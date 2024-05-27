@@ -43,11 +43,11 @@ const Header = () => {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to="/admin" className="dropdown-item">Admin
+                                        <NavLink to="/dashboard/admin" className="dropdown-item">Admin
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to="/student" className="dropdown-item">Student
+                                        <NavLink to="/dashboard/student" className="dropdown-item">Student
                                         </NavLink>
                                     </li>
                                 </ul>

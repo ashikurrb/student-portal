@@ -7,6 +7,9 @@ import Register from './pages/Auth/Register';
 import Login from './pages/Auth/Login';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import StudentDashboard from './pages/Student/StudentDashboard';
+import ViewResult from './pages/Student/ViewResult';
+import ViewPayment from './pages/Student/ViewPayment';
+import ContentLink from './pages/Student/ContentLink';
 
 
 
@@ -17,8 +20,11 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/register' element={<Register/>} />
         <Route path='/login' element={<Login/>} />
-        <Route path='/admin' element={<AdminDashboard/>} />
-        <Route path='/student' element={<StudentDashboard/>} />
+        <Route path='/dashboard/admin' element={<AdminDashboard/>} />
+        <Route path='/dashboard/student' element={<StudentDashboard/>} />
+        <Route path='/dashboard/student/view-result' element={<ViewResult/>} />
+        <Route path='/dashboard/student/view-payment' element={<ViewPayment/>} />
+        <Route path='/dashboard/student/content-link' element={<ContentLink/>} />
         <Route path='/about' element={<About />} />
         <Route path='*' element={<PageNotFound />} />
       
