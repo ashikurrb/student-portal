@@ -11,7 +11,8 @@ const ViewPayment = () => {
                         <StudentMenu></StudentMenu>
                     </div>
                     <div className="col-md-9">
-                        <div className="card mt-5 p-4">
+                    <h3 className='text-center pt-3'> Payment Status</h3>
+                    <div className="card mt-3 p-4">
                             <table className="table">
                                 <thead>
                                     <tr>
