@@ -20,7 +20,7 @@ const ViewPayment = () => {
                                         <th scope="col">Date</th>
                                         <th scope="col">Amount</th>
                                         <th scope="col">Method</th>
-                                        <th scope="col">Receipt/Trx Id</th>
+                                        <th scope="col">Trx Id</th>
                                     </tr>
                                 </thead>
                                 <tbody>
