@@ -10,6 +10,7 @@ import StudentDashboard from './pages/Student/StudentDashboard';
 import ViewResult from './pages/Student/ViewResult';
 import ViewPayment from './pages/Student/ViewPayment';
 import ContentLink from './pages/Student/ContentLink';
+import UpdateProfile from './pages/Student/UpdateProfile';
 
 
 
@@ -22,6 +23,7 @@ function App() {
         <Route path='/login' element={<Login/>} />
         <Route path='/dashboard/admin' element={<AdminDashboard/>} />
         <Route path='/dashboard/student' element={<StudentDashboard/>} />
+        <Route path='/dashboard/student/update-profile' element={<UpdateProfile/>} />
         <Route path='/dashboard/student/view-result' element={<ViewResult/>} />
         <Route path='/dashboard/student/view-payment' element={<ViewPayment/>} />
         <Route path='/dashboard/student/content-link' element={<ContentLink/>} />

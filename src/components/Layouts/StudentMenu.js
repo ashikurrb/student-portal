@@ -9,7 +9,7 @@ const StudentMenu = () => {
                     <NavLink to="/dashboard/student" className="product-link">
                         <h4>Student Menu</h4>
                     </NavLink>
-                    <NavLink to="/dashboard/student/profile" className="list-group-item list-group-item-action">
+                    <NavLink to="/dashboard/student/update-profile" className="list-group-item list-group-item-action">
                         Update Profile
                     </NavLink>
                     <NavLink to="/dashboard/student/view-result" className="list-group-item list-group-item-action">
