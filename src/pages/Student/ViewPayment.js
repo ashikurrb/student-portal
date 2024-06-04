@@ -17,10 +17,10 @@ const ViewPayment = () => {
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
-                                        <th scope="col">Payment Date</th>
+                                        <th scope="col">Date</th>
                                         <th scope="col">Amount</th>
-                                        <th scope="col">Payment Method</th>
-                                        <th scope="col">Receipt/Transaction Id</th>
+                                        <th scope="col">Method</th>
+                                        <th scope="col">Trx Id</th>
                                     </tr>
                                 </thead>
                                 <tbody>
