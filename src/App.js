@@ -12,8 +12,6 @@ import ViewPayment from './pages/Student/ViewPayment';
 import ContentLink from './pages/Student/ContentLink';
 import UpdateProfile from './pages/Student/UpdateProfile';
 
-
-
 function App() {
   return (
     <>

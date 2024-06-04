@@ -3,7 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import { Helmet } from 'react-helmet';
 
-const Layout = ({ children, title, description, keywords, author }) => {
+const Layout = (props, {title, description, keywords, author }) => {
     return (
         <div>
             <Helmet>
@@ -15,7 +15,7 @@ const Layout = ({ children, title, description, keywords, author }) => {
             </Helmet>
             <Header />
             <main style={{ minHeight: "80vh" }}>
-                {children}
+                {props.children}
             </main>
             <Footer />
         </div>
