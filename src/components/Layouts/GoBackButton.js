@@ -9,7 +9,7 @@ const GoBackButton = () => {
     };
     return (
         <div>
-            <button className='btn' onClick={handleGoBack}><b>⬅️Back</b></button>
+            <button className='btn' onClick={handleGoBack}><b>⬅️ Back</b></button>
             
         </div>
     );

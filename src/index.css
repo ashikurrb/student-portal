@@ -83,3 +83,11 @@
 background-color: black;
 color: white;
 }
+
+.table-container {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}

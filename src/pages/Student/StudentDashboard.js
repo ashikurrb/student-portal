@@ -8,10 +8,10 @@ const StudentDashboard = () => {
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
                     <div className="col-md-3">
-                    
                         <StudentMenu></StudentMenu>
                     </div>
                     <div className="col-md-9">
+                    <h3 className='text-center pt-3'>user.name's Profile</h3>
                         <div className="card p-4">
                             <div className="text-center">
                                 <img className='img img-fluid rounded' src="/images/TestUserImg.png" alt="" style={{width:"10%"}}/>

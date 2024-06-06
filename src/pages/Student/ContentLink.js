@@ -13,7 +13,7 @@ const ContentLink = () => {
                 </div>
                 <div className="col-md-9">
                 <h3 className='text-center pt-3'> Content Link</h3>
-                    <div className="card mt-3 p-4">
+                    <div className="card mt-3 p-4 table-container">
                         <table className="table">
                             <thead>
                                 <tr>

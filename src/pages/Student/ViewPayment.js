@@ -11,25 +11,25 @@ const ViewPayment = () => {
                         <StudentMenu></StudentMenu>
                     </div>
                     <div className="col-md-9 ">
-                    <h3 className='text-center pt-3'> Payment Status</h3>
-                    <div className="card mt-3 p-4">
-                            <table className="table ">
+                        <h3 className='text-center pt-3'> Payment Status</h3>
+                        <div className="card mt-3 p-4 table-container">
+                            <table className="table  ">
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Amount</th>
+                                        <th scope="col">Trx ID</th>
                                         <th scope="col">Method</th>
-                                        <th scope="col">Trx Id</th>
+                                        <th scope="col">Amount</th>
+                                        <th scope="col">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <th scope="row">1</th>
-                                        <td>21/5/2024</td>
-                                        <td>12200</td>
+                                        <td >75hgft9m</td>
                                         <td>bKash</td>
-                                        <td>75hgft9m</td>
+                                        <td>12200</td>
+                                        <td>21/5/2024</td>
                                     </tr>
                                 </tbody>
                             </table>
