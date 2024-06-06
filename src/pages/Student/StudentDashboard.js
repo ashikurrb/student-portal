@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '../../components/Layouts/Layout'
 import StudentMenu from '../../components/Layouts/StudentMenu';
+import GoBackButton from '../../components/Layouts/GoBackButton';
 
 const StudentDashboard = () => {
     return (
@@ -8,6 +9,7 @@ const StudentDashboard = () => {
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
                     <div className="col-md-3">
+                        <GoBackButton/>
                         <StudentMenu></StudentMenu>
                     </div>
                     <div className="col-md-9">
