@@ -1,12 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+   import GoBackButton from '../../components/Layouts/GoBackButton';
 
 const StudentMenu = () => {
     return (
         <>
             <div className="text-center">
                 <div className="list-group ">
-                    <NavLink to="/dashboard/student" className="product-link">
+                    <NavLink to="/dashboard/student" className="product-link"><GoBackButton />
                         <h4>Student Menu</h4>
                     </NavLink>
                     <NavLink to="/dashboard/student/update-profile" className="list-group-item list-group-item-action">

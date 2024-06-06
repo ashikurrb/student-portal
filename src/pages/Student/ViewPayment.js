@@ -5,12 +5,12 @@ import StudentMenu from '../../components/Layouts/StudentMenu';
 const ViewPayment = () => {
     return (
         <Layout title={"Dashboard - Student"}>
-            <div className="container-fluid mt-3 p-3">
+            <div className="container-fluid mt-3 p-3 horizontal-scrollable">
                 <div className="row">
                     <div className="col-md-3">
                         <StudentMenu></StudentMenu>
                     </div>
-                    <div className="col-md-9">
+                    <div className="col-md-9 overflow-auto ">
                     <h3 className='text-center pt-3'> Payment Status</h3>
                     <div className="card mt-3 p-4">
                             <table className="table">

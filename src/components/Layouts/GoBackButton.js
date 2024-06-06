@@ -9,7 +9,8 @@ const GoBackButton = () => {
     };
     return (
         <div>
-               <button className='pnf-btn' onClick={handleGoBack}><b>⬅️Go Back</b></button>
+            <button className='btn' onClick={handleGoBack}><b>⬅️Back</b></button>
+            
         </div>
     );
 };
