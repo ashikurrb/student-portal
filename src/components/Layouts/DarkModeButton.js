@@ -14,7 +14,7 @@ const DarkModeButton = () => {
 
     return (
         <div>
-            <button onClick={toggleDarkMode} className='btn fa-solid fa-circle-half-stroke'></button>
+            <button onClick={toggleDarkMode} className='btn fa-solid fa-circle-half-stroke'> Mode</button>
             
         </div>
     );
