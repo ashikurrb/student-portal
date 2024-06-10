@@ -1,16 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import GoBackButton from './GoBackButton';
 
 const AdminMenu = () => {
     return (
         <>
-            <div className="text-center">
-                <div className="list-group">
+            <div className="text-center" >
+                <div className="list-group ">
                     <NavLink to="/dashboard/admin" className="product-link">
-                    
+                        <GoBackButton />
                         <h4>Admin Panel</h4>
                     </NavLink>
-     
                     <NavLink to="/dashboard/admin/create-grade" className="list-group-item list-group-item-action">
                         Create & View Grade
                     </NavLink>

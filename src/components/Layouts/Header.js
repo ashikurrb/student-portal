@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import DarkModeButton from './DarkModeButton';
+
 
 const Header = () => {
     return (
@@ -15,6 +17,7 @@ const Header = () => {
                             <input className="form-control ms-auto" type="search" placeholder="Search" aria-label="Search" />
                             <button className="btn btn-outline-success" type="submit">Search</button>
                         </form>
+                        <DarkModeButton/>
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <li className="nav-item">
@@ -35,6 +38,7 @@ const Header = () => {
                                     UserName
                                 </NavLink>
                                 <ul className="dropdown-menu">
+                                    
                                     <li>
                                         <NavLink to="/dashboard" className="dropdown-item">Dashboard</NavLink>
                                     </li>
@@ -55,6 +59,7 @@ const Header = () => {
                             <li className="nav-item">
                                 <NavLink to="/about" className="nav-link">About Us</NavLink>
                             </li>
+                           
                         </ul>
                     </div>
                 </div>
