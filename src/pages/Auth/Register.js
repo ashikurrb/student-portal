@@ -5,13 +5,13 @@ import '../../style/AuthStyle.css'
 const Register = () => {
     return (
         <Layout title={"Register Now - C-Lab"}>
-            <div className="form-container"> <div className="container">
-            <div className="row">
-                <div className="col-md-6">
-                    <img className='pt-5 px-5' src="/images/registerImg.png" alt="" style={{width:"100%"}} />
-                </div>
-                <div className="col-md-6">
-                        <form className='w-75 m-5'>
+            <div className="form-container p-2"> <div className="container">
+                <div className="row">
+                    <div className="col-md-6">
+                        <img className='pt-5 px-5' src="/images/registerImg.png" alt="" style={{ width: "100%" }} />
+                    </div>
+                    <div className="col-md-6">
+                        <form className='m-md-5'>
                             <h4 className="title text-center pb-2">REGISTER FORM</h4>
                             <div className="form-floating mb-3">
                                 <input type="text" className="form-control" id="exampleInputName" placeholder='Name' required />
@@ -33,14 +33,14 @@ const Register = () => {
                                 <input type="password" className="form-control" id="exampleInputPassword1" placeholder='Password' required />
                                 <label for="floatingInput">Password</label>
                             </div>
-                          <div className="text-center">
-                          <button type="submit" className="btn btn-primary">REGISTER</button>
-                          </div>
+                            <div className="text-center">
+                                <button type="submit" className="btn btn-primary">REGISTER</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div></div>
-           
+
         </Layout>
     );
 };

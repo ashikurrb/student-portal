@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 const Login = () => {
     return (
         <Layout title={"C-Lab - Login"}>
-            <div className="form-container p-5 ">
+            <div className="form-container p-2">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6">
@@ -15,7 +15,7 @@ const Login = () => {
                             </div>
                         </div>
                         <div className="col-md-6">
-                          <div className="w-75 m-5">
+                          <div className="m-md-5">
                           <form>
                                 <h4 className="title">Login Here</h4>
                                 <div className="form-floating mb-3">

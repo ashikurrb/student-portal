@@ -7,8 +7,8 @@ const Header = () => {
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
-                <div className="container-fluid me-auto">
-                    <Link to="/" className="navbar-brand">STUDENT PORTAL</Link>
+                <div className="container-fluid">
+                    <Link to="/" className="navbar-brand mb-0 h1">STUDENT PORTAL</Link>
                     <DarkModeButton/>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon" />
