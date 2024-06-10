@@ -11,25 +11,16 @@ const DarkModeButton = () => {
         const newMode = !darkMode;
         setDarkMode(newMode);
         localStorage.setItem('darkMode', JSON.stringify(newMode));
-        if (newMode) {
+    };
+
+    // Apply the theme whenever darkMode state changes
+    useEffect(() => {
+        if (darkMode) {
             document.documentElement.setAttribute('data-bs-theme', 'dark');
         } else {
             document.documentElement.setAttribute('data-bs-theme', 'light');
         }
-    };
-
-    // Apply the theme on component mount based on localStorage value
-    useEffect(() => {
-        const savedMode = localStorage.getItem('darkMode');
-        if (savedMode) {
-            const isDarkMode = JSON.parse(savedMode);
-            if (isDarkMode) {
-                document.documentElement.setAttribute('data-bs-theme', 'dark');
-            } else {
-                document.documentElement.setAttribute('data-bs-theme', 'light');
-            }
-        }
-    }, []);
+    }, [darkMode]);
 
     return (
         <div>
