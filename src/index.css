@@ -73,8 +73,10 @@
 }
 
 .pnf-btn{
-  color: black;
+  background-color: rgb(66, 62, 62);
+  color: white;
   border: 1px solid black;
+  border-radius: 5px;
   text-decoration: none;
   padding:10px;
   margin-top: 10px;
