@@ -9,9 +9,13 @@ const AdminMenu = () => {
                 <div className="list-group ">
                     <NavLink to="/dashboard/admin" className="product-link">
                         <GoBackButton />
+                        <button className='btn d-sm-block d-md-none' data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
+                        <i className="fa-solid fa-bars"> </i>
+                    </button>
                         <h4>Admin Panel</h4>
                     </NavLink>
-                    <NavLink to="/dashboard/admin/create-grade" className="list-group-item list-group-item-action">
+                <div className='' id="collapseExample">
+                   <NavLink to="/dashboard/admin/create-grade" className="list-group-item list-group-item-action">
                         Create & View Grade
                     </NavLink>
                     <NavLink to="/dashboard/admin/create-course" className="list-group-item list-group-item-action">
@@ -32,6 +36,7 @@ const AdminMenu = () => {
                     <NavLink to="/dashboard/admin/students" className="list-group-item list-group-item-action">
                         All Students
                     </NavLink>
+                   </div>
                 </div>
             </div>
         </>
