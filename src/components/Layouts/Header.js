@@ -8,19 +8,19 @@ const Header = () => {
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
                 <div className="container-fluid">
-                    <Link to="/" className="navbar-brand mb-0 h1">STUDENT PORTAL</Link>
-                    
-                    <button className="navbar-toggler my-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <Link to="/" className="navbar-brand">STUDENT PORTAL</Link>
+                    <button className="navbar-toggler ms-auto my-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon" />
                     </button>
-                   
+                    <div className="d-lg-none">
+                        <DarkModeButton />
+                    </div>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <form className="d-flex ms-auto" role="search">
-                            <input className="form-control " type="search" placeholder="Search" aria-label="Search" /> 
+                            <input className="form-control " type="search" placeholder="Search" aria-label="Search" />
                             &nbsp;
                             <button className="btn btn-outline-success" type="submit"> Search</button>
                         </form>
-                      
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <li className="nav-item">
@@ -40,7 +40,7 @@ const Header = () => {
                                 <NavLink to=" " className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     UserName
                                 </NavLink>
-                                <ul className="dropdown-menu">  
+                                <ul className="dropdown-menu">
                                     <li>
                                         <NavLink to="/dashboard" className="dropdown-item">Dashboard</NavLink>
                                     </li>
@@ -63,10 +63,11 @@ const Header = () => {
                             </li>
                         </ul>
                     </div>
-                    <DarkModeButton/> &nbsp;
+                    <div className="d-none d-lg-block">
+                        <DarkModeButton />
+                    </div>
                 </div>
             </nav>
-
         </>
     );
 };
