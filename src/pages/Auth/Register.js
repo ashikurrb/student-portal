@@ -5,7 +5,8 @@ import '../../style/AuthStyle.css'
 const Register = () => {
     return (
         <Layout title={"Register Now - C-Lab"}>
-            <div className="form-container p-2"> <div className="container">
+            <div className="form-container p-2"> 
+                <div className="container">
                 <div className="row">
                     <div className="col-md-6">
                         <img className='pt-5 px-5' src="/images/registerImg.png" alt="" style={{ width: "100%" }} />

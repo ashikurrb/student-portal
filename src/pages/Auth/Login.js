@@ -15,8 +15,8 @@ const Login = () => {
                             </div>
                         </div>
                         <div className="col-md-6">
-                          <div className="m-md-5">
-                          <form>
+
+                            <form className='m-md-5'>
                                 <h4 className="title">Login Here</h4>
                                 <div className="form-floating mb-3">
                                     <input type="email" className="form-control" id="exampleInputEmail" placeholder='Email' required />
@@ -32,12 +32,10 @@ const Login = () => {
                                     <NavLink to="/forget-password">Forget Password</NavLink>
                                 </div>
                             </form>
-                          </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </Layout>
     );
 };
