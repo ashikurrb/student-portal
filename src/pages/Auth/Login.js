@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../../components/Layouts/Layout';
 import '../../style/AuthStyle.css'
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const Login = () => {
     return (
@@ -27,10 +27,9 @@ const Login = () => {
                                     <label for="floatingInput">Password</label>
                                 </div>
                                 <div className="text-center">
-                                    <button type="submit" className="btn btn-primary">Log In</button>
-                                    <br /> <br />
-                                    <NavLink to="/forget-password">Forget Password</NavLink>
-                                </div>
+                                <button type="submit" className="btn btn-primary">Log In</button>
+                            </div>
+                            <div className="text-center py-3">Forgot Password? <Link to="/forgot-password">Reset Here</Link></div>
                             </form>
                         </div>
                     </div>

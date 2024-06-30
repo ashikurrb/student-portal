@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '../../components/Layouts/Layout';
 import '../../style/AuthStyle.css'
+import { Link } from 'react-router-dom';
 
 const Register = () => {
     return (
@@ -13,7 +14,8 @@ const Register = () => {
                         </div>
                         <div className="col-md-6">
                             <form className='m-lg-5 mb-2'>
-                                <h4 className="title text-center pb-2">REGISTER FORM</h4>
+                            <h4 className="title"><i class="fa-solid fa-user-plus"></i> &nbsp; REGISTER FORM</h4>
+
                                 <div className="form-floating mb-3">
                                     <input type="text" className="form-control" id="exampleInputName" placeholder='Name' required />
                                     <label for="floatingInput">Name</label>
@@ -37,6 +39,7 @@ const Register = () => {
                                 <div className="text-center">
                                     <button type="submit" className="btn btn-primary">REGISTER</button>
                                 </div>
+                                <div className="text-center py-3">Already Registered? <Link to="/login">Log In</Link></div>
                             </form>
                         </div>
                     </div>

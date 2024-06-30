@@ -7,20 +7,22 @@ const StudentMenu = () => {
         <>
             <div className="text-center">
                 <div className="list-group">
-                    <button className='btn d-md-none' data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
-                        <i className="fa-solid fa-bars"> </i>
-                    </button>
-                    <NavLink to="/dashboard/student" className="product-lin">
-                    <div className="row align-items-center">
+                    <NavLink to="/dashboard/student" className="product-link">
+                        <div className="row align-items-center">
                             <div className="col-auto">
-                               <GoBackButton/>
+                                <GoBackButton />
                             </div>
                             <div className="col">
                                 <h4 className="mb-0 me-5 text-center">Student Menu</h4>
                             </div>
+                            <div className="col-auto">
+                                <button className='btn d-md-none' data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
+                                    <i className="fa-solid fa-bars"> </i>
+                                </button>
+                            </div>
                         </div>
                     </NavLink>
-                    <div className='d-md-collapse' id="collapseExample">
+                    <div className='d-md-collapse show' id="collapseExample">
                         <NavLink to="/dashboard/student/update-profile" className="list-group-item list-group-item-action">
                             Update Profile
                         </NavLink>

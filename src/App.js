@@ -11,6 +11,7 @@ import ViewResult from './pages/Student/ViewResult';
 import ViewPayment from './pages/Student/ViewPayment';
 import ContentLink from './pages/Student/ContentLink';
 import UpdateProfile from './pages/Student/UpdateProfile';
+import ForgotPassword from './pages/Auth/ForgotPassword';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/register' element={<Register/>} />
         <Route path='/login' element={<Login/>} />
+        <Route path='/forgot-password' element={<ForgotPassword/>} />
         <Route path='/dashboard/admin' element={<AdminDashboard/>} />
         <Route path='/dashboard/student' element={<StudentDashboard/>} />
         <Route path='/dashboard/student/update-profile' element={<UpdateProfile/>} />
