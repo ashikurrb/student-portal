@@ -16,8 +16,8 @@ const Login = () => {
                         </div>
                         <div className="col-md-6">
 
-                            <form className='m-md-5'>
-                                <h4 className="title">Login Here</h4>
+                            <form className='m-lg-5 mb-2'>
+                                <h4 className="title"><i class="fa-solid fa-right-to-bracket"></i> &nbsp; Login Here</h4>                                
                                 <div className="form-floating mb-3">
                                     <input type="email" className="form-control" id="exampleInputEmail" placeholder='Email' required />
                                     <label for="floatingInput">Email address</label>

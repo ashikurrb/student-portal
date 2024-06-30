@@ -6,11 +6,20 @@ import GoBackButton from '../components/Layouts/GoBackButton';
 const PageNotFound = () => {
     return (
         <Layout title={"Page Not Found"}>
+            <div className="container">
+                <div className="row">
+                <div className="row align-items-center">
+                    <div className="col-auto">
+                        <GoBackButton />
+                    </div>
+                </div>
             <div className="pnf" >
                 <div className="pnf-title" >404</div>
                 <h2 className="pnf-heading"> Ooops! Page Not Found</h2>
                 <Link to="/" className="pnf-btn"><b>Go to Home</b></Link>
-               <span className='pnf-button'> <GoBackButton /></span>
+
+            </div>
+                </div>
             </div>
         </Layout>
     );

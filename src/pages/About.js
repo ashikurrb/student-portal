@@ -5,8 +5,16 @@ import GoBackButton from '../components/Layouts/GoBackButton';
 const About = () => {
     return (
         <Layout title={"C-Lab - About US"}>
-            <h1 className='text-center mt-4'>About Us</h1>
-            <h1 className="text-center"> <GoBackButton /></h1>
+               <div className="container">
+               <div className="row align-items-center">
+                    <div className="col-auto">
+                        <GoBackButton />
+                    </div>
+                    <div className="col">
+                        <h3 className="mb-0 me-5 p-3 text-center">About Us</h3>
+                    </div>
+                </div>
+               </div>
         </Layout>
     );
 };

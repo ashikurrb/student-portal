@@ -34,20 +34,20 @@ const Header = () => {
                                 <NavLink to="/register" className="nav-link" >Register</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink to="/login" className="nav-link" >Log in</NavLink>
+                                <NavLink to="/login" className="nav-link"> <i class="fa-solid fa-right-to-bracket"></i> Login</NavLink>
                             </li>
                             <li className="nav-item dropdown">
-                                <NavLink to=" " className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    UserName
+                                <NavLink className="nav-link dropdown-toggle mx-1" role="button" data-bs-toggle="dropdown" >
+                                    <img style={{ width: "25px" }} className=' img-thumbnail rounded-circle' src="https://cdn-icons-png.flaticon.com/512/21/21104.png" alt="dp" />   Username
                                 </NavLink>
                                 <ul className="dropdown-menu">
                                     <li>
-                                        <NavLink to="/dashboard" className="dropdown-item">Dashboard</NavLink>
+                                        <NavLink to="/dashboard" className="dropdown-item"> <i class="fa-solid fa-user"></i> Dashboard </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to="/logout" className="dropdown-item">Log Out
-                                        </NavLink>
+                                        <NavLink to="/login" className="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i>  Logout </NavLink>
                                     </li>
+
                                     <li>
                                         <NavLink to="/dashboard/admin" className="dropdown-item">Admin
                                         </NavLink>
@@ -57,9 +57,6 @@ const Header = () => {
                                         </NavLink>
                                     </li>
                                 </ul>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to="/about" className="nav-link">About Us</NavLink>
                             </li>
                         </ul>
                     </div>

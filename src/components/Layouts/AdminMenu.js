@@ -8,11 +8,17 @@ const AdminMenu = () => {
             <div className="text-center" >
                 <div className="list-group ">
                     <NavLink to="/dashboard/admin" className="product-link">
-                        <GoBackButton />
                         <button className='btn d-sm-block d-md-none' data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
                         <i className="fa-solid fa-bars"> </i>
                     </button>
-                        <h4>Admin Panel</h4>
+                    <div className="row align-items-center">
+                            <div className="col-auto">
+                               <GoBackButton/>
+                            </div>
+                            <div className="col">
+                                <h4 className="mb-0 me-5 text-center">Admin Menu</h4>
+                            </div>
+                        </div>
                     </NavLink>
                 <div className='' id="collapseExample">
                    <NavLink to="/dashboard/admin/create-grade" className="list-group-item list-group-item-action">
@@ -35,6 +41,9 @@ const AdminMenu = () => {
                     </NavLink>
                     <NavLink to="/dashboard/admin/students" className="list-group-item list-group-item-action">
                         All Students
+                    </NavLink>
+                    <NavLink to="/dashboard/student" className="list-group-item list-group-item-action">
+                        Demo Student
                     </NavLink>
                    </div>
                 </div>
