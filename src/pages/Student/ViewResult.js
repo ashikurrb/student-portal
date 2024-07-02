@@ -14,16 +14,16 @@ const ViewResult = () => {
                         <h3 className='text-center pt-3'> Result</h3>
                         <div className="card mt-3 p-4 table-container">
                             <table className="table">
-                                <thead>
+                                <thead className='table-dark'>
                                     <tr>
-                                        <th scope="col">No</th>
+                                        <th scope="col">#</th>
                                         <th scope="col">Exam/Sub</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">Result</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tr data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <tr data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         <th scope="row">1</th>
                                         <td>Math</td>
                                         <td>21/5/2020</td>

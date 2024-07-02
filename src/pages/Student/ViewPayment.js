@@ -14,9 +14,9 @@ const ViewPayment = () => {
                         <h3 className='text-center pt-3'> Payment Status</h3>
                         <div className="card mt-3 p-4 table-container">
                             <table className="table  ">
-                                <thead>
+                            <thead className='table-dark'>
                                     <tr>
-                                        <th scope="col">No</th>
+                                        <th scope="col">#</th>
                                         <th scope="col">Trx ID</th>
                                         <th scope="col">Method</th>
                                         <th scope="col">Amount</th>
