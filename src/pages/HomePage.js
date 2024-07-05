@@ -12,6 +12,7 @@ const HomePage = () => {
                 <h6>Phone: {auth?.user?.phone} </h6>
                 <h6>Email: {auth?.user?.email} </h6>
                 <h6>Grade: {auth?.user?.grade} </h6>
+                <p>Token: {auth?.token} </p>
                 </div>
             </div>
         </Layout>
