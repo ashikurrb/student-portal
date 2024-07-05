@@ -58,7 +58,7 @@ const Header = () => {
                                             <img style={{ width: "25px" }} className=' img-thumbnail rounded-circle' src="https://cdn-icons-png.flaticon.com/512/21/21104.png" alt="dp" />
                                             {auth?.user?.name}
                                         </NavLink>
-                                        <ul className="dropdown-menu">
+                                        <ul className="dropdown-menu" >
                                         <li>
                                             <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "student"}`} className="dropdown-item"> <i class="fa-solid fa-user"></i> Dashboard </NavLink>
                                         </li>
