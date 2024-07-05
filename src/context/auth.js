@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 
 
@@ -8,9 +9,12 @@ const AuthProvider = ({ children }) => {
         user: null,
         token: ""
     })
-    useEffect(()=>{
+    //default axios
+    axios.defaults.headers.common['Authorization'] = auth?.token;
+
+    useEffect(() => {
         const data = localStorage.getItem('auth')
-        if(data){
+        if (data) {
             const parseData = JSON.parse(data)
             setAuth({
                 ...auth,
@@ -19,7 +23,7 @@ const AuthProvider = ({ children }) => {
             })
         }
         //eslint-disable-next line
-    },[])
+    }, [])
     return (
         <AuthContext.Provider value={[auth, setAuth]}>
             {children}
@@ -30,4 +34,4 @@ const AuthProvider = ({ children }) => {
 //custom Hooks
 const useAuth = () => useContext(AuthContext);
 
-export {useAuth, AuthProvider}
+export { useAuth, AuthProvider }

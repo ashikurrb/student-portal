@@ -1,22 +1,51 @@
 import Layout from '../../components/Layouts/Layout';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../../style/AuthStyle.css';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { useState } from 'react';
+import { useAuth } from '../../context/auth';
 
 const ForgotPassword = () => {
+    const [email, setEmail] = useState("");
+    const [answer, setAnswer] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const navigate = useNavigate();
+
+    //form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/forgot-password`, {
+                email,
+                newPassword,
+                answer
+            });
+            if (res && res.data.success) {
+                toast.success(res.data && res.data.message)
+                navigate( "/login")
+            } else {
+                toast.error(res.data.message)
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong")
+        }
+    }
 
     return (
         <Layout title={"Log In"}>
             <div className="form-container ">
-                <form >
+                <form onSubmit={handleSubmit}>
                     <h4 className="title"> <i class="fa-solid fa-lock"></i> Reset Password</h4>
                     <div className="mb-3">
-                        <input type="email" className="form-control" id="exampleInputEmail" placeholder='Email' required />
+                        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email' required />
                     </div>
                     <div className="mb-3">
-                        <input type="text" className="form-control" id="exampleInputEmail" placeholder='What is your favorite food?' required />
+                        <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" id="exampleInputAddress" placeholder='Security Answer' required />
                     </div>
                     <div className="mb-3">
-                        <input type="password" className="form-control" id="exampleInputPassword1" placeholder='Enter New Password' required />
+                        <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />
                     </div>
                     <div className="text-center">
                         <button type="submit" className="btn"> Reset Password </button>
