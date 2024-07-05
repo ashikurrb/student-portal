@@ -1,10 +1,14 @@
 import React from 'react';
 import Layout from '../components/Layouts/Layout';
+import { useAuth } from '../context/auth';
 
 const HomePage = () => {
+    const [auth, setAuth] = useAuth();
     return (
-        <Layout  title={"Home"}>
-            <img className='p-5 mx-auto d-block' src="/images/homepageImg.png" alt="HomePage" style={{width:"80%"}} />
+        <Layout title={"Home"}>
+            <pre>
+                {JSON.stringify(auth, null, 4)}
+            </pre>
         </Layout>
     );
 };

@@ -1,9 +1,22 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import DarkModeButton from './DarkModeButton';
+import { useAuth } from '../../context/auth';
+import toast from 'react-hot-toast';
 
 
 const Header = () => {
+    const [auth, setAuth] = useAuth();
+
+    //Logout
+    const handleLogOut = () => {
+        setAuth({
+            ...auth,
+            user: null, token: '',
+        })
+        localStorage.removeItem('auth');
+        toast.success('Logout Successfully');
+    }
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -30,34 +43,40 @@ const Header = () => {
                             <li className="nav-item">
                                 <NavLink to="/courses" className="nav-link" >Courses</NavLink>
                             </li>
-                            <li className="nav-item">
-                                <NavLink to="/register" className="nav-link" >Register</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to="/login" className="nav-link"> <i class="fa-solid fa-right-to-bracket"></i> Login</NavLink>
-                            </li>
-                            <li className="nav-item dropdown">
-                                <NavLink className="nav-link dropdown-toggle mx-1" role="button" data-bs-toggle="dropdown" >
-                                    <img style={{ width: "25px" }} className=' img-thumbnail rounded-circle' src="https://cdn-icons-png.flaticon.com/512/21/21104.png" alt="dp" />   Username
-                                </NavLink>
-                                <ul className="dropdown-menu">
-                                    <li>
-                                        <NavLink to="/dashboard" className="dropdown-item"> <i class="fa-solid fa-user"></i> Dashboard </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="/login" className="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i>  Logout </NavLink>
-                                    </li>
 
-                                    <li>
-                                        <NavLink to="/dashboard/admin" className="dropdown-item">Admin
-                                        </NavLink>
+                            {
+                                !auth.user ? (<>
+                                    <li className="nav-item">
+                                        <NavLink to="/register" className="nav-link" >Register</NavLink>
                                     </li>
-                                    <li>
-                                        <NavLink to="/dashboard/student" className="dropdown-item">Student
-                                        </NavLink>
+                                    <li className="nav-item">
+                                        <NavLink to="/login" className="nav-link"> <i class="fa-solid fa-right-to-bracket"></i> Login</NavLink>
                                     </li>
-                                </ul>
-                            </li>
+                                </>) : (<>
+                                    <li className="nav-item dropdown">
+                                        <NavLink className="nav-link dropdown-toggle mx-1" role="button" data-bs-toggle="dropdown" >
+                                            <img style={{ width: "25px" }} className=' img-thumbnail rounded-circle' src="https://cdn-icons-png.flaticon.com/512/21/21104.png" alt="dp" />   {auth?.user?.name}
+                                        </NavLink>
+                                        <ul className="dropdown-menu">
+                                            <li>
+                                                <NavLink to="/dashboard" className="dropdown-item"> <i class="fa-solid fa-user"></i> Dashboard </NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink to="/login" onClick={handleLogOut} className="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i>  Logout </NavLink>
+                                            </li>
+
+                                            <li>
+                                                <NavLink to="/dashboard/admin" className="dropdown-item">Admin
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink to="/dashboard/student" className="dropdown-item">Student
+                                                </NavLink>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </>)
+                            }
                         </ul>
                     </div>
                     <div className="d-none d-lg-block">
