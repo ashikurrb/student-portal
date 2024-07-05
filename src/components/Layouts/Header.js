@@ -55,21 +55,31 @@ const Header = () => {
                                 </>) : (<>
                                     <li className="nav-item dropdown">
                                         <NavLink className="nav-link dropdown-toggle mx-1" role="button" data-bs-toggle="dropdown" >
-                                            <img style={{ width: "25px" }} className=' img-thumbnail rounded-circle' src="https://cdn-icons-png.flaticon.com/512/21/21104.png" alt="dp" />   {auth?.user?.name}
+                                            <img style={{ width: "25px" }} className=' img-thumbnail rounded-circle' src="https://cdn-icons-png.flaticon.com/512/21/21104.png" alt="dp" />
+                                            {auth?.user?.name}
                                         </NavLink>
                                         <ul className="dropdown-menu">
-                                            <li>
-                                                <li>
-                                                    <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "student"}`} className="dropdown-item"> <i class="fa-solid fa-user"></i> Dashboard </NavLink>
-                                                </li>
-                                            </li>
-                                            <li>
-                                                <NavLink to="/login" onClick={handleLogOut} className="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i>  Logout </NavLink>
-                                            </li>
-                                        </ul>
+                                        <li>
+                                            <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "student"}`} className="dropdown-item"> <i class="fa-solid fa-user"></i> Dashboard </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink onClick={handleLogOut} to="/login" className="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i>  Logout </NavLink>
+                                        </li>
+                                    </ul>
                                     </li>
                                 </>)
                             }
+                               {/* <li className="nav-item d-none d-lg-block">
+                                <NavLink to="/cart" className="nav-link position-relative mx-1">
+                                    <i className='fa-solid fa-cart-shopping'></i> Cart
+                                    {
+                                        cart?.length > 0 ?
+                                            <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">
+                                                {cart.length}
+                                            </span> : ""
+                                    }
+                                </NavLink>
+                            </li> */}
                         </ul>
                     </div>
                     <div className="d-none d-lg-block">

@@ -7,12 +7,16 @@ const HomePage = () => {
     return (
         <Layout title={"Home"}>
             <div className="container">
-                <div className="row p-5">
-                <h4>Name: {auth?.user?.name}</h4>
+                <div className="row m-5">
+              <div className="col-md-6">
+              <h4>Name: {auth?.user?.name}</h4>
                 <h6>Phone: {auth?.user?.phone} </h6>
                 <h6>Email: {auth?.user?.email} </h6>
                 <h6>Grade: {auth?.user?.grade} </h6>
+              </div>
+                <div className="col-md-6 card">
                 <p>Token: {auth?.token} </p>
+                </div>
                 </div>
             </div>
         </Layout>
