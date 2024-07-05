@@ -7,7 +7,7 @@ const AdminMenu = () => {
         <>
             <div className="text-center" >
                 <div className="list-group">
-                <div>
+                    <div>
                         <div className="row align-items-center">
                             <div className="col-auto">
                                 <GoBackButton />
@@ -25,31 +25,31 @@ const AdminMenu = () => {
                         </div>
                     </div>
                     <div className='d-md-collapse show rounded' id="collapseExample">
-                   <NavLink to="/dashboard/admin/create-grade" className="list-group-item list-group-item-action">
-                        Create & View Grade
-                    </NavLink>
-                    <NavLink to="/dashboard/admin/create-course" className="list-group-item list-group-item-action">
-                        Create Course
-                    </NavLink>
-                    <NavLink to="/dashboard/admin/courses" className="list-group-item list-group-item-action">
-                        All Courses
-                    </NavLink>
-                    <NavLink to="/dashboard/admin/create-link" className="list-group-item list-group-item-action">
-                        Content Links
-                    </NavLink>
-                    <NavLink to="/dashboard/admin/create-result" className="list-group-item list-group-item-action">
-                        Publish Results
-                    </NavLink>
-                    <NavLink to="/dashboard/admin/create-payment" className="list-group-item list-group-item-action">
-                        Set Payment Status
-                    </NavLink>
-                    <NavLink to="/dashboard/admin/students" className="list-group-item list-group-item-action">
-                        All Students
-                    </NavLink>
-                    <NavLink to="/dashboard/student" className="list-group-item list-group-item-action">
-                        Demo Student
-                    </NavLink>
-                   </div>
+                        <NavLink to="/dashboard/admin/create-grade" className="list-group-item list-group-item-action">
+                            Create & View Grade
+                        </NavLink>
+                        <NavLink to="/dashboard/admin/create-course" className="list-group-item list-group-item-action">
+                            Create Course
+                        </NavLink>
+                        <NavLink to="/dashboard/admin/courses" className="list-group-item list-group-item-action">
+                            All Courses
+                        </NavLink>
+                        <NavLink to="/dashboard/admin/create-link" className="list-group-item list-group-item-action">
+                            Content Links
+                        </NavLink>
+                        <NavLink to="/dashboard/admin/create-result" className="list-group-item list-group-item-action">
+                            Publish Results
+                        </NavLink>
+                        <NavLink to="/dashboard/admin/create-payment" className="list-group-item list-group-item-action">
+                            Set Payment Status
+                        </NavLink>
+                        <NavLink to="/dashboard/admin/students" className="list-group-item list-group-item-action">
+                            All Students
+                        </NavLink>
+                        <NavLink to="/dashboard/student" className="list-group-item list-group-item-action">
+                            Demo Student
+                        </NavLink>
+                    </div>
                 </div>
             </div>
         </>
