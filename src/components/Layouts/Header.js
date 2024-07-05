@@ -59,19 +59,12 @@ const Header = () => {
                                         </NavLink>
                                         <ul className="dropdown-menu">
                                             <li>
-                                                <NavLink to="/dashboard" className="dropdown-item"> <i class="fa-solid fa-user"></i> Dashboard </NavLink>
+                                                <li>
+                                                    <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`} className="dropdown-item"> <i class="fa-solid fa-user"></i> Dashboard </NavLink>
+                                                </li>
                                             </li>
                                             <li>
                                                 <NavLink to="/login" onClick={handleLogOut} className="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i>  Logout </NavLink>
-                                            </li>
-
-                                            <li>
-                                                <NavLink to="/dashboard/admin" className="dropdown-item">Admin
-                                                </NavLink>
-                                            </li>
-                                            <li>
-                                                <NavLink to="/dashboard/student" className="dropdown-item">Student
-                                                </NavLink>
                                             </li>
                                         </ul>
                                     </li>

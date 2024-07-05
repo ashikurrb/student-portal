@@ -7,7 +7,7 @@ const StudentMenu = () => {
         <>
             <div className="text-center">
                 <div className="list-group">
-                    <div>
+                    <div className='border-bottom'>
                         <div className="row align-items-center">
                             <div className="col-auto">
                                 <GoBackButton />
