@@ -12,7 +12,8 @@ import ViewPayment from './pages/Student/ViewPayment';
 import ContentLink from './pages/Student/ContentLink';
 import UpdateProfile from './pages/Student/UpdateProfile';
 import ForgotPassword from './pages/Auth/ForgotPassword';
-import {PrivateRoute} from './components/Routes/Private';
+import { PrivateRoute } from './components/Routes/Private';
+import { AdminRoute } from './components/Routes/AdminRoute';
 
 function App() {
   return (
@@ -22,14 +23,16 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
-        <Route path='/dashboard' element={<PrivateRoute/>}>
+        <Route path='/dashboard' element={<PrivateRoute />}>
           <Route path='student' element={<StudentDashboard />} />
           <Route path='student/update-profile' element={<UpdateProfile />} />
           <Route path='student/view-result' element={<ViewResult />} />
           <Route path='student/view-payment' element={<ViewPayment />} />
           <Route path='student/content-link' element={<ContentLink />} />
         </Route>
-        <Route path='/dashboard/admin' element={<AdminDashboard />} />
+        <Route path='/dashboard' element={<AdminRoute />}>
+          <Route path='admin' element={<AdminDashboard />} />
+        </Route>
         <Route path='/about' element={<About />} />
         <Route path='*' element={<PageNotFound />} />
 
