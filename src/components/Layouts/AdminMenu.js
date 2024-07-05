@@ -26,7 +26,7 @@ const AdminMenu = () => {
                     </div>
                     <div className='d-md-collapse show rounded' id="collapseExample">
                         <NavLink to="/dashboard/admin/create-grade" className="list-group-item list-group-item-action">
-                            Create & View Grade
+                            Create Grade
                         </NavLink>
                         <NavLink to="/dashboard/admin/create-course" className="list-group-item list-group-item-action">
                             Create Course

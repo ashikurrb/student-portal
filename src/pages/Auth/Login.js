@@ -31,6 +31,8 @@ const Login = () => {
                 });
                 localStorage.setItem("auth",JSON.stringify(res.data));
                 navigate("/")
+            }else {
+                toast.error(res.data.message)
             }
         } catch (error) {
             console.log(error);
@@ -52,7 +54,7 @@ const Login = () => {
                         <form className='m-lg-5 mb-2' onSubmit={handleSubmit}>
                             <h4 className="title"><i class="fa-solid fa-right-to-bracket"></i> &nbsp; Login Here</h4>
                             <div className="mb-3">
-                                <input type="email" value={email || phone} onChange={(e) => setEmail(e.target.value) || setPhone(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email' required />
+                                <input type="text" value={email || phone} onChange={(e) => setEmail(e.target.value) || setPhone(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email or Phone' required />
                             </div>
                             <div className="mb-3">
                                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />

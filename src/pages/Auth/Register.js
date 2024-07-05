@@ -29,10 +29,12 @@ const Register = () => {
             if (res && res.data.success) {
                 toast.success(res.data.message)
                 navigate("/login")
+            } else {
+                toast.error(res.data.message)
             }
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong")
+            toast.error(error.message)
         }
     }
 
