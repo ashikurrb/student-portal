@@ -1,15 +1,17 @@
 import React from 'react';
-import StudentMenu from '../../components/Layouts/StudentMenu';
 import Layout from '../../components/Layouts/Layout';
+import StudentMenu from './StudentMenu';
 
 const UpdateProfile = () => {
     return (
         <Layout title={"Profile"}>
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
-                    <div className="col-md-3"><StudentMenu /></div>
+                    <div className="col-md-3">
+                        <StudentMenu />
+                    </div>
                     <div className="col-md-9">
-                        <div className="form-containe ">
+                        <div className="form-container ">
                             <form>
                                 <h4 className="text-center pb-4">Update your Profile</h4>
                                 <div className="mb-3">
@@ -18,7 +20,7 @@ const UpdateProfile = () => {
                                             type="file"
                                             name="photo"
                                             accept="image/*"
-                                            
+
                                         />
                                     </label>
                                 </div>

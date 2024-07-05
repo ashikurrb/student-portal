@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import GoBackButton from '../../components/Layouts/GoBackButton';
+import GoBackButton from '../../components/GoBackButton';
 
 const StudentMenu = () => {
     return (

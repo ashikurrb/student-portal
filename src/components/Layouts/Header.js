@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import DarkModeButton from './DarkModeButton';
+import DarkModeButton from '../DarkModeButton';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 

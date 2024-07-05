@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../components/Layouts/Layout';
 import { Link } from 'react-router-dom';
-import GoBackButton from '../components/Layouts/GoBackButton';
+import GoBackButton from '../components/GoBackButton';
 
 const PageNotFound = () => {
     return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../components/Layouts/Layout';
-import GoBackButton from '../components/Layouts/GoBackButton';
+import GoBackButton from '../components/GoBackButton';
 
 const About = () => {
     return (
