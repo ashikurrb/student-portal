@@ -43,11 +43,11 @@ const AdminMenu = () => {
                         <NavLink to="/dashboard/admin/create-payment" className="list-group-item list-group-item-action">
                             Set Payment Status
                         </NavLink>
-                        <NavLink to="/dashboard/admin/students" className="list-group-item list-group-item-action">
-                            All Students
+                        <NavLink to="/dashboard/admin/all-users" className="list-group-item list-group-item-action">
+                            All Users
                         </NavLink>
                         <NavLink to="/dashboard/student" className="list-group-item list-group-item-action">
-                            Demo Student
+                            Demo Students
                         </NavLink>
                     </div>
                 </div>

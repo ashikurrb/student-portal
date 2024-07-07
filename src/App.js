@@ -12,6 +12,7 @@ import ViewPayment from './pages/Student/ViewPayment';
 import ContentLink from './pages/Student/ContentLink';
 import UpdateProfile from './pages/Student/UpdateProfile';
 import ForgotPassword from './pages/Auth/ForgotPassword';
+import AllUsers from './pages/Admin/AllUsers';
 import { PrivateRoute } from './components/Routes/Private';
 import { AdminRoute } from './components/Routes/AdminRoute';
 
@@ -32,6 +33,7 @@ function App() {
         </Route>
         <Route path='/dashboard' element={<AdminRoute />}>
           <Route path='admin' element={<AdminDashboard />} />
+          <Route path='admin/all-users' element={<AllUsers />} />
         </Route>
         <Route path='/about' element={<About />} />
         <Route path='*' element={<PageNotFound />} />
