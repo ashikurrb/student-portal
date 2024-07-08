@@ -54,7 +54,7 @@ const Users = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>All User's List ({users?.length})</h2>
-                        {spinnerLoading ? <Spinner /> : <div className="table-container">
+                        {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <div className="table-container">
                             <table className='table'>
                                 <thead className='table-dark'>
                                     <tr>
@@ -90,7 +90,7 @@ const Users = () => {
                                                     <td>{moment(u?.createdAt).fromNow()}</td>
                                                     <td>
                                                         {
-                                                            u.role === 1 ? "Restricted" : (
+                                                            u.role === 1 ? <span class="badge text-bg-info">Restricted</span> : (
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(u._id)}>Delete</button>
                                                             )
                                                         }

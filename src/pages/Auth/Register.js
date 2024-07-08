@@ -30,9 +30,9 @@ const Register = () => {
                 grade,
                 answer
             });
-            setSpinnerLoading(false);
             if (res && res.data.success) {
                 toast.success(res.data.message)
+                setSpinnerLoading(false);
                 navigate("/login")
             } else {
                 toast.error(res.data.message)
@@ -46,7 +46,8 @@ const Register = () => {
 
     return (
         <Layout title={"Register Now - C-Lab"}>
-            <div className="form-container p-2">
+            <div className="form-container">
+                {spinnerLoading ? <Spinner /> : ""}
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6">
@@ -74,9 +75,9 @@ const Register = () => {
                                     <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" id="exampleInputAddress" placeholder='Security Answer' required />
                                 </div>
                                 <div className="text-center">
-                                    {spinnerLoading ? <Spinner /> : <button type="submit" className="btn btn-primary" disabled={spinnerLoading}>
+                                    <button type="submit" className="btn btn-primary">
                                         REGISTER
-                                    </button>}
+                                    </button>
                                 </div>
                                 <div className="text-center py-3">Already Registered? <Link to="/login">Log In</Link></div>
                             </form>
