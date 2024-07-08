@@ -48,8 +48,8 @@ const Login = () => {
     return (
         <Layout title={"CLab - Log In"}>
             <div className="form-container">
-                {spinnerLoading ? <Spinner /> : ""}
-                <div className="container d-md-flex">
+            {spinnerLoading ? <div className=''><Spinner /></div> : ""}
+            <div className="container d-md-flex">
                     <div className="row m-3">
                         <div className="col-md-7 mb-5 mx-md-5">
                             <div className="text-center">
