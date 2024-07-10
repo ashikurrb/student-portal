@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layouts/Layout';
 import '../../style/AuthStyle.css'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
@@ -47,6 +47,7 @@ const Login = () => {
             setSpinnerLoading(false);
         }
     }
+    
     return (
         <Layout title={"CLab - Log In"}>
             <div className="form-container">
