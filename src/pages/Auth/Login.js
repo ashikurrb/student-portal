@@ -47,7 +47,6 @@ const Login = () => {
             setSpinnerLoading(false);
         }
     }
-    
     return (
         <Layout title={"CLab - Log In"}>
             <div className="form-container">

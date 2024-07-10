@@ -19,7 +19,6 @@ const Header = () => {
         Cookies.remove('auth'); // Remove the auth cookie
         toast.success('Logout Successfully');
     };
-    
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
