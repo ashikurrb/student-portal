@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 import Spinner from '../../components/Spinner';
+import Cookies from 'js-cookie';
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -34,8 +35,9 @@ const Login = () => {
                     user: res.data.user,
                     token: res.data.token
                 });
-                localStorage.setItem("auth", JSON.stringify(res.data));
-                navigate(location.state || "/")
+              // Set login details in cookies
+              Cookies.set("auth", JSON.stringify(res.data), { expires: 7 }); // expires in 7 days
+              navigate(location.state || "/")
             } else {
                 toast.error(res.data.message)
             }

@@ -3,20 +3,22 @@ import { Link, NavLink } from 'react-router-dom';
 import DarkModeButton from '../DarkModeButton';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 
 const Header = () => {
     const [auth, setAuth] = useAuth();
 
-    //Logout
+    // Logout
     const handleLogOut = () => {
         setAuth({
             ...auth,
-            user: null, token: '',
-        })
-        localStorage.removeItem('auth');
+            user: null,
+            token: '',
+        });
+        Cookies.remove('auth'); // Remove the auth cookie
         toast.success('Logout Successfully');
-    }
+    };
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -59,17 +61,17 @@ const Header = () => {
                                             {auth?.user?.name}
                                         </NavLink>
                                         <ul className="dropdown-menu" >
-                                        <li>
-                                            <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "student"}`} className="dropdown-item"> <i class="fa-solid fa-user"></i> Dashboard </NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink onClick={handleLogOut} to="/login" className="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i>  Logout </NavLink>
-                                        </li>
-                                    </ul>
+                                            <li>
+                                                <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "student"}`} className="dropdown-item"> <i class="fa-solid fa-user"></i> Dashboard </NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink onClick={handleLogOut} to="/login" className="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i>  Logout </NavLink>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </>)
                             }
-                               {/* <li className="nav-item d-none d-lg-block">
+                            {/* <li className="nav-item d-none d-lg-block">
                                 <NavLink to="/cart" className="nav-link position-relative mx-1">
                                     <i className='fa-solid fa-cart-shopping'></i> Cart
                                     {
