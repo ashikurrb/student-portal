@@ -3,6 +3,7 @@ import Layout from '../../components/Layouts/Layout';
 import AdminMenu from '../Admin/AdminMenu';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import moment from "moment";
 import GradeForm from './GradeForm';
 import { Modal } from 'antd';
 
@@ -94,30 +95,39 @@ const CreateGrade = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Create Grade</h2>
-                        <div className="p-3 w-50">
+                        <h6 className='text-center my-3'>Total Grade: {grades.length}</h6>
+                        <div className="p-3">
                             <GradeForm handleSubmit={handleSubmit} value={name} setValue={setName} />
                         </div>
-                        <table className='table'>
-                            <thead>
+                       <div className="table-container">
+                       <table className='table'>
+                            <thead className='table-dark'>
                                 <tr>
+                                    <th scope='row'>#</th>
                                     <th>Grade</th>
                                     <th>Action</th>
+                                    <th>Created</th>
+                                    <th>Modified</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                {grades.map(g => (
+                                {grades.map((g, i) => (
                                     <tr>
-                                        <td>{g.name}</td>
-                                        <td>
-                                            <button className='btn btn-primary m-1' onClick={() => { setVisible(true); setUpdatedName(g.name); setSelected(g) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                                            <button className='btn btn-danger m-1' onClick={() => { handelDelete(g._id) }}><i class="fa-solid fa-trash-can"></i> Delete</button>
+                                        <th scope='row'>{i+1}</th>
+                                        <td className='fs-5 fw-bold'>{g.name}</td>
+                                        <td className='d-flex'>
+                                            <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); setUpdatedName(g.name); setSelected(g) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                            <button className='btn btn-danger mx-1' onClick={() => { handelDelete(g._id) }}><i class="fa-solid fa-trash-can"></i> Delete</button>
                                         </td>
+                                        <td>{moment(g?.createdAt).fromNow()}</td>
+                                        <td>{moment(g?.updatedAt).fromNow()}</td>
                                     </tr>
                                 ))}
 
                             </tbody>
                         </table>
+                       </div>
                     </div>
                     <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
                         <GradeForm value={updatedName} setValue={setUpdatedName} handleSubmit={handleUpdate} />

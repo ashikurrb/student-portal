@@ -40,8 +40,8 @@ const Register = () => {
 
     //form submission
     const handleSubmit = async (e) => {
-        e.preventDefault();
         setSpinnerLoading(true);
+        e.preventDefault();
         try {
             const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, {
                 name,
@@ -57,6 +57,7 @@ const Register = () => {
                 navigate("/login")
             } else {
                 toast.error(res.data.message)
+                setSpinnerLoading(false);
             }
         } catch (error) {
             console.log(error);
@@ -96,6 +97,12 @@ const Register = () => {
                                             <Option key={g._id} value={g.name}>{g.name}</Option>
                                         ))}
                                     </Select>
+                                    {/* <select className="form-select" aria-label="Default select example" onChange={(e) => { setGrade(e.target.value) }} required>
+                                    <option selected disabled>Select Grade</option>
+                                        {grades?.map(g => (
+                                            <option key={g._id} value={g.name}>{g.name}</option>
+                                        ))}
+                                    </select> */}
                                 </div>
                                 <div className="mb-3">
                                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />
