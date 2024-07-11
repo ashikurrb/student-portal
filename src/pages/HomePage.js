@@ -6,7 +6,7 @@ const HomePage = () => {
     const [auth] = useAuth();
 
     return (
-        <Layout title={"Home"}>
+        <Layout title={"CLAB - Best Coaching"}>
             <div className="container">
                 <div className="row m-5">
                     <div className="col-md-6">

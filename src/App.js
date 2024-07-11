@@ -15,6 +15,7 @@ import ForgotPassword from './pages/Auth/ForgotPassword';
 import AllUsers from './pages/Admin/AllUsers';
 import { PrivateRoute } from './components/Routes/Private';
 import { AdminRoute } from './components/Routes/AdminRoute';
+import CreateGrade from './pages/Grade/CreateGrade';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         </Route>
         <Route path='/dashboard' element={<AdminRoute />}>
           <Route path='admin' element={<AdminDashboard />} />
+          <Route path='admin/create-grade' element={<CreateGrade />} />
           <Route path='admin/all-users' element={<AllUsers />} />
         </Route>
         <Route path='/about' element={<About />} />

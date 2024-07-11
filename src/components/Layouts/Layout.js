@@ -4,7 +4,9 @@ import Footer from './Footer';
 import { Helmet } from 'react-helmet';
 import { Toaster } from 'react-hot-toast';
 
-const Layout = (props, { title, description, keywords, author }) => {
+//children is coming from props
+
+const Layout = ({ children,title, description, keywords, author }) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -22,16 +24,16 @@ const Layout = (props, { title, description, keywords, author }) => {
             <Header />
             <main style={{ minHeight: "80vh" }}>
                 <Toaster />
-                {props.children}
+                {children}
             </main>
             <Footer />
         </div>
     );
 };
 Layout.defaultProps = {
-    title: "C-Lab Student Portal",
+    title: "C-LAB Student Portal",
     description: "Best Coaching in Mohammadpur, Dhaka",
-    keywords: "education, dhaka, mohammadpur, coaching, student",
+    keywords: "clab, education, dhaka, mohammadpur, coaching, student",
     author: "@ashikurrb "
 }
 export default Layout;
