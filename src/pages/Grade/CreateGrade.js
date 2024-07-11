@@ -70,6 +70,10 @@ const CreateGrade = () => {
     //Delete grade
     const handelDelete = async (pId) => {
         try {
+            let answer = window.confirm("Are you sure you want to delete this Grade?")
+            if (!answer) {
+                return
+            }
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/grade/delete-grade/${pId}`)
             if (data.success) {
                 toast.success('Grade deleted successfully')
