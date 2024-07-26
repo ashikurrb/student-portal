@@ -7,7 +7,6 @@ import toast from 'react-hot-toast';
 import moment from "moment";
 import Spinner from '../../components/Spinner';
 
-
 const Users = () => {
     const [auth, setAuth] = useAuth();
     const [users, setUsers] = useState([]);
@@ -54,6 +53,7 @@ const Users = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>All User's List ({users?.length})</h2>
+                       
                         {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <div className="table-container">
                             <table className='table'>
                                 <thead className='table-dark'>
@@ -74,10 +74,11 @@ const Users = () => {
                                     {
                                         users.map((u, i) => {
                                             return (
+
                                                 <tr>
                                                     <th scope='row'>{i + 1}</th>
                                                     <td>{u.name}</td>
-                                                    <td>{u.grade}</td>
+                                                    <td>{u?.grade?.name}</td>
                                                     <td>{u.email}</td>
                                                     <td>{u.phone}</td>
                                                     <td>{u.answer}</td>
@@ -91,7 +92,7 @@ const Users = () => {
                                                     <td>
                                                         {
                                                             u.role === 1 ? <span class="badge text-bg-info">Restricted</span> : (
-                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(u._id)}>Delete</button>
+                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(u._id)}><i class="fa-solid fa-trash-can"></i>  Delete</button>
                                                             )
                                                         }
                                                     </td>

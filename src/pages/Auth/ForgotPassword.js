@@ -1,41 +1,46 @@
 import Layout from '../../components/Layouts/Layout';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../style/AuthStyle.css';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useState } from 'react';
-import { useAuth } from '../../context/auth';
+import Spinner from '../../components/Spinner';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [answer, setAnswer] = useState("");
     const [newPassword, setNewPassword] = useState("");
+    const [spinnerLoading, setSpinnerLoading] = useState(false);
     const navigate = useNavigate();
 
     //form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSpinnerLoading(true);
         try {
             const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/forgot-password`, {
                 email,
                 newPassword,
                 answer
             });
+            setSpinnerLoading(false);
             if (res && res.data.success) {
                 toast.success(res.data && res.data.message)
-                navigate( "/login")
+                navigate("/login")
             } else {
                 toast.error(res.data.message)
             }
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong")
+            toast.error("Something went wrong");
+            setSpinnerLoading(false);
         }
     }
 
     return (
         <Layout title={"Log In"}>
-            <div className="form-container ">
+            <div className="form-container">
+            {spinnerLoading ? <Spinner /> : ""}
                 <form onSubmit={handleSubmit}>
                     <h4 className="title"> <i class="fa-solid fa-lock"></i> Reset Password</h4>
                     <div className="mb-3">
