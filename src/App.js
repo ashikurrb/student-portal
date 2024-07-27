@@ -18,10 +18,10 @@ import { AdminRoute } from './components/Routes/AdminRoute';
 import CreateGrade from './pages/Grade/CreateGrade';
 import ContentLinks from './pages/Admin/ContentLinks';
 import PublishResult from './pages/Admin/PublishResult';
-import SetPayment from './pages/Admin/SetPayment';
 import CreateCourse from './pages/Admin/CreateCoruse';
 import AllCourses from './pages/Admin/AllCourses';
 import UpdateCourse from './pages/Admin/UpdateCourse';
+import SetPaymentStatus from './pages/Admin/SetPaymentStatus';
 
 function App() {
   return (
@@ -46,7 +46,7 @@ function App() {
           <Route path='admin/all-courses' element={<AllCourses />} />
           <Route path="admin/course/:slug" element={<UpdateCourse />} />
           <Route path='admin/create-result' element={<PublishResult />} />
-          <Route path='admin/create-payment' element={<SetPayment />} />
+          <Route path='admin/create-payment' element={<SetPaymentStatus />} />
           <Route path='admin/all-users' element={<AllUsers />} />
         </Route>
         <Route path='/about' element={<About />} />

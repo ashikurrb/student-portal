@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useAuth } from '../../context/auth';
 import UpdateResult from './UpdateResult';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Modal } from 'antd';
 import { DatePicker } from 'antd';
 import { Select } from 'antd';
@@ -14,7 +14,6 @@ import { Select } from 'antd';
 const { Option } = Select;
 
 const PublishResult = () => {
-    const navigate = useNavigate();
     const [spinnerLoading, setSpinnerLoading] = useState(false);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
     const [auth, setAuth] = useAuth();
@@ -31,6 +30,10 @@ const PublishResult = () => {
     const [updatedExamDate, setUpdatedExamDate] = useState('');
     const [selected, setSelected] = useState(null);
     const [visible, setVisible] = useState(false);
+    const params = useParams();
+    const id = params.id;
+    console.log(id);
+
 
     //Get All Grades
     const getAllGrades = async (req, res) => {
@@ -48,7 +51,7 @@ const PublishResult = () => {
         getAllGrades();
     }, [])
 
-    //get all users
+    //Get all users
     const getAllUsers = async () => {
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/all-users`)
@@ -111,9 +114,33 @@ const PublishResult = () => {
         getAllResults();
     }, [])
 
-    const handleUpdate = async (e) => {
+    const handleUpdate = async ({e,rId}) => {
         e.preventDefault();
+        try {
+            const updateResultData = new FormData();
+            updateResultData.append("subject", subject);
+            updateResultData.append("marks", marks);
+            updateResultData.append("examDate", examDate);
 
+            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/result/update-result/${selected.rId}`, updateResultData);
+            if (data?.success) {
+                setSpinnerLoading(false);
+                toast.success(data?.message);
+                getAllResults();
+                // Clear form fields
+                setSubject('');
+                setMarks('');
+                setExamDate('');
+                setUser('');
+            } else {
+                toast.success("Result Updated Successfully");
+            }
+
+        } catch (error) {
+            console.log(error);
+            toast.error('Something went wrong')
+            setSpinnerLoading(false)
+        }
     };
 
     //delete result
@@ -142,11 +169,11 @@ const PublishResult = () => {
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Publish Result</h2>
                         <div className="m-1  w-75">
-                            <div className="mb-4 d-flex">
+                            <div className="mb-4 d-lg-flex">
                                 <Select bordered={false}
                                     placeholder="Select Grade"
                                     size='large'
-                                    className='form-select mx-1'
+                                    className='form-select mb-1 mx-1'
                                     onChange={(value) => { setGrade(value) }}>
                                 >
                                     {grades?.map(g => (
@@ -156,7 +183,7 @@ const PublishResult = () => {
                                 <Select bordered={false}
                                     placeholder="Select Student"
                                     size='large'
-                                    className='form-select mx-1'
+                                    className='form-select mb-1 mx-1'
                                     onChange={(value) => { setUser(value) }} required>
                                     {users?.map(u => (
                                         <Option key={u._id} value={u._id}>{u.name}</Option>
@@ -202,7 +229,7 @@ const PublishResult = () => {
                                     </tr>
                                 </thead>
                                 {
-                                    listSpinnerLoading ? <Spinner/>:
+                                    listSpinnerLoading ? <Spinner /> :
                                         <tbody>
                                             {
                                                 result.map((r, i) => {
@@ -229,12 +256,8 @@ const PublishResult = () => {
                     <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
                         <UpdateResult
                             handleSubmit={handleUpdate}
-                            updatedSubject={updatedSubject}
-                            setUpdatedSubject={setUpdatedSubject}
-                            updatedMarks={updatedMarks}
-                            setUpdatedMarks={setUpdatedMarks}
-                            updatedExamDate={updatedExamDate}
-                            setUpdatedExamDate={setUpdatedExamDate}
+                            value={{ updatedSubject, updatedMarks, updatedExamDate }}
+                            setValue={{ setUpdatedSubject, setUpdatedMarks, setUpdatedExamDate }}
                         />
                     </Modal>
                 </div>
