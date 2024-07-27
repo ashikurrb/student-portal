@@ -36,7 +36,7 @@ const ViewResult = () => {
                     <div className="col-md-9">
                         <h3 className='text-center pt-3'> Result</h3>
                         <div className="card mt-3 p-4 table-container">
-                            <table className="table">
+                        {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> :<table className="table">
                                 <thead className='table-dark'>
                                     <tr>
                                         <th scope="col">#</th>
@@ -45,7 +45,7 @@ const ViewResult = () => {
                                         <th scope="col">Date</th>
                                     </tr>
                                 </thead>
-                                {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <tbody>
+                               <tbody>
                                     {results.map((r, i) => {
                                         return (
                                             <tr key={r._id}>
@@ -56,8 +56,9 @@ const ViewResult = () => {
                                             </tr>
                                         )
                                     })}
-                                </tbody>}
-                            </table>
+                                </tbody>
+                            </table> }
+                            
                         </div>
                     </div>
                 </div>

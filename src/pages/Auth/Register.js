@@ -6,7 +6,6 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import Spinner from '../../components/Spinner';
 import { Select } from 'antd';
-
 const { Option } = Select;
 
 const Register = () => {
@@ -87,20 +86,20 @@ const Register = () => {
                                     <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" id="exampleInputPhone" placeholder='Phone Number' required />
                                 </div>
                                 <div className="mb-3">
-                                    <Select bordered={false}
+                                    {/* <Select bordered={false}
                                         placeholder="Select Grade"
                                         size='large' 
                                         className='form-select mb-3' onChange={(value) => { setGrade(value) }} required>
                                         {grades?.map(g => (
                                             <Option key={g._id} value={g._id}>{g.name}</Option>
                                         ))}
-                                    </Select>
-                                    {/* <select className="form-select" aria-label="Default select example" onChange={(e) => { setGrade(e.target.value) }} required>
-                                    <option selected disabled>Select Grade</option>
+                                    </Select> */}
+                                    <select className="form-select" aria-label="Default select example" onChange={(e) => { setGrade(e.target.value) }} required>
+                                        <option selected disabled>Select Grade</option>
                                         {grades?.map(g => (
                                             <option key={g._id} value={g._id}>{g.name}</option>
                                         ))}
-                                    </select> */}
+                                    </select>
                                 </div>
                                 <div className="mb-3">
                                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />

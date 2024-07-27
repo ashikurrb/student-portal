@@ -16,6 +16,7 @@ const { Option } = Select;
 const PublishResult = () => {
     const navigate = useNavigate();
     const [spinnerLoading, setSpinnerLoading] = useState(false);
+    const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
     const [auth, setAuth] = useAuth();
     const [grades, setGrades] = useState([]);
     const [grade, setGrade] = useState("");
@@ -54,8 +55,6 @@ const PublishResult = () => {
             setUsers(data)
         } catch (error) {
             console.log(error);
-        } finally {
-            setSpinnerLoading(false)
         }
     }
 
@@ -97,13 +96,14 @@ const PublishResult = () => {
 
     //get all result
     const getAllResults = async () => {
+        setListSpinnerLoading(true)
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/result/all-result`)
             setResult(data)
         } catch (error) {
             console.log(error);
         } finally {
-            setSpinnerLoading(false)
+            setListSpinnerLoading(false)
         }
     }
 
@@ -113,9 +113,9 @@ const PublishResult = () => {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-       
+
     };
-    
+
     //delete result
     const handleDelete = async (rId) => {
         try {
@@ -189,7 +189,7 @@ const PublishResult = () => {
                                 </button>
                             </div>
                         </div>
-                        <div>
+                        <div className='table-container'>
                             <table className="table">
                                 <thead className='table-dark'>
                                     <tr>
@@ -197,29 +197,32 @@ const PublishResult = () => {
                                         <th>Name</th>
                                         <th>Subject</th>
                                         <th>Result</th>
-                                        <th>Exam Date</th>
+                                        <th>Date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {
-                                        result.map((r, i) => {
-                                            return (
-                                                <tr>
-                                                    <td>{i + 1}</td>
-                                                    <td>{r?.user?.name}</td>
-                                                    <td>{r.subject}</td>
-                                                    <td>{r.marks}</td>
-                                                    <td>{r.examDate}</td>
-                                                    <td className='d-flex'>
-                                                        <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                                                        <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(r._id)}><i class="fa-solid fa-trash-can"></i>  Delete</button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                </tbody>
+                                {
+                                    listSpinnerLoading ? <Spinner/>:
+                                        <tbody>
+                                            {
+                                                result.map((r, i) => {
+                                                    return (
+                                                        <tr>
+                                                            <td>{i + 1}</td>
+                                                            <td>{r?.user?.name}</td>
+                                                            <td>{r.subject}</td>
+                                                            <td>{r.marks}</td>
+                                                            <td>{r.examDate}</td>
+                                                            <td className='d-flex'>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(r._id)}><i class="fa-solid fa-trash-can"></i>  Delete</button>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </tbody>
+                                }
                             </table>
                         </div>
                     </div>
