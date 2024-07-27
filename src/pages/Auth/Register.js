@@ -66,7 +66,7 @@ const Register = () => {
     }
 
     return (
-        <Layout title={"Register Now - C-Lab"}>
+        <Layout title={"Register Now - C-LAB"}>
             <div className="form-container">
                 {spinnerLoading ? <Spinner /> : ""}
                 <div className="container">

@@ -48,7 +48,7 @@ const Login = () => {
         }
     }
     return (
-        <Layout title={"CLab - Log In"}>
+        <Layout title={"Log In - C-LAB"}>
             <div className="form-container">
             {spinnerLoading ? <Spinner /> : ""}
             <div className="container d-md-flex">
