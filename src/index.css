@@ -100,3 +100,9 @@ table {
 .list-custom {
 background-color: red;
 }
+
+.link{
+  text-decoration: none;
+  color: grey;
+  font-weight: bold;
+}

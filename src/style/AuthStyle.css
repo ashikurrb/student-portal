@@ -56,10 +56,3 @@
       #000000
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
-
-  .form-select{
-    border-top: 10px !important;
-    border-right: 10px !important;
-    border-left: 10px !important;
-    border-bottom: 1px solid black !important;
-  }

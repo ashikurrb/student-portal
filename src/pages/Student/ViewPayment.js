@@ -24,6 +24,8 @@ const ViewPayment = () => {
         getPayment();
     }, []);
 
+ //total payment amount calculate
+ const totalAmount = payment.reduce((sum, p) => sum + p.amount, 0);
 
     return (
         <Layout title={"Dashboard - Student"}>
@@ -34,14 +36,16 @@ const ViewPayment = () => {
                     </div>
                     <div className="col-md-9">
                         <h3 className='text-center pt-3'> Payment Status</h3>
+                        <h6 className='text-end'>Total paid: TK. {totalAmount}</h6>
                         <div className="card mt-3 p-4 table-container">
                             {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <table className="table">
                                 <thead className='table-dark'>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Trx ID</th>
-                                        <th scope="col">Method</th>
+                                        <th scope="col">Remark</th>
                                         <th scope="col">Amount</th>
+                                        <th scope="col">Method</th>
+                                        <th scope="col">Trx ID</th>
                                         <th scope="col">Date</th>
                                     </tr>
                                 </thead>
@@ -50,9 +54,10 @@ const ViewPayment = () => {
                                         return (
                                             <tr key={p._id}>
                                                 <th scope='row'>{i + 1}</th>
-                                                <td>{p.trxId}</td>
-                                                <td>{p.method}</td>
+                                                <td>{p.remark}</td>
                                                 <td>TK. {p.amount}</td>
+                                                <td>{p.method}</td>
+                                                <td>{p.trxId}</td>
                                                 <td>{p.paymentDate}</td>
                                             </tr>
                                         )

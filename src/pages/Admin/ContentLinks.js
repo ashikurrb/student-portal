@@ -114,7 +114,7 @@ const ContentLinks = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Create Content Link</h2>
-                        <div className="m-1  w-75">
+                        <div className="m-1">
                             <div className="mb-4 d-lg-flex">
                                 <Select bordered={false}
                                     placeholder="Select Grade"
@@ -136,18 +136,18 @@ const ContentLinks = () => {
                                     ))}
                                 </Select>
                             </div>
-                            <div className="mb-4 d-flex">
+                            <div className="mb-4 d-lg-flex">
                                 <input
                                     type="text"
                                     placeholder='Subject'
-                                    className='form-control w-75 me-2'
+                                    className='form-control mb-2 me-2'
                                     value={subject}
                                     onChange={(e) => setSubject(e.target.value)} required
                                 />
                                 <input
                                     type="text"
                                     placeholder='Remark'
-                                    className='form-control w-75 me-2'
+                                    className='form-control mb-2 me-2'
                                     value={remark}
                                     onChange={(e) => setRemark(e.target.value)} required
                                 />
@@ -193,7 +193,11 @@ const ContentLinks = () => {
                                                             <td>{c.subject}</td>
                                                             <td>{c.remark}</td>
                                                             <td>{c.type}</td>
-                                                            <td><Link to={c.contentLink} target='_blank'>Click Here</Link></td>
+                                                            <td>
+                                                                <Link className='link' to={c.contentLink} target='_blank'>
+                                                                <i class="fa-solid fa-up-right-from-square"></i> Open
+                                                                </Link>
+                                                            </td>
                                                             <td className='d-flex'>
                                                                 <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}><i class="fa-solid fa-trash-can"></i>  Delete</button>

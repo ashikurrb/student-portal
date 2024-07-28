@@ -7,7 +7,7 @@ import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 import { DatePicker } from 'antd';
 import { Select } from 'antd';
-
+const dateFormat = 'DD-MM-YYYY';
 const { Option } = Select;
 
 const SetPaymentStatus = () => {
@@ -19,6 +19,7 @@ const SetPaymentStatus = () => {
     const [user, setUser] = useState('');
     const [grades, setGrades] = useState([]);
     const [grade, setGrade] = useState('');
+    const [remark, setRemark] = useState('');
     const [trxId, setTrxId] = useState('');
     const [methods] = useState(["Cash", "bKash", "Nagad", "Upay", "Rocket", "Debit/Credit Card", "Bank Transfer"]);
     const [method, setMethod] = useState(null);
@@ -74,6 +75,7 @@ const SetPaymentStatus = () => {
         setSpinnerLoading(true);
         try {
             const paymentData = new FormData();
+            paymentData.append("remark", remark);
             paymentData.append("trxId", trxId);
             paymentData.append("method", method);
             paymentData.append("amount", amount);
@@ -89,6 +91,7 @@ const SetPaymentStatus = () => {
                 // Clear form fields
                 setMethod('');
                 setAmount('');
+                setRemark('');
                 setTrxId('');
                 setPaymentDate('');
                 setUser('');
@@ -137,6 +140,9 @@ const SetPaymentStatus = () => {
         }
     };
 
+    //total payment amount calculate
+    const totalAmount = payment.reduce((sum, p) => sum + p.amount, 0);
+
     return (
         <Layout title={"Admin - Set Payment Status"}>
             <div className="container-fluid mt-3 p-3">
@@ -144,7 +150,7 @@ const SetPaymentStatus = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Create Payment Status</h2>
-                        <div className="m-1  w-75">
+                        <div className="m-1">
                             <div className="mb-4 d-lg-flex">
                                 <Select bordered={false}
                                     placeholder="Select Grade"
@@ -165,8 +171,25 @@ const SetPaymentStatus = () => {
                                     ))}
                                 </Select>
                             </div>
-                            <div className="mb-4 d-flex">
-                                <Select bordered={false}
+                            <div className="mb-4 d-lg-flex">
+                                <input
+                                    type="text"
+                                    placeholder='Remark'
+                                    className='form-control mb-1 mx-1'
+                                    value={remark}
+                                    onChange={(e) => setRemark(e.target.value)} required
+                                />
+                                <input
+                                    type="number"
+                                    placeholder='Amount'
+                                    className='form-control mb-1 mx-1'
+                                    value={amount}
+                                    onChange={(e) => setAmount(e.target.value)} required
+                                />
+                                <DatePicker format={dateFormat} className='form-control w-100 mx-1 mb-2' onChange={(date) => setPaymentDate(date)} required />
+                            </div>
+                            <div className="mb-4 d-lg-flex">
+                            <Select bordered={false}
                                     placeholder="Select Method"
                                     size='large'
                                     className='form-select mb-1 mx-1'
@@ -177,19 +200,9 @@ const SetPaymentStatus = () => {
                                     ))}
                                 </Select>
                                 <input
-                                    type="number"
-                                    placeholder='Amount'
-                                    className='form-control'
-                                    value={amount}
-                                    onChange={(e) => setAmount(e.target.value)} required
-                                />
-                            </div>
-                            <div className="mb-4 d-flex">
-                                <DatePicker className='w-50' onChange={(date) => setPaymentDate(date)} required />
-                                <input
                                     type="text"
                                     placeholder='Transaction ID / Receipt No'
-                                    className='form-control ms-2'
+                                    className='form-control mb-2 mx-1'
                                     value={trxId}
                                     onChange={(e) => setTrxId(e.target.value)} required
                                 />
@@ -201,6 +214,7 @@ const SetPaymentStatus = () => {
                                 </button>
                             </div>
                         </div>
+                        <h6 className='text-end'>Total Received: TK. {totalAmount}</h6>
                         <div className='table-container'>
                             <table className="table">
                                 <thead className='table-dark'>
@@ -208,6 +222,7 @@ const SetPaymentStatus = () => {
                                         <th>#</th>
                                         <th>Grade</th>
                                         <th>Name</th>
+                                        <th>Remark</th>
                                         <th>Amount</th>
                                         <th>Method</th>
                                         <th>Trx ID</th>
@@ -225,6 +240,7 @@ const SetPaymentStatus = () => {
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{p?.grade?.name}</td>
                                                             <td>{p?.user?.name}</td>
+                                                            <td>{p.remark}</td>
                                                             <td>TK. {p.amount}</td>
                                                             <td>{p.method}</td>
                                                             <td>{p.trxId}</td>

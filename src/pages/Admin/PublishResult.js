@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Modal } from 'antd';
 import { DatePicker } from 'antd';
 import { Select } from 'antd';
-
+const dateFormat = 'DD-MM-YYYY';
 const { Option } = Select;
 
 const PublishResult = () => {
@@ -31,10 +31,6 @@ const PublishResult = () => {
     const [updatedExamDate, setUpdatedExamDate] = useState('');
     const [selected, setSelected] = useState(null);
     const [visible, setVisible] = useState(false);
-    const params = useParams();
-    const id = params.id;
-    console.log(id);
-
 
     //Get All Grades
     const getAllGrades = async (req, res) => {
@@ -127,7 +123,7 @@ const PublishResult = () => {
         getAllResults();
     }, [])
 
-    const handleUpdate = async ({e,rId}) => {
+    const handleUpdate = async ({ e, rId }) => {
         e.preventDefault();
         try {
             const updateResultData = new FormData();
@@ -181,7 +177,7 @@ const PublishResult = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Publish Result</h2>
-                        <div className="m-1  w-75">
+                        <div className="m-1">
                             <div className="mb-4 d-lg-flex">
                                 <Select bordered={false}
                                     placeholder="Select Grade"
@@ -202,15 +198,15 @@ const PublishResult = () => {
                                     ))}
                                 </Select>
                             </div>
-                            <div className="mb-4 d-flex">
+                            <div className="mb-4 d-lg-flex">
                                 <input
                                     type="text"
                                     placeholder='Subject'
-                                    className='form-control w-75 me-2'
+                                    className='form-control form-input mb-2 me-2'
                                     value={subject}
                                     onChange={(e) => setSubject(e.target.value)} required
                                 />
-                                <DatePicker className='w-50' onChange={(date) => setExamDate(date)} required />
+                                <DatePicker format={dateFormat} className='w-100 mb-2 me-2 form-control' onChange={(date) => setExamDate(date)} required />
                             </div>
                             <div className="mb-4">
                                 <input

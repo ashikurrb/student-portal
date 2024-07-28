@@ -53,7 +53,11 @@ const ViewContent = () => {
                                                 <td>{c.subject}</td>
                                                 <td>{c.remark}</td>
                                                 <td>{c.type}</td>
-                                                <td><Link to={c.contentLink} target='_blank'>Click Here</Link></td>
+                                                <td>
+                                                    <Link className='link' to={c.contentLink} target='_blank'>
+                                                        <i class="fa-solid fa-up-right-from-square"></i> Open
+                                                    </Link>
+                                                </td>
                                             </tr>
                                         )
                                     })}
