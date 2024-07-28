@@ -22,7 +22,7 @@ const StudentDashboard = () => {
                             <h5>Name: {auth?.user?.name} </h5>
                             <p>Email: {auth?.user?.email} </p>
                             <p>Phone: {auth?.user?.phone}</p>
-                            <p>Grade: {auth?.user?.grade}</p>
+                            <p>Grade: {auth?.user?.grade?.name}</p>
                         </div>
                     </div>
                 </div>

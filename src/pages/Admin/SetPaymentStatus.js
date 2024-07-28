@@ -16,6 +16,8 @@ const SetPaymentStatus = () => {
     const [auth, setAuth] = useAuth();
     const [users, setUsers] = useState([]);
     const [user, setUser] = useState('');
+    const [grades, setGrades] = useState([]);
+    const [grade, setGrade] = useState("");
     const [trxId, setTrxId] = useState('');
     const [methods] = useState(["Cash", "bKash", "Nagad", "Upay", "Rocket", "Debit/Credit Card", "Bank Transfer"]);
     const [method, setMethod] = useState(null);
@@ -23,6 +25,23 @@ const SetPaymentStatus = () => {
     const [paymentDate, setPaymentDate] = useState('');
     const [payment, setPayment] = useState([]);
     const [visible, setVisible] = useState(null);
+
+    //Get All Grades
+    const getAllGrades = async (req, res) => {
+        try {
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/grade/all-grades`)
+            if (data?.success) {
+                setGrades(data?.grade);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Getting error while fetching Grade")
+        }
+    }
+    useEffect(() => {
+        getAllGrades();
+    }, [])
+
 
     //Get all users
     const getAllUsers = async () => {
@@ -48,6 +67,7 @@ const SetPaymentStatus = () => {
             paymentData.append("amount", amount);
             paymentData.append("paymentDate", paymentDate);
             paymentData.append("user", user);
+            paymentData.append("grade", grade);
 
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/payment/create-payment`, paymentData);
             if (data?.success) {
@@ -60,6 +80,7 @@ const SetPaymentStatus = () => {
                 setTrxId('');
                 setPaymentDate('');
                 setUser('');
+                setGrade('');
             } else {
                 toast.success("Payment Status Created Successfully");
             }
@@ -77,7 +98,6 @@ const SetPaymentStatus = () => {
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/payment/all-payment`)
             setPayment(data)
-            console.log(data);
         } catch (error) {
             console.log(error);
         } finally {
@@ -108,14 +128,23 @@ const SetPaymentStatus = () => {
 
 
     return (
-        <Layout title={"Admin - Create Links"}>
+        <Layout title={"Admin - Set Payment Status"}>
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Create Payment Status</h2>
                         <div className="m-1  w-75">
-                            <div className="mb-4">
+                            <div className="mb-4 d-lg-flex">
+                            <Select bordered={false}
+                                    placeholder="Select Grade"
+                                    size='large'
+                                    className='form-select mb-1 mx-1'
+                                    onChange={(value) => { setGrade(value) }}>
+                                    {grades?.map(g => (
+                                        <Option key={g._id} value={g._id}>{g.name}</Option>
+                                    ))}
+                                </Select>
                                 <Select bordered={false}
                                     placeholder="Select Student"
                                     size='large'
@@ -167,6 +196,7 @@ const SetPaymentStatus = () => {
                                 <thead className='table-dark'>
                                     <tr>
                                         <th>#</th>
+                                        <th>Grade</th>
                                         <th>Name</th>
                                         <th>Amount</th>
                                         <th>Method</th>
@@ -183,6 +213,7 @@ const SetPaymentStatus = () => {
                                                     return (
                                                         <tr>
                                                             <td>{i + 1}</td>
+                                                            <td>{p?.grade?.name}</td>
                                                             <td>{p?.user?.name}</td>
                                                             <td>TK. {p.amount}</td>
                                                             <td>{p.method}</td>

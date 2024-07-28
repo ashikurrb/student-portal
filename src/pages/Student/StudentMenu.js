@@ -35,8 +35,8 @@ const StudentMenu = () => {
                         <NavLink to="/dashboard/student/view-payment" className="list-group-item list-group-item-action">
                             Payment Status
                         </NavLink>
-                        <NavLink to="/dashboard/student/content-link" className="list-group-item list-group-item-action">
-                            Course Content Links
+                        <NavLink to="/dashboard/student/view-content" className="list-group-item list-group-item-action">
+                            Content Links
                         </NavLink>
                     </div>
 

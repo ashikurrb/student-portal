@@ -1,17 +1,212 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layouts/Layout';
 import AdminMenu from './AdminMenu';
+import Spinner from '../../components/Spinner'
+import axios from 'axios';
+import { useAuth } from '../../context/auth';
+import toast from 'react-hot-toast';
+import { Modal } from 'antd';
+import { Select } from 'antd';
+import { Link } from 'react-router-dom';
+
+const { Option } = Select;
 
 const ContentLinks = () => {
+    const [spinnerLoading, setSpinnerLoading] = useState(false);
+    const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
+    const [auth, setAuth] = useAuth();
+    const [grades, setGrades] = useState([]);
+    const [grade, setGrade] = useState("");
+    const [subject, setSubject] = useState('');
+    const [remark, setRemark] = useState('');
+    const [contentLink, setContentLink] = useState('');
+    const [types] = useState(["PDF", "Doc", "Video", "Audio", "PPT"]);
+    const [type, setType] = useState(null);
+    const [content, setContent] = useState([]);
+    const [selected, setSelected] = useState(null);
+    const [visible, setVisible] = useState(false);
+
+    //Get All Grades
+    const getAllGrades = async (req, res) => {
+        try {
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/grade/all-grades`)
+            if (data?.success) {
+                setGrades(data?.grade);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Getting error while fetching Grade")
+        }
+    }
+    useEffect(() => {
+        getAllGrades();
+    }, [])
+
+    //Get all content link list
+    const getAllContent = async () => {
+        try {
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/content/all-content`)
+            setContent(data)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        getAllContent();
+    }, [])
+
+    //Create Content
+    const handleCreate = async (e) => {
+        e.preventDefault();
+        setSpinnerLoading(true);
+        try {
+            const contentData = new FormData();
+            contentData.append("subject", subject);
+            contentData.append("remark", remark);
+            contentData.append("type", type);
+            contentData.append("contentLink", contentLink);
+            contentData.append("grade", grade);
+
+            const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/content/create-content`, contentData);
+            if (data?.success) {
+                setSpinnerLoading(false);
+                toast.success(data?.message);
+                getAllContent();
+                // Clear form fields
+                setSubject('');
+                setRemark('');
+                setType('');
+                setContentLink('');
+                setGrade('')
+            } else {
+                toast.success("Content Link Created Successfully");
+            }
+
+        } catch (error) {
+            console.log(error);
+            toast.error('Something went wrong')
+            setSpinnerLoading(false)
+        }
+    }
+
+    //delete content
+    const handleDelete = async (rId) => {
+        try {
+            let answer = window.confirm("Are you sure want to delete this content?")
+            if (!answer) return;
+            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/content/delete-content/${rId}`);
+            if (data.success) {
+                toast.success('Content deleted successfully');
+                getAllContent();
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error('Something wrong while Delete')
+        }
+    }
+
+
     return (
-        <Layout title={"Admin - Create Links"}>
+        <Layout title={"Admin - Create Content Link"}>
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
-                   <div className="col-md-9">
-                   <h2 className='text-center my-3'>Create Content Links</h2>
-
-                   </div>
+                    <div className="col-md-9">
+                        <h2 className='text-center my-3'>Create Content Link</h2>
+                        <div className="m-1  w-75">
+                            <div className="mb-4 d-lg-flex">
+                                <Select bordered={false}
+                                    placeholder="Select Grade"
+                                    size='large'
+                                    className='form-select mb-1 mx-1'
+                                    onChange={(value) => { setGrade(value) }}>
+                                    {grades?.map(g => (
+                                        <Option key={g._id} value={g._id}>{g.name}</Option>
+                                    ))}
+                                </Select>
+                                <Select bordered={false}
+                                    placeholder="Select Content Type"
+                                    size='large'
+                                    className='form-select mb-1 mx-1'
+                                    onChange={(value) => { setType(value) }}
+                                    required>
+                                    {types.map((t, i) => (
+                                        <Option key={i} value={t}>{t}</Option>
+                                    ))}
+                                </Select>
+                            </div>
+                            <div className="mb-4 d-flex">
+                                <input
+                                    type="text"
+                                    placeholder='Subject'
+                                    className='form-control w-75 me-2'
+                                    value={subject}
+                                    onChange={(e) => setSubject(e.target.value)} required
+                                />
+                                <input
+                                    type="text"
+                                    placeholder='Remark'
+                                    className='form-control w-75 me-2'
+                                    value={remark}
+                                    onChange={(e) => setRemark(e.target.value)} required
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <input
+                                    type="text"
+                                    placeholder='Paste Link Here'
+                                    className='form-control'
+                                    value={contentLink}
+                                    onChange={(e) => setContentLink(e.target.value)} required
+                                />
+                            </div>
+                            <div className="my-3 text-center">
+                                {spinnerLoading ? <div className='my-2'><Spinner /> </div> : ""}
+                                <button className="btn btn-warning fw-bold" onClick={handleCreate}>
+                                    Create Content Link
+                                </button>
+                            </div>
+                        </div>
+                        <div className='table-container'>
+                            <table className="table">
+                                <thead className='table-dark'>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Grade</th>
+                                        <th>Subject</th>
+                                        <th>Remark</th>
+                                        <th>Type</th>
+                                        <th>Link</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                {
+                                    listSpinnerLoading ? <Spinner /> :
+                                        <tbody>
+                                            {
+                                                content.map((c, i) => {
+                                                    return (
+                                                        <tr>
+                                                            <th scope='row'>{i + 1}</th>
+                                                            <td>{c?.grade?.name}</td>
+                                                            <td>{c.subject}</td>
+                                                            <td>{c.remark}</td>
+                                                            <td>{c.type}</td>
+                                                            <td><Link to={c.contentLink} target='_blank'>Click Here</Link></td>
+                                                            <td className='d-flex'>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}><i class="fa-solid fa-trash-can"></i>  Delete</button>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </tbody>
+                                }
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </Layout>

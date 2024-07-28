@@ -75,6 +75,7 @@ const PublishResult = () => {
             resultData.append("marks", marks);
             resultData.append("examDate", examDate);
             resultData.append("user", user);
+            resultData.append("grade", grade);
 
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/result/create-result`, resultData);
             if (data?.success) {
@@ -86,6 +87,7 @@ const PublishResult = () => {
                 setMarks('');
                 setExamDate('');
                 setUser('');
+                setGrade('');
             } else {
                 toast.success("Result Created Successfully");
             }
@@ -175,7 +177,6 @@ const PublishResult = () => {
                                     size='large'
                                     className='form-select mb-1 mx-1'
                                     onChange={(value) => { setGrade(value) }}>
-                                >
                                     {grades?.map(g => (
                                         <Option key={g._id} value={g._id}>{g.name}</Option>
                                     ))}
@@ -221,6 +222,7 @@ const PublishResult = () => {
                                 <thead className='table-dark'>
                                     <tr>
                                         <th>#</th>
+                                        <th>Grade</th>
                                         <th>Name</th>
                                         <th>Subject</th>
                                         <th>Result</th>
@@ -236,6 +238,7 @@ const PublishResult = () => {
                                                     return (
                                                         <tr>
                                                             <td>{i + 1}</td>
+                                                            <td>{r?.grade?.name}</td>
                                                             <td>{r?.user?.name}</td>
                                                             <td>{r.subject}</td>
                                                             <td>{r.marks}</td>
@@ -253,13 +256,6 @@ const PublishResult = () => {
                             </table>
                         </div>
                     </div>
-                    <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
-                        <UpdateResult
-                            handleSubmit={handleUpdate}
-                            value={{ updatedSubject, updatedMarks, updatedExamDate }}
-                            setValue={{ setUpdatedSubject, setUpdatedMarks, setUpdatedExamDate }}
-                        />
-                    </Modal>
                 </div>
             </div>
         </Layout>

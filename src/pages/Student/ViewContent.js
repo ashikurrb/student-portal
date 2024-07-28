@@ -4,16 +4,17 @@ import Spinner from '../../components/Spinner';
 import StudentMenu from './StudentMenu';
 import { useAuth } from '../../context/auth';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-const ViewPayment = () => {
+const ViewContent = () => {
     const [auth, setAuth] = useAuth();
-    const [payment, setPayment] = useState([]);
+    const [content, setContent] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
 
-    const getPayment = async () => {
+    const getContent = async () => {
         try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/payment/user-payment`);
-            setPayment(data);
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/content/user-content`);
+            setContent(data);
         } catch (error) {
             console.log(error);
         } finally {
@@ -21,9 +22,8 @@ const ViewPayment = () => {
         }
     };
     useEffect(() => {
-        getPayment();
+        getContent();
     }, []);
-
 
     return (
         <Layout title={"Dashboard - Student"}>
@@ -33,33 +33,32 @@ const ViewPayment = () => {
                         <StudentMenu />
                     </div>
                     <div className="col-md-9">
-                        <h3 className='text-center pt-3'> Payment Status</h3>
+                        <h3 className='text-center pt-3'> Content Links</h3>
                         <div className="card mt-3 p-4 table-container">
                             {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <table className="table">
                                 <thead className='table-dark'>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Trx ID</th>
-                                        <th scope="col">Method</th>
-                                        <th scope="col">Amount</th>
-                                        <th scope="col">Date</th>
+                                        <th scope="col">Subject</th>
+                                        <th scope="col">Remark</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Link</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {payment.map((p, i) => {
+                                    {content.map((c, i) => {
                                         return (
-                                            <tr key={p._id}>
+                                            <tr key={c._id}>
                                                 <th scope='row'>{i + 1}</th>
-                                                <td>{p.trxId}</td>
-                                                <td>{p.method}</td>
-                                                <td>{p.amount}</td>
-                                                <td>{p.paymentDate}</td>
+                                                <td>{c.subject}</td>
+                                                <td>{c.remark}</td>
+                                                <td>{c.type}</td>
+                                                <td><Link to={c.contentLink} target='_blank'>Click Here</Link></td>
                                             </tr>
                                         )
                                     })}
                                 </tbody>
                             </table>}
-
                         </div>
                     </div>
                 </div>
@@ -68,4 +67,4 @@ const ViewPayment = () => {
     );
 };
 
-export default ViewPayment;
+export default ViewContent;
