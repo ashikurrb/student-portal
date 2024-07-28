@@ -32,11 +32,11 @@ const StudentMenu = () => {
                         <NavLink to="/dashboard/student/view-result" className="list-group-item list-group-item-action">
                             View Result
                         </NavLink>
-                        <NavLink to="/dashboard/student/view-payment" className="list-group-item list-group-item-action">
-                            Payment Status
-                        </NavLink>
                         <NavLink to="/dashboard/student/view-content" className="list-group-item list-group-item-action">
                             Content Links
+                        </NavLink>
+                        <NavLink to="/dashboard/student/view-payment" className="list-group-item list-group-item-action">
+                            Payment Status
                         </NavLink>
                     </div>
 

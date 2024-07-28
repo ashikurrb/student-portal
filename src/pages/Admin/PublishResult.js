@@ -21,6 +21,7 @@ const PublishResult = () => {
     const [grade, setGrade] = useState("");
     const [users, setUsers] = useState([]);
     const [user, setUser] = useState('');
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [subject, setSubject] = useState('');
     const [marks, setMarks] = useState('');
     const [examDate, setExamDate] = useState('');
@@ -64,6 +65,16 @@ const PublishResult = () => {
     useEffect(() => {
         if (auth?.token) getAllUsers();
     }, [auth?.token])
+
+    // Filter users by grade
+    useEffect(() => {
+        if (grade) {
+            const filtered = users.filter(user => user.grade._id === grade);
+            setFilteredUsers(filtered);
+        } else {
+            setFilteredUsers(users);
+        }
+    }, [grade, users]);
 
     //publish result
     const handlePublish = async (e) => {
@@ -186,7 +197,7 @@ const PublishResult = () => {
                                     size='large'
                                     className='form-select mb-1 mx-1'
                                     onChange={(value) => { setUser(value) }} required>
-                                    {users?.map(u => (
+                                    {filteredUsers?.map(u => (
                                         <Option key={u._id} value={u._id}>{u.name}</Option>
                                     ))}
                                 </Select>

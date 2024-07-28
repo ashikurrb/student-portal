@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layouts/Layout';
 import AdminMenu from './AdminMenu';
-import Spinner from '../../components/Spinner'
+import Spinner from '../../components/Spinner';
 import axios from 'axios';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
@@ -15,9 +15,10 @@ const SetPaymentStatus = () => {
     const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
     const [auth, setAuth] = useAuth();
     const [users, setUsers] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [user, setUser] = useState('');
     const [grades, setGrades] = useState([]);
-    const [grade, setGrade] = useState("");
+    const [grade, setGrade] = useState('');
     const [trxId, setTrxId] = useState('');
     const [methods] = useState(["Cash", "bKash", "Nagad", "Upay", "Rocket", "Debit/Credit Card", "Bank Transfer"]);
     const [method, setMethod] = useState(null);
@@ -27,34 +28,45 @@ const SetPaymentStatus = () => {
     const [visible, setVisible] = useState(null);
 
     //Get All Grades
-    const getAllGrades = async (req, res) => {
+    const getAllGrades = async () => {
         try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/grade/all-grades`)
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/grade/all-grades`);
             if (data?.success) {
                 setGrades(data?.grade);
             }
         } catch (error) {
             console.log(error);
-            toast.error("Getting error while fetching Grade")
+            toast.error("Getting error while fetching Grade");
         }
-    }
+    };
+
     useEffect(() => {
         getAllGrades();
-    }, [])
-
+    }, []);
 
     //Get all users
     const getAllUsers = async () => {
         try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/all-users`)
-            setUsers(data)
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/all-users`);
+            setUsers(data);
         } catch (error) {
             console.log(error);
         }
-    }
+    };
+
     useEffect(() => {
         if (auth?.token) getAllUsers();
-    }, [auth?.token])
+    }, [auth?.token]);
+
+    // Filter users by grade
+    useEffect(() => {
+        if (grade) {
+            const filtered = users.filter(user => user.grade._id === grade);
+            setFilteredUsers(filtered);
+        } else {
+            setFilteredUsers(users);
+        }
+    }, [grade, users]);
 
     //Create Payment Status
     const handleCreate = async (e) => {
@@ -84,48 +96,46 @@ const SetPaymentStatus = () => {
             } else {
                 toast.success("Payment Status Created Successfully");
             }
-
         } catch (error) {
             console.log(error);
-            toast.error('Something went wrong')
-            setSpinnerLoading(false)
+            toast.error('Something went wrong');
+            setSpinnerLoading(false);
         }
-    }
+    };
 
     //get all payment list
     const getAllPayment = async () => {
-        setListSpinnerLoading(true)
+        setListSpinnerLoading(true);
         try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/payment/all-payment`)
-            setPayment(data)
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/payment/all-payment`);
+            setPayment(data);
         } catch (error) {
             console.log(error);
         } finally {
-            setListSpinnerLoading(false)
+            setListSpinnerLoading(false);
         }
-    }
+    };
 
     useEffect(() => {
         getAllPayment();
-    }, [])
+    }, []);
 
     //delete payment status
     const handleDelete = async (rId) => {
         try {
-            let answer = window.confirm("Are you sure want to delete this payment Status?")
+            let answer = window.confirm("Are you sure want to delete this payment Status?");
             if (!answer) return;
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/payment/delete-payment/${rId}`);
             if (data.success) {
                 toast.success(`Payment Status deleted successfully`);
                 getAllPayment();
             } else {
-                toast.error(data.message)
+                toast.error(data.message);
             }
         } catch (error) {
-            toast.error('Something wrong while Delete')
+            toast.error('Something wrong while Delete');
         }
-    }
-
+    };
 
     return (
         <Layout title={"Admin - Set Payment Status"}>
@@ -136,7 +146,7 @@ const SetPaymentStatus = () => {
                         <h2 className='text-center my-3'>Create Payment Status</h2>
                         <div className="m-1  w-75">
                             <div className="mb-4 d-lg-flex">
-                            <Select bordered={false}
+                                <Select bordered={false}
                                     placeholder="Select Grade"
                                     size='large'
                                     className='form-select mb-1 mx-1'
@@ -150,7 +160,7 @@ const SetPaymentStatus = () => {
                                     size='large'
                                     className='form-select mb-1 mx-1'
                                     onChange={(value) => { setUser(value) }} required>
-                                    {users?.map(u => (
+                                    {filteredUsers?.map(u => (
                                         <Option key={u._id} value={u._id}>{u.name}</Option>
                                     ))}
                                 </Select>
@@ -211,7 +221,7 @@ const SetPaymentStatus = () => {
                                             {
                                                 payment.map((p, i) => {
                                                     return (
-                                                        <tr>
+                                                        <tr key={p._id}>
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{p?.grade?.name}</td>
                                                             <td>{p?.user?.name}</td>
@@ -220,11 +230,11 @@ const SetPaymentStatus = () => {
                                                             <td>{p.trxId}</td>
                                                             <td>{p.paymentDate}</td>
                                                             <td className='d-flex'>
-                                                                <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}><i class="fa-solid fa-trash-can"></i>  Delete</button>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); }}><i className="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}><i className="fa-solid fa-trash-can"></i> Delete</button>
                                                             </td>
                                                         </tr>
-                                                    )
+                                                    );
                                                 })
                                             }
                                         </tbody>

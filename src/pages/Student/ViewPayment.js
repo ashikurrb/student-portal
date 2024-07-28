@@ -52,7 +52,7 @@ const ViewPayment = () => {
                                                 <th scope='row'>{i + 1}</th>
                                                 <td>{p.trxId}</td>
                                                 <td>{p.method}</td>
-                                                <td>{p.amount}</td>
+                                                <td>TK. {p.amount}</td>
                                                 <td>{p.paymentDate}</td>
                                             </tr>
                                         )

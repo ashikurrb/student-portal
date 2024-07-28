@@ -58,7 +58,7 @@ const Header = () => {
                                     <li className="nav-item dropdown">
                                         <NavLink className="nav-link dropdown-toggle mx-1" role="button" data-bs-toggle="dropdown" >
                                             <img style={{ width: "25px" }} className=' img-thumbnail rounded-circle' src="https://cdn-icons-png.flaticon.com/512/21/21104.png" alt="dp" />
-                                            {auth?.user?.name}
+                                            &nbsp; {auth?.user?.name}
                                         </NavLink>
                                         <ul className="dropdown-menu" >
                                             <li>
