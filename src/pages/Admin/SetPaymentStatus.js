@@ -5,6 +5,7 @@ import Spinner from '../../components/Spinner';
 import axios from 'axios';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
+import { Modal } from 'antd';
 import { DatePicker } from 'antd';
 import { Select } from 'antd';
 const dateFormat = 'DD-MM-YYYY';
@@ -26,6 +27,8 @@ const SetPaymentStatus = () => {
     const [amount, setAmount] = useState('');
     const [paymentDate, setPaymentDate] = useState('');
     const [payment, setPayment] = useState([]);
+    const [paymentId, setPaymentId] = useState([]);
+    const [selected, setSelected] = useState(null);
     const [visible, setVisible] = useState(null);
 
     //Get All Grades
@@ -88,7 +91,7 @@ const SetPaymentStatus = () => {
                 setSpinnerLoading(false);
                 toast.success(data?.message);
                 getAllPayment();
-                // Clear form fields
+                // Clear form fields after submit
                 setMethod('');
                 setAmount('');
                 setRemark('');
@@ -122,6 +125,37 @@ const SetPaymentStatus = () => {
     useEffect(() => {
         getAllPayment();
     }, []);
+
+    //update payment status
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        try {
+            const updateResultData = new FormData();
+            updateResultData.append("remark", remark);
+            updateResultData.append("trxId", trxId);
+            updateResultData.append("method", method);
+            updateResultData.append("amount", amount);
+            updateResultData.append("paymentDate", paymentDate);
+            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/payment/update-payment/${selected._id}`, updateResultData);
+            if (data?.success) {
+                toast.success(data?.message);
+                getAllPayment();
+                // Clear form fields after submit
+                setMethod('');
+                setAmount('');
+                setRemark('');
+                setTrxId('');
+                setPaymentDate('');
+                setVisible(false)
+            } else {
+                toast.success("Payment Status Updated Successfully");
+            }
+
+        } catch (error) {
+            console.log(error);
+            toast.error('Something went wrong')
+        }
+    };
 
     //delete payment status
     const handleDelete = async (rId) => {
@@ -189,7 +223,7 @@ const SetPaymentStatus = () => {
                                 <DatePicker format={dateFormat} className='form-control w-100 mx-1 mb-2' onChange={(date) => setPaymentDate(date)} required />
                             </div>
                             <div className="mb-4 d-lg-flex">
-                            <Select bordered={false}
+                                <Select bordered={false}
                                     placeholder="Select Method"
                                     size='large'
                                     className='form-select mb-1 mx-1'
@@ -246,7 +280,7 @@ const SetPaymentStatus = () => {
                                                             <td>{p.trxId}</td>
                                                             <td>{p.paymentDate}</td>
                                                             <td className='d-flex'>
-                                                                <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); }}><i className="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); setPaymentId(p._id); setSelected(p) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}><i className="fa-solid fa-trash-can"></i> Delete</button>
                                                             </td>
                                                         </tr>
@@ -260,6 +294,50 @@ const SetPaymentStatus = () => {
                     </div>
                 </div>
             </div>
+            <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
+                <h5 className='text-center'>Update Payment Status</h5>
+                <div className="mb-4 d-lg-flex">
+                    <input
+                        type="text"
+                        placeholder='Remark'
+                        className='form-control mb-1 mx-1'
+                        value={remark}
+                        onChange={(e) => setRemark(e.target.value)} required
+                    />
+                    <input
+                        type="number"
+                        placeholder='Amount'
+                        className='form-control mb-1 mx-1'
+                        value={amount}
+                        onChange={(e) => setAmount(e.target.value)} required
+                    />
+                    <DatePicker format={dateFormat} className='form-control w-100 mx-1 mb-2' onChange={(date) => setPaymentDate(date)} required />
+                </div>
+                <div className="mb-4 d-lg-flex">
+                    <Select bordered={false}
+                        placeholder="Select Method"
+                        size='large'
+                        className='form-select mb-1 mx-1'
+                        onChange={(value) => { setMethod(value) }}
+                        required>
+                        {methods.map((m, i) => (
+                            <Option key={i} value={m}>{m}</Option>
+                        ))}
+                    </Select>
+                    <input
+                        type="text"
+                        placeholder='Transaction ID / Receipt No'
+                        className='form-control mb-2 mx-1'
+                        value={trxId}
+                        onChange={(e) => setTrxId(e.target.value)} required
+                    />
+                </div>
+                <div className="text-center">
+                    <button className="btn btn-warning fw-bold" onClick={handleUpdate}>
+                        Update Payment Status
+                    </button>
+                </div>
+            </Modal>
         </Layout>
     );
 };

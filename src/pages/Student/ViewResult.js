@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layouts/Layout'
 import Spinner from '../../components/Spinner';
 import StudentMenu from './StudentMenu';
-import { useAuth } from '../../context/auth';
 import axios from 'axios';
 
 const ViewResult = () => {
-    const [auth, setAuth] = useAuth();
     const [results, setResults] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
 
@@ -24,7 +22,6 @@ const ViewResult = () => {
     useEffect(() => {
         getResult();
     }, []);
-
 
     return (
         <Layout title={"Dashboard - Student"}>

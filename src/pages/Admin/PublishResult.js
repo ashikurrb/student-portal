@@ -4,9 +4,7 @@ import AdminMenu from './AdminMenu';
 import Spinner from '../../components/Spinner'
 import axios from 'axios';
 import { useAuth } from '../../context/auth';
-import UpdateResult from './UpdateResult';
 import toast from 'react-hot-toast';
-import { useNavigate, useParams } from 'react-router-dom';
 import { Modal } from 'antd';
 import { DatePicker } from 'antd';
 import { Select } from 'antd';
@@ -26,6 +24,7 @@ const PublishResult = () => {
     const [marks, setMarks] = useState('');
     const [examDate, setExamDate] = useState('');
     const [result, setResult] = useState([]);
+    const [resultId, setResultId] = useState([]);
     const [updatedSubject, setUpdatedSubject] = useState('');
     const [updatedMarks, setUpdatedMarks] = useState('');
     const [updatedExamDate, setUpdatedExamDate] = useState('');
@@ -83,7 +82,6 @@ const PublishResult = () => {
             resultData.append("examDate", examDate);
             resultData.append("user", user);
             resultData.append("grade", grade);
-
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/result/create-result`, resultData);
             if (data?.success) {
                 setSpinnerLoading(false);
@@ -123,24 +121,24 @@ const PublishResult = () => {
         getAllResults();
     }, [])
 
-    const handleUpdate = async ({ e, rId }) => {
+
+    //update result
+    const handleUpdate = async (e) => {
         e.preventDefault();
         try {
             const updateResultData = new FormData();
             updateResultData.append("subject", subject);
             updateResultData.append("marks", marks);
             updateResultData.append("examDate", examDate);
-
-            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/result/update-result/${selected.rId}`, updateResultData);
+            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/result/update-result/${selected._id}`, updateResultData);
             if (data?.success) {
-                setSpinnerLoading(false);
                 toast.success(data?.message);
                 getAllResults();
                 // Clear form fields
                 setSubject('');
                 setMarks('');
                 setExamDate('');
-                setUser('');
+                setVisible(false)
             } else {
                 toast.success("Result Updated Successfully");
             }
@@ -148,7 +146,6 @@ const PublishResult = () => {
         } catch (error) {
             console.log(error);
             toast.error('Something went wrong')
-            setSpinnerLoading(false)
         }
     };
 
@@ -168,7 +165,6 @@ const PublishResult = () => {
             toast.error('Something wrong while Delete')
         }
     }
-
 
     return (
         <Layout title={"Admin - Publish Result"}>
@@ -251,7 +247,7 @@ const PublishResult = () => {
                                                             <td>{r.marks}</td>
                                                             <td>{r.examDate}</td>
                                                             <td className='d-flex'>
-                                                                <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); setResultId(r._id); setSelected(r) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(r._id)}><i class="fa-solid fa-trash-can"></i>  Delete</button>
                                                             </td>
                                                         </tr>
@@ -265,6 +261,31 @@ const PublishResult = () => {
                     </div>
                 </div>
             </div>
+            <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
+                <h5 className='text-center'>Update Result</h5>
+                <div className='mt-4'>
+                    <input
+                        type="text"
+                        placeholder='Subject'
+                        className='form-control form-input mb-2 me-2'
+                        value={subject}
+                        onChange={(e) => setSubject(e.target.value)} required
+                    />
+                    <DatePicker format={dateFormat} value={examDate} className='w-100 mb-2 me-2 form-control' onChange={(date) => setExamDate(date)} required />
+                    <input
+                        type="text"
+                        placeholder='Marks'
+                        className='form-control'
+                        value={marks}
+                        onChange={(e) => setMarks(e.target.value)} required
+                    />
+                    <div className="mt-3 text-center">
+                        <button className="btn btn-warning fw-bold" onClick={handleUpdate} >
+                            Update Result
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </Layout>
     );
 };

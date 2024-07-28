@@ -3,18 +3,15 @@ import Layout from '../../components/Layouts/Layout';
 import AdminMenu from './AdminMenu';
 import Spinner from '../../components/Spinner'
 import axios from 'axios';
-import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 import { Modal } from 'antd';
 import { Select } from 'antd';
-import { Link } from 'react-router-dom';
-
 const { Option } = Select;
 
 const ContentLinks = () => {
     const [spinnerLoading, setSpinnerLoading] = useState(false);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
-    const [auth, setAuth] = useAuth();
     const [grades, setGrades] = useState([]);
     const [grade, setGrade] = useState("");
     const [subject, setSubject] = useState('');
@@ -23,6 +20,7 @@ const ContentLinks = () => {
     const [types] = useState(["PDF", "Doc", "Video", "Audio", "PPT"]);
     const [type, setType] = useState(null);
     const [content, setContent] = useState([]);
+    const [contentId, setContentId] = useState([]);
     const [selected, setSelected] = useState(null);
     const [visible, setVisible] = useState(false);
 
@@ -88,6 +86,35 @@ const ContentLinks = () => {
             setSpinnerLoading(false)
         }
     }
+
+    //update content link
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        try {
+            const updateResultData = new FormData();
+            updateResultData.append("subject", subject);
+            updateResultData.append("remark", remark);
+            updateResultData.append("type", type);
+            updateResultData.append("contentLink", contentLink);
+            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/content/update-content/${selected._id}`, updateResultData);
+            if (data?.success) {
+                toast.success(data?.message);
+                getAllContent();
+                // Clear form fields after submit
+                setSubject('');
+                setRemark('');
+                setType('');
+                setContentLink('');
+                setVisible(false)
+            } else {
+                toast.success("Content Updated Successfully");
+            }
+
+        } catch (error) {
+            console.log(error);
+            toast.error('Something went wrong')
+        }
+    };
 
     //delete content
     const handleDelete = async (rId) => {
@@ -195,11 +222,11 @@ const ContentLinks = () => {
                                                             <td>{c.type}</td>
                                                             <td>
                                                                 <Link className='link' to={c.contentLink} target='_blank'>
-                                                                <i class="fa-solid fa-up-right-from-square"></i> Open
+                                                                    <i class="fa-solid fa-up-right-from-square"></i> Open
                                                                 </Link>
                                                             </td>
                                                             <td className='d-flex'>
-                                                                <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); setContentId(c._id); setSelected(c) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}><i class="fa-solid fa-trash-can"></i>  Delete</button>
                                                             </td>
                                                         </tr>
@@ -213,6 +240,46 @@ const ContentLinks = () => {
                     </div>
                 </div>
             </div>
+            <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
+                <h5 className='text-center'>Update Content</h5>
+                <input
+                    type="text"
+                    placeholder='Subject'
+                    className='form-control mb-2'
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)} required
+                />
+                <input
+                    type="text"
+                    placeholder='Remark'
+                    className='form-control mb-2'
+                    value={remark}
+                    onChange={(e) => setRemark(e.target.value)} required
+                />
+                <Select bordered={false}
+                    placeholder="Select Content Type"
+                    size='large'
+                    className='form-select mb-2'
+                    onChange={(value) => { setType(value) }}
+                    required>
+                    {types.map((t, i) => (
+                        <Option key={i} value={t}>{t}</Option>
+                    ))}
+                </Select>
+                <input
+                    type="text"
+                    placeholder='Paste Link Here'
+                    className='form-control mb-2'
+                    value={contentLink}
+                    onChange={(e) => setContentLink(e.target.value)} required
+                />
+
+                <div className="text-center">
+                    <button className="btn btn-warning fw-bold" onClick={handleUpdate}>
+                       Update Content
+                    </button>
+                </div>
+            </Modal>
         </Layout>
     );
 };

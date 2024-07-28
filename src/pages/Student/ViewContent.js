@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layouts/Layout'
 import Spinner from '../../components/Spinner';
 import StudentMenu from './StudentMenu';
-import { useAuth } from '../../context/auth';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const ViewContent = () => {
-    const [auth, setAuth] = useAuth();
     const [content, setContent] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
 

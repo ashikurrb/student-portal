@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layouts/Layout'
 import Spinner from '../../components/Spinner';
 import StudentMenu from './StudentMenu';
-import { useAuth } from '../../context/auth';
 import axios from 'axios';
 
 const ViewPayment = () => {
-    const [auth, setAuth] = useAuth();
     const [payment, setPayment] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
 
