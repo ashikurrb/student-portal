@@ -237,7 +237,7 @@ const PublishResult = () => {
                                                 result.map((r, i) => {
                                                     return (
                                                         <tr>
-                                                            <td>{i + 1}</td>
+                                                            <th scope="row">{i + 1}</th>
                                                             <td>{r?.grade?.name}</td>
                                                             <td>{r?.user?.name}</td>
                                                             <td>{r.subject}</td>

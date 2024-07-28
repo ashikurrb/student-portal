@@ -212,7 +212,7 @@ const SetPaymentStatus = () => {
                                                 payment.map((p, i) => {
                                                     return (
                                                         <tr>
-                                                            <td>{i + 1}</td>
+                                                            <th scope="row">{i + 1}</th>
                                                             <td>{p?.grade?.name}</td>
                                                             <td>{p?.user?.name}</td>
                                                             <td>TK. {p.amount}</td>
