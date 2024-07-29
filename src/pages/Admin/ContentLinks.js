@@ -21,6 +21,10 @@ const ContentLinks = () => {
     const [type, setType] = useState(null);
     const [content, setContent] = useState([]);
     const [contentId, setContentId] = useState([]);
+    const [updatedSubject, setUpdatedSubject] = useState('');
+    const [updatedReMark, setUpdatedReMark] = useState('');
+    const [updatedType, setUpdatedType] = useState('');
+    const [updatedContentLink, setUpdatedContentLink] = useState('');
     const [selected, setSelected] = useState(null);
     const [visible, setVisible] = useState(false);
 
@@ -92,19 +96,19 @@ const ContentLinks = () => {
         e.preventDefault();
         try {
             const updateResultData = new FormData();
-            updateResultData.append("subject", subject);
-            updateResultData.append("remark", remark);
-            updateResultData.append("type", type);
-            updateResultData.append("contentLink", contentLink);
+            updateResultData.append("subject", updatedSubject);
+            updateResultData.append("remark", updatedReMark);
+            updateResultData.append("type", updatedType);
+            updateResultData.append("contentLink", updatedContentLink);
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/content/update-content/${selected._id}`, updateResultData);
             if (data?.success) {
                 toast.success(data?.message);
                 getAllContent();
                 // Clear form fields after submit
-                setSubject('');
-                setRemark('');
-                setType('');
-                setContentLink('');
+                setUpdatedSubject('');
+                setUpdatedReMark('');
+                setUpdatedType('');
+                setUpdatedContentLink('');
                 setVisible(false)
             } else {
                 toast.success("Content Updated Successfully");
@@ -115,6 +119,18 @@ const ContentLinks = () => {
             toast.error('Something went wrong')
         }
     };
+
+      // Open modal with selected result data
+      const openModal = (content) => {
+        setVisible(true);
+        setSelected(content);
+        setContentId(content._id);
+        setUpdatedSubject(content.subject);
+        setUpdatedReMark(content.remark);
+        setUpdatedType(content.type);
+        setUpdatedContentLink(content.contentLink);
+    };
+
 
     //delete content
     const handleDelete = async (rId) => {
@@ -226,7 +242,7 @@ const ContentLinks = () => {
                                                                 </Link>
                                                             </td>
                                                             <td className='d-flex'>
-                                                                <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); setContentId(c._id); setSelected(c) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                                <button className='btn btn-primary mx-1' onClick={() => {openModal(c)}}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}><i class="fa-solid fa-trash-can"></i>  Delete</button>
                                                             </td>
                                                         </tr>
@@ -246,21 +262,22 @@ const ContentLinks = () => {
                     type="text"
                     placeholder='Subject'
                     className='form-control mb-2'
-                    value={subject}
-                    onChange={(e) => setSubject(e.target.value)} required
+                    value={updatedSubject}
+                    onChange={(e) => setUpdatedSubject(e.target.value)} required
                 />
                 <input
                     type="text"
                     placeholder='Remark'
                     className='form-control mb-2'
-                    value={remark}
-                    onChange={(e) => setRemark(e.target.value)} required
+                    value={updatedReMark}
+                    onChange={(e) => setUpdatedReMark(e.target.value)} required
                 />
                 <Select bordered={false}
                     placeholder="Select Content Type"
                     size='large'
                     className='form-select mb-2'
-                    onChange={(value) => { setType(value) }}
+                    value={updatedType}
+                    onChange={(value) => { setUpdatedType(value) }}
                     required>
                     {types.map((t, i) => (
                         <Option key={i} value={t}>{t}</Option>
@@ -270,13 +287,13 @@ const ContentLinks = () => {
                     type="text"
                     placeholder='Paste Link Here'
                     className='form-control mb-2'
-                    value={contentLink}
-                    onChange={(e) => setContentLink(e.target.value)} required
+                    value={updatedContentLink}
+                    onChange={(e) => setUpdatedContentLink(e.target.value)} required
                 />
 
                 <div className="text-center">
                     <button className="btn btn-warning fw-bold" onClick={handleUpdate}>
-                       Update Content
+                        Update Content
                     </button>
                 </div>
             </Modal>

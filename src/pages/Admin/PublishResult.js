@@ -127,17 +127,17 @@ const PublishResult = () => {
         e.preventDefault();
         try {
             const updateResultData = new FormData();
-            updateResultData.append("subject", subject);
-            updateResultData.append("marks", marks);
-            updateResultData.append("examDate", examDate);
+            updateResultData.append("subject", updatedSubject);
+            updateResultData.append("marks", updatedMarks);
+            updateResultData.append("examDate", updatedExamDate);
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/result/update-result/${selected._id}`, updateResultData);
             if (data?.success) {
                 toast.success(data?.message);
                 getAllResults();
                 // Clear form fields
-                setSubject('');
-                setMarks('');
-                setExamDate('');
+                setUpdatedSubject('');
+                setUpdatedMarks('');
+                setUpdatedExamDate('');
                 setVisible(false)
             } else {
                 toast.success("Result Updated Successfully");
@@ -147,6 +147,15 @@ const PublishResult = () => {
             console.log(error);
             toast.error('Something went wrong')
         }
+    };
+
+    // Open modal with selected result data
+    const openModal = (result) => {
+        setVisible(true);
+        setSelected(result);
+        setResultId(result._id);
+        setUpdatedSubject(result.subject);
+        setUpdatedMarks(result.marks);
     };
 
     //delete result
@@ -247,7 +256,7 @@ const PublishResult = () => {
                                                             <td>{r.marks}</td>
                                                             <td>{r.examDate}</td>
                                                             <td className='d-flex'>
-                                                                <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); setResultId(r._id); setSelected(r) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(r) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(r._id)}><i class="fa-solid fa-trash-can"></i>  Delete</button>
                                                             </td>
                                                         </tr>
@@ -268,16 +277,16 @@ const PublishResult = () => {
                         type="text"
                         placeholder='Subject'
                         className='form-control form-input mb-2 me-2'
-                        value={subject}
-                        onChange={(e) => setSubject(e.target.value)} required
+                        value={updatedSubject}
+                        onChange={(e) => setUpdatedSubject(e.target.value)} required
                     />
-                    <DatePicker format={dateFormat} value={examDate} className='w-100 mb-2 me-2 form-control' onChange={(date) => setExamDate(date)} required />
+                    <DatePicker format={dateFormat} value={updatedExamDate} className='w-100 mb-2 me-2 form-control' onChange={(date) => setUpdatedExamDate(date)} required />
                     <input
                         type="text"
                         placeholder='Marks'
                         className='form-control'
-                        value={marks}
-                        onChange={(e) => setMarks(e.target.value)} required
+                        value={updatedMarks}
+                        onChange={(e) => setUpdatedMarks(e.target.value)} required
                     />
                     <div className="mt-3 text-center">
                         <button className="btn btn-warning fw-bold" onClick={handleUpdate} >

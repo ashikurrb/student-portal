@@ -28,6 +28,11 @@ const SetPaymentStatus = () => {
     const [paymentDate, setPaymentDate] = useState('');
     const [payment, setPayment] = useState([]);
     const [paymentId, setPaymentId] = useState([]);
+    const [updatedRemark, setUpdatedRemark] = useState('');
+    const [updatedTrxId, setUpdatedTrxId] = useState('');
+    const [updatedMethod, setUpdatedMethod] = useState('');
+    const [updatedAmount, setUpdatedAmount] = useState('');
+    const [updatedPaymentDate, setUpdatedPaymentDate] = useState('');
     const [selected, setSelected] = useState(null);
     const [visible, setVisible] = useState(null);
 
@@ -131,21 +136,21 @@ const SetPaymentStatus = () => {
         e.preventDefault();
         try {
             const updateResultData = new FormData();
-            updateResultData.append("remark", remark);
-            updateResultData.append("trxId", trxId);
-            updateResultData.append("method", method);
-            updateResultData.append("amount", amount);
-            updateResultData.append("paymentDate", paymentDate);
+            updateResultData.append("remark", updatedRemark);
+            updateResultData.append("trxId", updatedTrxId);
+            updateResultData.append("method", updatedMethod);
+            updateResultData.append("amount", updatedAmount);
+            updateResultData.append("paymentDate", updatedPaymentDate);
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/payment/update-payment/${selected._id}`, updateResultData);
             if (data?.success) {
                 toast.success(data?.message);
                 getAllPayment();
                 // Clear form fields after submit
-                setMethod('');
-                setAmount('');
-                setRemark('');
-                setTrxId('');
-                setPaymentDate('');
+                setUpdatedRemark('');
+                setUpdatedTrxId('');
+                setUpdatedMethod('');
+                setUpdatedAmount('');
+                setUpdatedPaymentDate('');
                 setVisible(false)
             } else {
                 toast.success("Payment Status Updated Successfully");
@@ -156,6 +161,19 @@ const SetPaymentStatus = () => {
             toast.error('Something went wrong')
         }
     };
+
+      // Open modal with selected result data
+      const openModal = (payment) => {
+        setVisible(true);
+        setSelected(payment);
+        setPaymentId(payment._id);
+        setUpdatedRemark(payment.remark);
+        setUpdatedTrxId(payment.trxId);
+        setUpdatedMethod(payment.method);
+        setUpdatedAmount(payment.amount);
+        // setUpdatedPaymentDate(payment.paymentDate);
+    };
+
 
     //delete payment status
     const handleDelete = async (rId) => {
@@ -280,7 +298,7 @@ const SetPaymentStatus = () => {
                                                             <td>{p.trxId}</td>
                                                             <td>{p.paymentDate}</td>
                                                             <td className='d-flex'>
-                                                                <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); setPaymentId(p._id); setSelected(p) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(p)}}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}><i className="fa-solid fa-trash-can"></i> Delete</button>
                                                             </td>
                                                         </tr>
@@ -301,24 +319,25 @@ const SetPaymentStatus = () => {
                         type="text"
                         placeholder='Remark'
                         className='form-control mb-1 mx-1'
-                        value={remark}
-                        onChange={(e) => setRemark(e.target.value)} required
+                        value={updatedRemark}
+                        onChange={(e) => setUpdatedRemark(e.target.value)} required
                     />
                     <input
                         type="number"
                         placeholder='Amount'
                         className='form-control mb-1 mx-1'
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)} required
+                        value={updatedAmount}
+                        onChange={(e) => setUpdatedAmount(e.target.value)} required
                     />
-                    <DatePicker format={dateFormat} className='form-control w-100 mx-1 mb-2' onChange={(date) => setPaymentDate(date)} required />
+                    <DatePicker format={dateFormat} value={updatedPaymentDate} className='form-control w-100 mx-1 mb-2' onChange={(date) => setUpdatedPaymentDate(date)} required />
                 </div>
                 <div className="mb-4 d-lg-flex">
                     <Select bordered={false}
                         placeholder="Select Method"
                         size='large'
                         className='form-select mb-1 mx-1'
-                        onChange={(value) => { setMethod(value) }}
+                        value={updatedMethod}
+                        onChange={(value) => { setUpdatedMethod(value) }}
                         required>
                         {methods.map((m, i) => (
                             <Option key={i} value={m}>{m}</Option>
@@ -328,8 +347,8 @@ const SetPaymentStatus = () => {
                         type="text"
                         placeholder='Transaction ID / Receipt No'
                         className='form-control mb-2 mx-1'
-                        value={trxId}
-                        onChange={(e) => setTrxId(e.target.value)} required
+                        value={updatedTrxId}
+                        onChange={(e) => setUpdatedTrxId(e.target.value)} required
                     />
                 </div>
                 <div className="text-center">
