@@ -118,6 +118,7 @@ const ContentLinks = () => {
                 setVisible(false)
             } else {
                 toast.success("Content Updated Successfully");
+                setUpdateSpinnerLoading(false);
             }
 
         } catch (error) {

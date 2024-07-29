@@ -135,7 +135,7 @@ const SetPaymentStatus = () => {
     //update payment status
     const handleUpdate = async (e) => {
         e.preventDefault();
-        setUpdateSpinnerLoading(true)
+        setUpdateSpinnerLoading(true);
         try {
             const updateResultData = new FormData();
             updateResultData.append("remark", updatedRemark);
@@ -157,6 +157,7 @@ const SetPaymentStatus = () => {
                 setVisible(false)
             } else {
                 toast.success("Payment Status Updated Successfully");
+                setUpdateSpinnerLoading(false);
             }
 
         } catch (error) {

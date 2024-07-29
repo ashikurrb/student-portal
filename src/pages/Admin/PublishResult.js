@@ -126,7 +126,7 @@ const PublishResult = () => {
     //update result
     const handleUpdate = async (e) => {
         e.preventDefault();
-        setUpdateSpinnerLoading(true)
+        setUpdateSpinnerLoading(true);
         try {
             const updateResultData = new FormData();
             updateResultData.append("subject", updatedSubject);
@@ -149,7 +149,8 @@ const PublishResult = () => {
 
         } catch (error) {
             console.log(error);
-            toast.error('Something went wrong')
+            toast.error('Something went wrong');
+            setUpdateSpinnerLoading(false);
         }
     };
 
