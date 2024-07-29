@@ -13,6 +13,7 @@ const { Option } = Select;
 
 const SetPaymentStatus = () => {
     const [spinnerLoading, setSpinnerLoading] = useState(false);
+    const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
     const [auth, setAuth] = useAuth();
     const [users, setUsers] = useState([]);
@@ -134,6 +135,7 @@ const SetPaymentStatus = () => {
     //update payment status
     const handleUpdate = async (e) => {
         e.preventDefault();
+        setUpdateSpinnerLoading(true)
         try {
             const updateResultData = new FormData();
             updateResultData.append("remark", updatedRemark);
@@ -143,6 +145,7 @@ const SetPaymentStatus = () => {
             updateResultData.append("paymentDate", updatedPaymentDate);
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/payment/update-payment/${selected._id}`, updateResultData);
             if (data?.success) {
+                setUpdateSpinnerLoading(false);
                 toast.success(data?.message);
                 getAllPayment();
                 // Clear form fields after submit
@@ -159,11 +162,12 @@ const SetPaymentStatus = () => {
         } catch (error) {
             console.log(error);
             toast.error('Something went wrong')
+            setUpdateSpinnerLoading(false)
         }
     };
 
-      // Open modal with selected result data
-      const openModal = (payment) => {
+    // Open modal with selected result data
+    const openModal = (payment) => {
         setVisible(true);
         setSelected(payment);
         setPaymentId(payment._id);
@@ -260,13 +264,12 @@ const SetPaymentStatus = () => {
                                 />
                             </div>
                             <div className="mb-3 text-center">
-                                {spinnerLoading ? <div className='my-2'><Spinner /> </div> : ""}
                                 <button className="btn btn-warning fw-bold" onClick={handleCreate}>
-                                    Create Payment Status
+                                    {spinnerLoading ? <Spinner /> : "Create Payment Status"}
                                 </button>
                             </div>
                         </div>
-                        <h6 className='text-end'>Total Received: TK. {totalAmount}</h6>
+                        <h6 className='d-flex justify-content-between'> <span>Payment Count: {payment.length}</span> <span>Total Received: TK. {totalAmount}</span></h6>
                         <div className='table-container'>
                             <table className="table">
                                 <thead className='table-dark'>
@@ -283,7 +286,7 @@ const SetPaymentStatus = () => {
                                     </tr>
                                 </thead>
                                 {
-                                    listSpinnerLoading ? <Spinner /> :
+                                    listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
                                         <tbody>
                                             {
                                                 payment.map((p, i) => {
@@ -298,7 +301,7 @@ const SetPaymentStatus = () => {
                                                             <td>{p.trxId}</td>
                                                             <td>{p.paymentDate}</td>
                                                             <td className='d-flex'>
-                                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(p)}}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(p) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}><i className="fa-solid fa-trash-can"></i> Delete</button>
                                                             </td>
                                                         </tr>
@@ -314,7 +317,7 @@ const SetPaymentStatus = () => {
             </div>
             <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
                 <h5 className='text-center'>Update Payment Status</h5>
-                <div className="mb-4 d-lg-flex">
+                <div className="mt-4 d-lg-flex">
                     <input
                         type="text"
                         placeholder='Remark'
@@ -331,7 +334,7 @@ const SetPaymentStatus = () => {
                     />
                     <DatePicker format={dateFormat} value={updatedPaymentDate} className='form-control w-100 mx-1 mb-2' onChange={(date) => setUpdatedPaymentDate(date)} required />
                 </div>
-                <div className="mb-4 d-lg-flex">
+                <div className="mb-3 d-lg-flex">
                     <Select bordered={false}
                         placeholder="Select Method"
                         size='large'
@@ -346,14 +349,14 @@ const SetPaymentStatus = () => {
                     <input
                         type="text"
                         placeholder='Transaction ID / Receipt No'
-                        className='form-control mb-2 mx-1'
+                        className='form-control mx-1'
                         value={updatedTrxId}
                         onChange={(e) => setUpdatedTrxId(e.target.value)} required
                     />
                 </div>
                 <div className="text-center">
                     <button className="btn btn-warning fw-bold" onClick={handleUpdate}>
-                        Update Payment Status
+                        {updateSpinnerLoading ? <Spinner /> : "Update Payment Status"}
                     </button>
                 </div>
             </Modal>

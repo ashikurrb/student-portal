@@ -13,6 +13,7 @@ const { Option } = Select;
 
 const PublishResult = () => {
     const [spinnerLoading, setSpinnerLoading] = useState(false);
+    const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
     const [auth, setAuth] = useAuth();
     const [grades, setGrades] = useState([]);
@@ -125,6 +126,7 @@ const PublishResult = () => {
     //update result
     const handleUpdate = async (e) => {
         e.preventDefault();
+        setUpdateSpinnerLoading(true)
         try {
             const updateResultData = new FormData();
             updateResultData.append("subject", updatedSubject);
@@ -132,6 +134,7 @@ const PublishResult = () => {
             updateResultData.append("examDate", updatedExamDate);
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/result/update-result/${selected._id}`, updateResultData);
             if (data?.success) {
+                setUpdateSpinnerLoading(false);
                 toast.success(data?.message);
                 getAllResults();
                 // Clear form fields
@@ -141,6 +144,7 @@ const PublishResult = () => {
                 setVisible(false)
             } else {
                 toast.success("Result Updated Successfully");
+                setUpdateSpinnerLoading(false);
             }
 
         } catch (error) {
@@ -223,9 +227,8 @@ const PublishResult = () => {
                                 />
                             </div>
                             <div className="mb-3 text-center">
-                                {spinnerLoading ? <div className='my-2'><Spinner /> </div> : ""}
                                 <button className="btn btn-warning fw-bold" onClick={handlePublish}>
-                                    Create Result
+                                {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}  
                                 </button>
                             </div>
                         </div>
@@ -243,7 +246,7 @@ const PublishResult = () => {
                                     </tr>
                                 </thead>
                                 {
-                                    listSpinnerLoading ? <Spinner /> :
+                                    listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
                                         <tbody>
                                             {
                                                 result.map((r, i) => {
@@ -290,7 +293,7 @@ const PublishResult = () => {
                     />
                     <div className="mt-3 text-center">
                         <button className="btn btn-warning fw-bold" onClick={handleUpdate} >
-                            Update Result
+                        {updateSpinnerLoading ? <Spinner /> : "Update Result"}
                         </button>
                     </div>
                 </div>

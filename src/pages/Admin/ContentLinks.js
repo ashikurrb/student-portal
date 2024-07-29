@@ -11,6 +11,7 @@ const { Option } = Select;
 
 const ContentLinks = () => {
     const [spinnerLoading, setSpinnerLoading] = useState(false);
+    const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
     const [grades, setGrades] = useState([]);
     const [grade, setGrade] = useState("");
@@ -46,11 +47,14 @@ const ContentLinks = () => {
 
     //Get all content link list
     const getAllContent = async () => {
+        setListSpinnerLoading(true)
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/content/all-content`)
             setContent(data)
         } catch (error) {
             console.log(error);
+        }finally{
+            setListSpinnerLoading(false)
         }
     }
     useEffect(() => {
@@ -93,6 +97,7 @@ const ContentLinks = () => {
 
     //update content link
     const handleUpdate = async (e) => {
+        setUpdateSpinnerLoading(true);
         e.preventDefault();
         try {
             const updateResultData = new FormData();
@@ -101,6 +106,7 @@ const ContentLinks = () => {
             updateResultData.append("type", updatedType);
             updateResultData.append("contentLink", updatedContentLink);
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/content/update-content/${selected._id}`, updateResultData);
+            setUpdateSpinnerLoading(false);
             if (data?.success) {
                 toast.success(data?.message);
                 getAllContent();
@@ -116,12 +122,13 @@ const ContentLinks = () => {
 
         } catch (error) {
             console.log(error);
-            toast.error('Something went wrong')
+            toast.error('Something went wrong');
+            setUpdateSpinnerLoading(false);
         }
     };
 
-      // Open modal with selected result data
-      const openModal = (content) => {
+    // Open modal with selected result data
+    const openModal = (content) => {
         setVisible(true);
         setSelected(content);
         setContentId(content._id);
@@ -205,9 +212,8 @@ const ContentLinks = () => {
                                 />
                             </div>
                             <div className="my-3 text-center">
-                                {spinnerLoading ? <div className='my-2'><Spinner /> </div> : ""}
                                 <button className="btn btn-warning fw-bold" onClick={handleCreate}>
-                                    Create Content Link
+                                {spinnerLoading ? <Spinner />  : "Create Content Link"}
                                 </button>
                             </div>
                         </div>
@@ -225,7 +231,7 @@ const ContentLinks = () => {
                                     </tr>
                                 </thead>
                                 {
-                                    listSpinnerLoading ? <Spinner /> :
+                                     listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
                                         <tbody>
                                             {
                                                 content.map((c, i) => {
@@ -242,7 +248,7 @@ const ContentLinks = () => {
                                                                 </Link>
                                                             </td>
                                                             <td className='d-flex'>
-                                                                <button className='btn btn-primary mx-1' onClick={() => {openModal(c)}}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(c) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}><i class="fa-solid fa-trash-can"></i>  Delete</button>
                                                             </td>
                                                         </tr>
@@ -258,42 +264,43 @@ const ContentLinks = () => {
             </div>
             <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
                 <h5 className='text-center'>Update Content</h5>
-                <input
-                    type="text"
-                    placeholder='Subject'
-                    className='form-control mb-2'
-                    value={updatedSubject}
-                    onChange={(e) => setUpdatedSubject(e.target.value)} required
-                />
-                <input
-                    type="text"
-                    placeholder='Remark'
-                    className='form-control mb-2'
-                    value={updatedReMark}
-                    onChange={(e) => setUpdatedReMark(e.target.value)} required
-                />
-                <Select bordered={false}
-                    placeholder="Select Content Type"
-                    size='large'
-                    className='form-select mb-2'
-                    value={updatedType}
-                    onChange={(value) => { setUpdatedType(value) }}
-                    required>
-                    {types.map((t, i) => (
-                        <Option key={i} value={t}>{t}</Option>
-                    ))}
-                </Select>
-                <input
-                    type="text"
-                    placeholder='Paste Link Here'
-                    className='form-control mb-2'
-                    value={updatedContentLink}
-                    onChange={(e) => setUpdatedContentLink(e.target.value)} required
-                />
-
-                <div className="text-center">
-                    <button className="btn btn-warning fw-bold" onClick={handleUpdate}>
-                        Update Content
+                <div className="mt-4">
+                    <input
+                        type="text"
+                        placeholder='Subject'
+                        className='form-control mb-2'
+                        value={updatedSubject}
+                        onChange={(e) => setUpdatedSubject(e.target.value)} required
+                    />
+                    <input
+                        type="text"
+                        placeholder='Remark'
+                        className='form-control mb-2'
+                        value={updatedReMark}
+                        onChange={(e) => setUpdatedReMark(e.target.value)} required
+                    />
+                    <Select bordered={false}
+                        placeholder="Select Content Type"
+                        size='large'
+                        className='form-select mb-2'
+                        value={updatedType}
+                        onChange={(value) => { setUpdatedType(value) }}
+                        required>
+                        {types.map((t, i) => (
+                            <Option key={i} value={t}>{t}</Option>
+                        ))}
+                    </Select>
+                    <input
+                        type="text"
+                        placeholder='Paste Link Here'
+                        className='form-control mb-2'
+                        value={updatedContentLink}
+                        onChange={(e) => setUpdatedContentLink(e.target.value)} required
+                    />
+                </div>
+                <div className="text-center ">
+                    <button className="btn btn-warning fw-bold mt-2" onClick={handleUpdate}>
+                    {updateSpinnerLoading ? <Spinner /> : "Update Content"}
                     </button>
                 </div>
             </Modal>
