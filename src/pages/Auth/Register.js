@@ -67,7 +67,6 @@ const Register = () => {
     return (
         <Layout title={"Register Now - C-LAB"}>
             <div className="form-container">
-                {spinnerLoading ? <Spinner /> : ""}
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6">
@@ -108,8 +107,7 @@ const Register = () => {
                                     <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" id="exampleInputAddress" placeholder='Security Answer' required />
                                 </div>
                                 <div className="text-center">
-                                    <button type="submit" className="btn btn-primary">
-                                        REGISTER
+                                    <button type="submit" className="btn btn-primary">                                        {spinnerLoading ? <Spinner /> : "REGISTER"}
                                     </button>
                                 </div>
                                 <div className="text-center py-3">Already Registered? <Link to="/login">Log In</Link></div>

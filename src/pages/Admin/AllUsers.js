@@ -88,7 +88,7 @@ const Users = () => {
                                                         }
 
                                                     </td>
-                                                    <td>{moment(u?.createdAt).fromNow()}</td>
+                                                    <td>{moment(u?.createdAt).format('lll')}</td>
                                                     <td>
                                                         {
                                                             u.role === 1 ? <span class="badge text-bg-info">Restricted</span> : (

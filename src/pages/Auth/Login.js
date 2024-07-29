@@ -35,9 +35,9 @@ const Login = () => {
                     user: res.data.user,
                     token: res.data.token
                 });
-              // Set login details in cookies
-              Cookies.set("auth", JSON.stringify(res.data), { expires: 7 }); // expires in 7 days
-              navigate(location.state || "/")
+                // Set login details in cookies
+                Cookies.set("auth", JSON.stringify(res.data), { expires: 7 }); // expires in 7 days
+                navigate(location.state || "/")
             } else {
                 toast.error(res.data.message)
             }
@@ -50,8 +50,7 @@ const Login = () => {
     return (
         <Layout title={"Log In - C-LAB"}>
             <div className="form-container">
-            {spinnerLoading ? <Spinner /> : ""}
-            <div className="container d-md-flex">
+                <div className="container d-md-flex">
                     <div className="row m-3">
                         <div className="col-md-7 mb-5 mx-md-5">
                             <div className="text-center">
@@ -70,7 +69,7 @@ const Login = () => {
                             </div>
                             <div className="text-center">
                                 <button type="submit" className="btn btn-primary">
-                                    Login
+                                    {spinnerLoading ? <Spinner /> : "Log In"}
                                 </button>
                             </div>
                             <div className="text-center py-3">Forgot Password? <Link to="/forgot-password">Reset Here</Link></div>

@@ -21,6 +21,7 @@ const PublishResult = () => {
     const [users, setUsers] = useState([]);
     const [user, setUser] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
+    const [type, setType] = useState('');
     const [subject, setSubject] = useState('');
     const [marks, setMarks] = useState('');
     const [examDate, setExamDate] = useState('');
@@ -78,6 +79,7 @@ const PublishResult = () => {
         setSpinnerLoading(true);
         try {
             const resultData = new FormData();
+            resultData.append("type", type);
             resultData.append("subject", subject);
             resultData.append("marks", marks);
             resultData.append("examDate", examDate);
@@ -89,6 +91,7 @@ const PublishResult = () => {
                 toast.success(data?.message);
                 getAllResults();
                 // Clear form fields
+                setType('');
                 setSubject('');
                 setMarks('');
                 setExamDate('');
@@ -179,8 +182,7 @@ const PublishResult = () => {
             toast.error('Something wrong while Delete')
         }
     }
-
-    return (
+return (
         <Layout title={"Admin - Publish Result"}>
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
@@ -211,14 +213,21 @@ const PublishResult = () => {
                             <div className="mb-4 d-lg-flex">
                                 <input
                                     type="text"
+                                    placeholder='Exam Type'
+                                    className='form-control form-input mb-2 me-2'
+                                    value={type}
+                                    onChange={(e) => setType(e.target.value)} required
+                                />
+                                <input
+                                    type="text"
                                     placeholder='Subject'
                                     className='form-control form-input mb-2 me-2'
                                     value={subject}
                                     onChange={(e) => setSubject(e.target.value)} required
                                 />
-                                <DatePicker format={dateFormat} className='w-100 mb-2 me-2 form-control' onChange={(date) => setExamDate(date)} required />
                             </div>
-                            <div className="mb-4">
+                            <div className="mb-4 d-lg-flex">
+                            <DatePicker format={dateFormat} className='w-100 me-2 form-control' onChange={(date) => setExamDate(date)} required />
                                 <input
                                     type="text"
                                     placeholder='Marks'
@@ -240,6 +249,7 @@ const PublishResult = () => {
                                         <th>#</th>
                                         <th>Grade</th>
                                         <th>Name</th>
+                                        <th>Type</th>
                                         <th>Subject</th>
                                         <th>Result</th>
                                         <th>Date</th>
@@ -256,6 +266,7 @@ const PublishResult = () => {
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{r?.grade?.name}</td>
                                                             <td>{r?.user?.name}</td>
+                                                            <td>{r.type}</td>
                                                             <td>{r.subject}</td>
                                                             <td>{r.marks}</td>
                                                             <td>{r.examDate}</td>

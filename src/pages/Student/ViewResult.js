@@ -37,6 +37,7 @@ const ViewResult = () => {
                                 <thead className='table-dark'>
                                     <tr>
                                         <th scope="col">#</th>
+                                        <th scope="col">Exam</th>
                                         <th scope="col">Subject</th>
                                         <th scope="col">Marks</th>
                                         <th scope="col">Date</th>
@@ -47,6 +48,7 @@ const ViewResult = () => {
                                         return (
                                             <tr key={r._id}>
                                                 <th scope='row'>{i + 1}</th>
+                                                <td>{r.type}</td>
                                                 <td>{r.subject}</td>
                                                 <td>{r.marks}</td>
                                                 <td>{r.examDate}</td>

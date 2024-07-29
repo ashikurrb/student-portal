@@ -40,7 +40,6 @@ const ForgotPassword = () => {
     return (
         <Layout title={"Log In"}>
             <div className="form-container">
-            {spinnerLoading ? <Spinner /> : ""}
                 <form onSubmit={handleSubmit}>
                     <h4 className="title"> <i class="fa-solid fa-lock"></i> Reset Password</h4>
                     <div className="mb-3">
@@ -53,7 +52,9 @@ const ForgotPassword = () => {
                         <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />
                     </div>
                     <div className="text-center">
-                        <button type="submit" className="btn"> Reset Password </button>
+                        <button type="submit" className="btn">
+                            {spinnerLoading ? <Spinner /> : "Reset Password"}
+                        </button>
                     </div>
                     <div className="text-center mt-3">
                         <Link to="/login">Back to Log In</Link>
