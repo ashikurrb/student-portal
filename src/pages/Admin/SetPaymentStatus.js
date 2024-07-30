@@ -206,7 +206,7 @@ const SetPaymentStatus = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Create Payment Status</h2>
-                        <div className="m-1">
+                        <form className="m-1" onSubmit={handleCreate}>
                             <div className="d-lg-flex">
                                 <Select bordered={false}
                                     placeholder="Select Grade"
@@ -264,11 +264,11 @@ const SetPaymentStatus = () => {
                                 />
                             </div>
                             <div className="m-3 text-center">
-                                <button className="btn btn-warning fw-bold" onClick={handleCreate}>
+                                <button type='submit' className="btn btn-warning fw-bold">
                                     {spinnerLoading ? <Spinner /> : "Create Payment Status"}
                                 </button>
                             </div>
-                        </div>
+                        </form>
                         <h6 className='d-flex justify-content-between'> <span>Payment Count: {payment.length}</span> <span>Total Received: TK. {totalAmount}</span></h6>
                         <div className='table-container'>
                             <table className="table">
@@ -321,7 +321,8 @@ const SetPaymentStatus = () => {
             </div>
             <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
                 <h5 className='text-center'>Update Payment Status</h5>
-                <div className="mt-4 d-lg-flex">
+               <form onSubmit={handleUpdate}>
+               <div className="mt-4 d-lg-flex">
                     <input
                         type="text"
                         placeholder='Remark'
@@ -359,10 +360,11 @@ const SetPaymentStatus = () => {
                     />
                 </div>
                 <div className="text-center">
-                    <button className="btn btn-warning fw-bold" onClick={handleUpdate}>
+                    <button type='submit' className="btn btn-warning fw-bold">
                         {updateSpinnerLoading ? <Spinner /> : "Update Payment Status"}
                     </button>
                 </div>
+               </form>
             </Modal>
         </Layout>
     );

@@ -164,7 +164,7 @@ const ContentLinks = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Create Content Link</h2>
-                        <div className="m-1">
+                        <form className="m-1" onSubmit={handleCreate}>
                             <div className="d-lg-flex">
                                 <Select bordered={false}
                                     placeholder="Select Grade"
@@ -212,11 +212,11 @@ const ContentLinks = () => {
                                 />
                             </div>
                             <div className="m-3 text-center">
-                                <button className="btn btn-warning fw-bold" onClick={handleCreate}>
+                                <button type="submit" className="btn btn-warning fw-bold">
                                     {spinnerLoading ? <Spinner /> : "Create Content Link"}
                                 </button>
                             </div>
-                        </div>
+                        </form>
                         <div className='table-container'>
                             <table className="table">
                                 <thead className='table-dark'>
@@ -267,7 +267,8 @@ const ContentLinks = () => {
             </div>
             <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
                 <h5 className='text-center'>Update Content</h5>
-                <div className="mt-4">
+               <form onSubmit={handleUpdate}>
+               <div className="mt-4">
                     <input
                         type="text"
                         placeholder='Subject'
@@ -302,10 +303,11 @@ const ContentLinks = () => {
                     />
                 </div>
                 <div className="text-center">
-                    <button className="btn btn-warning fw-bold mt-2" onClick={handleUpdate}>
+                    <button type="submit" className="btn btn-warning fw-bold mt-2">
                         {updateSpinnerLoading ? <Spinner /> : "Update Content"}
                     </button>
                 </div>
+               </form>
             </Modal>
         </Layout>
     );

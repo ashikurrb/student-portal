@@ -110,7 +110,7 @@ const CreateGrade = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Create Grade</h2>
-                        <div className="p-3">
+                        <form className="p-3" onSubmit={handleSubmit}>
                             <div>
                                 <input
                                     type="text"
@@ -121,11 +121,11 @@ const CreateGrade = () => {
                                 />
                             </div>
                             <div className="mt-3 text-center">
-                                <button className="btn btn-warning fw-bold" onClick={handleSubmit}>
+                                <button type='submit' className="btn btn-warning fw-bold">
                                     {spinnerLoading ? <Spinner /> : "Create Grade"}
                                 </button>
                             </div>
-                        </div>
+                        </form>
                         <h6 className='text-start'>Total Grade: {grades.length}</h6>
                         <div className="table-container">
                             <table className='table'>
@@ -159,20 +159,22 @@ const CreateGrade = () => {
                     </div>
                     <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
                         <h5 className='text-center'>Update Grade</h5>
-                        <div className='mt-4'>
-                            <input
-                                type="text"
-                                placeholder='Updated Grade Name'
-                                className='form-control mb-3'
-                                value={updatedName}
-                                onChange={(e) => setUpdatedName(e.target.value)} required
-                            />
-                        </div>
-                        <div className="text-center mt-2">
-                            <button className="btn btn-warning fw-bold" onClick={handleUpdate}>
-                                {updateSpinnerLoading ? <Spinner /> : "Update Grade"}
-                            </button>
-                        </div>
+                        <form onSubmit={handleUpdate}>
+                            <div className='mt-4'>
+                                <input
+                                    type="text"
+                                    placeholder='Updated Grade Name'
+                                    className='form-control mb-3'
+                                    value={updatedName}
+                                    onChange={(e) => setUpdatedName(e.target.value)} required
+                                />
+                            </div>
+                            <div className="text-center mt-2">
+                                <button type='submit' className="btn btn-warning fw-bold">
+                                    {updateSpinnerLoading ? <Spinner /> : "Update Grade"}
+                                </button>
+                            </div>
+                        </form>
                     </Modal>
                 </div>
             </div>

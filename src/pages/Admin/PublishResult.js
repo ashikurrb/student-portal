@@ -26,6 +26,7 @@ const PublishResult = () => {
     const [examDate, setExamDate] = useState('');
     const [result, setResult] = useState([]);
     const [resultId, setResultId] = useState([]);
+    const [updatedType, setUpdatedType] = useState('');
     const [updatedSubject, setUpdatedSubject] = useState('');
     const [updatedMarks, setUpdatedMarks] = useState('');
     const [updatedExamDate, setUpdatedExamDate] = useState('');
@@ -131,6 +132,7 @@ const PublishResult = () => {
         setUpdateSpinnerLoading(true);
         try {
             const updateResultData = new FormData();
+            updateResultData.append("type", updatedType);
             updateResultData.append("subject", updatedSubject);
             updateResultData.append("marks", updatedMarks);
             updateResultData.append("examDate", updatedExamDate);
@@ -139,7 +141,9 @@ const PublishResult = () => {
                 setUpdateSpinnerLoading(false);
                 toast.success(data?.message);
                 getAllResults();
+
                 // Clear form fields
+                setUpdatedType('');
                 setUpdatedSubject('');
                 setUpdatedMarks('');
                 setUpdatedExamDate('');
@@ -148,7 +152,6 @@ const PublishResult = () => {
                 toast.success("Result Updated Successfully");
                 setUpdateSpinnerLoading(false);
             }
-
         } catch (error) {
             console.log(error);
             toast.error('Something went wrong');
@@ -161,6 +164,7 @@ const PublishResult = () => {
         setVisible(true);
         setSelected(result);
         setResultId(result._id);
+        setUpdatedType(result.type);
         setUpdatedSubject(result.subject);
         setUpdatedMarks(result.marks);
     };
@@ -188,7 +192,7 @@ const PublishResult = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Publish Result</h2>
-                        <div className="m-1">
+                        <form className="m-1" onSubmit={handlePublish}>
                             <div className="d-lg-flex">
                                 <Select bordered={false}
                                     placeholder="Select Grade"
@@ -236,11 +240,11 @@ const PublishResult = () => {
                                 />
                             </div>
                             <div className="m-3 text-center">
-                                <button className="btn btn-warning fw-bold" onClick={handlePublish}>
+                                <button type="submit" className="btn btn-warning fw-bold">
                                     {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}
                                 </button>
                             </div>
-                        </div>
+                        </form>
                         <div className='table-container'>
                             <table className="table">
                                 <thead className='table-dark'>
@@ -290,7 +294,14 @@ const PublishResult = () => {
             </div>
             <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
                 <h5 className='text-center'>Update Result</h5>
-                <div className='mt-4'>
+                <form className='mt-4' onSubmit={handleUpdate}>
+                    <input
+                        type="text"
+                        placeholder='Exam Type'
+                        className='form-control form-input mb-2 me-2'
+                        value={updatedType}
+                        onChange={(e) => setUpdatedType(e.target.value)} required
+                    />
                     <input
                         type="text"
                         placeholder='Subject'
@@ -307,11 +318,11 @@ const PublishResult = () => {
                         onChange={(e) => setUpdatedMarks(e.target.value)} required
                     />
                     <div className="mt-3 text-center">
-                        <button className="btn btn-warning fw-bold" onClick={handleUpdate} >
+                        <button type='submit' className="btn btn-warning fw-bold" >
                             {updateSpinnerLoading ? <Spinner /> : "Update Result"}
                         </button>
                     </div>
-                </div>
+                </form>
             </Modal>
         </Layout>
     );
