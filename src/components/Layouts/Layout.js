@@ -31,9 +31,9 @@ const Layout = ({ children,title, description, keywords, author }) => {
     );
 };
 Layout.defaultProps = {
-    title: "C-LAB Student Portal",
+    title: "5Points Student Portal",
     description: "Best Coaching in Mohammadpur, Dhaka",
-    keywords: "clab, education, dhaka, mohammadpur, coaching, student",
+    keywords: "5Points, education, dhaka, mohammadpur, coaching, student",
     author: "@ashikurrb "
 }
 export default Layout;

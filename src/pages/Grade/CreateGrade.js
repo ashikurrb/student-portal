@@ -95,39 +95,39 @@ const CreateGrade = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Create Grade</h2>
-                        <h6 className='text-center my-3'>Total Grade: {grades.length}</h6>
                         <div className="p-3">
                             <GradeForm handleSubmit={handleSubmit} value={name} setValue={setName} />
                         </div>
-                       <div className="table-container">
-                       <table className='table'>
-                            <thead className='table-dark'>
-                                <tr>
-                                    <th scope='row'>#</th>
-                                    <th>Grade</th>
-                                    <th>Action</th>
-                                    <th>Created</th>
-                                    <th>Modified</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                {grades.map((g, i) => (
+                        <h6 className='text-start my-2'>Total Grade: {grades.length}</h6>
+                        <div className="table-container">
+                            <table className='table'>
+                                <thead className='table-dark'>
                                     <tr>
-                                        <th scope='row'>{i+1}</th>
-                                        <td className='fs-5 fw-bold'>{g.name}</td>
-                                        <td className='d-flex'>
-                                            <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); setUpdatedName(g.name); setSelected(g) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                                            <button className='btn btn-danger mx-1' onClick={() => { handelDelete(g._id) }}><i class="fa-solid fa-trash-can"></i> Delete</button>
-                                        </td>
-                                        <td>{moment(g?.createdAt).fromNow()}</td>
-                                        <td>{moment(g?.updatedAt).fromNow()}</td>
+                                        <th scope='row'>#</th>
+                                        <th>Grade</th>
+                                        <th>Action</th>
+                                        <th>Created</th>
+                                        <th>Modified</th>
                                     </tr>
-                                ))}
+                                </thead>
+                                <tbody>
 
-                            </tbody>
-                        </table>
-                       </div>
+                                    {grades.map((g, i) => (
+                                        <tr>
+                                            <th scope='row'>{i + 1}</th>
+                                            <td className='fs-5 fw-bold'>{g.name}</td>
+                                            <td className='d-flex'>
+                                                <button className='btn btn-primary mx-1' onClick={() => { setVisible(true); setUpdatedName(g.name); setSelected(g) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                <button className='btn btn-danger mx-1' onClick={() => { handelDelete(g._id) }}><i class="fa-solid fa-trash-can"></i> Delete</button>
+                                            </td>
+                                            <td>{moment(g?.createdAt).fromNow()}</td>
+                                            <td>{moment(g?.updatedAt).fromNow()}</td>
+                                        </tr>
+                                    ))}
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
                         <GradeForm value={updatedName} setValue={setUpdatedName} handleSubmit={handleUpdate} />

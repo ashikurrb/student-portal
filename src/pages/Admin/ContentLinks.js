@@ -3,10 +3,10 @@ import Layout from '../../components/Layouts/Layout';
 import AdminMenu from './AdminMenu';
 import Spinner from '../../components/Spinner'
 import axios from 'axios';
+import moment from 'moment';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import { Modal } from 'antd';
-import { Select } from 'antd';
+import { Modal, Select, Tooltip } from 'antd';
 const { Option } = Select;
 
 const ContentLinks = () => {
@@ -53,7 +53,7 @@ const ContentLinks = () => {
             setContent(data)
         } catch (error) {
             console.log(error);
-        }finally{
+        } finally {
             setListSpinnerLoading(false)
         }
     }
@@ -214,7 +214,7 @@ const ContentLinks = () => {
                             </div>
                             <div className="m-3 text-center">
                                 <button className="btn btn-warning fw-bold" onClick={handleCreate}>
-                                {spinnerLoading ? <Spinner />  : "Create Content Link"}
+                                    {spinnerLoading ? <Spinner /> : "Create Content Link"}
                                 </button>
                             </div>
                         </div>
@@ -232,7 +232,7 @@ const ContentLinks = () => {
                                     </tr>
                                 </thead>
                                 {
-                                     listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
+                                    listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
                                         <tbody>
                                             {
                                                 content.map((c, i) => {
@@ -240,8 +240,11 @@ const ContentLinks = () => {
                                                         <tr>
                                                             <th scope='row'>{i + 1}</th>
                                                             <td>{c?.grade?.name}</td>
-                                                            <td>{c.subject}</td>
-                                                            <td>{c.remark}</td>
+                                                            <td>
+                                                                <Tooltip title={`Created: ${moment(c.createdAt).format('llll')}, Updated: ${moment(c.updatedAt).format('llll')}`}>
+                                                                    <span>{c?.subject}</span>
+                                                                </Tooltip>
+                                                            </td>                                                            <td>{c.remark}</td>
                                                             <td>{c.type}</td>
                                                             <td>
                                                                 <Link className='link' to={c.contentLink} target='_blank'>
@@ -301,7 +304,7 @@ const ContentLinks = () => {
                 </div>
                 <div className="text-center ">
                     <button className="btn btn-warning fw-bold mt-2" onClick={handleUpdate}>
-                    {updateSpinnerLoading ? <Spinner /> : "Update Content"}
+                        {updateSpinnerLoading ? <Spinner /> : "Update Content"}
                     </button>
                 </div>
             </Modal>

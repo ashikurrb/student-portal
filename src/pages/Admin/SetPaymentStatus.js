@@ -6,9 +6,7 @@ import axios from 'axios';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 import moment from 'moment'
-import { Modal } from 'antd';
-import { DatePicker } from 'antd';
-import { Select } from 'antd';
+import { Modal, DatePicker, Select, Tooltip } from 'antd';
 const dateFormat = 'DD-MM-YYYY';
 const { Option } = Select;
 
@@ -197,7 +195,7 @@ const SetPaymentStatus = () => {
             toast.error('Something wrong while Delete');
         }
     };
-    
+
     //total payment amount calculate
     const totalAmount = payment.reduce((sum, p) => sum + p.amount, 0);
 
@@ -296,7 +294,11 @@ const SetPaymentStatus = () => {
                                                         <tr key={p._id}>
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{p?.grade?.name}</td>
-                                                            <td>{p?.user?.name}</td>
+                                                            <td>
+                                                                <Tooltip title={`Created: ${moment(p.createdAt).format('llll')}, Updated: ${moment(p.updatedAt).format('llll')}`}>
+                                                                    <span>{p?.user?.name}</span>
+                                                                </Tooltip>
+                                                            </td>
                                                             <td>{p.remark}</td>
                                                             <td>TK. {p.amount}</td>
                                                             <td>{p.method}</td>

@@ -6,9 +6,7 @@ import axios from 'axios';
 import moment from 'moment'
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
-import { Modal } from 'antd';
-import { DatePicker } from 'antd';
-import { Select } from 'antd';
+import { Modal, DatePicker, Select, Tooltip } from 'antd';
 const dateFormat = 'DD-MM-YYYY';
 const { Option } = Select;
 
@@ -183,7 +181,7 @@ const PublishResult = () => {
             toast.error('Something wrong while Delete')
         }
     }
-return (
+    return (
         <Layout title={"Admin - Publish Result"}>
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
@@ -228,7 +226,7 @@ return (
                                 />
                             </div>
                             <div className="d-lg-flex">
-                            <DatePicker format={dateFormat} className='w-100 m-2 form-control' onChange={(date) => setExamDate(date)} required />
+                                <DatePicker format={dateFormat} className='w-100 m-2 form-control' onChange={(date) => setExamDate(date)} required />
                                 <input
                                     type="text"
                                     placeholder='Marks'
@@ -239,7 +237,7 @@ return (
                             </div>
                             <div className="m-3 text-center">
                                 <button className="btn btn-warning fw-bold" onClick={handlePublish}>
-                                {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}  
+                                    {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}
                                 </button>
                             </div>
                         </div>
@@ -266,7 +264,11 @@ return (
                                                         <tr>
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{r?.grade?.name}</td>
-                                                            <td>{r?.user?.name}</td>
+                                                            <td>
+                                                                <Tooltip title={`Created: ${moment(r.createdAt).format('llll')}, Updated: ${moment(r.updatedAt).format('llll')}`}>
+                                                                    <span>{r?.user?.name}</span>
+                                                                </Tooltip>
+                                                            </td>
                                                             <td>{r.type}</td>
                                                             <td>{r.subject}</td>
                                                             <td>{r.marks}</td>
@@ -306,7 +308,7 @@ return (
                     />
                     <div className="mt-3 text-center">
                         <button className="btn btn-warning fw-bold" onClick={handleUpdate} >
-                        {updateSpinnerLoading ? <Spinner /> : "Update Result"}
+                            {updateSpinnerLoading ? <Spinner /> : "Update Result"}
                         </button>
                     </div>
                 </div>

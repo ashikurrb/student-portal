@@ -4,7 +4,7 @@ import GoBackButton from '../../components/GoBackButton';
 
 const AdminMenu = () => {
     return (
-        <>
+        <div className='sticky-post'>
             <div className="text-center" >
                 <div className="list-group">
                     <div className='border-bottom'>
@@ -52,7 +52,7 @@ const AdminMenu = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
