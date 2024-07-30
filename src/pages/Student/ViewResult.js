@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layouts/Layout'
 import Spinner from '../../components/Spinner';
 import StudentMenu from './StudentMenu';
+import moment from 'moment'
 import axios from 'axios';
 
 const ViewResult = () => {
@@ -51,8 +52,8 @@ const ViewResult = () => {
                                                 <td>{r.type}</td>
                                                 <td>{r.subject}</td>
                                                 <td>{r.marks}</td>
-                                                <td>{r.examDate}</td>
-                                            </tr>
+                                                <td>{moment(r.examDate).format('ll')}</td>
+                                                </tr>
                                         )
                                     })}
                                 </tbody>

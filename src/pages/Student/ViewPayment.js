@@ -3,6 +3,8 @@ import Layout from '../../components/Layouts/Layout'
 import Spinner from '../../components/Spinner';
 import StudentMenu from './StudentMenu';
 import axios from 'axios';
+import moment from 'moment'
+
 
 const ViewPayment = () => {
     const [payment, setPayment] = useState([]);
@@ -56,8 +58,8 @@ const ViewPayment = () => {
                                                 <td>TK. {p.amount}</td>
                                                 <td>{p.method}</td>
                                                 <td>{p.trxId}</td>
-                                                <td>{p.paymentDate}</td>
-                                            </tr>
+                                                <td>{moment(p.paymentDate).format('ll')}</td>
+                                                </tr>
                                         )
                                     })}
                                 </tbody>

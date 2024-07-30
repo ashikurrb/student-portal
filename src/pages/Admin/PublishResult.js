@@ -3,6 +3,7 @@ import Layout from '../../components/Layouts/Layout';
 import AdminMenu from './AdminMenu';
 import Spinner from '../../components/Spinner'
 import axios from 'axios';
+import moment from 'moment'
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 import { Modal } from 'antd';
@@ -269,7 +270,7 @@ return (
                                                             <td>{r.type}</td>
                                                             <td>{r.subject}</td>
                                                             <td>{r.marks}</td>
-                                                            <td>{r.examDate}</td>
+                                                            <td>{moment(r.examDate).format('ll')}</td>
                                                             <td className='d-flex'>
                                                                 <button className='btn btn-primary mx-1' onClick={() => { openModal(r) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(r._id)}><i class="fa-solid fa-trash-can"></i>  Delete</button>

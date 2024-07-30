@@ -5,6 +5,7 @@ import Spinner from '../../components/Spinner';
 import axios from 'axios';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
+import moment from 'moment'
 import { Modal } from 'antd';
 import { DatePicker } from 'antd';
 import { Select } from 'antd';
@@ -196,7 +197,7 @@ const SetPaymentStatus = () => {
             toast.error('Something wrong while Delete');
         }
     };
-
+    
     //total payment amount calculate
     const totalAmount = payment.reduce((sum, p) => sum + p.amount, 0);
 
@@ -300,7 +301,7 @@ const SetPaymentStatus = () => {
                                                             <td>TK. {p.amount}</td>
                                                             <td>{p.method}</td>
                                                             <td>{p.trxId}</td>
-                                                            <td>{p.paymentDate}</td>
+                                                            <td>{moment(p?.paymentDate).format('ll')}</td>
                                                             <td className='d-flex'>
                                                                 <button className='btn btn-primary mx-1' onClick={() => { openModal(p) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}><i className="fa-solid fa-trash-can"></i> Delete</button>
