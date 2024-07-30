@@ -87,7 +87,6 @@ const ContentLinks = () => {
             } else {
                 toast.success("Content Link Created Successfully");
             }
-
         } catch (error) {
             console.log(error);
             toast.error('Something went wrong')
@@ -302,7 +301,7 @@ const ContentLinks = () => {
                         onChange={(e) => setUpdatedContentLink(e.target.value)} required
                     />
                 </div>
-                <div className="text-center ">
+                <div className="text-center">
                     <button className="btn btn-warning fw-bold mt-2" onClick={handleUpdate}>
                         {updateSpinnerLoading ? <Spinner /> : "Update Content"}
                     </button>

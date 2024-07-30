@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const Spinner = ({ path = "login" }) => {
+const AuthSpinner = ({ path = "login" }) => {
     const [count, setCount] = useState(1);
     const navigate = useNavigate();
     const location = useLocation()
@@ -28,4 +28,4 @@ const Spinner = ({ path = "login" }) => {
     );
 };
 
-export default Spinner;
+export default AuthSpinner;

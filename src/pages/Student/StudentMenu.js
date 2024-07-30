@@ -4,7 +4,7 @@ import GoBackButton from '../../components/GoBackButton';
 
 const StudentMenu = () => {
     return (
-        <>
+        <div>
             <div className="text-center">
                 <div className="list-group">
                     <div className='border-bottom'>
@@ -24,16 +24,14 @@ const StudentMenu = () => {
                             </div>
                         </div>
                     </div>
-
                     <div className='d-md-collapse show rounded' id="collapseExample">
                         <NavLink to="/dashboard/student/update-profile" className="list-group-item list-group-item-action ">
                             Update Profile
                         </NavLink>
-                        <NavLink to="/dashboard/student/view-result" className="list-group-item list-group-item-action">
-                            View Result
-                        </NavLink>
-                        <NavLink to="/dashboard/student/view-content" className="list-group-item list-group-item-action">
+                         <NavLink to="/dashboard/student/view-content" className="list-group-item list-group-item-action">
                             Content Links
+                        </NavLink><NavLink to="/dashboard/student/view-result" className="list-group-item list-group-item-action">
+                            View Result
                         </NavLink>
                         <NavLink to="/dashboard/student/view-payment" className="list-group-item list-group-item-action">
                             Payment Status
@@ -42,7 +40,7 @@ const StudentMenu = () => {
 
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

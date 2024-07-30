@@ -1,8 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import HomePage from './pages/HomePage';
+import PageNotFound from './pages/PageNotFound';
 import About from './pages/About';
-import PageNotFound from './pages/PageNotFound'
+import Contact from './pages/Contact';
 import Register from './pages/Auth/Register';
 import Login from './pages/Auth/Login';
 import AdminDashboard from './pages/Admin/AdminDashboard';
@@ -15,10 +16,10 @@ import ForgotPassword from './pages/Auth/ForgotPassword';
 import AllUsers from './pages/Admin/AllUsers';
 import { PrivateRoute } from './components/Routes/Private';
 import { AdminRoute } from './components/Routes/AdminRoute';
-import CreateGrade from './pages/Grade/CreateGrade';
+import CreateGrade from './pages/Admin/CreateGrade';
 import ContentLinks from './pages/Admin/ContentLinks';
 import PublishResult from './pages/Admin/PublishResult';
-import CreateCourse from './pages/Admin/CreateCoruse';
+import CreateCourse from './pages/Admin/CreateCourse';
 import AllCourses from './pages/Admin/AllCourses';
 import UpdateCourse from './pages/Admin/UpdateCourse';
 import SetPaymentStatus from './pages/Admin/SetPaymentStatus';
@@ -50,6 +51,7 @@ function App() {
           <Route path='admin/all-users' element={<AllUsers />} />
         </Route>
         <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact />} />
         <Route path='*' element={<PageNotFound />} />
 
 

@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Spinner from '../../components/Spinner';
+import { useAuth } from '../../context/auth';
 import { Select } from 'antd';
 const { Option } = Select;
 
@@ -17,6 +18,7 @@ const Register = () => {
     const [answer, setAnswer] = useState("");
     const [password, setPassword] = useState("");
     const [spinnerLoading, setSpinnerLoading] = useState(false);
+    const [auth] = useAuth();
     const navigate = useNavigate();
 
     //Get All Grades
@@ -64,8 +66,13 @@ const Register = () => {
         }
     }
 
+    //redirect based on user auth
+    if (auth.token) {
+        auth.user.role === 1 ? navigate('/dashboard/admin') : navigate('/dashboard/student');
+    }
+
     return (
-        <Layout title={"Register Now - C-LAB"}>
+        <Layout title={"5Points - Register Now"}>
             <div className="form-container">
                 <div className="container">
                     <div className="row">

@@ -4,7 +4,7 @@ import GoBackButton from '../../components/GoBackButton';
 
 const AdminMenu = () => {
     return (
-        <div className='sticky-post'>
+        <div>
             <div className="text-center" >
                 <div className="list-group">
                     <div className='border-bottom'>

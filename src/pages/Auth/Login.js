@@ -47,8 +47,14 @@ const Login = () => {
             setSpinnerLoading(false);
         }
     }
+
+    //redirection based on auth
+    if (auth.token) {
+        auth.user.role === 1 ? navigate('/dashboard/admin') : navigate('/dashboard/student');
+    }
+
     return (
-        <Layout title={"Log In - C-LAB"}>
+        <Layout title={"5Points - Log In"}>
             <div className="form-container">
                 <div className="container d-md-flex">
                     <div className="row m-3">

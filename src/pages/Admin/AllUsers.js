@@ -31,7 +31,7 @@ const Users = () => {
     //delete users
     const handleDelete = async (uId) => {
         try {
-            let answer = window.confirm("Are you sure want to delete this user?")
+            let answer = window.confirm("Are you sure want to delete this user? Payment & Result Data of this user will also be deleted.")
             if (!answer) return;
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/auth/delete-user/${uId}`);
             if (data.success) {

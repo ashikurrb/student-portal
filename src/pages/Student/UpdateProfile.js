@@ -25,16 +25,19 @@ const UpdateProfile = () => {
                                     </label>
                                 </div>
                                 <div className="mb-3">
-                                    <input type="text" className="form-control" id="exampleInputName" placeholder='Name' required />
+                                    <input type="text" className="form-control" id="exampleInputName" placeholder='Updated Name' required />
                                 </div>
                                 <div className="mb-3 " >
-                                    <input type="email" readonly className="form-control" id="exampleInputEmail" placeholder='Email' required disabled />
+                                    <input type="email" readonly className="form-control" id="exampleInputEmail" placeholder='Email' disabled />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="password" className="form-control" id="exampleInputPassword1" placeholder='Password' required />
+                                    <input type="number" className="form-control" id="exampleInputPhone" placeholder='Updated Phone Number' required />
                                 </div>
+                                <div className="mb-3 " >
+                                        <input type="text" readonly className="form-control" id="exampleInputEmail" placeholder='Grade' disabled />
+                                    </div>
                                 <div className="mb-3">
-                                    <input type="number" className="form-control" id="exampleInputPhone" placeholder='Phone Number' required />
+                                    <input type="password" className="form-control" id="exampleInputPassword1" placeholder='New Password' required />
                                 </div>
                                 <div className="text-center">
                                     <button type="submit" className=" btn btn-primary">Update</button>
