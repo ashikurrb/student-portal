@@ -190,11 +190,11 @@ return (
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Publish Result</h2>
                         <div className="m-1">
-                            <div className="mb-4 d-lg-flex">
+                            <div className="d-lg-flex">
                                 <Select bordered={false}
                                     placeholder="Select Grade"
                                     size='large'
-                                    className='form-select mb-1 mx-1'
+                                    className='form-select m-2'
                                     onChange={(value) => { setGrade(value) }}>
                                     {grades?.map(g => (
                                         <Option key={g._id} value={g._id}>{g.name}</Option>
@@ -203,40 +203,40 @@ return (
                                 <Select bordered={false}
                                     placeholder="Select Student"
                                     size='large'
-                                    className='form-select mb-1 mx-1'
+                                    className='form-select m-2'
                                     onChange={(value) => { setUser(value) }} required>
                                     {filteredUsers?.map(u => (
                                         <Option key={u._id} value={u._id}>{u.name}</Option>
                                     ))}
                                 </Select>
                             </div>
-                            <div className="mb-4 d-lg-flex">
+                            <div className="d-lg-flex">
                                 <input
                                     type="text"
                                     placeholder='Exam Type'
-                                    className='form-control form-input mb-2 me-2'
+                                    className='form-control form-input m-2'
                                     value={type}
                                     onChange={(e) => setType(e.target.value)} required
                                 />
                                 <input
                                     type="text"
                                     placeholder='Subject'
-                                    className='form-control form-input mb-2 me-2'
+                                    className='form-control form-input m-2'
                                     value={subject}
                                     onChange={(e) => setSubject(e.target.value)} required
                                 />
                             </div>
-                            <div className="mb-4 d-lg-flex">
-                            <DatePicker format={dateFormat} className='w-100 me-2 form-control' onChange={(date) => setExamDate(date)} required />
+                            <div className="d-lg-flex">
+                            <DatePicker format={dateFormat} className='w-100 m-2 form-control' onChange={(date) => setExamDate(date)} required />
                                 <input
                                     type="text"
                                     placeholder='Marks'
-                                    className='form-control'
+                                    className='form-control m-2'
                                     value={marks}
                                     onChange={(e) => setMarks(e.target.value)} required
                                 />
                             </div>
-                            <div className="mb-3 text-center">
+                            <div className="m-3 text-center">
                                 <button className="btn btn-warning fw-bold" onClick={handlePublish}>
                                 {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}  
                                 </button>

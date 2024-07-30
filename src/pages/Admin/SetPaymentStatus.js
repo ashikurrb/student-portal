@@ -208,11 +208,11 @@ const SetPaymentStatus = () => {
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Create Payment Status</h2>
                         <div className="m-1">
-                            <div className="mb-4 d-lg-flex">
+                            <div className="d-lg-flex">
                                 <Select bordered={false}
                                     placeholder="Select Grade"
                                     size='large'
-                                    className='form-select mb-1 mx-1'
+                                    className='form-select m-2'
                                     onChange={(value) => { setGrade(value) }}>
                                     {grades?.map(g => (
                                         <Option key={g._id} value={g._id}>{g.name}</Option>
@@ -221,35 +221,35 @@ const SetPaymentStatus = () => {
                                 <Select bordered={false}
                                     placeholder="Select Student"
                                     size='large'
-                                    className='form-select mb-1 mx-1'
+                                    className='form-select m-2'
                                     onChange={(value) => { setUser(value) }} required>
                                     {filteredUsers?.map(u => (
                                         <Option key={u._id} value={u._id}>{u.name}</Option>
                                     ))}
                                 </Select>
                             </div>
-                            <div className="mb-4 d-lg-flex">
+                            <div className="d-lg-flex">
                                 <input
                                     type="text"
                                     placeholder='Remark'
-                                    className='form-control mb-1 mx-1'
+                                    className='form-control m-2'
                                     value={remark}
                                     onChange={(e) => setRemark(e.target.value)} required
                                 />
                                 <input
                                     type="number"
                                     placeholder='Amount'
-                                    className='form-control mb-1 mx-1'
+                                    className='form-control m-2'
                                     value={amount}
                                     onChange={(e) => setAmount(e.target.value)} required
                                 />
-                                <DatePicker format={dateFormat} className='form-control w-100 mx-1 mb-2' onChange={(date) => setPaymentDate(date)} required />
+                                <DatePicker format={dateFormat} className='form-control w-100 m-2' onChange={(date) => setPaymentDate(date)} required />
                             </div>
-                            <div className="mb-4 d-lg-flex">
+                            <div className="d-lg-flex">
                                 <Select bordered={false}
                                     placeholder="Select Method"
                                     size='large'
-                                    className='form-select mb-1 mx-1'
+                                    className='form-select m-2'
                                     onChange={(value) => { setMethod(value) }}
                                     required>
                                     {methods.map((m, i) => (
@@ -259,12 +259,12 @@ const SetPaymentStatus = () => {
                                 <input
                                     type="text"
                                     placeholder='Transaction ID / Receipt No'
-                                    className='form-control mb-2 mx-1'
+                                    className='form-control m-2'
                                     value={trxId}
                                     onChange={(e) => setTrxId(e.target.value)} required
                                 />
                             </div>
-                            <div className="mb-3 text-center">
+                            <div className="m-3 text-center">
                                 <button className="btn btn-warning fw-bold" onClick={handleCreate}>
                                     {spinnerLoading ? <Spinner /> : "Create Payment Status"}
                                 </button>
