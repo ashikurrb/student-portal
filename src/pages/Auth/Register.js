@@ -103,7 +103,11 @@ const Register = () => {
                                     <select className="form-select" aria-label="Default select example" onChange={(e) => { setGrade(e.target.value) }} required>
                                         <option selected disabled>Select Grade</option>
                                         {grades?.map(g => (
-                                            <option key={g._id} value={g._id}>{g.name}</option>
+                                            <option key={g._id}
+                                                value={g._id}
+                                                disabled={g?.name === "Administration"}>
+                                                {g.name}
+                                            </option>
                                         ))}
                                     </select>
                                 </div>

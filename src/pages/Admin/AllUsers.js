@@ -5,7 +5,7 @@ import { useAuth } from '../../context/auth';
 import Spinner from '../../components/Spinner'; import axios from 'axios';
 import toast from 'react-hot-toast';
 import moment from "moment";
-import { Modal, Select, Alert, Tooltip } from 'antd';
+import { Modal, Select, Alert, Tooltip, Checkbox } from 'antd';
 const { Option } = Select;
 
 
@@ -20,8 +20,6 @@ const Users = () => {
     const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
     const [visible, setVisible] = useState(false);
     const [selected, setSelected] = useState({});
-    const [user, setUser] = useState('');
-    const [userId, setUserId] = ([]);
 
     //Get All Grades
     const getAllGrades = async () => {
@@ -68,13 +66,12 @@ const Users = () => {
                 toast.success(data?.message);
                 getAllUsers();
                 // Clear form fields after submit
-               setUpdatedGrade("");
+                setUpdatedGrade("");
                 setVisible(false)
             } else {
                 toast.success("User's Grade Updated Successfully");
                 setUpdateSpinnerLoading(false);
             }
-
         } catch (error) {
             console.log(error);
             toast.error('Something went wrong');
@@ -86,7 +83,7 @@ const Users = () => {
     const openModal = (users) => {
         setVisible(true);
         setSelected(users);
-        setUpdatedGrade(users.grade.name)
+        setUpdatedGrade(users.grade.name);
     }
 
     //delete users
@@ -143,9 +140,12 @@ const Users = () => {
                                                 <tr>
                                                     <th scope='row'>{i + 1}</th>
                                                     <td>{u.name}</td>
-                                                    <td>
+                                                    <td >
                                                         <Tooltip title="Click here to update grade">
-                                                            <button className='btn border' onClick={() => { openModal(u) }}>{u?.grade?.name}</button>
+                                                            <button className='btn border'
+                                                                onClick={() => { openModal(u) }}
+                                                                disabled={u?.grade?.name === "Administration"}>
+                                                                {u?.grade?.name}</button>
                                                         </Tooltip>
                                                     </td>
                                                     <td>{u.email}</td>
@@ -155,7 +155,6 @@ const Users = () => {
                                                         {
                                                             u.role === 0 ? <span class="badge text-bg-success">Student</span> : u.role === 1 ? <span class="badge text-bg-warning">Admin</span> : <span class="badge text-bg-danger">{u.role}</span>
                                                         }
-
                                                     </td>
                                                     <td>{moment(u?.createdAt).format('lll')}</td>
                                                     <td>
@@ -188,7 +187,11 @@ const Users = () => {
                                                             value={updatedGrade}
                                                             onChange={(value) => { setUpdatedGrade(value) }}>
                                                             {grades?.map(g => (
-                                                                <Option key={g._id} value={g._id}>{g.name}</Option>
+                                                                <Option key={g._id}
+                                                                    value={g._id}
+                                                                    disabled={g?.name === "Administration"}>
+                                                                    {g.name}
+                                                                </Option>
                                                             ))}
                                                         </Select>
                                                     </Modal>
