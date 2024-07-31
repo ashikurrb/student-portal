@@ -269,7 +269,7 @@ const PublishResult = () => {
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{r?.grade?.name}</td>
                                                             <td>
-                                                                <Tooltip title={`Created: ${moment(r.createdAt).format('llll')}, Updated: ${moment(r.updatedAt).format('llll')}`}>
+                                                                <Tooltip title={`Created: ${moment(r.createdAt).format('llll')} Updated: ${moment(r.updatedAt).format('llll')}`}>
                                                                     <span>{r?.user?.name}</span>
                                                                 </Tooltip>
                                                             </td>

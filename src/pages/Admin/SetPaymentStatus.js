@@ -16,8 +16,8 @@ const SetPaymentStatus = () => {
     const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
     const [auth, setAuth] = useAuth();
     const [users, setUsers] = useState([]);
-    const [filteredUsers, setFilteredUsers] = useState([]);
     const [user, setUser] = useState('');
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [grades, setGrades] = useState([]);
     const [grade, setGrade] = useState('');
     const [remark, setRemark] = useState('');
@@ -295,7 +295,7 @@ const SetPaymentStatus = () => {
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{p?.grade?.name}</td>
                                                             <td>
-                                                                <Tooltip title={`Created: ${moment(p.createdAt).format('llll')}, Updated: ${moment(p.updatedAt).format('llll')}`}>
+                                                                <Tooltip title={`Created: ${moment(p.createdAt).format('llll')} Updated: ${moment(p.updatedAt).format('llll')}`}>
                                                                     <span>{p?.user?.name}</span>
                                                                 </Tooltip>
                                                             </td>

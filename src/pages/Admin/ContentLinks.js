@@ -240,7 +240,7 @@ const ContentLinks = () => {
                                                             <th scope='row'>{i + 1}</th>
                                                             <td>{c?.grade?.name}</td>
                                                             <td>
-                                                                <Tooltip title={`Created: ${moment(c.createdAt).format('llll')}, Updated: ${moment(c.updatedAt).format('llll')}`}>
+                                                                <Tooltip title={`Created: ${moment(c.createdAt).format('llll')} Updated: ${moment(c.updatedAt).format('llll')}`}>
                                                                     <span>{c?.subject}</span>
                                                                 </Tooltip>
                                                             </td>                                                            <td>{c.remark}</td>

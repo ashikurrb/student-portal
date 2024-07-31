@@ -16,12 +16,14 @@ const CreateGrade = () => {
     const [visible, setVisible] = useState(false);
     const [selected, setSelected] = useState(null);
 
-    //handle GradeForm Submit
-    const handleSubmit = async (e) => {
+    //create grade
+    const handleCreate = async (e) => {
         e.preventDefault();
         setSpinnerLoading(true);
         try {
-            const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/grade/create-grade`, { name })
+            const gradeData = new FormData();
+            gradeData.append("name", name);
+            const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/grade/create-grade`, gradeData)
             if (data?.success) {
                 setSpinnerLoading(false);
                 setName("");
@@ -59,7 +61,9 @@ const CreateGrade = () => {
         e.preventDefault();
         setUpdateSpinnerLoading(true);
         try {
-            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/grade/update-grade/${selected._id}`, { name: updatedName })
+            const updatedGradeData = new FormData();
+            updatedGradeData.append("name", updatedName);
+            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/grade/update-grade/${selected._id}`, updatedGradeData)
             if (data.success) {
                 setUpdateSpinnerLoading(false);
                 toast.success(`${updatedName} updated successfully`)
@@ -110,7 +114,7 @@ const CreateGrade = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Create Grade</h2>
-                        <form className="p-3" onSubmit={handleSubmit}>
+                        <form className="p-3" onSubmit={handleCreate}>
                             <div>
                                 <input
                                     type="text"
