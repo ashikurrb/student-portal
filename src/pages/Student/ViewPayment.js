@@ -34,7 +34,7 @@ const ViewPayment = () => {
     // Function to generate invoice PDF
     const generateInvoice = (payment) => {
         const doc = new jsPDF();
-        doc.setFontSize(20);
+        doc.setFontSize(22);
         const instituteName = '5Points Academy';
         const pageWidth1 = doc.internal.pageSize.getWidth();
         const titleWidth1 = doc.getTextWidth(instituteName);
@@ -45,22 +45,28 @@ const ViewPayment = () => {
         const pageWidth2 = doc.internal.pageSize.getWidth();
         const titleWidth2 = doc.getTextWidth(addressName);
         const titleX2 = (pageWidth2 - titleWidth2) / 2;
-        doc.text(addressName, titleX2, 18);
+        doc.text(addressName, titleX2, 19);
+        doc.setFontSize(11);
+        const mobile = '+880 1853-660115';
+        const pageWidth3 = doc.internal.pageSize.getWidth();
+        const titleWidth3 = doc.getTextWidth(mobile);
+        const titleX3 = (pageWidth3 - titleWidth3) / 2;
+        doc.text(mobile, titleX3, 25);
         doc.setFontSize(16);
         const title = 'Payment Invoice';
         const pageWidth = doc.internal.pageSize.getWidth();
         const titleWidth = doc.getTextWidth(title);
         const titleX = (pageWidth - titleWidth) / 2; // Center the title
-        doc.text(title, titleX, 30);
+        doc.text(title, titleX, 36);
         doc.setFontSize(12);
-        doc.text(`Date: ${moment(payment.paymentDate).format('ll')}`, 14, 42);
-        doc.text(`Name: ${auth.user.name}`, 14, 52);
-        doc.text(`Grade: ${auth.user.grade.name}`, 14, 62);
-        doc.text(`Email: ${auth.user.email}`, 14, 72);
-        doc.text(`Mobile: ${auth.user.phone}`, 14, 82);
+        doc.text(`Date: ${moment(payment.paymentDate).format('ll')}`, 14, 54);
+        doc.text(`Name: ${auth.user.name}`, 14, 64);
+        doc.text(`Grade: ${auth.user.grade.name}`, 14, 74);
+        doc.text(`Email: ${auth.user.email }`, 14, 84);
+        doc.text(`Mobile: ${auth.user.phone}`, 14, 94);
 
         doc.autoTable({
-            startY: 92,
+            startY: 104,
             head: [['Remark', 'Amount', "Method", "Trx ID / Receipt No"]],
             body: [
                 [`${payment.remark}`, `TK. ${payment.amount}`, `${payment.method}`, `${payment.trxId}`]
@@ -75,8 +81,9 @@ const ViewPayment = () => {
             const imgWidth = 50; // Width of the image
             const imgHeight = 20; // Height of the image
             const marginRight = 14; // Right margin
+
             const imgX = pageWidth - imgWidth - marginRight; // X coordinate to place the image on the right side
-            const imgY = finalY + 7; // Y coordinate to place the image below the table
+            const imgY = finalY + 10; // Y coordinate to place the image below the table
 
             // Add the signature image
             doc.addImage(img, 'PNG', imgX, imgY, imgWidth, imgHeight);
@@ -91,17 +98,17 @@ const ViewPayment = () => {
             doc.text('Authority', textX, textY, { align: 'center' });
 
             // Create a Blob URL and open it in a new window for printing
-            const blob = doc.output('blob');
-            const url = URL.createObjectURL(blob);
-            const printWindow = window.open(url, '_blank');
-            if (printWindow) {
-                printWindow.focus();
-                printWindow.onload = function () {
-                    printWindow.print();
-                };
-            } else {
-                toast.error('Failed to open the print window');
-            }
+        const blob = doc.output('blob');
+        const url = URL.createObjectURL(blob);
+        const printWindow = window.open(url, '_blank');
+        if (printWindow) {
+            printWindow.focus();
+            printWindow.onload = function () {
+                printWindow.print();
+            };
+        } else {
+            toast.error('Failed to open the print window');
+        }
 
         };
         img.onerror = (err) => {
@@ -109,7 +116,6 @@ const ViewPayment = () => {
             toast.error('Failed to load signature image');
         };
     };
-
     console.log(auth);
     console.log(payment);
     return (

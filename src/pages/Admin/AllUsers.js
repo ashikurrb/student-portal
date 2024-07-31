@@ -110,12 +110,12 @@ const Users = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>All User's List ({users?.length})</h2>
-                        <div className="w-50 align-items-center"><Alert
+                            <Alert
                             className='my-2 mx-4'
                             message="Click on Grade name to update user's grade."
                             type="info"
                             showIcon
-                        /></div>
+                        />
                         {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <div className="table-container">
                             <table className='table'>
                                 <thead className='table-dark'>

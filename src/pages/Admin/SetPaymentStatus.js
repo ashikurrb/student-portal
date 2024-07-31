@@ -203,7 +203,7 @@ const SetPaymentStatus = () => {
     // Function to generate invoice PDF
     const generateInvoice = (payment) => {
         const doc = new jsPDF();
-        doc.setFontSize(20);
+        doc.setFontSize(22);
         const instituteName = '5Points Academy';
         const pageWidth1 = doc.internal.pageSize.getWidth();
         const titleWidth1 = doc.getTextWidth(instituteName);
@@ -214,22 +214,28 @@ const SetPaymentStatus = () => {
         const pageWidth2 = doc.internal.pageSize.getWidth();
         const titleWidth2 = doc.getTextWidth(addressName);
         const titleX2 = (pageWidth2 - titleWidth2) / 2;
-        doc.text(addressName, titleX2, 18);
+        doc.text(addressName, titleX2, 19);
+        doc.setFontSize(11);
+        const mobile = '+880 1853-660115';
+        const pageWidth3 = doc.internal.pageSize.getWidth();
+        const titleWidth3 = doc.getTextWidth(mobile);
+        const titleX3 = (pageWidth3 - titleWidth3) / 2;
+        doc.text(mobile, titleX3, 25);
         doc.setFontSize(16);
         const title = 'Payment Invoice';
         const pageWidth = doc.internal.pageSize.getWidth();
         const titleWidth = doc.getTextWidth(title);
         const titleX = (pageWidth - titleWidth) / 2; // Center the title
-        doc.text(title, titleX, 30);
+        doc.text(title, titleX, 36);
         doc.setFontSize(12);
-        doc.text(`Date: ${moment(payment.paymentDate).format('ll')}`, 14, 42);
-        doc.text(`Name: ${payment.user.name}`, 14, 52);
-        doc.text(`Grade: ${payment.grade.name}`, 14, 62);
-        doc.text(`Email: ${payment.user.email }`, 14, 72);
-        doc.text(`Mobile: ${payment.user.phone}`, 14, 82);
+        doc.text(`Date: ${moment(payment.paymentDate).format('ll')}`, 14, 54);
+        doc.text(`Name: ${payment.user.name}`, 14, 64);
+        doc.text(`Grade: ${payment.grade.name}`, 14, 74);
+        doc.text(`Email: ${payment.user.email }`, 14, 84);
+        doc.text(`Mobile: ${payment.user.phone}`, 14, 94);
 
         doc.autoTable({
-            startY: 92,
+            startY: 104,
             head: [['Remark', 'Amount', "Method", "Trx ID / Receipt No"]],
             body: [
                 [`${payment.remark}`, `TK. ${payment.amount}`, `${payment.method}`, `${payment.trxId}`]
