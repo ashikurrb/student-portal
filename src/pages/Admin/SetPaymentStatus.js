@@ -75,7 +75,7 @@ const SetPaymentStatus = () => {
             const filtered = users.filter(user => user.grade._id === grade);
             setFilteredUsers(filtered);
         } else {
-            setFilteredUsers(users);
+            setFilteredUsers([]);
         }
     }, [grade, users]);
 

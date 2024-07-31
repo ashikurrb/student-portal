@@ -17,7 +17,7 @@ import AllUsers from './pages/Admin/AllUsers';
 import { PrivateRoute } from './components/Routes/Private';
 import { AdminRoute } from './components/Routes/AdminRoute';
 import CreateGrade from './pages/Admin/CreateGrade';
-import ContentLinks from './pages/Admin/ContentLinks';
+import CreateContent from './pages/Admin/CreateContent';
 import PublishResult from './pages/Admin/PublishResult';
 import CreateCourse from './pages/Admin/CreateCourse';
 import AllCourses from './pages/Admin/AllCourses';
@@ -42,7 +42,7 @@ function App() {
         <Route path='/dashboard' element={<AdminRoute />}>
           <Route path='admin' element={<AdminDashboard />} />
           <Route path='admin/create-grade' element={<CreateGrade />} />
-          <Route path='admin/create-link' element={<ContentLinks />} />
+          <Route path='admin/create-link' element={<CreateContent />} />
           <Route path='admin/create-course' element={<CreateCourse />} />
           <Route path='admin/all-courses' element={<AllCourses />} />
           <Route path="admin/course/:slug" element={<UpdateCourse />} />

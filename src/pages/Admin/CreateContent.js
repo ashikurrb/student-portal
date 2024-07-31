@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { Modal, Select, Tooltip } from 'antd';
 const { Option } = Select;
 
-const ContentLinks = () => {
+const CreateContent = () => {
     const [spinnerLoading, setSpinnerLoading] = useState(false);
     const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
@@ -313,4 +313,4 @@ const ContentLinks = () => {
     );
 };
 
-export default ContentLinks;
+export default CreateContent;

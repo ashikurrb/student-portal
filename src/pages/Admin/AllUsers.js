@@ -5,12 +5,12 @@ import { useAuth } from '../../context/auth';
 import Spinner from '../../components/Spinner'; import axios from 'axios';
 import toast from 'react-hot-toast';
 import moment from "moment";
-import { Modal, Select, Alert, Tooltip, Checkbox } from 'antd';
+import { Modal, Select, Alert, Tooltip } from 'antd';
 const { Option } = Select;
 
 
 
-const Users = () => {
+const AllUsers = () => {
     const [auth, setAuth] = useAuth();
     const [users, setUsers] = useState([]);
     const [grades, setGrades] = useState([]);
@@ -142,10 +142,10 @@ const Users = () => {
                                                     <td>{u.name}</td>
                                                     <td >
                                                         <Tooltip title="Click here to update grade">
-                                                            <button className='btn border'
+                                                            <p className='border rounded p-2'
                                                                 onClick={() => { openModal(u) }}
                                                                 disabled={u?.grade?.name === "Administration"}>
-                                                                {u?.grade?.name}</button>
+                                                                {u?.grade?.name}</p>
                                                         </Tooltip>
                                                     </td>
                                                     <td>{u.email}</td>
@@ -219,4 +219,4 @@ const Users = () => {
     );
 };
 
-export default Users;
+export default AllUsers;
