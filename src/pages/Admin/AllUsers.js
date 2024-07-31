@@ -164,7 +164,11 @@ const Users = () => {
                                                             )
                                                         }
                                                     </td>
-                                                    <Modal onCancel={() => setVisible(false)} onOk={handleUpdate} visible={visible}>
+                                                    <Modal
+                                                        visible={visible}
+                                                        onCancel={() => setVisible(false)}
+                                                        
+                                                        footer={null}>
                                                         <h5 className='text-center'>User Grade Upgrading</h5>
                                                         <Alert
                                                             className='m-3'
@@ -194,6 +198,11 @@ const Users = () => {
                                                                 </Option>
                                                             ))}
                                                         </Select>
+                                                        <div className='text-center mt-3'>
+                                                            <button onClick={handleUpdate} className="btn btn-warning fw-bold">
+                                                                {updateSpinnerLoading ? <Spinner /> : "Update Grade"}
+                                                            </button>
+                                                        </div>
                                                     </Modal>
                                                 </tr>
                                             )
@@ -206,7 +215,7 @@ const Users = () => {
                     </div>
                 </div>
             </div>
-        </Layout>
+        </Layout >
     );
 };
 
