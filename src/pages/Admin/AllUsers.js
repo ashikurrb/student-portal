@@ -110,12 +110,18 @@ const AllUsers = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>All User's List ({users?.length})</h2>
+                        <div className="d-flex justify-content-center">
                             <Alert
-                            className='my-2 mx-4'
-                            message="Click on Grade name to update user's grade."
-                            type="info"
-                            showIcon
-                        />
+                                className='m-2 col-md-4'
+                                message={
+                                    <>
+                                        <b>Click on Grade value to update user's grade</b>
+                                    </>
+                                }
+                                type="info"
+                                showIcon
+                            />
+                        </div>
                         {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <div className="table-container">
                             <table className='table'>
                                 <thead className='table-dark'>
@@ -132,7 +138,6 @@ const AllUsers = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     {
                                         users.map((u, i) => {
                                             return (
@@ -167,12 +172,16 @@ const AllUsers = () => {
                                                     <Modal
                                                         visible={visible}
                                                         onCancel={() => setVisible(false)}
-                                                        
+
                                                         footer={null}>
                                                         <h5 className='text-center'>User Grade Upgrading</h5>
                                                         <Alert
                                                             className='m-3'
-                                                            message="Changing grade of user will change his access to the available content"
+                                                            message={
+                                                                <>
+                                                                    <p>Changing <b>GRADE</b> of user will change his access to the available content</p>
+                                                                </>
+                                                            }
                                                             type="warning"
                                                             showIcon
                                                         />

@@ -64,13 +64,13 @@ const PublishResult = () => {
     }, [auth?.token])
 
     // Filter users by grade
-   useEffect(() => {
+    useEffect(() => {
         if (grade) {
             const filtered = users.filter(user => user.grade._id === grade);
             setFilteredUsers(filtered);
         } else {
             setFilteredUsers([]);
-        }
+        } setUser(null);
     }, [grade, users]);
 
     //publish result

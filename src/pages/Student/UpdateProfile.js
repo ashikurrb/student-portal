@@ -70,7 +70,6 @@ const UpdateProfile = () => {
                         <div className="form-container">
                             <form onSubmit={handleUpdate} className='custom-profile'>
                                 <h4 className="text-center pb-3">Update your Profile</h4>
-
                                 <div className="mb-3">
                                     <h6 className='text-center my-3'>Maximum Photo size is 1 MB</h6>
                                     {photo && (

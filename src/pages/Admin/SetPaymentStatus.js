@@ -231,7 +231,7 @@ const SetPaymentStatus = () => {
         doc.text(`Date: ${moment(payment.paymentDate).format('ll')}`, 14, 54);
         doc.text(`Name: ${payment.user.name}`, 14, 64);
         doc.text(`Grade: ${payment.grade.name}`, 14, 74);
-        doc.text(`Email: ${payment.user.email }`, 14, 84);
+        doc.text(`Email: ${payment.user.email}`, 14, 84);
         doc.text(`Mobile: ${payment.user.phone}`, 14, 94);
 
         doc.autoTable({
@@ -267,17 +267,17 @@ const SetPaymentStatus = () => {
             doc.text('Authority', textX, textY, { align: 'center' });
 
             // Create a Blob URL and open it in a new window for printing
-        const blob = doc.output('blob');
-        const url = URL.createObjectURL(blob);
-        const printWindow = window.open(url, '_blank');
-        if (printWindow) {
-            printWindow.focus();
-            printWindow.onload = function () {
-                printWindow.print();
-            };
-        } else {
-            toast.error('Failed to open the print window');
-        }
+            const blob = doc.output('blob');
+            const url = URL.createObjectURL(blob);
+            const printWindow = window.open(url, '_blank');
+            if (printWindow) {
+                printWindow.focus();
+                printWindow.onload = function () {
+                    printWindow.print();
+                };
+            } else {
+                toast.error('Failed to open the print window');
+            }
 
         };
         img.onerror = (err) => {
