@@ -146,7 +146,7 @@ const PublishResult = () => {
                 setUpdatedType('');
                 setUpdatedSubject('');
                 setUpdatedMarks('');
-                setUpdatedExamDate('');
+                setUpdatedExamDate(undefined);
                 setVisible(false)
             } else {
                 toast.success("Result Updated Successfully");
@@ -297,8 +297,16 @@ const PublishResult = () => {
             </div>
             <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
                 <h5 className='text-center'>Update Result</h5>
-                <form className='mt-4' onSubmit={handleUpdate}>
-                    <input
+                <div className='text-center my-3'>
+                    {
+                        <p>
+                            {selected?.user?.name} - {selected?.grade?.name}
+                        </p>
+                    }
+                </div>
+                <form onSubmit={handleUpdate}>
+                   <div className="mt-4 d-lg-flex">
+                   <input
                         type="text"
                         placeholder='Exam Type'
                         className='form-control form-input mb-2 me-2'
@@ -308,10 +316,11 @@ const PublishResult = () => {
                     <input
                         type="text"
                         placeholder='Subject'
-                        className='form-control form-input mb-2 me-2'
+                        className='form-control form-input mb-2'
                         value={updatedSubject}
                         onChange={(e) => setUpdatedSubject(e.target.value)} required
                     />
+                   </div>
                     <DatePicker format={dateFormat} value={updatedExamDate} className='w-100 mb-2 me-2 form-control' onChange={(date) => setUpdatedExamDate(date)} required />
                     <input
                         type="text"

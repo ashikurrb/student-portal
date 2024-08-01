@@ -112,7 +112,7 @@ const CreateContent = () => {
                 // Clear form fields after submit
                 setUpdatedSubject('');
                 setUpdatedReMark('');
-                setUpdatedType('');
+                setUpdatedType(undefined);
                 setUpdatedContentLink('');
                 setVisible(false)
             } else {
@@ -170,7 +170,7 @@ const CreateContent = () => {
                                     placeholder="Select Grade"
                                     size='large'
                                     className='form-select m-2'
-                                    value={grade || undefined} 
+                                    value={grade || undefined}
                                     onChange={(value) => { setGrade(value) }}>
                                     {grades?.map(g => (
                                         <Option key={g._id} value={g._id}>{g.name}</Option>
@@ -269,47 +269,52 @@ const CreateContent = () => {
             </div>
             <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
                 <h5 className='text-center'>Update Content</h5>
-               <form onSubmit={handleUpdate}>
-               <div className="mt-4">
-                    <input
-                        type="text"
-                        placeholder='Subject'
-                        className='form-control mb-2'
-                        value={updatedSubject}
-                        onChange={(e) => setUpdatedSubject(e.target.value)} required
-                    />
-                    <input
-                        type="text"
-                        placeholder='Remark'
-                        className='form-control mb-2'
-                        value={updatedReMark}
-                        onChange={(e) => setUpdatedReMark(e.target.value)} required
-                    />
-                    <Select bordered={false}
-                        placeholder="Select Content Type"
-                        size='large'
-                        className='form-select mb-2'
-                        value={updatedType}
-                        onChange={(value) => { setUpdatedType(value) }}
-                        required>
-                        {types.map((t, i) => (
-                            <Option key={i} value={t}>{t}</Option>
-                        ))}
-                    </Select>
-                    <input
-                        type="text"
-                        placeholder='Paste Link Here'
-                        className='form-control mb-2'
-                        value={updatedContentLink}
-                        onChange={(e) => setUpdatedContentLink(e.target.value)} required
-                    />
+                <div className='text-center my-3'>
+                    {
+                        <h6>{selected?.grade?.name}</h6>
+                    }
                 </div>
-                <div className="text-center">
-                    <button type="submit" className="btn btn-warning fw-bold mt-2">
-                        {updateSpinnerLoading ? <Spinner /> : "Update Content"}
-                    </button>
-                </div>
-               </form>
+                <form onSubmit={handleUpdate}>
+                    <div className="mt-4">
+                        <input
+                            type="text"
+                            placeholder='Subject'
+                            className='form-control mb-2'
+                            value={updatedSubject}
+                            onChange={(e) => setUpdatedSubject(e.target.value)} required
+                        />
+                        <input
+                            type="text"
+                            placeholder='Remark'
+                            className='form-control mb-2'
+                            value={updatedReMark}
+                            onChange={(e) => setUpdatedReMark(e.target.value)} required
+                        />
+                        <Select bordered={false}
+                            placeholder="Select Content Type"
+                            size='large'
+                            className='form-select mb-2'
+                            value={updatedType}
+                            onChange={(value) => { setUpdatedType(value) }}
+                            required>
+                            {types.map((t, i) => (
+                                <Option key={i} value={t}>{t}</Option>
+                            ))}
+                        </Select>
+                        <input
+                            type="text"
+                            placeholder='Paste Link Here'
+                            className='form-control mb-2'
+                            value={updatedContentLink}
+                            onChange={(e) => setUpdatedContentLink(e.target.value)} required
+                        />
+                    </div>
+                    <div className="text-center">
+                        <button type="submit" className="btn btn-warning fw-bold mt-2">
+                            {updateSpinnerLoading ? <Spinner /> : "Update Content"}
+                        </button>
+                    </div>
+                </form>
             </Modal>
         </Layout>
     );

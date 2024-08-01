@@ -172,7 +172,6 @@ const AllUsers = () => {
                                                     <Modal
                                                         visible={visible}
                                                         onCancel={() => setVisible(false)}
-
                                                         footer={null}>
                                                         <h5 className='text-center'>User Grade Upgrading</h5>
                                                         <Alert
@@ -186,12 +185,12 @@ const AllUsers = () => {
                                                             showIcon
                                                         />
                                                         <div className='text-center my-2'>
-                                                            {selected && (
+                                                            {
                                                                 <div className='text-center my-3'>
                                                                     <p>Student Name: <b>{selected.name}</b></p>
                                                                     <p>Current Grade: <b>{selected?.grade?.name}</b></p>
                                                                 </div>
-                                                            )}
+                                                            }
                                                         </div>
                                                         <Select bordered={false}
                                                             placeholder="Select Grade"

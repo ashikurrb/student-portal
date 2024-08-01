@@ -150,13 +150,14 @@ const SetPaymentStatus = () => {
                 setUpdateSpinnerLoading(false);
                 toast.success(data?.message);
                 getAllPayment();
+
                 // Clear form fields after submit
                 setUpdatedRemark('');
                 setUpdatedTrxId('');
-                setUpdatedMethod('');
+                setUpdatedMethod(undefined);
                 setUpdatedAmount('');
-                setUpdatedPaymentDate('');
-                setVisible(false)
+                setUpdatedPaymentDate(undefined);
+                setVisible(false);
             } else {
                 toast.success("Payment Status Updated Successfully");
                 setUpdateSpinnerLoading(false);
@@ -418,29 +419,37 @@ const SetPaymentStatus = () => {
             </div>
             <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
                 <h5 className='text-center'>Update Payment Status</h5>
+                <div className='text-center my-3'>
+                    {
+                        <p>
+                            {selected?.user?.name} - {selected?.grade?.name}
+                        </p>
+                    }
+                </div>
                 <form onSubmit={handleUpdate}>
-                    <div className="mt-4 d-lg-flex">
+                    <div className="mt-4 mb-2 d-lg-flex">
                         <input
                             type="text"
                             placeholder='Remark'
-                            className='form-control mb-1 mx-1'
+                            className='form-control mx-1'
                             value={updatedRemark}
                             onChange={(e) => setUpdatedRemark(e.target.value)} required
                         />
                         <input
                             type="number"
                             placeholder='Amount'
-                            className='form-control mb-1 mx-1'
+                            className='form-control mx-1'
                             value={updatedAmount}
                             onChange={(e) => setUpdatedAmount(e.target.value)} required
                         />
-                        <DatePicker format={dateFormat} value={updatedPaymentDate} className='form-control w-100 mx-1 mb-2' onChange={(date) => setUpdatedPaymentDate(date)} required />
+                        <DatePicker format={dateFormat} value={updatedPaymentDate} className='form-control w-100 mx-1' 
+                        onChange={(date) => setUpdatedPaymentDate(date)} required />
                     </div>
                     <div className="mb-3 d-lg-flex">
                         <Select bordered={false}
                             placeholder="Select Method"
                             size='large'
-                            className='form-select mb-1 mx-1'
+                            className='form-select mx-1'
                             value={updatedMethod}
                             onChange={(value) => { setUpdatedMethod(value) }}
                             required>
