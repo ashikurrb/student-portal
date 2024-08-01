@@ -68,9 +68,10 @@ const PublishResult = () => {
         if (grade) {
             const filtered = users.filter(user => user.grade._id === grade);
             setFilteredUsers(filtered);
+            setUser('');
         } else {
             setFilteredUsers([]);
-        } setUser(null);
+        }
     }, [grade, users]);
 
     //publish result
@@ -79,24 +80,24 @@ const PublishResult = () => {
         setSpinnerLoading(true);
         try {
             const resultData = new FormData();
+            resultData.append("grade", grade);
+            resultData.append("user", user);
             resultData.append("type", type);
             resultData.append("subject", subject);
-            resultData.append("marks", marks);
             resultData.append("examDate", examDate);
-            resultData.append("user", user);
-            resultData.append("grade", grade);
+            resultData.append("marks", marks);
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/result/create-result`, resultData);
             if (data?.success) {
                 setSpinnerLoading(false);
                 toast.success(data?.message);
                 getAllResults();
                 // Clear form fields
+                setGrade(undefined);
+                setUser(undefined);
                 setType('');
                 setSubject('');
+                setExamDate(undefined);
                 setMarks('');
-                setExamDate('');
-                setUser('');
-                setGrade('');
             } else {
                 toast.success("Result Created Successfully");
             }
@@ -197,6 +198,7 @@ const PublishResult = () => {
                                     placeholder="Select Grade"
                                     size='large'
                                     className='form-select m-2'
+                                    value={grade || undefined} 
                                     onChange={(value) => { setGrade(value) }}>
                                     {grades?.map(g => (
                                         <Option key={g._id} value={g._id}>{g.name}</Option>
@@ -206,7 +208,9 @@ const PublishResult = () => {
                                     placeholder="Select Student"
                                     size='large'
                                     className='form-select m-2'
-                                    onChange={(value) => { setUser(value) }} required>
+                                    value={user || undefined} 
+                                    onChange={(value) => { setUser(value) }}
+                                    required>
                                     {filteredUsers?.map(u => (
                                         <Option key={u._id} value={u._id}>{u.name}</Option>
                                     ))}
@@ -229,7 +233,7 @@ const PublishResult = () => {
                                 />
                             </div>
                             <div className="d-lg-flex">
-                                <DatePicker format={dateFormat} className='w-100 m-2 form-control' onChange={(date) => setExamDate(date)} required />
+                                <DatePicker format={dateFormat} className='w-100 m-2 form-control' value={examDate} onChange={(date) => setExamDate(date)} required />
                                 <input
                                     type="text"
                                     placeholder='Marks'

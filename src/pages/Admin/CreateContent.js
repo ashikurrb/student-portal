@@ -79,11 +79,11 @@ const CreateContent = () => {
                 toast.success(data?.message);
                 getAllContent();
                 // Clear form fields
+                setGrade(undefined)
+                setType(undefined);
                 setSubject('');
                 setRemark('');
-                setType('');
                 setContentLink('');
-                setGrade('')
             } else {
                 toast.success("Content Link Created Successfully");
             }
@@ -170,6 +170,7 @@ const CreateContent = () => {
                                     placeholder="Select Grade"
                                     size='large'
                                     className='form-select m-2'
+                                    value={grade || undefined} 
                                     onChange={(value) => { setGrade(value) }}>
                                     {grades?.map(g => (
                                         <Option key={g._id} value={g._id}>{g.name}</Option>
@@ -179,6 +180,7 @@ const CreateContent = () => {
                                     placeholder="Select Content Type"
                                     size='large'
                                     className='form-select m-2'
+                                    value={type}
                                     onChange={(value) => { setType(value) }}
                                     required>
                                     {types.map((t, i) => (

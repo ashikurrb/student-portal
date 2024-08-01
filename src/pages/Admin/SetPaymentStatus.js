@@ -74,6 +74,7 @@ const SetPaymentStatus = () => {
         if (grade) {
             const filtered = users.filter(user => user.grade._id === grade);
             setFilteredUsers(filtered);
+            setUser('');
         } else {
             setFilteredUsers([]);
         }
@@ -99,13 +100,13 @@ const SetPaymentStatus = () => {
                 toast.success(data?.message);
                 getAllPayment();
                 // Clear form fields after submit
-                setMethod('');
-                setAmount('');
+                setGrade(undefined);
+                setUser(undefined);
                 setRemark('');
+                setPaymentDate(undefined);
+                setAmount('');
+                setMethod(undefined);
                 setTrxId('');
-                setPaymentDate('');
-                setUser('');
-                setGrade('');
             } else {
                 toast.success("Payment Status Created Successfully");
             }
@@ -299,6 +300,7 @@ const SetPaymentStatus = () => {
                                     placeholder="Select Grade"
                                     size='large'
                                     className='form-select m-2'
+                                    value={grade || undefined}
                                     onChange={(value) => { setGrade(value) }}>
                                     {grades?.map(g => (
                                         <Option key={g._id} value={g._id}>{g.name}</Option>
@@ -308,6 +310,7 @@ const SetPaymentStatus = () => {
                                     placeholder="Select Student"
                                     size='large'
                                     className='form-select m-2'
+                                    value={user || undefined}
                                     onChange={(value) => { setUser(value) }} required>
                                     {filteredUsers?.map(u => (
                                         <Option key={u._id} value={u._id}>{u.name}</Option>
@@ -329,13 +332,14 @@ const SetPaymentStatus = () => {
                                     value={amount}
                                     onChange={(e) => setAmount(e.target.value)} required
                                 />
-                                <DatePicker format={dateFormat} className='form-control w-100 m-2' onChange={(date) => setPaymentDate(date)} required />
+                                <DatePicker format={dateFormat} className='form-control w-100 m-2' value={paymentDate} onChange={(date) => setPaymentDate(date)} required />
                             </div>
                             <div className="d-lg-flex">
                                 <Select bordered={false}
                                     placeholder="Select Method"
                                     size='large'
                                     className='form-select m-2'
+                                    value={method}
                                     onChange={(value) => { setMethod(value) }}
                                     required>
                                     {methods.map((m, i) => (
