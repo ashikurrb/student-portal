@@ -9,15 +9,15 @@ const AdminMenu = () => {
                 <div className="list-group">
                     <div className='border-bottom'>
                         <div className="row align-items-center">
-                            <div className="col-auto">
+                            <div className="col-auto mb-1">
                                 <GoBackButton />
                             </div>
-                            <div className="col">
+                            <div className="col mb-1">
                                 <NavLink to="/dashboard/admin" className="product-link">
                                     <h4 className="mb-0 me-5 text-center">Admin Menu</h4>
                                 </NavLink>
                             </div>
-                            <div className="col-auto">
+                            <div className="col-auto mb-1">
                                 <button className='btn d-md-none' data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
                                     <i className="fa-solid fa-bars"> </i>
                                 </button>

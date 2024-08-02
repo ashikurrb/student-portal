@@ -24,7 +24,7 @@ const DarkModeButton = () => {
 
     return (
         <div>
-            <button onClick={toggleDarkMode} className='btn'>
+            <button onClick={toggleDarkMode} className='btn ms-2'>
                  {darkMode ? <i className='fa-solid fa-sun'></i> : <i className='fa-solid fa-moon'></i>}
             </button>
         </div>
