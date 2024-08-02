@@ -27,7 +27,7 @@ const Login = () => {
 
             toast.promise(loginPromise, {
                 loading: 'Logging in...',
-                success: 'Log In Successful!',
+                success: 'Login Successful!',
                 error: 'Error in Login',
             });
             const res = await loginPromise;

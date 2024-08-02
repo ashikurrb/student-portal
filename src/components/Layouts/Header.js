@@ -23,7 +23,7 @@ const Header = () => {
 
         toast.promise(logoutPromise, {
             loading: 'Logging out...',
-            success: 'Logout Successfully',
+            success: 'Logout Successful',
             error: 'Error during logout',
         });
     };

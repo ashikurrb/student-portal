@@ -4,7 +4,6 @@ import '../../style/AuthStyle.css'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import Spinner from '../../components/Spinner';
 import { useAuth } from '../../context/auth';
 import { Select } from 'antd';
 const { Option } = Select;
@@ -51,7 +50,7 @@ const Register = () => {
             });
 
             toast.promise(registerPromise, {
-                loading: 'Registering you',
+                loading: 'Registering you...',
                 success: 'Registration Successful. Please Login.',
                 error: 'Error in Register',
             });
