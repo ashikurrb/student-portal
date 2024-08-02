@@ -9,7 +9,7 @@ const AdminMenu = () => {
                 <div className="list-group">
                     <div className='border-bottom'>
                         <div className="row align-items-center">
-                            <div className="col-auto mb-1">
+                            <div className="col-auto">
                                 <GoBackButton />
                             </div>
                             <div className="col mb-1">
