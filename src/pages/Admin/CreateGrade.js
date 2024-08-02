@@ -12,6 +12,7 @@ const CreateGrade = () => {
     const [name, setName] = useState("");
     const [updatedName, setUpdatedName] = useState("");
     const [spinnerLoading, setSpinnerLoading] = useState(false);
+    const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
     const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
     const [visible, setVisible] = useState(false);
     const [selected, setSelected] = useState(null);
@@ -26,9 +27,11 @@ const CreateGrade = () => {
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/grade/create-grade`, gradeData)
             if (data?.success) {
                 setSpinnerLoading(false);
-                setName("");
                 toast.success(`${name} | Grade created successfully`)
                 getAllGrades();
+                //clear fields
+                setName("");
+                setListSpinnerLoading(false);
             } else {
                 toast.error(data.message)
             }
@@ -42,6 +45,7 @@ const CreateGrade = () => {
 
     //Get All Grades
     const getAllGrades = async (req, res) => {
+        setListSpinnerLoading(true);
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/grade/all-grades`)
             if (data.success) {
@@ -50,6 +54,8 @@ const CreateGrade = () => {
         } catch (error) {
             console.log(error);
             toast.error("Error fetching grades")
+        } finally {
+            setListSpinnerLoading(false)
         }
     }
     useEffect(() => {
@@ -67,10 +73,12 @@ const CreateGrade = () => {
             if (data.success) {
                 setUpdateSpinnerLoading(false);
                 toast.success(`${updatedName} updated successfully`)
-                setSelected(null);
-                setUpdatedName("");
-                setVisible(false);
                 getAllGrades();
+                //clear fields
+                setSelected(null);
+                setVisible(false);
+                setUpdatedName("");
+                setListSpinnerLoading(false);
             } else {
                 toast.error(data.message);
             }
@@ -142,8 +150,7 @@ const CreateGrade = () => {
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-
+                                {listSpinnerLoading ? <div className="m-5"><Spinner /></div> : <tbody>
                                     {grades.map((g, i) => (
                                         <tr>
                                             <th scope='row'>{i + 1}</th>
@@ -156,8 +163,7 @@ const CreateGrade = () => {
                                             </td>
                                         </tr>
                                     ))}
-
-                                </tbody>
+                                </tbody>}
                             </table>
                         </div>
                     </div>

@@ -107,6 +107,7 @@ const SetPaymentStatus = () => {
                 setAmount('');
                 setMethod(undefined);
                 setTrxId('');
+                setListSpinnerLoading(false);
             } else {
                 toast.success("Payment Status Created Successfully");
             }
@@ -158,6 +159,7 @@ const SetPaymentStatus = () => {
                 setUpdatedAmount('');
                 setUpdatedPaymentDate(undefined);
                 setVisible(false);
+                setListSpinnerLoading(false);
             } else {
                 toast.success("Payment Status Updated Successfully");
                 setUpdateSpinnerLoading(false);

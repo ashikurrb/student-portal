@@ -98,6 +98,7 @@ const PublishResult = () => {
                 setSubject('');
                 setExamDate(undefined);
                 setMarks('');
+                setListSpinnerLoading(false);
             } else {
                 toast.success("Result Created Successfully");
             }
@@ -147,7 +148,8 @@ const PublishResult = () => {
                 setUpdatedSubject('');
                 setUpdatedMarks('');
                 setUpdatedExamDate(undefined);
-                setVisible(false)
+                setVisible(false);
+                setListSpinnerLoading(false);
             } else {
                 toast.success("Result Updated Successfully");
                 setUpdateSpinnerLoading(false);
@@ -198,7 +200,7 @@ const PublishResult = () => {
                                     placeholder="Select Grade"
                                     size='large'
                                     className='form-select m-2'
-                                    value={grade || undefined} 
+                                    value={grade || undefined}
                                     onChange={(value) => { setGrade(value) }}>
                                     {grades?.map(g => (
                                         <Option key={g._id} value={g._id}>{g.name}</Option>
@@ -208,7 +210,7 @@ const PublishResult = () => {
                                     placeholder="Select Student"
                                     size='large'
                                     className='form-select m-2'
-                                    value={user || undefined} 
+                                    value={user || undefined}
                                     onChange={(value) => { setUser(value) }}
                                     required>
                                     {filteredUsers?.map(u => (
@@ -305,32 +307,32 @@ const PublishResult = () => {
                     }
                 </div>
                 <form onSubmit={handleUpdate}>
-                   <div className="mt-4 d-lg-flex">
-                   <input
-                        type="text"
-                        placeholder='Exam Type'
-                        className='form-control form-input mb-2 me-2'
-                        value={updatedType}
-                        onChange={(e) => setUpdatedType(e.target.value)} required
-                    />
-                    <input
-                        type="text"
-                        placeholder='Subject'
-                        className='form-control form-input mb-2'
-                        value={updatedSubject}
-                        onChange={(e) => setUpdatedSubject(e.target.value)} required
-                    />
-                   </div>
-                   <div className='mb-3'>
-                   <DatePicker format={dateFormat} value={updatedExamDate} className='w-100 mb-2 me-2 form-control' onChange={(date) => setUpdatedExamDate(date)} required />
-                    <input
-                        type="text"
-                        placeholder='Marks'
-                        className='form-control'
-                        value={updatedMarks}
-                        onChange={(e) => setUpdatedMarks(e.target.value)} required
-                    />
-                   </div>
+                    <div className="mt-4 d-lg-flex">
+                        <input
+                            type="text"
+                            placeholder='Exam Type'
+                            className='form-control form-input mb-2 me-2'
+                            value={updatedType}
+                            onChange={(e) => setUpdatedType(e.target.value)} required
+                        />
+                        <input
+                            type="text"
+                            placeholder='Subject'
+                            className='form-control form-input mb-2'
+                            value={updatedSubject}
+                            onChange={(e) => setUpdatedSubject(e.target.value)} required
+                        />
+                    </div>
+                    <div className='mb-3'>
+                        <DatePicker format={dateFormat} value={updatedExamDate} className='w-100 mb-2 me-2 form-control' onChange={(date) => setUpdatedExamDate(date)} required />
+                        <input
+                            type="text"
+                            placeholder='Marks'
+                            className='form-control'
+                            value={updatedMarks}
+                            onChange={(e) => setUpdatedMarks(e.target.value)} required
+                        />
+                    </div>
                     <div className="text-center">
                         <button type='submit' className="btn btn-warning fw-bold" >
                             {updateSpinnerLoading ? <Spinner /> : "Update Result"}

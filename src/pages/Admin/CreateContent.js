@@ -84,6 +84,7 @@ const CreateContent = () => {
                 setSubject('');
                 setRemark('');
                 setContentLink('');
+                setListSpinnerLoading(false);
             } else {
                 toast.success("Content Link Created Successfully");
             }
@@ -114,7 +115,8 @@ const CreateContent = () => {
                 setUpdatedReMark('');
                 setUpdatedType(undefined);
                 setUpdatedContentLink('');
-                setVisible(false)
+                setVisible(false);
+                setListSpinnerLoading(false);
             } else {
                 toast.success("Content Updated Successfully");
                 setUpdateSpinnerLoading(false);
