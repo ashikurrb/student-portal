@@ -89,7 +89,7 @@ const ViewPayment = () => {
             doc.addImage(img, 'PNG', imgX, imgY, imgWidth, imgHeight);
 
             // Add a line below the image
-            const lineY = imgY + imgHeight + 5; // Y coordinate for the line, a bit below the image
+            const lineY = imgY + imgHeight + 1; // Y coordinate for the line, a bit below the image
             doc.line(imgX, lineY, imgX + imgWidth, lineY);
 
             // Add the word "Authority" under the line
@@ -152,7 +152,7 @@ const ViewPayment = () => {
                                                 <td>{p.trxId}</td>
                                                 <td>{moment(p.paymentDate).format('ll')}</td>
                                                 <td>
-                                                    <button className="btn" onClick={() => generateInvoice(p)}>
+                                                    <button className="btn btn-secondary" onClick={() => generateInvoice(p)}>
                                                         <i className="fa-solid fa-download"></i>
                                                     </button>
                                                 </td>
