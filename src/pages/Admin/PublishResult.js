@@ -321,7 +321,8 @@ const PublishResult = () => {
                         onChange={(e) => setUpdatedSubject(e.target.value)} required
                     />
                    </div>
-                    <DatePicker format={dateFormat} value={updatedExamDate} className='w-100 mb-2 me-2 form-control' onChange={(date) => setUpdatedExamDate(date)} required />
+                   <div className='mb-3'>
+                   <DatePicker format={dateFormat} value={updatedExamDate} className='w-100 mb-2 me-2 form-control' onChange={(date) => setUpdatedExamDate(date)} required />
                     <input
                         type="text"
                         placeholder='Marks'
@@ -329,7 +330,8 @@ const PublishResult = () => {
                         value={updatedMarks}
                         onChange={(e) => setUpdatedMarks(e.target.value)} required
                     />
-                    <div className="mt-3 text-center">
+                   </div>
+                    <div className="text-center">
                         <button type='submit' className="btn btn-warning fw-bold" >
                             {updateSpinnerLoading ? <Spinner /> : "Update Result"}
                         </button>

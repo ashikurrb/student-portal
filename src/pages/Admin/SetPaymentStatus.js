@@ -427,29 +427,29 @@ const SetPaymentStatus = () => {
                     }
                 </div>
                 <form onSubmit={handleUpdate}>
-                    <div className="mt-4 mb-2 d-lg-flex">
+                    <div className="mt-4 d-lg-flex">
                         <input
                             type="text"
                             placeholder='Remark'
-                            className='form-control mx-1'
+                            className='form-control mb-2 mx-1'
                             value={updatedRemark}
                             onChange={(e) => setUpdatedRemark(e.target.value)} required
                         />
                         <input
                             type="number"
                             placeholder='Amount'
-                            className='form-control mx-1'
+                            className='form-control mb-2 mx-1'
                             value={updatedAmount}
                             onChange={(e) => setUpdatedAmount(e.target.value)} required
                         />
-                        <DatePicker format={dateFormat} value={updatedPaymentDate} className='form-control w-100 mx-1' 
+                        <DatePicker format={dateFormat} value={updatedPaymentDate} className='form-control w-100 mb-2 mx-1' 
                         onChange={(date) => setUpdatedPaymentDate(date)} required />
                     </div>
                     <div className="mb-3 d-lg-flex">
                         <Select bordered={false}
                             placeholder="Select Method"
                             size='large'
-                            className='form-select mx-1'
+                            className='form-select mb-2 mx-1'
                             value={updatedMethod}
                             onChange={(value) => { setUpdatedMethod(value) }}
                             required>
@@ -460,7 +460,7 @@ const SetPaymentStatus = () => {
                         <input
                             type="text"
                             placeholder='Transaction ID / Receipt No'
-                            className='form-control mx-1'
+                            className='form-control mb-2 mx-1'
                             value={updatedTrxId}
                             onChange={(e) => setUpdatedTrxId(e.target.value)} required
                         />

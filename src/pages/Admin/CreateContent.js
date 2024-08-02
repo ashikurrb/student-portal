@@ -275,11 +275,11 @@ const CreateContent = () => {
                     }
                 </div>
                 <form onSubmit={handleUpdate}>
-                    <div className="mt-4">
+                <div className="mt-4 d-lg-flex">
                         <input
                             type="text"
                             placeholder='Subject'
-                            className='form-control mb-2'
+                            className='form-control mb-2 me-2'
                             value={updatedSubject}
                             onChange={(e) => setUpdatedSubject(e.target.value)} required
                         />
@@ -290,6 +290,8 @@ const CreateContent = () => {
                             value={updatedReMark}
                             onChange={(e) => setUpdatedReMark(e.target.value)} required
                         />
+                        </div>
+                        <div className='mb-3'>
                         <Select bordered={false}
                             placeholder="Select Content Type"
                             size='large'
