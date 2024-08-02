@@ -17,7 +17,6 @@ const PageNotFound = () => {
                 <div className="pnf-title" >404</div>
                 <h2 className="pnf-heading"> Ooops! Page Not Found</h2>
                 <Link to="/" className="pnf-btn"><b>Go to Home</b></Link>
-
             </div>
                 </div>
             </div>

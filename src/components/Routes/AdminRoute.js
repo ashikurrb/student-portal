@@ -19,5 +19,5 @@ export const AdminRoute = () => {
         }
         if (auth?.token) authCheck();
     }, [auth?.token])
-    return ok ? <Outlet /> : <AuthSpinner path="dashboard/admin"/>
+    return ok ? <Outlet /> : <AuthSpinner path=""/>
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const AuthSpinner = ({ path = "login" }) => {
-    const [count, setCount] = useState(1);
+    const [count, setCount] = useState(5);
     const navigate = useNavigate();
     const location = useLocation()
 

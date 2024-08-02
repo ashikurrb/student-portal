@@ -1,45 +1,21 @@
-import React, { useState } from 'react';
-import { Select, Space } from 'antd';
-const cityData = {
-  Zhejiang: ['Hangzhou', 'Ningbo', 'Wenzhou'],
-  Jiangsu: ['Nanjing', 'Suzhou', 'Zhenjiang'],
+import React from 'react';
+import Layout from '../../components/Layouts/Layout';
+import AdminMenu from './AdminMenu';
+
+const CreateCourse = () => {
+    return (
+        <Layout title={"Admin - Create Links"}>
+            <div className="container-fluid mt-3 p-3">
+                <div className="row">
+                    <div className="col-md-3"><AdminMenu /></div>
+                   <div className="col-md-9">
+                   <h2 className='text-center my-3'>Create Course</h2>
+
+                   </div>
+                </div>
+            </div>
+        </Layout>
+    );
 };
-const provinceData = ['Zhejiang', 'Jiangsu'];
-const App = () => {
-  const [cities, setCities] = useState(cityData[provinceData[0]]);
-  const [secondCity, setSecondCity] = useState(cityData[provinceData[0]][0]);
-  const handleProvinceChange = (value) => {
-    setCities(cityData[value]);
-    setSecondCity(cityData[value][0]);
-  };
-  const onSecondCityChange = (value) => {
-    setSecondCity(value);
-  };
-  return (
-    <Space wrap>
-      <Select
-        defaultValue={provinceData[0]}
-        style={{
-          width: 120,
-        }}
-        onChange={handleProvinceChange}
-        options={provinceData.map((province) => ({
-          label: province,
-          value: province,
-        }))}
-      />
-      <Select
-        style={{
-          width: 120,
-        }}
-        value={secondCity}
-        onChange={onSecondCityChange}
-        options={cities.map((city) => ({
-          label: city,
-          value: city,
-        }))}
-      />
-    </Space>
-  );
-};
-export default App;
+
+export default CreateCourse;
