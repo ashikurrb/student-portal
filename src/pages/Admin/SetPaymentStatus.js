@@ -262,12 +262,12 @@ const SetPaymentStatus = () => {
             doc.addImage(img, 'PNG', imgX, imgY, imgWidth, imgHeight);
 
             // Add a line below the image
-            const lineY = imgY + imgHeight + 5; // Y coordinate for the line, a bit below the image
+            const lineY = imgY + imgHeight + 2; // Y coordinate for the line, a bit below the image
             doc.line(imgX, lineY, imgX + imgWidth, lineY);
 
             // Add the word "Authority" under the line
             const textX = imgX + imgWidth / 2; // Center text below the image
-            const textY = lineY + 10; // Y coordinate for the text
+            const textY = lineY + 6; // Y coordinate for the text
             doc.text('Authority', textX, textY, { align: 'center' });
 
             // Create a Blob URL and open it in a new window for printing
