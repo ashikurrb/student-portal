@@ -107,11 +107,14 @@ background-color: red;
   font-weight: bold;
 }
 
-.sticky-post{
-
-}
 .navbar {
   position: sticky;
   top: 0%;
   z-index: 1000;
+}
+
+.toast-root{
+  background: #2c324b !important;
+  border:  px solid #713200 !important;
+  color:#fff !important;
 }

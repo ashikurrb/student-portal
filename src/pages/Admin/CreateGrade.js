@@ -49,7 +49,7 @@ const CreateGrade = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error("Error while fetching grades")
+            toast.error("Error fetching grades")
         }
     }
     useEffect(() => {
@@ -103,7 +103,7 @@ const CreateGrade = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error("Getting error while updating Grade")
+            toast.error("Error deleting grade")
         }
     }
 

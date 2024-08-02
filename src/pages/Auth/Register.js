@@ -17,7 +17,6 @@ const Register = () => {
     const [grade, setGrade] = useState("");
     const [answer, setAnswer] = useState("");
     const [password, setPassword] = useState("");
-    const [spinnerLoading, setSpinnerLoading] = useState(false);
     const [auth] = useAuth();
     const navigate = useNavigate();
 
@@ -40,10 +39,9 @@ const Register = () => {
 
     //form submission
     const handleSubmit = async (e) => {
-        setSpinnerLoading(true);
         e.preventDefault();
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, {
+            const registerPromise = axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, {
                 name,
                 email,
                 password,
@@ -51,18 +49,23 @@ const Register = () => {
                 grade,
                 answer
             });
+
+            toast.promise(registerPromise, {
+                loading: 'Registering you',
+                success: 'Registration Successful. Please Login.',
+                error: 'Error in Register',
+            });
+            const res = await registerPromise;
+
             if (res && res.data.success) {
                 toast.success(res.data.message)
-                setSpinnerLoading(false);
                 navigate("/login")
             } else {
                 toast.error(res.data.message)
-                setSpinnerLoading(false);
             }
         } catch (error) {
             console.log(error);
             toast.error(error.message);
-            setSpinnerLoading(false);
         }
     }
 
@@ -118,7 +121,8 @@ const Register = () => {
                                     <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" id="exampleInputAddress" placeholder='Security Answer' required />
                                 </div>
                                 <div className="text-center">
-                                    <button type="submit" className="btn btn-primary">                                        {spinnerLoading ? <Spinner /> : "REGISTER"}
+                                    <button type="submit" className="btn btn-primary">                                        
+                                        REGISTER
                                     </button>
                                 </div>
                                 <div className="text-center py-3">Already Registered? <Link to="/login">Log In</Link></div>

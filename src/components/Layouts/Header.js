@@ -11,14 +11,24 @@ const Header = () => {
 
     // Logout
     const handleLogOut = () => {
-        setAuth({
-            ...auth,
-            user: null,
-            token: '',
+        const logoutPromise = new Promise((resolve) => {
+            setAuth({
+                ...auth,
+                user: null,
+                token: '',
+            });
+            Cookies.remove('auth'); // Remove the auth cookie
+            resolve();
         });
-        Cookies.remove('auth'); // Remove the auth cookie
-        toast.success('Logout Successfully');
+
+        toast.promise(logoutPromise, {
+            loading: 'Logging out...',
+            success: 'Logout Successfully',
+            error: 'Error during logout',
+        });
     };
+
+
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">

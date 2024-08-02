@@ -5,7 +5,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
-import Spinner from '../../components/Spinner';
 import Cookies from 'js-cookie';
 
 const Login = () => {
@@ -13,23 +12,27 @@ const Login = () => {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [auth, setAuth] = useAuth();
-    const [spinnerLoading, setSpinnerLoading] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
     //form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setSpinnerLoading(true);
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, {
+            const loginPromise = axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, {
                 email,
                 phone,
                 password,
             });
-            setSpinnerLoading(false);
+
+            toast.promise(loginPromise, {
+                loading: 'Logging in...',
+                success: 'Log In Successful!',
+                error: 'Error in Login',
+            });
+            const res = await loginPromise;
+
             if (res && res.data.success) {
-                toast.success(res.data && res.data.message)
                 setAuth({
                     ...auth,
                     user: res.data.user,
@@ -44,7 +47,6 @@ const Login = () => {
         } catch (error) {
             console.log(error);
             toast.error("Something went wrong");
-            setSpinnerLoading(false);
         }
     }
 
@@ -75,7 +77,7 @@ const Login = () => {
                             </div>
                             <div className="text-center">
                                 <button type="submit" className="btn btn-primary">
-                                    {spinnerLoading ? <Spinner /> : "Log In"}
+                                    Login
                                 </button>
                             </div>
                             <div className="text-center py-3">Forgot Password? <Link to="/forgot-password">Reset Here</Link></div>

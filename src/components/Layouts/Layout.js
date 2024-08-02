@@ -6,12 +6,12 @@ import { Toaster } from 'react-hot-toast';
 
 //children is coming from props
 
-const Layout = ({ children,title, description, keywords, author }) => {
+const Layout = ({ children, title, description, keywords, author }) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
-    
+
     return (
         <div>
             <Helmet>
@@ -23,7 +23,9 @@ const Layout = ({ children,title, description, keywords, author }) => {
             </Helmet>
             <Header />
             <main style={{ minHeight: "80vh" }}>
-                <Toaster />
+                <Toaster toastOptions={{
+                    className: 'toast-root'
+                }} />
                 {children}
             </main>
             <Footer />
