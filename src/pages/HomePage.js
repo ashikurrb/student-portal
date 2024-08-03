@@ -5,7 +5,7 @@ import { useAuth } from '../context/auth';
 const HomePage = () => {
     const [auth] = useAuth();
     return (
-        <Layout title={"5Points - Best Coaching"}>
+        <Layout title={"5points - Best Coaching"}>
             <div className="container">
                 <div className="row m-5">
                     <div className="col-md-6">

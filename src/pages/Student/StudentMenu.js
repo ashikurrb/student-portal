@@ -14,7 +14,7 @@ const StudentMenu = () => {
                             </div>
                             <div className="col mb-1">
                                 <NavLink to="/dashboard/student" className="product-link">
-                                    <h4 className="mb-0 me-5 text-center">Student Menu</h4>
+                                    <h4 className="mb-0 me-5 text-center">Student Profile</h4>
                                 </NavLink>
                             </div>
                             <div className="col-auto mb-1">

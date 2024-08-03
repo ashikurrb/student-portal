@@ -5,10 +5,11 @@ import { useAuth } from '../../context/auth';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
-import Spinner from '../../components/Spinner';
 import { Alert } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const UpdateProfile = () => {
+    const navigate = useNavigate();
     const [auth, setAuth] = useAuth();
     const [email, setEmail] = useState('');
     const [grade, setGrade] = useState('');
@@ -16,7 +17,6 @@ const UpdateProfile = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [answer, setAnswer] = useState('');
-    const [spinnerLoading, setSpinnerLoading] = useState(false);
     const [photo, setPhoto] = useState(null);
     const [avatar, setAvatar] = useState('');
 
@@ -52,8 +52,7 @@ const UpdateProfile = () => {
     // Update profile
     const handleUpdate = async (e) => {
         e.preventDefault();
-        setSpinnerLoading(true);
-
+        const loadingToastId = toast.loading('Updating your profile...');
         try {
             let avatar = auth.user.photoUrl; // Keep existing photo URL if not updating
 
@@ -72,21 +71,19 @@ const UpdateProfile = () => {
             });
 
             if (data?.error) {
-                toast.error(data?.error);
-                setSpinnerLoading(false);
+                toast.error(data.error, { id: loadingToastId });
             } else {
                 setAuth({ ...auth, user: data?.updatedUser });
                 let ls = Cookies.get("auth");
                 ls = JSON.parse(ls);
                 ls.user = data.updatedUser;
                 Cookies.set("auth", JSON.stringify(ls));
-                toast.success(data?.message);
-                setSpinnerLoading(false);
+                navigate("/dashboard/student");
+                toast.success(data.message, { id: loadingToastId });
             }
         } catch (error) {
             console.log(error);
-            toast.error('Something went wrong');
-            setSpinnerLoading(false);
+            toast.error("Something went wrong", { id: loadingToastId });
         }
     };
 
@@ -154,7 +151,7 @@ const UpdateProfile = () => {
                                 </div>
                                 <div className="text-center">
                                     <button type="submit" className=" btn btn-primary">
-                                        {spinnerLoading ? <Spinner /> : "Update Profile"}
+                                        Update Profile
                                     </button>
                                 </div>
                             </form>
