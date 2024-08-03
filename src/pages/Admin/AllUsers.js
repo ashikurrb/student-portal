@@ -27,13 +27,14 @@ const AllUsers = () => {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/grade/all-grades`);
             if (data?.success) {
                 setGrades(data?.grade);
+            }else{
+                toast.error(data.message)
             }
         } catch (error) {
             console.log(error);
-            toast.error("Getting error while fetching Grade");
+            toast.error("Error fetching Grades");
         }
     };
-
     useEffect(() => {
         getAllGrades();
     }, []);
@@ -45,6 +46,7 @@ const AllUsers = () => {
             setUsers(data)
         } catch (error) {
             console.log(error);
+            toast.error("Error fetching Users");
         } finally {
             setSpinnerLoading(false)
         }
@@ -69,7 +71,7 @@ const AllUsers = () => {
                 setUpdatedGrade("");
                 setVisible(false)
             } else {
-                toast.success("User's Grade Updated Successfully");
+                toast.success(data.message);
                 setUpdateSpinnerLoading(false);
             }
         } catch (error) {
@@ -93,7 +95,7 @@ const AllUsers = () => {
             if (!answer) return;
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/auth/delete-user/${uId}`);
             if (data.success) {
-                toast.success(`User deleted successfully`);
+                toast.success(data.message);
                 getAllUsers();
             } else {
                 toast.error(data.message)

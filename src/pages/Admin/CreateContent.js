@@ -38,7 +38,7 @@ const CreateContent = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error("Getting error while fetching Grade")
+            toast.error("Error fetching Grades")
         }
     }
     useEffect(() => {
@@ -53,6 +53,7 @@ const CreateContent = () => {
             setContent(data)
         } catch (error) {
             console.log(error);
+            toast.error("Error fetching contents")
         } finally {
             setListSpinnerLoading(false)
         }
@@ -86,7 +87,7 @@ const CreateContent = () => {
                 setContentLink('');
                 setListSpinnerLoading(false);
             } else {
-                toast.success("Content Link Created Successfully");
+                toast.success(data.message);
             }
         } catch (error) {
             console.log(error);
@@ -118,7 +119,7 @@ const CreateContent = () => {
                 setVisible(false);
                 setListSpinnerLoading(false);
             } else {
-                toast.success("Content Updated Successfully");
+                toast.success(data.message);
                 setUpdateSpinnerLoading(false);
             }
 
@@ -148,7 +149,7 @@ const CreateContent = () => {
             if (!answer) return;
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/content/delete-content/${rId}`);
             if (data.success) {
-                toast.success('Content deleted successfully');
+                toast.success(data.message);
                 getAllContent();
             } else {
                 toast.error(data.message)
@@ -157,7 +158,6 @@ const CreateContent = () => {
             toast.error('Something wrong while Delete')
         }
     }
-
 
     return (
         <Layout title={"Admin - Create Content Link"}>

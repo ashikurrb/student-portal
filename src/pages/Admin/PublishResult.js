@@ -42,7 +42,7 @@ const PublishResult = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error("Getting error while fetching Grade")
+            toast.error("Error fetching Grades")
         }
     }
     useEffect(() => {
@@ -56,9 +56,9 @@ const PublishResult = () => {
             setUsers(data)
         } catch (error) {
             console.log(error);
+            toast.error("Error fetching Users")
         }
     }
-
     useEffect(() => {
         if (auth?.token) getAllUsers();
     }, [auth?.token])
@@ -100,9 +100,8 @@ const PublishResult = () => {
                 setMarks('');
                 setListSpinnerLoading(false);
             } else {
-                toast.success("Result Created Successfully");
+                toast.success(data.message);
             }
-
         } catch (error) {
             console.log(error);
             toast.error('Something went wrong')
@@ -118,6 +117,7 @@ const PublishResult = () => {
             setResult(data)
         } catch (error) {
             console.log(error);
+            toast.error("Error fetching Results")
         } finally {
             setListSpinnerLoading(false)
         }
@@ -142,7 +142,6 @@ const PublishResult = () => {
                 setUpdateSpinnerLoading(false);
                 toast.success(data?.message);
                 getAllResults();
-
                 // Clear form fields
                 setUpdatedType('');
                 setUpdatedSubject('');
@@ -151,7 +150,7 @@ const PublishResult = () => {
                 setVisible(false);
                 setListSpinnerLoading(false);
             } else {
-                toast.success("Result Updated Successfully");
+                toast.success(data.message);
                 setUpdateSpinnerLoading(false);
             }
         } catch (error) {
@@ -178,7 +177,7 @@ const PublishResult = () => {
             if (!answer) return;
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/result/delete-result/${rId}`);
             if (data.success) {
-                toast.success(`Result deleted successfully`);
+                toast.success(data.message);
                 getAllResults();
             } else {
                 toast.error(data.message)

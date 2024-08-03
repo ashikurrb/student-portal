@@ -4,6 +4,7 @@ import Spinner from '../../components/Spinner';
 import StudentMenu from './StudentMenu';
 import moment from 'moment'
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const ViewResult = () => {
     const [results, setResults] = useState([]);
@@ -15,6 +16,7 @@ const ViewResult = () => {
             setResults(data);
         } catch (error) {
             console.log(error);
+            toast.error("Error fetching Results");
         } finally {
             setSpinnerLoading(false);
         }

@@ -20,6 +20,7 @@ const ViewPayment = () => {
             setPayment(data);
         } catch (error) {
             console.log(error);
+            toast.error("Error fetching Payments");
         } finally {
             setSpinnerLoading(false);
         }
@@ -105,6 +106,7 @@ const ViewPayment = () => {
             printWindow.focus();
             printWindow.onload = function () {
                 printWindow.print();
+                toast.success("Invoice created")
             };
         } else {
             toast.error('Failed to open the print window');

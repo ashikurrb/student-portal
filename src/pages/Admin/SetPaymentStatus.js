@@ -47,10 +47,9 @@ const SetPaymentStatus = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error("Getting error while fetching Grade");
+            toast.error("Error fetching Grades");
         }
     };
-
     useEffect(() => {
         getAllGrades();
     }, []);
@@ -62,9 +61,9 @@ const SetPaymentStatus = () => {
             setUsers(data);
         } catch (error) {
             console.log(error);
+            toast.error("Error fetching Users");
         }
     };
-
     useEffect(() => {
         if (auth?.token) getAllUsers();
     }, [auth?.token]);
@@ -109,7 +108,7 @@ const SetPaymentStatus = () => {
                 setTrxId('');
                 setListSpinnerLoading(false);
             } else {
-                toast.success("Payment Status Created Successfully");
+                toast.success(data.message);
             }
         } catch (error) {
             console.log(error);
@@ -126,11 +125,11 @@ const SetPaymentStatus = () => {
             setPayment(data);
         } catch (error) {
             console.log(error);
+            toast.error("Error fetching Payments");
         } finally {
             setListSpinnerLoading(false);
         }
     };
-
     useEffect(() => {
         getAllPayment();
     }, []);
@@ -161,7 +160,7 @@ const SetPaymentStatus = () => {
                 setVisible(false);
                 setListSpinnerLoading(false);
             } else {
-                toast.success("Payment Status Updated Successfully");
+                toast.success(data.message);
                 setUpdateSpinnerLoading(false);
             }
 
@@ -191,13 +190,13 @@ const SetPaymentStatus = () => {
             if (!answer) return;
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/payment/delete-payment/${rId}`);
             if (data.success) {
-                toast.success(`Payment Status deleted successfully`);
+                toast.success(data.message);
                 getAllPayment();
             } else {
                 toast.error(data.message);
             }
         } catch (error) {
-            toast.error('Something wrong while Delete');
+            toast.error('Something went wrong');
         }
     };
 
@@ -278,6 +277,7 @@ const SetPaymentStatus = () => {
                 printWindow.focus();
                 printWindow.onload = function () {
                     printWindow.print();
+                    toast.success("Invoice created.")
                 };
             } else {
                 toast.error('Failed to open the print window');
@@ -444,8 +444,8 @@ const SetPaymentStatus = () => {
                             value={updatedAmount}
                             onChange={(e) => setUpdatedAmount(e.target.value)} required
                         />
-                        <DatePicker format={dateFormat} value={updatedPaymentDate} className='form-control w-100 mb-2 mx-1' 
-                        onChange={(date) => setUpdatedPaymentDate(date)} required />
+                        <DatePicker format={dateFormat} value={updatedPaymentDate} className='form-control w-100 mb-2 mx-1'
+                            onChange={(date) => setUpdatedPaymentDate(date)} required />
                     </div>
                     <div className="mb-3 d-lg-flex">
                         <Select bordered={false}

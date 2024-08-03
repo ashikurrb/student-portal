@@ -18,20 +18,14 @@ const Login = () => {
     //form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // Show loading toast
+        const loadingToastId = toast.loading('Logging in...');
         try {
-            const loginPromise = axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, {
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, {
                 email,
                 phone,
                 password,
             });
-
-            toast.promise(loginPromise, {
-                loading: 'Logging in...',
-                success: 'Login Successful!',
-                error: 'Error in Login',
-            });
-            const res = await loginPromise;
-
             if (res && res.data.success) {
                 setAuth({
                     ...auth,
@@ -41,12 +35,14 @@ const Login = () => {
                 // Set login details in cookies
                 Cookies.set("auth", JSON.stringify(res.data), { expires: 7 }); // expires in 7 days
                 navigate(location.state || "/")
+                // Show success toast
+                toast.success(res.data && res.data.message, { id: loadingToastId });
             } else {
-                toast.error(res.data.message)
+                toast.error(res.data.message, { id: loadingToastId });
             }
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong");
+            toast.error("Something went wrong", { id: loadingToastId });
         }
     }
 

@@ -27,7 +27,7 @@ const CreateGrade = () => {
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/grade/create-grade`, gradeData)
             if (data?.success) {
                 setSpinnerLoading(false);
-                toast.success(`${name} | Grade created successfully`)
+                toast.success(`${name} - ${data.message}`)
                 getAllGrades();
                 //clear fields
                 setName("");
@@ -72,7 +72,7 @@ const CreateGrade = () => {
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/grade/update-grade/${selected._id}`, updatedGradeData)
             if (data.success) {
                 setUpdateSpinnerLoading(false);
-                toast.success(`${updatedName} updated successfully`)
+                toast.success(`${updatedName} - ${data.message}`)
                 getAllGrades();
                 //clear fields
                 setSelected(null);
@@ -104,7 +104,7 @@ const CreateGrade = () => {
             }
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/grade/delete-grade/${pId}`)
             if (data.success) {
-                toast.success('Grade deleted successfully')
+                toast.success(data.message)
                 getAllGrades();
             } else {
                 toast.error(data.message)

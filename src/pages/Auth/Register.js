@@ -39,8 +39,9 @@ const Register = () => {
     //form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const loadingToastId = toast.loading('Registering you...');
         try {
-            const registerPromise = axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, {
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, {
                 name,
                 email,
                 password,
@@ -49,22 +50,16 @@ const Register = () => {
                 answer
             });
 
-            toast.promise(registerPromise, {
-                loading: 'Registering you...',
-                success: 'Registration Successful. Please Login.',
-                error: 'Error in Register',
-            });
-            const res = await registerPromise;
-
             if (res && res.data.success) {
-                toast.success(res.data.message)
-                navigate("/login")
+                // Show success toast
+                toast.success(res.data && res.data.message, { id: loadingToastId });
+                navigate("/login");
             } else {
-                toast.error(res.data.message)
+                toast.error(res.data.message, { id: loadingToastId });
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.message);
+            toast.error(error.message, { id: loadingToastId });
         }
     }
 
@@ -120,7 +115,7 @@ const Register = () => {
                                     <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" id="exampleInputAddress" placeholder='Security Answer' required />
                                 </div>
                                 <div className="text-center">
-                                    <button type="submit" className="btn btn-primary">                                        
+                                    <button type="submit" className="btn btn-primary">
                                         REGISTER
                                     </button>
                                 </div>

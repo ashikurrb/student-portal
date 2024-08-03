@@ -10,35 +10,33 @@ const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [answer, setAnswer] = useState("");
     const [newPassword, setNewPassword] = useState("");
-    const [spinnerLoading, setSpinnerLoading] = useState(false);
     const navigate = useNavigate();
 
     //form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setSpinnerLoading(true);
+        const loadingToastId = toast.loading('Password resetting...');
         try {
             const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/forgot-password`, {
                 email,
                 newPassword,
                 answer
             });
-            setSpinnerLoading(false);
             if (res && res.data.success) {
-                toast.success(res.data && res.data.message)
-                navigate("/login")
+           
+                toast.success(res.data && res.data.message, { id: loadingToastId });
+                navigate("/login");
             } else {
-                toast.error(res.data.message)
+                toast.error(res.data.message, { id: loadingToastId });
             }
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong");
-            setSpinnerLoading(false);
+            toast.error("Something went wrong", { id: loadingToastId });
         }
     }
 
     return (
-        <Layout title={"Log In"}>
+        <Layout title={"Forget Password - Reset"}>
             <div className="form-container">
                 <form onSubmit={handleSubmit}>
                     <h4 className="title"> <i class="fa-solid fa-lock"></i> Reset Password</h4>
@@ -53,7 +51,7 @@ const ForgotPassword = () => {
                     </div>
                     <div className="text-center">
                         <button type="submit" className="btn">
-                            {spinnerLoading ? <Spinner /> : "Reset Password"}
+                            Reset Password
                         </button>
                     </div>
                     <div className="text-center mt-3">
