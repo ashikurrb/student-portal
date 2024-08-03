@@ -88,7 +88,7 @@ const UpdateProfile = () => {
     };
 
     return (
-        <Layout title={"Profile"}>
+        <Layout title={"Dashboard - Update Profile"}>
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
                     <div className="col-md-3">
@@ -123,8 +123,8 @@ const UpdateProfile = () => {
                                         className='my-2 mx-4'
                                         message={
                                             <>
-                                                <b>Security Answer:</b> Enter new answer to update or Leave blank to unchanged.<br />
-                                                <b>Password:</b> Enter new password to update or Enter current password to continue.
+                                                <span className='fw-bold'>Security Answer:</span> Enter new answer to update or Leave blank to unchanged.<br />
+                                                <span className='fw-bold'>Password:</span> Enter new password to update or Enter current password to continue.
                                             </>
                                         }
                                         type="info"

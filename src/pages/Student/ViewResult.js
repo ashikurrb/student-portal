@@ -27,7 +27,7 @@ const ViewResult = () => {
     }, []);
 
     return (
-        <Layout title={"Dashboard - Student"}>
+        <Layout title={"Dashboard - Result"}>
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
                     <div className="col-md-3">

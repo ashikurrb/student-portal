@@ -7,7 +7,7 @@ const StudentDashboard = () => {
     const [auth] = useAuth();
 
     return (
-        <Layout title={"Dashboard - Student"}>
+        <Layout title={"Dashboard - Profile"}>
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
                     <div className="col-md-3">

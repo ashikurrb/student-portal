@@ -17,6 +17,9 @@
   font-size: 17px;
   line-height: 26px;
   text-transform: uppercase;
+  position: sticky;
+  top: 0%;
+  z-index: 1000;
  }
 
 .nav-link{
@@ -105,12 +108,6 @@ background-color: red;
   text-decoration: none;
   color: grey;
   font-weight: bold;
-}
-
-.navbar {
-  position: sticky;
-  top: 0%;
-  z-index: 1000;
 }
 
 .toast-root{

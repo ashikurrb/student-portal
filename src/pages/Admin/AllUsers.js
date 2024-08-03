@@ -27,7 +27,7 @@ const AllUsers = () => {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/grade/all-grades`);
             if (data?.success) {
                 setGrades(data?.grade);
-            }else{
+            } else {
                 toast.error(data.message)
             }
         } catch (error) {
@@ -155,13 +155,17 @@ const AllUsers = () => {
                                                     </td>
                                                     <td >
                                                         <Tooltip title="Click here to update grade">
-                                                            <p className='border rounded p-2'
+                                                            <p className='border rounded p-2 d-flex align-items-center justify-content-between'
                                                                 onClick={() => { openModal(u) }}
                                                                 disabled={u?.grade?.name === "Administration"}>
-                                                                {u?.grade?.name}</p>
+                                                                <span>
+                                                                    {u?.grade?.name}
+                                                                </span>
+                                                                <i className="fa-solid fa-caret-down"></i>
+                                                            </p>
                                                         </Tooltip>
                                                     </td>
-                                                    <td>{u.email}</td>
+                                                    <td className='text-wrap'>{u.email}</td>
                                                     <td>{u.phone}</td>
                                                     <td>{u.answer}</td>
                                                     <td >
@@ -186,7 +190,7 @@ const AllUsers = () => {
                                                             className='m-3'
                                                             message={
                                                                 <>
-                                                                    <p>Changing <b>GRADE</b> of user will change his access to the available content</p>
+                                                                    <p>Changing <span className='fw-bold'>GRADE</span> of user will change his access to the available content</p>
                                                                 </>
                                                             }
                                                             type="warning"
