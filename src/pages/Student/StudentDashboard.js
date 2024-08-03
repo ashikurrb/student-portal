@@ -5,18 +5,19 @@ import { useAuth } from '../../context/auth';
 
 const StudentDashboard = () => {
     const [auth] = useAuth();
+
     return (
         <Layout title={"Dashboard - Student"}>
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
                     <div className="col-md-3">
-                        <StudentMenu/>
+                        <StudentMenu />
                     </div>
                     <div className="col-md-9">
                         <h3 className='text-center my-3'>Your Profile</h3>
                         <div className="card px-4 py-2">
                             <div className="text-center">
-                                <img className='img img-fluid rounded m-3' src="/images/TestUserImg.png" alt="" style={{ width: "20%" }} />
+                                <img className='img img-fluid rounded m-3' src={auth?.user?.avatar} alt="DP" style={{ width: "20%" }} />
                             </div>
                             <h5>Name: {auth?.user?.name} </h5>
                             <p>Email: {auth?.user?.email} </p>
