@@ -14,8 +14,8 @@ const HomePage = () => {
                         <h6>Email: {auth?.user?.email} </h6>
                         <h6>Grade: {auth?.user?.grade?.name} </h6>
                     </div>
-                    <div className="col-md-6 card" role="alert">
-                        <p className='p-2'>Token: {auth?.token} </p>
+                    <div className="col-md-6 text-center">
+                        <img className='img img-fluid rounded' src={auth?.user?.avatar} alt="DP" style={{ width: "50%" }} />
                     </div>
                 </div>
             </div>
