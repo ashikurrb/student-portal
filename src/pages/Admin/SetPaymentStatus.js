@@ -205,6 +205,7 @@ const SetPaymentStatus = () => {
 
     // Function to generate invoice PDF
     const generateInvoice = (payment) => {
+        toast.success("Invoice created");
         const doc = new jsPDF();
         doc.setFontSize(22);
         const instituteName = '5Points Academy';
@@ -277,7 +278,6 @@ const SetPaymentStatus = () => {
                 printWindow.focus();
                 printWindow.onload = function () {
                     printWindow.print();
-                    toast.success("Invoice created.")
                 };
             } else {
                 toast.error('Failed to open the print window');
