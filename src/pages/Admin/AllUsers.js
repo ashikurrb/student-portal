@@ -144,7 +144,13 @@ const AllUsers = () => {
 
                                                 <tr>
                                                     <th scope='row'>{i + 1}</th>
-                                                    <td>{u.name}</td>
+                                                    <td className=''>
+                                                        <div className="d-flex">
+                                                            <img style={{ width: "27px", height: "27px", borderRadius: "100%" }}
+                                                                className='border mx-2' src={u?.avatar} alt="dp" />
+                                                            {u.name}
+                                                        </div>
+                                                    </td>
                                                     <td >
                                                         <Tooltip title="Click here to update grade">
                                                             <p className='border rounded p-2'
