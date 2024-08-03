@@ -68,8 +68,9 @@ const Header = () => {
                                 </>) : (<>
                                     <li className="nav-item dropdown">
                                         <NavLink className="nav-link dropdown-toggle mx-1" role="button" data-bs-toggle="dropdown" >
-                                            <img style={{ width: "25px" }} className='border rounded-circle' src={auth?.user?.avatar} alt="dp" />
-                                            &nbsp; {auth?.user?.name}
+                                            <img style={{ width: "27px", height: "27px", borderRadius: "100%" }}
+                                                className='border mx-1' src={auth?.user?.avatar} alt="dp" />
+                                            {auth?.user?.name}
                                         </NavLink>
                                         <ul className="dropdown-menu" >
                                             <li>
