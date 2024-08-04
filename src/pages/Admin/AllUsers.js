@@ -191,7 +191,7 @@ const AllUsers = () => {
                                                             className='m-3'
                                                             message={
                                                                 <>
-                                                                    <p>Changing <span className='fw-bold'>GRADE</span> of user will change his access to the available content</p>
+                                                                    <p>Changing <b>Grade</b> of user will change his access to the available content</p>
                                                                 </>
                                                             }
                                                             type="warning"
@@ -200,8 +200,7 @@ const AllUsers = () => {
                                                         <div className='text-center my-2'>
                                                             {
                                                                 <div className='text-center my-3'>
-                                                                    <p>Student: <b>{selected.name}</b></p>
-                                                                    <p>Current Grade: <b>{selected?.grade?.name}</b></p>
+                                                                 <b> Student: {selected?.name} - {selected?.grade?.name}</b>
                                                                 </div>
                                                             }
                                                         </div>

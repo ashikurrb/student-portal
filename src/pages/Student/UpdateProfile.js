@@ -123,8 +123,8 @@ const UpdateProfile = () => {
                                         className='my-2 mx-4'
                                         message={
                                             <>
-                                                <span className='fw-bold'>Security Answer:</span> Enter new answer to update or Leave blank to unchanged.<br />
-                                                <span className='fw-bold'>Password:</span> Enter new password to update or Enter current password to continue.
+                                                <b>Security Answer:</b> Enter new answer to update or Leave blank to unchanged.<br />
+                                                <b>Password:</b> Enter new password to update or Enter current password to continue.
                                             </>
                                         }
                                         type="info"

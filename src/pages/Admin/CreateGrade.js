@@ -98,7 +98,7 @@ const CreateGrade = () => {
     //Delete grade
     const handelDelete = async (pId) => {
         try {
-            let answer = window.confirm("Are you sure you want to delete this Grade? All Content related to this grade will also be deleted.")
+            let answer = window.confirm("Are your sure? Deleting this grade will also delete all associated users, user data, and associated content.")
             if (!answer) {
                 return
             }
