@@ -153,16 +153,17 @@ const AllUsers = () => {
                                                             {u.name}
                                                         </div>
                                                     </td>
-                                                    <td >
+                                                    <td>
                                                         <Tooltip title="Click here to update grade">
-                                                            <p className='border rounded p-2 d-flex align-items-center justify-content-between'
+                                                            <button className="btn d-flex justify-content-between align-items-center w-100"
                                                                 onClick={() => { openModal(u) }}
                                                                 disabled={u?.grade?.name === "Administration"}>
-                                                                <span>
+                                                                <span className='text-start'>
                                                                     {u?.grade?.name}
                                                                 </span>
-                                                                <i className="fa-solid fa-caret-down"></i>
-                                                            </p>
+                                                                <span className='text-end'>                                                <i className="fa-solid fa-caret-down"></i>
+                                                                </span>
+                                                            </button>
                                                         </Tooltip>
                                                     </td>
                                                     <td className='text-wrap'>{u.email}</td>
@@ -199,7 +200,7 @@ const AllUsers = () => {
                                                         <div className='text-center my-2'>
                                                             {
                                                                 <div className='text-center my-3'>
-                                                                    <p>Student Name: <b>{selected.name}</b></p>
+                                                                    <p>Student: <b>{selected.name}</b></p>
                                                                     <p>Current Grade: <b>{selected?.grade?.name}</b></p>
                                                                 </div>
                                                             }

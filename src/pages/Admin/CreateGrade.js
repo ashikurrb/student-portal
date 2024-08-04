@@ -158,8 +158,14 @@ const CreateGrade = () => {
                                             <td>{moment(g?.createdAt).fromNow()}</td>
                                             <td>{moment(g?.updatedAt).fromNow()}</td>
                                             <td className='d-flex'>
-                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(g) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                                                <button className='btn btn-danger mx-1' onClick={() => { handelDelete(g._id) }}><i class="fa-solid fa-trash-can"></i> Delete</button>
+                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(g) }}
+                                                    disabled={g.name === "Administration"}>
+                                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                </button>
+                                                <button className='btn btn-danger mx-1' onClick={() => { handelDelete(g._id) }}
+                                                    disabled={g.name === "Administration"}>
+                                                    <i class="fa-solid fa-trash-can"></i> Delete
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
