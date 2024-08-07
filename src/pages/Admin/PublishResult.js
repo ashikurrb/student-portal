@@ -32,6 +32,8 @@ const PublishResult = () => {
     const [updatedExamDate, setUpdatedExamDate] = useState('');
     const [selected, setSelected] = useState(null);
     const [visible, setVisible] = useState(false);
+    const [createModalVisible, setIsCreateModalVisible] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
 
     //Get All Grades
     const getAllGrades = async (req, res) => {
@@ -186,6 +188,15 @@ const PublishResult = () => {
             toast.error('Something wrong while Delete')
         }
     }
+
+    // Filter content based on search query
+    const filteredResult = result.filter(r =>
+        r.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <Layout title={"Admin - Publish Result"}>
             <div className="container-fluid mt-3 p-3">
@@ -193,62 +204,77 @@ const PublishResult = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Publish Result</h2>
-                        <form className="m-1" onSubmit={handlePublish}>
-                            <div className="d-lg-flex">
-                                <Select bordered={false}
-                                    placeholder="Select Grade"
-                                    size='large'
-                                    className='form-select m-2'
-                                    value={grade || undefined}
-                                    onChange={(value) => { setGrade(value) }}>
-                                    {grades?.map(g => (
-                                        <Option key={g._id} value={g._id}>{g.name}</Option>
-                                    ))}
-                                </Select>
-                                <Select bordered={false}
-                                    placeholder="Select Student"
-                                    size='large'
-                                    className='form-select m-2'
-                                    value={user || undefined}
-                                    onChange={(value) => { setUser(value) }}
-                                    required>
-                                    {filteredUsers?.map(u => (
-                                        <Option key={u._id} value={u._id}>{u.name}</Option>
-                                    ))}
-                                </Select>
-                            </div>
-                            <div className="d-lg-flex">
-                                <input
-                                    type="text"
-                                    placeholder='Exam Type'
-                                    className='form-control form-input m-2'
-                                    value={type}
-                                    onChange={(e) => setType(e.target.value)} required
-                                />
-                                <input
-                                    type="text"
-                                    placeholder='Subject'
-                                    className='form-control form-input m-2'
-                                    value={subject}
-                                    onChange={(e) => setSubject(e.target.value)} required
-                                />
-                            </div>
-                            <div className="d-lg-flex">
-                                <DatePicker format={dateFormat} className='w-100 m-2 form-control' value={examDate} onChange={(date) => setExamDate(date)} required />
-                                <input
-                                    type="text"
-                                    placeholder='Marks'
-                                    className='form-control m-2'
-                                    value={marks}
-                                    onChange={(e) => setMarks(e.target.value)} required
-                                />
-                            </div>
-                            <div className="m-3 text-center">
-                                <button type="submit" className="btn btn-warning fw-bold">
-                                    {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}
-                                </button>
-                            </div>
-                        </form>
+                        <div className='d-flex mb-3'>
+                            <input
+                                type="text"
+                                placeholder='Search'
+                                className='form-control mx-1'
+                                style={{ flexBasis: '85%' }}
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2" style={{ flexBasis: '15%' }}>Publish Result</button>
+                        </div>
+                        <Modal visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
+                        <h5 className='text-center mb-3'>Publish Result</h5>
+                            <form className="m-1" onSubmit={handlePublish}>
+                                <div className="d-lg-flex">
+                                    <Select bordered={false}
+                                        placeholder="Select Grade"
+                                        size='large'
+                                        className='form-select m-2'
+                                        value={grade || undefined}
+                                        onChange={(value) => { setGrade(value) }}>
+                                        {grades?.map(g => (
+                                            <Option key={g._id} value={g._id}>{g.name}</Option>
+                                        ))}
+                                    </Select>
+                                    <Select bordered={false}
+                                        placeholder="Select Student"
+                                        size='large'
+                                        className='form-select m-2'
+                                        value={user || undefined}
+                                        onChange={(value) => { setUser(value) }}
+                                        required>
+                                        {filteredUsers?.map(u => (
+                                            <Option key={u._id} value={u._id}>{u.name}</Option>
+                                        ))}
+                                    </Select>
+                                </div>
+                                <div className="d-lg-flex">
+                                    <input
+                                        type="text"
+                                        placeholder='Exam Type'
+                                        className='form-control form-input m-2'
+                                        value={type}
+                                        onChange={(e) => setType(e.target.value)} required
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder='Subject'
+                                        className='form-control form-input m-2'
+                                        value={subject}
+                                        onChange={(e) => setSubject(e.target.value)} required
+                                    />
+                                </div>
+                                <div className="d-lg-flex">
+                                    <DatePicker format={dateFormat} className='w-100 m-2 form-control' value={examDate} onChange={(date) => setExamDate(date)} required />
+                                    <input
+                                        type="text"
+                                        placeholder='Marks'
+                                        className='form-control m-2'
+                                        value={marks}
+                                        onChange={(e) => setMarks(e.target.value)} required
+                                    />
+                                </div>
+                                <div className="m-3 text-center">
+                                    <button type="submit" className="btn btn-warning fw-bold">
+                                        {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}
+                                    </button>
+                                </div>
+                            </form>
+                        </Modal>
+
                         <div className='table-container'>
                             <table className="table">
                                 <thead className='table-dark'>
@@ -267,7 +293,7 @@ const PublishResult = () => {
                                     listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
                                         <tbody>
                                             {
-                                                result.map((r, i) => {
+                                                filteredResult.map((r, i) => {
                                                     return (
                                                         <tr>
                                                             <th scope="row">{i + 1}</th>

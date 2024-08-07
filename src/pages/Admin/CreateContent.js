@@ -27,7 +27,9 @@ const CreateContent = () => {
     const [updatedType, setUpdatedType] = useState('');
     const [updatedContentLink, setUpdatedContentLink] = useState('');
     const [selected, setSelected] = useState(null);
+    const [createModalVisible, setIsCreateModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
 
     //Get All Grades
     const getAllGrades = async (req, res) => {
@@ -159,6 +161,13 @@ const CreateContent = () => {
         }
     }
 
+    // Filter content based on search query
+    const filteredContent = content.filter(c => 
+        c.subject.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        c.remark.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        c.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <Layout title={"Admin - Create Content Link"}>
             <div className="container-fluid mt-3 p-3">
@@ -166,61 +175,78 @@ const CreateContent = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Create Content Link</h2>
-                        <form className="m-1" onSubmit={handleCreate}>
-                            <div className="d-lg-flex">
-                                <Select bordered={false}
-                                    placeholder="Select Grade"
-                                    size='large'
-                                    className='form-select m-2'
-                                    value={grade || undefined}
-                                    onChange={(value) => { setGrade(value) }}>
-                                    {grades?.map(g => (
-                                        <Option key={g._id} value={g._id}>{g.name}</Option>
-                                    ))}
-                                </Select>
-                                <Select bordered={false}
-                                    placeholder="Select Content Type"
-                                    size='large'
-                                    className='form-select m-2'
-                                    value={type}
-                                    onChange={(value) => { setType(value) }}
-                                    required>
-                                    {types.map((t, i) => (
-                                        <Option key={i} value={t}>{t}</Option>
-                                    ))}
-                                </Select>
-                            </div>
-                            <div className="d-lg-flex">
-                                <input
-                                    type="text"
-                                    placeholder='Subject'
-                                    className='form-control m-2'
-                                    value={subject}
-                                    onChange={(e) => setSubject(e.target.value)} required
-                                />
-                                <input
-                                    type="text"
-                                    placeholder='Remark'
-                                    className='form-control m-2'
-                                    value={remark}
-                                    onChange={(e) => setRemark(e.target.value)} required
-                                />
-                            </div>
-                            <div>
-                                <input
-                                    type="text"
-                                    placeholder='Paste Link Here'
-                                    className='form-control m-2'
-                                    value={contentLink}
-                                    onChange={(e) => setContentLink(e.target.value)} required
-                                />
-                            </div>
-                            <div className="m-3 text-center">
-                                <button type="submit" className="btn btn-warning fw-bold">
-                                    {spinnerLoading ? <Spinner /> : "Create Content Link"}
-                                </button>
-                            </div>
-                        </form>
+
+                        <div className='d-flex mb-3'>
+                            <input
+                                type="text"
+                                placeholder='Search'
+                                className='form-control mx-1'
+                                style={{ flexBasis: '85%' }}
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2" style={{ flexBasis: '15%' }}>Create Content</button>
+                        </div>
+
+                        <Modal visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
+                            <h5 className='text-center mb-3'>Create Content</h5>
+                            <form className="m-1" onSubmit={handleCreate}>
+                                <div className="d-lg-flex">
+                                    <Select bordered={false}
+                                        placeholder="Select Grade"
+                                        size='large'
+                                        className='form-select m-2'
+                                        value={grade || undefined}
+                                        onChange={(value) => { setGrade(value) }}>
+                                        {grades?.map(g => (
+                                            <Option key={g._id} value={g._id}>{g.name}</Option>
+                                        ))}
+                                    </Select>
+                                    <Select bordered={false}
+                                        placeholder="Select Content Type"
+                                        size='large'
+                                        className='form-select m-2'
+                                        value={type}
+                                        onChange={(value) => { setType(value) }}
+                                        required>
+                                        {types.map((t, i) => (
+                                            <Option key={i} value={t}>{t}</Option>
+                                        ))}
+                                    </Select>
+                                </div>
+                                <div className="d-lg-flex">
+                                    <input
+                                        type="text"
+                                        placeholder='Subject'
+                                        className='form-control m-2'
+                                        value={subject}
+                                        onChange={(e) => setSubject(e.target.value)} required
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder='Remark'
+                                        className='form-control m-2'
+                                        value={remark}
+                                        onChange={(e) => setRemark(e.target.value)} required
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        type="text"
+                                        placeholder='Paste Link Here'
+                                        className='form-control m-2'
+                                        value={contentLink}
+                                        onChange={(e) => setContentLink(e.target.value)} required
+                                    />
+                                </div>
+                                <div className=" text-center">
+                                    <button type="submit" className="btn btn-warning fw-bold mt-2">
+                                        {spinnerLoading ? <Spinner /> : "Create Content Link"}
+                                    </button>
+                                </div>
+                            </form>
+                        </Modal>
+
                         <div className='table-container'>
                             <table className="table">
                                 <thead className='table-dark'>
@@ -238,25 +264,26 @@ const CreateContent = () => {
                                     listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
                                         <tbody>
                                             {
-                                                content.map((c, i) => {
+                                                filteredContent.map((c, i) => {
                                                     return (
-                                                        <tr>
+                                                        <tr key={c._id}>
                                                             <th scope='row'>{i + 1}</th>
                                                             <td>{c?.grade?.name}</td>
                                                             <td>
                                                                 <Tooltip title={`Created: ${moment(c.createdAt).format('llll')} Updated: ${moment(c.updatedAt).format('llll')}`}>
                                                                     <span>{c?.subject}</span>
                                                                 </Tooltip>
-                                                            </td>                                                            <td>{c.remark}</td>
+                                                            </td>
+                                                            <td>{c.remark}</td>
                                                             <td>{c.type}</td>
                                                             <td>
                                                                 <Link className='link' to={c.contentLink} target='_blank'>
-                                                                    <i class="fa-solid fa-up-right-from-square"></i> Open
+                                                                    <i className="fa-solid fa-up-right-from-square"></i> Open
                                                                 </Link>
                                                             </td>
                                                             <td className='d-flex'>
-                                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(c) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}><i class="fa-solid fa-trash-can"></i>  Delete</button>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(c) }}><i className="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}><i className="fa-solid fa-trash-can"></i>  Delete</button>
                                                             </td>
                                                         </tr>
                                                     )
@@ -277,7 +304,7 @@ const CreateContent = () => {
                     }
                 </div>
                 <form onSubmit={handleUpdate}>
-                <div className="mt-4 d-lg-flex">
+                    <div className="mt-4 d-lg-flex">
                         <input
                             type="text"
                             placeholder='Subject'
@@ -292,8 +319,8 @@ const CreateContent = () => {
                             value={updatedReMark}
                             onChange={(e) => setUpdatedReMark(e.target.value)} required
                         />
-                        </div>
-                        <div className='mb-3'>
+                    </div>
+                    <div className='mb-3'>
                         <Select bordered={false}
                             placeholder="Select Content Type"
                             size='large'

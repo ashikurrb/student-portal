@@ -37,6 +37,8 @@ const SetPaymentStatus = () => {
     const [updatedPaymentDate, setUpdatedPaymentDate] = useState('');
     const [selected, setSelected] = useState(null);
     const [visible, setVisible] = useState(null);
+    const [createModalVisible, setIsCreateModalVisible] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
 
     //Get All Grades
     const getAllGrades = async () => {
@@ -203,6 +205,15 @@ const SetPaymentStatus = () => {
     //total payment amount calculate
     const totalAmount = payment.reduce((sum, p) => sum + p.amount, 0);
 
+    // Filter content based on search query
+    const filteredPayment = payment.filter(p =>
+        p.remark.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.trxId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.method.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     // Function to generate invoice PDF
     const generateInvoice = (payment) => {
         toast.success("Invoice created");
@@ -297,72 +308,89 @@ const SetPaymentStatus = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Create Payment Status</h2>
-                        <form className="m-1" onSubmit={handleCreate}>
-                            <div className="d-lg-flex">
-                                <Select bordered={false}
-                                    placeholder="Select Grade"
-                                    size='large'
-                                    className='form-select m-2'
-                                    value={grade || undefined}
-                                    onChange={(value) => { setGrade(value) }}>
-                                    {grades?.map(g => (
-                                        <Option key={g._id} value={g._id}>{g.name}</Option>
-                                    ))}
-                                </Select>
-                                <Select bordered={false}
-                                    placeholder="Select Student"
-                                    size='large'
-                                    className='form-select m-2'
-                                    value={user || undefined}
-                                    onChange={(value) => { setUser(value) }} required>
-                                    {filteredUsers?.map(u => (
-                                        <Option key={u._id} value={u._id}>{u.name}</Option>
-                                    ))}
-                                </Select>
-                            </div>
-                            <div className="d-lg-flex">
-                                <input
-                                    type="text"
-                                    placeholder='Remark'
-                                    className='form-control m-2'
-                                    value={remark}
-                                    onChange={(e) => setRemark(e.target.value)} required
-                                />
-                                <input
-                                    type="number"
-                                    placeholder='Amount'
-                                    className='form-control m-2'
-                                    value={amount}
-                                    onChange={(e) => setAmount(e.target.value)} required
-                                />
-                                <DatePicker format={dateFormat} className='form-control w-100 m-2' value={paymentDate} onChange={(date) => setPaymentDate(date)} required />
-                            </div>
-                            <div className="d-lg-flex">
-                                <Select bordered={false}
-                                    placeholder="Select Method"
-                                    size='large'
-                                    className='form-select m-2'
-                                    value={method}
-                                    onChange={(value) => { setMethod(value) }}
-                                    required>
-                                    {methods.map((m, i) => (
-                                        <Option key={i} value={m}>{m}</Option>
-                                    ))}
-                                </Select>
-                                <input
-                                    type="text"
-                                    placeholder='Transaction ID / Receipt No'
-                                    className='form-control m-2'
-                                    value={trxId}
-                                    onChange={(e) => setTrxId(e.target.value)} required
-                                />
-                            </div>
-                            <div className="m-3 text-center">
-                                <button type='submit' className="btn btn-warning fw-bold">
-                                    {spinnerLoading ? <Spinner /> : "Create Payment Status"}
-                                </button>
-                            </div>
-                        </form>
+
+                        <div className='d-flex mb-3'>
+                            <input
+                                type="text"
+                                placeholder='Search'
+                                className='form-control mx-1'
+                                style={{ flexBasis: '85%' }}
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2" style={{ flexBasis: '15%' }}>Set Payment</button>
+                        </div>
+                        
+                        <Modal visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
+                            <form className="m-1" onSubmit={handleCreate}>
+                            <h5 className='text-center mb-3'>Create Payment Status</h5>
+                                <div className="d-lg-flex">
+                                    <Select bordered={false}
+                                        placeholder="Select Grade"
+                                        size='large'
+                                        className='form-select m-2'
+                                        value={grade || undefined}
+                                        onChange={(value) => { setGrade(value) }}>
+                                        {grades?.map(g => (
+                                            <Option key={g._id} value={g._id}>{g.name}</Option>
+                                        ))}
+                                    </Select>
+                                    <Select bordered={false}
+                                        placeholder="Select Student"
+                                        size='large'
+                                        className='form-select m-2'
+                                        value={user || undefined}
+                                        onChange={(value) => { setUser(value) }} required>
+                                        {filteredUsers?.map(u => (
+                                            <Option key={u._id} value={u._id}>{u.name}</Option>
+                                        ))}
+                                    </Select>
+                                </div>
+                                <div className="d-lg-flex">
+                                    <input
+                                        type="text"
+                                        placeholder='Remark'
+                                        className='form-control m-2'
+                                        value={remark}
+                                        onChange={(e) => setRemark(e.target.value)} required
+                                    />
+                                    <input
+                                        type="number"
+                                        placeholder='Amount'
+                                        className='form-control m-2'
+                                        value={amount}
+                                        onChange={(e) => setAmount(e.target.value)} required
+                                    />
+                                    <DatePicker format={dateFormat} className='form-control w-100 m-2' value={paymentDate} onChange={(date) => setPaymentDate(date)} required />
+                                </div>
+                                <div className="d-lg-flex">
+                                    <Select bordered={false}
+                                        placeholder="Select Method"
+                                        size='large'
+                                        className='form-select m-2'
+                                        value={method}
+                                        onChange={(value) => { setMethod(value) }}
+                                        required>
+                                        {methods.map((m, i) => (
+                                            <Option key={i} value={m}>{m}</Option>
+                                        ))}
+                                    </Select>
+                                    <input
+                                        type="text"
+                                        placeholder='Transaction ID / Receipt No'
+                                        className='form-control m-2'
+                                        value={trxId}
+                                        onChange={(e) => setTrxId(e.target.value)} required
+                                    />
+                                </div>
+                                <div className="text-center">
+                                <button type="submit" className="btn btn-warning fw-bold mt-2">
+                                        {spinnerLoading ? <Spinner /> : "Create Payment Status"}
+                                    </button>
+                                </div>
+                            </form>
+                        </Modal>
+
                         <h6 className='d-flex justify-content-between'> <span>Payment Count: {payment.length}</span> <span>Total Received: TK. {totalAmount}</span></h6>
                         <div className='table-container'>
                             <table className="table">
@@ -384,7 +412,7 @@ const SetPaymentStatus = () => {
                                     listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
                                         <tbody>
                                             {
-                                                payment.map((p, i) => {
+                                                filteredPayment.map((p, i) => {
                                                     return (
                                                         <tr key={p._id}>
                                                             <th scope="row">{i + 1}</th>

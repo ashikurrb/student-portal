@@ -7,6 +7,10 @@ const HomePage = () => {
     return (
         <Layout title={"5points - Best Coaching"}>
             <div className="container">
+                <div>
+                    <h1 className='text-center my-5'>Welcome to Bangladesh 2.0</h1>
+
+                </div>
                 <div className="row m-5">
                     <div className="col-md-6">
                         <h4>Name: {auth?.user?.name}</h4>
