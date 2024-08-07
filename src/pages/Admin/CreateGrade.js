@@ -5,7 +5,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import moment from "moment";
 import Spinner from '../../components/Spinner';
-import { Modal } from 'antd';
+import { Modal, Alert } from 'antd';
 
 const CreateGrade = () => {
     const [grades, setGrades] = useState([]);
@@ -97,6 +97,7 @@ const CreateGrade = () => {
 
     //Delete grade
     const handelDelete = async (pId) => {
+        const loadingToastId = toast.loading('Deleting grade...');
         try {
             let answer = window.confirm("Are your sure? Deleting this grade will also delete all associated users, user data, and associated content.")
             if (!answer) {
@@ -104,14 +105,14 @@ const CreateGrade = () => {
             }
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/grade/delete-grade/${pId}`)
             if (data.success) {
-                toast.success(data.message)
+                toast.success(data.message, { id: loadingToastId });
                 getAllGrades();
             } else {
-                toast.error(data.message)
+                toast.error(data.message, { id: loadingToastId });
             }
         } catch (error) {
             console.log(error);
-            toast.error("Error deleting grade")
+            toast.error("Error deleting grade", { id: loadingToastId })
         }
     }
 
@@ -138,6 +139,18 @@ const CreateGrade = () => {
                                 </button>
                             </div>
                         </form>
+                        <div className="d-flex justify-content-center">
+                            <Alert
+                                className='m-2 col-md-9'
+                                message={
+                                    <>
+                                        <b>Deleting a grade will also delete all associated users, their data (result, payment status etc), and associated content.</b>
+                                    </>
+                                }
+                                type="warning"
+                                showIcon
+                            />
+                        </div>
                         <h6 className='text-start'>Total Grade: {grades.length}</h6>
                         <div className="table-container">
                             <table className='table'>
