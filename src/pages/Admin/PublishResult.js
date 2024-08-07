@@ -204,12 +204,12 @@ const PublishResult = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Publish Result</h2>
-                        <div className='d-flex mb-3'>
+                        <div className='d-flex justify-content-between mb-3'>
                             <input
                                 type="text"
                                 placeholder='Search'
                                 className='form-control mx-1'
-                                style={{ flexBasis: '85%' }}
+                                style={{ flexBasis: '60%' }}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
@@ -268,7 +268,7 @@ const PublishResult = () => {
                                     />
                                 </div>
                                 <div className="text-center">
-                                <button type="submit" className="btn btn-warning fw-bold mt-3">
+                                    <button type="submit" className="btn btn-warning fw-bold mt-3">
                                         {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}
                                     </button>
                                 </div>
@@ -292,7 +292,14 @@ const PublishResult = () => {
                                 {
                                     listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
                                         <tbody>
-                                            {
+                                            {filteredResult.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan="8" className="text-center">
+                                                        <h3 className='mt-5 text-secondary'>No Result Found</h3>
+                                                        <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">Reset Search</button>
+                                                    </td>
+                                                </tr>
+                                            ) : (
                                                 filteredResult.map((r, i) => {
                                                     return (
                                                         <tr>
@@ -314,7 +321,7 @@ const PublishResult = () => {
                                                         </tr>
                                                     )
                                                 })
-                                            }
+                                            )}
                                         </tbody>
                                 }
                             </table>

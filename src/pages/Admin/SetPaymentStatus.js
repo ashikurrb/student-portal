@@ -308,13 +308,12 @@ const SetPaymentStatus = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Create Payment Status</h2>
-
-                        <div className='d-flex mb-3'>
+                        <div className='d-flex justify-content-between mb-3'>
                             <input
                                 type="text"
                                 placeholder='Search'
                                 className='form-control mx-1'
-                                style={{ flexBasis: '85%' }}
+                                style={{ flexBasis: '60%' }}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
@@ -323,7 +322,7 @@ const SetPaymentStatus = () => {
 
                         <Modal visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
                             <form className="m-1" onSubmit={handleCreate}>
-                            <h5 className='text-center mb-3'>Create Payment Status</h5>
+                                <h5 className='text-center mb-3'>Create Payment Status</h5>
                                 <div className="d-lg-flex">
                                     <Select bordered={false}
                                         placeholder="Select Grade"
@@ -384,7 +383,7 @@ const SetPaymentStatus = () => {
                                     />
                                 </div>
                                 <div className="text-center">
-                                <button type="submit" className="btn btn-warning fw-bold mt-3">
+                                    <button type="submit" className="btn btn-warning fw-bold mt-3">
                                         {spinnerLoading ? <Spinner /> : "Create Payment Status"}
                                     </button>
                                 </div>
@@ -411,7 +410,14 @@ const SetPaymentStatus = () => {
                                 {
                                     listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
                                         <tbody>
-                                            {
+                                            {filteredPayment.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan="10" className="text-center">
+                                                        <h3 className='mt-5 text-secondary'>No Payment Status Found</h3>
+                                                        <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">Reset Search</button>
+                                                    </td>
+                                                </tr>
+                                            ) : (
                                                 filteredPayment.map((p, i) => {
                                                     return (
                                                         <tr key={p._id}>
@@ -439,7 +445,7 @@ const SetPaymentStatus = () => {
                                                         </tr>
                                                     );
                                                 })
-                                            }
+                                            )}
                                         </tbody>
                                 }
                             </table>

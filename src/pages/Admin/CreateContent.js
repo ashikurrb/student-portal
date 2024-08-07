@@ -175,13 +175,12 @@ const CreateContent = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>Create Content Link</h2>
-
-                        <div className='d-flex mb-3'>
+                        <div className='d-flex justify-content-between mb-3'>
                             <input
                                 type="text"
                                 placeholder='Search'
                                 className='form-control mx-1'
-                                style={{ flexBasis: '85%' }}
+                                style={{ flexBasis: '60%' }}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
@@ -263,34 +262,40 @@ const CreateContent = () => {
                                 </thead>
                                 {
                                     listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
-                                        <tbody>
-                                            {
-                                                filteredContent.map((c, i) => {
-                                                    return (
-                                                        <tr key={c._id}>
-                                                            <th scope='row'>{i + 1}</th>
-                                                            <td>{c?.grade?.name}</td>
-                                                            <td>
-                                                                <Tooltip title={`Created: ${moment(c.createdAt).format('llll')} Updated: ${moment(c.updatedAt).format('llll')}`}>
-                                                                    <span>{c?.subject}</span>
-                                                                </Tooltip>
-                                                            </td>
-                                                            <td>{c.remark}</td>
-                                                            <td>{c.type}</td>
-                                                            <td>
-                                                                <Link className='link' to={c.contentLink} target='_blank'>
-                                                                    <i className="fa-solid fa-up-right-from-square"></i> Open
-                                                                </Link>
-                                                            </td>
-                                                            <td className='d-flex'>
-                                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(c) }}><i className="fa-solid fa-pen-to-square"></i> Edit</button>
-                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}><i className="fa-solid fa-trash-can"></i>  Delete</button>
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
+                                    <tbody>
+                                    {filteredContent.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="7" className="text-center">
+                                                <h3 className='mt-5 text-secondary'>No Content Found</h3>
+                                                <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">Reset Search</button>
+                                            </td>
+                                        </tr>
+                                    ) : (
+                                        filteredContent.map((c, i) => (
+                                            <tr key={c._id}>
+                                                <th scope='row'>{i + 1}</th>
+                                                <td>{c?.grade?.name}</td>
+                                                <td>
+                                                    <Tooltip title={`Created: ${moment(c.createdAt).format('llll')} Updated: ${moment(c.updatedAt).format('llll')}`}>
+                                                        <span>{c?.subject}</span>
+                                                    </Tooltip>
+                                                </td>
+                                                <td>{c.remark}</td>
+                                                <td>{c.type}</td>
+                                                <td>
+                                                    <Link className='link' to={c.contentLink} target='_blank'>
+                                                        <i className="fa-solid fa-up-right-from-square"></i> Open
+                                                    </Link>
+                                                </td>
+                                                <td className='d-flex'>
+                                                    <button className='btn btn-primary mx-1' onClick={() => { openModal(c) }}><i className="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                    <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}><i className="fa-solid fa-trash-can"></i> Delete</button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    )}
+                                </tbody>
+                                
                                 }
                             </table>
                         </div>
