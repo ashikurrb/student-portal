@@ -1,25 +1,26 @@
 import React from 'react';
 import Layout from '../components/Layouts/Layout';
-import { useAuth } from '../context/auth';
 
 const HomePage = () => {
-    const [auth] = useAuth();
     return (
         <Layout title={"5points - Best Coaching"}>
             <div className="container">
-                <div>
-                    <h1 className='text-center my-5'>Welcome to Bangladesh 2.0</h1>
-
-                </div>
-                <div className="row m-5">
-                    <div className="col-md-6">
-                        <h4>Name: {auth?.user?.name}</h4>
-                        <h6>Phone: {auth?.user?.phone} </h6>
-                        <h6>Email: {auth?.user?.email} </h6>
-                        <h6>Grade: {auth?.user?.grade?.name} </h6>
+                <div className="row">
+                    <div>
+                        <h1 className='text-center my-5'>Welcome to Bangladesh 2.0</h1>
                     </div>
-                    <div className="col-md-6 text-center">
-                        <img className='img img-fluid rounded' src={auth?.user?.avatar} alt="DP" style={{ width: "50%" }} />
+                    <p>
+                        শিক্ষার এক নতুন যুগে প্রতিযোগিতামূলক সফলতা অর্জনের জন্য আমরা 5points school আছি সবসময় আপনাদের পাশে।
+                        শিক্ষার্থীর যেকোনো ক্লাসের যেকোনো subject এর হাজারো সব সমস্যার সমাধান পাবেন একই প্লাটফর্মে যা পাওয়া যাবে খুবই সাশ্রয়ী মূল্যে।
+                        একই সাথে আমরা আছি শিক্ষার্থীর স্কুল জীবন থেকে শুরু করে জীবনের প্রতিটা অধ্যায়ের সফলতা অর্জনের সহযোগী হিসেবে।
+                        এরকম আরো সুবিধা একই প্লাটফর্মে পেতে আজই সাইন আপ/রেজিস্টার করে আমাদের সাথে থাকুন
+                    </p>
+                    <div>
+                        Call us for more information about admission and courses.
+                        <br />
+                        <i className='fa-solid fa-envelope'></i> : 5pointschool@gmail.com
+                        <br />
+                        <i className='fa-solid fa-phone-volume'></i> : +880 1794-744343
                     </div>
                 </div>
             </div>

@@ -38,10 +38,9 @@
 
 .footer{
   color: white;
-  padding: 30px;
-  background: #000000;
-  background: -webkit-linear-gradient(to right, #434343,#000000);
-  background: linear-gradient(to right, #434343,#000000);
+  padding-top: 20px;
+  padding-bottom: 5px;
+  background: #151414;
 }
 
 .footer a{
@@ -51,8 +50,7 @@
 }
 
 .footer a:hover{
-  color: gray;
-  border-bottom: 1px solid gray;
+  color: gray !important;
 }
 
 .pnf{
