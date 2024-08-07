@@ -174,11 +174,11 @@ const CreateGrade = () => {
                                             <td className='d-flex'>
                                                 <button className='btn btn-primary mx-1' onClick={() => { openModal(g) }}
                                                     disabled={g.name === "Administration"}>
-                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                    <i class="fa-solid fa-pen-to-square"></i> Edit
                                                 </button>
                                                 <button className='btn btn-danger mx-1' onClick={() => { handleDelete(g._id) }}
                                                     disabled={g.name === "Administration"}>
-                                                    <i class="fa-solid fa-trash-can"></i>
+                                                    <i class="fa-solid fa-trash-can"></i> Delete
                                                 </button>
                                             </td>
                                         </tr>

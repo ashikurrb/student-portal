@@ -319,7 +319,7 @@ const SetPaymentStatus = () => {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2">
-                            <i class="fa-solid fa-plus"></i>  Set Payment
+                                <i class="fa-solid fa-plus"></i>  Set Payment
                             </button>
                         </div>
 
@@ -327,7 +327,7 @@ const SetPaymentStatus = () => {
                             <form onSubmit={handleCreate}>
                                 <h5 className='text-center'>Create Payment Status</h5>
                                 <div className="mt-4 d-lg-flex">
-                                <Select bordered={false}
+                                    <Select bordered={false}
                                         placeholder="Select Grade"
                                         size='large'
                                         className='form-select mb-2 me-2'
@@ -420,7 +420,9 @@ const SetPaymentStatus = () => {
                                                 <tr>
                                                     <td colSpan="10" className="text-center">
                                                         <h3 className='mt-5 text-secondary'>No Payment Status Found</h3>
-                                                        <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">Reset Search</button>
+                                                        <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">
+                                                            Reset Search
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             ) : (
@@ -445,8 +447,12 @@ const SetPaymentStatus = () => {
                                                                 </button>
                                                             </td>
                                                             <td className='d-flex'>
-                                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(p) }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}><i className="fa-solid fa-trash-can"></i> Delete</button>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(p) }}>
+                                                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                                </button>
+                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}>
+                                                                    <i className="fa-solid fa-trash-can"></i> Delete
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                     );

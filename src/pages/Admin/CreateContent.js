@@ -270,7 +270,9 @@ const CreateContent = () => {
                                                 <tr>
                                                     <td colSpan="7" className="text-center">
                                                         <h3 className='mt-5 text-secondary'>No Content Found</h3>
-                                                        <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">Reset Search</button>
+                                                        <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">
+                                                            Reset Search
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             ) : (
@@ -291,8 +293,12 @@ const CreateContent = () => {
                                                             </Link>
                                                         </td>
                                                         <td className='d-flex'>
-                                                            <button className='btn btn-primary mx-1' onClick={() => { openModal(c) }}><i className="fa-solid fa-pen-to-square"></i> Edit</button>
-                                                            <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}><i className="fa-solid fa-trash-can"></i> Delete</button>
+                                                            <button className='btn btn-primary mx-1' onClick={() => { openModal(c) }}>
+                                                                <i className="fa-solid fa-pen-to-square"></i> Edit
+                                                            </button>
+                                                            <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}>
+                                                                <i className="fa-solid fa-trash-can"></i> Delete
+                                                            </button>
                                                         </td>
                                                     </tr>
                                                 ))
