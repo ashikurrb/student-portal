@@ -267,8 +267,8 @@ const PublishResult = () => {
                                         onChange={(e) => setMarks(e.target.value)} required
                                     />
                                 </div>
-                                <div className="m-3 text-center">
-                                    <button type="submit" className="btn btn-warning fw-bold">
+                                <div className="text-center">
+                                <button type="submit" className="btn btn-warning fw-bold mt-3">
                                         {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}
                                     </button>
                                 </div>

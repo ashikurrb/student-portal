@@ -384,7 +384,7 @@ const SetPaymentStatus = () => {
                                     />
                                 </div>
                                 <div className="text-center">
-                                <button type="submit" className="btn btn-warning fw-bold mt-2">
+                                <button type="submit" className="btn btn-warning fw-bold mt-3">
                                         {spinnerLoading ? <Spinner /> : "Create Payment Status"}
                                     </button>
                                 </div>
