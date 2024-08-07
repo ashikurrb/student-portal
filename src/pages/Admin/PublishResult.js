@@ -214,17 +214,17 @@ const PublishResult = () => {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2">
-                            <i class="fa-solid fa-plus"></i> Publish Result
+                                <i class="fa-solid fa-plus"></i> Publish Result
                             </button>
                         </div>
                         <Modal visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
                             <h5 className='text-center mb-3'>Publish Result</h5>
-                            <form className="m-1" onSubmit={handlePublish}>
-                                <div className="d-lg-flex">
+                            <form onSubmit={handlePublish}>
+                                <div className="mt-4 d-lg-flex">
                                     <Select bordered={false}
                                         placeholder="Select Grade"
                                         size='large'
-                                        className='form-select m-2'
+                                        className='form-select mb-2 me-2'
                                         value={grade || undefined}
                                         onChange={(value) => { setGrade(value) }}>
                                         {grades?.map(g => (
@@ -234,7 +234,7 @@ const PublishResult = () => {
                                     <Select bordered={false}
                                         placeholder="Select Student"
                                         size='large'
-                                        className='form-select m-2'
+                                        className='form-select mb-2'
                                         value={user || undefined}
                                         onChange={(value) => { setUser(value) }}
                                         required>
@@ -247,24 +247,24 @@ const PublishResult = () => {
                                     <input
                                         type="text"
                                         placeholder='Exam Type'
-                                        className='form-control form-input m-2'
+                                        className='form-control form-input mb-2 me-2'
                                         value={type}
                                         onChange={(e) => setType(e.target.value)} required
                                     />
                                     <input
                                         type="text"
                                         placeholder='Subject'
-                                        className='form-control form-input m-2'
+                                        className='form-control form-input mb-2'
                                         value={subject}
                                         onChange={(e) => setSubject(e.target.value)} required
                                     />
                                 </div>
                                 <div className="d-lg-flex">
-                                    <DatePicker format={dateFormat} className='w-100 m-2 form-control' value={examDate} onChange={(date) => setExamDate(date)} required />
+                                    <DatePicker format={dateFormat} className='w-100 mb-2 me-2 form-control' value={examDate} onChange={(date) => setExamDate(date)} required />
                                     <input
                                         type="text"
                                         placeholder='Marks'
-                                        className='form-control m-2'
+                                        className='form-control mb-2'
                                         value={marks}
                                         onChange={(e) => setMarks(e.target.value)} required
                                     />
