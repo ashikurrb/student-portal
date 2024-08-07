@@ -6,11 +6,8 @@ const HomePage = () => {
         <Layout title={"5points - Best Coaching"}>
             <div className="container">
                 <div className="row">
-                    <div>
-                        <h1 className='text-center mt-5'>Welcome to Bangladesh 2.0</h1>
-                    </div>
                     <div className="d-flex justify-content-center align-items-center my-3">
-                        <img src="/images/logoIcon.png" alt="logo" style={{ width: "30%" }} />
+                        <img src="/images/logoBrand.png" alt="logo" style={{ width: "30%" }} />
                     </div>
                     <p className='px-4'>
                         শিক্ষার এক নতুন যুগে প্রতিযোগিতামূলক সফলতা অর্জনের জন্য আমরা 5points school আছি সবসময় আপনাদের পাশে।
