@@ -209,11 +209,13 @@ const PublishResult = () => {
                                 type="text"
                                 placeholder='Search'
                                 className='form-control mx-1'
-                                style={{ flexBasis: '60%' }}
+                                style={{ flexBasis: '50%' }}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2" style={{ flexBasis: '15%' }}>Publish Result</button>
+                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2">
+                            <i class="fa-solid fa-plus"></i> Publish Result
+                            </button>
                         </div>
                         <Modal visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
                             <h5 className='text-center mb-3'>Publish Result</h5>
@@ -274,7 +276,7 @@ const PublishResult = () => {
                                 </div>
                             </form>
                         </Modal>
-                        <h6 className='justify-content-start'> <span>Count: {filteredResult.length}</span></h6>
+                        <h6 className='justify-content-start'> Count: {filteredResult.length}</h6>
                         <div className='table-container'>
                             <table className="table">
                                 <thead className='table-dark'>

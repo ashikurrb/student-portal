@@ -313,11 +313,13 @@ const SetPaymentStatus = () => {
                                 type="text"
                                 placeholder='Search'
                                 className='form-control mx-1'
-                                style={{ flexBasis: '60%' }}
+                                style={{ flexBasis: '50%' }}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2" style={{ flexBasis: '15%' }}>Set Payment</button>
+                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2">
+                            <i class="fa-solid fa-plus"></i>  Set Payment
+                            </button>
                         </div>
 
                         <Modal visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
@@ -390,7 +392,10 @@ const SetPaymentStatus = () => {
                             </form>
                         </Modal>
 
-                        <h6 className='d-flex justify-content-between'> <span>Payment Count: {filteredPayment.length}</span> <span>Total Received: TK. {totalAmount}</span></h6>
+                        <h6 className='d-flex justify-content-between'>
+                            <span>Payment Count: {filteredPayment.length}</span>
+                            <span>Total Received: TK. {totalAmount}</span>
+                        </h6>
                         <div className='table-container'>
                             <table className="table">
                                 <thead className='table-dark'>

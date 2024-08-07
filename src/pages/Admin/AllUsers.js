@@ -5,10 +5,9 @@ import { useAuth } from '../../context/auth';
 import Spinner from '../../components/Spinner'; import axios from 'axios';
 import toast from 'react-hot-toast';
 import moment from "moment";
-import { Modal, Select, Alert, Tooltip } from 'antd';
+import { Modal, Select, Alert, Tooltip, Input } from 'antd';
 const { Option } = Select;
-
-
+const { Search } = Input;
 
 const AllUsers = () => {
     const [auth, setAuth] = useAuth();
@@ -20,6 +19,7 @@ const AllUsers = () => {
     const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
     const [visible, setVisible] = useState(false);
     const [selected, setSelected] = useState({});
+    const [searchQuery, setSearchQuery] = useState('');
 
     //Get All Grades
     const getAllGrades = async () => {
@@ -105,6 +105,14 @@ const AllUsers = () => {
         }
     }
 
+    // Filter content based on search query
+    const filteredUser = users.filter(u =>
+        u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        u.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        u.phone.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        u.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <Layout title={"Admin - User's List"}>
             <div className="container-fluid mt-3 p-3">
@@ -124,6 +132,17 @@ const AllUsers = () => {
                                 showIcon
                             />
                         </div>
+                        <div className="d-flex justify-content-end">
+                            <input
+                                type="text"
+                                placeholder='Search'
+                                className='form-control mt-4'
+                                style={{ flexBasis: '40%' }}
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                        </div>
+                        <h6 className='justify-content-start'> Count: {filteredUser.length}</h6>
                         {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <div className="table-container">
                             <table className='table'>
                                 <thead className='table-dark'>
@@ -140,8 +159,16 @@ const AllUsers = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {
-                                        users.map((u, i) => {
+                                    {filteredUser.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="8" className="text-center">
+                                                <h3 className='mt-5 text-secondary'>No User Found</h3>
+                                                <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">Reset Search</button>
+                                            </td>
+                                        </tr>
+                                    ) : (
+
+                                        filteredUser.map((u, i) => {
                                             return (
 
                                                 <tr>
@@ -227,7 +254,7 @@ const AllUsers = () => {
                                                 </tr>
                                             )
                                         })
-                                    }
+                                    )}
                                 </tbody>
                             </table>
 
