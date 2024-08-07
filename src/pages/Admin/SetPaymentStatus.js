@@ -202,9 +202,6 @@ const SetPaymentStatus = () => {
         }
     };
 
-    //total payment amount calculate
-    const totalAmount = payment.reduce((sum, p) => sum + p.amount, 0);
-
     // Filter content based on search query
     const filteredPayment = payment.filter(p =>
         p.remark.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -213,6 +210,9 @@ const SetPaymentStatus = () => {
         p.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    //total payment amount calculate
+    const totalAmount = filteredPayment.reduce((sum, p) => sum + p.amount, 0);
 
     // Function to generate invoice PDF
     const generateInvoice = (payment) => {
@@ -320,7 +320,7 @@ const SetPaymentStatus = () => {
                             />
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2" style={{ flexBasis: '15%' }}>Set Payment</button>
                         </div>
-                        
+
                         <Modal visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
                             <form className="m-1" onSubmit={handleCreate}>
                             <h5 className='text-center mb-3'>Create Payment Status</h5>
@@ -391,7 +391,7 @@ const SetPaymentStatus = () => {
                             </form>
                         </Modal>
 
-                        <h6 className='d-flex justify-content-between'> <span>Payment Count: {payment.length}</span> <span>Total Received: TK. {totalAmount}</span></h6>
+                        <h6 className='d-flex justify-content-between'> <span>Payment Count: {filteredPayment.length}</span> <span>Total Received: TK. {totalAmount}</span></h6>
                         <div className='table-container'>
                             <table className="table">
                                 <thead className='table-dark'>

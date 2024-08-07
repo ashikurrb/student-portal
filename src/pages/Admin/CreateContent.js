@@ -247,6 +247,7 @@ const CreateContent = () => {
                             </form>
                         </Modal>
 
+                        <h6 className='justify-content-start'> <span>Count: {filteredContent.length}</span></h6>
                         <div className='table-container'>
                             <table className="table">
                                 <thead className='table-dark'>

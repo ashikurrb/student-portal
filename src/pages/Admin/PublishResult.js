@@ -216,7 +216,7 @@ const PublishResult = () => {
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2" style={{ flexBasis: '15%' }}>Publish Result</button>
                         </div>
                         <Modal visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
-                        <h5 className='text-center mb-3'>Publish Result</h5>
+                            <h5 className='text-center mb-3'>Publish Result</h5>
                             <form className="m-1" onSubmit={handlePublish}>
                                 <div className="d-lg-flex">
                                     <Select bordered={false}
@@ -274,7 +274,7 @@ const PublishResult = () => {
                                 </div>
                             </form>
                         </Modal>
-
+                        <h6 className='justify-content-start'> <span>Count: {filteredResult.length}</span></h6>
                         <div className='table-container'>
                             <table className="table">
                                 <thead className='table-dark'>
