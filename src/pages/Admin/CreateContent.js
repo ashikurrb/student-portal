@@ -189,14 +189,14 @@ const CreateContent = () => {
                             </button>
                         </div>
 
-                        <Modal visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
+                        <Modal width={650} visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
                             <h5 className='text-center'>Create Content</h5>
                             <form onSubmit={handleCreate}>
                             <div className="mt-4 d-lg-flex">
                                     <Select bordered={false}
                                         placeholder="Select Grade"
                                         size='large'
-                                        className='form-select mb-2 me-2'
+                                        className='form-select mb-3 me-2'
                                         value={grade || undefined}
                                         onChange={(value) => { setGrade(value) }}>
                                         {grades?.map(g => (
@@ -206,7 +206,7 @@ const CreateContent = () => {
                                     <Select bordered={false}
                                         placeholder="Select Content Type"
                                         size='large'
-                                        className='form-select mb-2'
+                                        className='form-select mb-3'
                                         value={type}
                                         onChange={(value) => { setType(value) }}
                                         required>
@@ -219,14 +219,14 @@ const CreateContent = () => {
                                     <input
                                         type="text"
                                         placeholder='Subject'
-                                        className='form-control mb-2 me-2'
+                                        className='form-control mb-3 me-2'
                                         value={subject}
                                         onChange={(e) => setSubject(e.target.value)} required
                                     />
                                     <input
                                         type="text"
                                         placeholder='Remark'
-                                        className='form-control mb-2'
+                                        className='form-control mb-3'
                                         value={remark}
                                         onChange={(e) => setRemark(e.target.value)} required
                                     />
@@ -235,7 +235,7 @@ const CreateContent = () => {
                                     <input
                                         type="text"
                                         placeholder='Paste Link Here'
-                                        className='form-control mb-2'
+                                        className='form-control mb-3'
                                         value={contentLink}
                                         onChange={(e) => setContentLink(e.target.value)} required
                                     />

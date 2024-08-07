@@ -217,7 +217,7 @@ const PublishResult = () => {
                                 <i class="fa-solid fa-plus"></i> Publish Result
                             </button>
                         </div>
-                        <Modal visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
+                        <Modal width={650} visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
                             <h5 className='text-center mb-3'>Publish Result</h5>
                             <form onSubmit={handlePublish}>
                                 <div className="mt-4 d-lg-flex">

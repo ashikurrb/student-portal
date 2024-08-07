@@ -322,7 +322,7 @@ const SetPaymentStatus = () => {
                             </button>
                         </div>
 
-                        <Modal visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
+                        <Modal width={650} visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
                             <form onSubmit={handleCreate}>
                                 <h5 className='text-center'>Create Payment Status</h5>
                                 <div className="mt-4 d-lg-flex">
