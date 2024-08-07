@@ -174,18 +174,19 @@ const PublishResult = () => {
 
     //delete result
     const handleDelete = async (rId) => {
+        let answer = window.confirm("Are you sure want to delete this result?")
+        if (!answer) return;
+        const loadingToastId = toast.loading('Deleting result...');
         try {
-            let answer = window.confirm("Are you sure want to delete this result?")
-            if (!answer) return;
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/result/delete-result/${rId}`);
             if (data.success) {
-                toast.success(data.message);
+                toast.success(data.message, { id: loadingToastId });
                 getAllResults();
             } else {
-                toast.error(data.message)
+                toast.error(data.message, { id: loadingToastId })
             }
         } catch (error) {
-            toast.error('Something wrong while Delete')
+            toast.error('Something wrong while Delete', { id: loadingToastId })
         }
     }
 

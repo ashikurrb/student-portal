@@ -145,19 +145,20 @@ const CreateContent = () => {
 
 
     //delete content
-    const handleDelete = async (rId) => {
+    const handleDelete = async (cId) => {
+        let answer = window.confirm("Are you sure want to delete this content?")
+        if (!answer) return;
+        const loadingToastId = toast.loading('Deleting content...');
         try {
-            let answer = window.confirm("Are you sure want to delete this content?")
-            if (!answer) return;
-            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/content/delete-content/${rId}`);
+            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/content/delete-content/${cId}`);
             if (data.success) {
-                toast.success(data.message);
+                toast.success(data.message, { id: loadingToastId });
                 getAllContent();
             } else {
-                toast.error(data.message)
+                toast.error(data.message, { id: loadingToastId })
             }
         } catch (error) {
-            toast.error('Something wrong while Delete')
+            toast.error('Something wrong while Delete', { id: loadingToastId })
         }
     }
 
@@ -185,14 +186,14 @@ const CreateContent = () => {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2">
-                            <i class="fa-solid fa-plus"></i> Create Content
+                                <i class="fa-solid fa-plus"></i> Create Content
                             </button>
                         </div>
 
                         <Modal width={650} visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
                             <h5 className='text-center'>Create Content</h5>
                             <form onSubmit={handleCreate}>
-                            <div className="mt-4 d-lg-flex">
+                                <div className="mt-4 d-lg-flex">
                                     <Select bordered={false}
                                         placeholder="Select Grade"
                                         size='large'

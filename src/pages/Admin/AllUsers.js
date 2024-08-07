@@ -90,18 +90,19 @@ const AllUsers = () => {
 
     //delete users
     const handleDelete = async (uId) => {
+        let answer = window.confirm("Are you sure want to delete this user? Payment & Result Data of this user will also be deleted.")
+        if (!answer) return;
+        const loadingToastId = toast.loading('Deleting user...');
         try {
-            let answer = window.confirm("Are you sure want to delete this user? Payment & Result Data of this user will also be deleted.")
-            if (!answer) return;
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/auth/delete-user/${uId}`);
             if (data.success) {
-                toast.success(data.message);
+                toast.success(data.message, { id: loadingToastId });
                 getAllUsers();
             } else {
-                toast.error(data.message)
+                toast.error(data.message, { id: loadingToastId });
             }
         } catch (error) {
-            toast.error('Something wrong while Delete')
+            toast.error('Something wrong while Delete', { id: loadingToastId })
         }
     }
 

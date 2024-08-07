@@ -186,19 +186,20 @@ const SetPaymentStatus = () => {
     };
 
     //delete payment status
-    const handleDelete = async (rId) => {
+    const handleDelete = async (pId) => {
+        let answer = window.confirm("Are you sure want to delete this payment Status?");
+        if (!answer) return;
+        const loadingToastId = toast.loading('Deleting payment status...');
         try {
-            let answer = window.confirm("Are you sure want to delete this payment Status?");
-            if (!answer) return;
-            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/payment/delete-payment/${rId}`);
+            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/payment/delete-payment/${pId}`);
             if (data.success) {
-                toast.success(data.message);
+                toast.success(data.message, { id: loadingToastId });
                 getAllPayment();
             } else {
                 toast.error(data.message);
             }
         } catch (error) {
-            toast.error('Something went wrong');
+            toast.error('Something went wrong', { id: loadingToastId });
         }
     };
 

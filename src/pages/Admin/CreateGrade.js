@@ -96,14 +96,14 @@ const CreateGrade = () => {
     }
 
     //Delete grade
-    const handelDelete = async (pId) => {
+    const handleDelete = async (gId) => {
+        let answer = window.confirm("Are you sure? Deleting this grade will also delete all associated users, user data, and associated content.");
+        if (!answer) {
+            return;
+        }
         const loadingToastId = toast.loading('Deleting grade...');
         try {
-            let answer = window.confirm("Are your sure? Deleting this grade will also delete all associated users, user data, and associated content.")
-            if (!answer) {
-                return
-            }
-            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/grade/delete-grade/${pId}`)
+            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/grade/delete-grade/${gId}`);
             if (data.success) {
                 toast.success(data.message, { id: loadingToastId });
                 getAllGrades();
@@ -112,9 +112,10 @@ const CreateGrade = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error("Error deleting grade", { id: loadingToastId })
+            toast.error("Error deleting grade", { id: loadingToastId });
         }
     }
+
 
     return (
         <Layout title={"Admin - Create Grade"}>
@@ -173,11 +174,11 @@ const CreateGrade = () => {
                                             <td className='d-flex'>
                                                 <button className='btn btn-primary mx-1' onClick={() => { openModal(g) }}
                                                     disabled={g.name === "Administration"}>
-                                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                    <i class="fa-solid fa-pen-to-square"></i>
                                                 </button>
-                                                <button className='btn btn-danger mx-1' onClick={() => { handelDelete(g._id) }}
+                                                <button className='btn btn-danger mx-1' onClick={() => { handleDelete(g._id) }}
                                                     disabled={g.name === "Administration"}>
-                                                    <i class="fa-solid fa-trash-can"></i> Delete
+                                                    <i class="fa-solid fa-trash-can"></i>
                                                 </button>
                                             </td>
                                         </tr>
