@@ -37,7 +37,7 @@ const ViewPayment = () => {
         toast.success("Invoice created");
         const doc = new jsPDF();
         doc.setFontSize(22);
-        const instituteName = '5Points Academy';
+        const instituteName = '5points Academy';
         const pageWidth1 = doc.internal.pageSize.getWidth();
         const titleWidth1 = doc.getTextWidth(instituteName);
         const titleX1 = (pageWidth1 - titleWidth1) / 2;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layouts/Layout';
 import AdminMenu from './AdminMenu';
-import Spinner from '../../components/Spinner'
+import Spinner from '../../components/Spinner';
 import axios from 'axios';
 import moment from 'moment';
 import toast from 'react-hot-toast';
@@ -30,39 +30,40 @@ const CreateContent = () => {
     const [createModalVisible, setIsCreateModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedContent, setSelectedContent] = useState([]);
 
     //Get All Grades
     const getAllGrades = async (req, res) => {
         try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/grade/all-grades`)
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/grade/all-grades`);
             if (data?.success) {
                 setGrades(data?.grade);
             }
         } catch (error) {
             console.log(error);
-            toast.error("Error fetching Grades")
+            toast.error("Error fetching Grades");
         }
-    }
+    };
     useEffect(() => {
         getAllGrades();
-    }, [])
+    }, []);
 
     //Get all content link list
     const getAllContent = async () => {
-        setListSpinnerLoading(true)
+        setListSpinnerLoading(true);
         try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/content/all-content`)
-            setContent(data)
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/content/all-content`);
+            setContent(data);
         } catch (error) {
             console.log(error);
-            toast.error("Error fetching contents")
+            toast.error("Error fetching contents");
         } finally {
-            setListSpinnerLoading(false)
+            setListSpinnerLoading(false);
         }
-    }
+    };
     useEffect(() => {
         getAllContent();
-    }, [])
+    }, []);
 
     //Create Content
     const handleCreate = async (e) => {
@@ -82,7 +83,7 @@ const CreateContent = () => {
                 toast.success(data?.message);
                 getAllContent();
                 // Clear form fields
-                setGrade(undefined)
+                setGrade(undefined);
                 setType(undefined);
                 setSubject('');
                 setRemark('');
@@ -93,10 +94,10 @@ const CreateContent = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error('Something went wrong')
-            setSpinnerLoading(false)
+            toast.error('Something went wrong');
+            setSpinnerLoading(false);
         }
-    }
+    };
 
     //update content link
     const handleUpdate = async (e) => {
@@ -143,8 +144,14 @@ const CreateContent = () => {
         setUpdatedContentLink(content.contentLink);
     };
 
+    // Filter content based on search query
+    const filteredContent = content.filter(c =>
+        c.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        c.remark.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        c.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
-    //delete content
+    //delete individual content
     const handleDelete = async (cId) => {
         let answer = window.confirm("Are you sure want to delete this content?")
         if (!answer) return;
@@ -158,16 +165,46 @@ const CreateContent = () => {
                 toast.error(data.message, { id: loadingToastId })
             }
         } catch (error) {
-            toast.error('Something wrong while Delete', { id: loadingToastId })
+            toast.error('Something wrong while delete', { id: loadingToastId })
         }
     }
 
-    // Filter content based on search query
-    const filteredContent = content.filter(c =>
-        c.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        c.remark.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        c.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    //delete selected contents
+    const handleDeleteSelected = async () => {
+        let answer = window.confirm("Are you sure you want to delete the selected content?");
+        if (!answer) return;
+
+        const loadingToastId = toast.loading('Deleting content...');
+        try {
+            await Promise.all(selectedContent.map(async (cId) => {
+                await axios.delete(`${process.env.REACT_APP_API}/api/v1/content/delete-content/${cId}`);
+            }));
+            toast.success('Selected content deleted successfully', { id: loadingToastId });
+            setSelectedContent([]);
+            getAllContent();
+        } catch (error) {
+            toast.error('Something went wrong while deleting', { id: loadingToastId });
+        }
+    };
+
+    // Handle selecting all content
+    const handleSelectAll = (e) => {
+        if (e.target.checked) {
+            const allContentIds = filteredContent.map(c => c._id);
+            setSelectedContent(allContentIds);
+        } else {
+            setSelectedContent([]);
+        }
+    };
+
+    // Handle selecting individual content
+    const handleSelectContent = (cId) => {
+        if (selectedContent.includes(cId)) {
+            setSelectedContent(selectedContent.filter(id => id !== cId));
+        } else {
+            setSelectedContent([...selectedContent, cId]);
+        }
+    };
 
     return (
         <Layout title={"Admin - Create Content Link"}>
@@ -186,8 +223,13 @@ const CreateContent = () => {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2">
-                                <i class="fa-solid fa-plus"></i> Create Content
+                                <i className="fa-solid fa-plus"></i> Create Content
                             </button>
+                            {selectedContent.length > 0 && (
+                                <button onClick={handleDeleteSelected} className="btn btn-danger fw-bold mx-1 py-2 floating-delete-button">
+                                    <i className="fa-solid fa-trash"></i> Delete Selected
+                                </button>
+                            )}
                         </div>
 
                         <Modal width={650} visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
@@ -254,6 +296,14 @@ const CreateContent = () => {
                             <table className="table">
                                 <thead className='table-dark'>
                                     <tr>
+                                        <th>
+                                            <input
+                                                className='form-check-input'
+                                                type="checkbox"
+                                                onChange={handleSelectAll}
+                                                checked={selectedContent.length === filteredContent.length && filteredContent.length > 0}
+                                            />
+                                        </th>
                                         <th>#</th>
                                         <th>Grade</th>
                                         <th>Subject</th>
@@ -268,7 +318,7 @@ const CreateContent = () => {
                                         <tbody>
                                             {filteredContent.length === 0 ? (
                                                 <tr>
-                                                    <td colSpan="7" className="text-center">
+                                                    <td colSpan="8" className="text-center">
                                                         <h3 className='mt-5 text-secondary'>No Content Found</h3>
                                                         <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">
                                                             Reset Search
@@ -278,6 +328,14 @@ const CreateContent = () => {
                                             ) : (
                                                 filteredContent.map((c, i) => (
                                                     <tr key={c._id}>
+                                                        <td>
+                                                            <input
+                                                                className='form-check-input'
+                                                                type="checkbox"
+                                                                checked={selectedContent.includes(c._id)}
+                                                                onChange={() => handleSelectContent(c._id)}
+                                                            />
+                                                        </td>
                                                         <th scope='row'>{i + 1}</th>
                                                         <td>{c?.grade?.name}</td>
                                                         <td>
@@ -304,7 +362,6 @@ const CreateContent = () => {
                                                 ))
                                             )}
                                         </tbody>
-
                                 }
                             </table>
                         </div>

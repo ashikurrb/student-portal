@@ -39,6 +39,7 @@ const SetPaymentStatus = () => {
     const [visible, setVisible] = useState(null);
     const [createModalVisible, setIsCreateModalVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedPayment, setSelectedPayment] = useState([]);
 
     //Get All Grades
     const getAllGrades = async () => {
@@ -185,7 +186,19 @@ const SetPaymentStatus = () => {
         // setUpdatedPaymentDate(payment.paymentDate);
     };
 
-    //delete payment status
+    // Filter content based on search query
+    const filteredPayment = payment.filter(p =>
+        p.remark.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.trxId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.method.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    //total payment amount calculate
+    const totalAmount = filteredPayment.reduce((sum, p) => sum + p.amount, 0);
+
+    //delete individual payment status
     const handleDelete = async (pId) => {
         let answer = window.confirm("Are you sure want to delete this payment Status?");
         if (!answer) return;
@@ -203,24 +216,49 @@ const SetPaymentStatus = () => {
         }
     };
 
-    // Filter content based on search query
-    const filteredPayment = payment.filter(p =>
-        p.remark.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.trxId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.method.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    //delete selected payment status
+    const handleDeleteSelected = async () => {
+        let answer = window.confirm("Are you sure you want to delete the selected payment status?");
+        if (!answer) return;
+        const loadingToastId = toast.loading('Deleting payment status...');
+        try {
+            await Promise.all(selectedPayment.map(async (pId) => {
+                await axios.delete(`${process.env.REACT_APP_API}/api/v1/payment/delete-payment/${pId}`);
+            }));
+            toast.success('Selected payment status deleted successfully', { id: loadingToastId });
+            setSelectedPayment([]);
+            getAllPayment();
+        } catch (error) {
+            toast.error('Something went wrong while deleting', { id: loadingToastId });
+        }
+    };
 
-    //total payment amount calculate
-    const totalAmount = filteredPayment.reduce((sum, p) => sum + p.amount, 0);
+    // Handle selecting all content
+    const handleSelectAll = (e) => {
+        if (e.target.checked) {
+            const allPaymentIds = filteredPayment.map(p => p._id);
+            setSelectedPayment(allPaymentIds);
+        } else {
+            setSelectedPayment([]);
+        }
+    };
+
+    // Handle selecting individual content
+    const handleSelectPayment = (pId) => {
+        if (selectedPayment.includes(pId)) {
+            setSelectedPayment(selectedPayment.filter(id => id !== pId));
+        } else {
+            setSelectedPayment([...selectedPayment, pId]);
+        }
+    };
+
 
     // Function to generate invoice PDF
     const generateInvoice = (payment) => {
         toast.success("Invoice created");
         const doc = new jsPDF();
         doc.setFontSize(22);
-        const instituteName = '5Points Academy';
+        const instituteName = '5points Academy';
         const pageWidth1 = doc.internal.pageSize.getWidth();
         const titleWidth1 = doc.getTextWidth(instituteName);
         const titleX1 = (pageWidth1 - titleWidth1) / 2;
@@ -321,6 +359,11 @@ const SetPaymentStatus = () => {
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2">
                                 <i class="fa-solid fa-plus"></i>  Set Payment
                             </button>
+                            {selectedPayment.length > 0 && (
+                                <button onClick={handleDeleteSelected} className="btn btn-danger fw-bold mx-1 py-2 floating-delete-button">
+                                    <i className="fa-solid fa-trash"></i> Delete Selected
+                                </button>
+                            )}
                         </div>
 
                         <Modal width={650} visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
@@ -401,6 +444,14 @@ const SetPaymentStatus = () => {
                             <table className="table">
                                 <thead className='table-dark'>
                                     <tr>
+                                    <th>
+                                            <input
+                                                type="checkbox"
+                                                onChange={handleSelectAll}
+                                                className='form-check-input'
+                                                checked={selectedPayment.length === filteredPayment.length && filteredPayment.length > 0}
+                                            />
+                                        </th>
                                         <th>#</th>
                                         <th>Grade</th>
                                         <th>Name</th>
@@ -429,6 +480,14 @@ const SetPaymentStatus = () => {
                                                 filteredPayment.map((p, i) => {
                                                     return (
                                                         <tr key={p._id}>
+                                                             <td>
+                                                            <input
+                                                                type="checkbox"
+                                                                className='form-check-input'
+                                                                checked={selectedPayment.includes(p._id)}
+                                                                onChange={() => handleSelectPayment(p._id)}
+                                                            />
+                                                        </td>
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{p?.grade?.name}</td>
                                                             <td>

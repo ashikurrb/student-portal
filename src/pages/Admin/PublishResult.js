@@ -34,6 +34,8 @@ const PublishResult = () => {
     const [visible, setVisible] = useState(false);
     const [createModalVisible, setIsCreateModalVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedResult, setSelectedResult] = useState([]);
+
 
     //Get All Grades
     const getAllGrades = async (req, res) => {
@@ -172,7 +174,15 @@ const PublishResult = () => {
         setUpdatedMarks(result.marks);
     };
 
-    //delete result
+    // Filter content based on search query
+    const filteredResult = result.filter(r =>
+        r.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    //delete individual result
     const handleDelete = async (rId) => {
         let answer = window.confirm("Are you sure want to delete this result?")
         if (!answer) return;
@@ -186,17 +196,45 @@ const PublishResult = () => {
                 toast.error(data.message, { id: loadingToastId })
             }
         } catch (error) {
+            toast.error('Something wrong while delete', { id: loadingToastId })
+        }
+    }
+
+    //delete selected result
+    const handleDeleteSelected = async (rId) => {
+        let answer = window.confirm("Are you sure want to delete this result?")
+        if (!answer) return;
+        const loadingToastId = toast.loading('Deleting result...');
+        try {
+            await Promise.all(selectedResult.map(async (rId) => {
+                await axios.delete(`${process.env.REACT_APP_API}/api/v1/result/delete-result/${rId}`);
+            }));
+            toast.success('Selected result deleted successfully', { id: loadingToastId });
+            setSelectedResult([]);
+            getAllResults();
+        } catch (error) {
             toast.error('Something wrong while Delete', { id: loadingToastId })
         }
     }
 
-    // Filter content based on search query
-    const filteredResult = result.filter(r =>
-        r.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // Handle selecting all content
+    const handleSelectAll = (e) => {
+        if (e.target.checked) {
+            const allResultIds = filteredResult.map(r => r._id);
+            setSelectedResult(allResultIds);
+        } else {
+            setSelectedResult([]);
+        }
+    };
+
+    // Handle selecting individual content
+    const handleSelectResult = (rId) => {
+        if (selectedResult.includes(rId)) {
+            setSelectedResult(selectedResult.filter(id => id !== rId));
+        } else {
+            setSelectedResult([...selectedResult, rId]);
+        }
+    };
 
     return (
         <Layout title={"Admin - Publish Result"}>
@@ -217,6 +255,11 @@ const PublishResult = () => {
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2">
                                 <i class="fa-solid fa-plus"></i> Publish Result
                             </button>
+                            {selectedResult.length > 0 && (
+                                <button onClick={handleDeleteSelected} className="btn btn-danger fw-bold mx-1 py-2 floating-delete-button">
+                                    <i className="fa-solid fa-trash"></i> Delete Selected
+                                </button>
+                            )}
                         </div>
                         <Modal width={650} visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
                             <h5 className='text-center mb-3'>Publish Result</h5>
@@ -282,6 +325,14 @@ const PublishResult = () => {
                             <table className="table">
                                 <thead className='table-dark'>
                                     <tr>
+                                        <th>
+                                            <input
+                                                className='form-check-input'
+                                                type="checkbox"
+                                                onChange={handleSelectAll}
+                                                checked={selectedResult.length === filteredResult.length && filteredResult.length > 0}
+                                            />
+                                        </th>
                                         <th>#</th>
                                         <th>Grade</th>
                                         <th>Name</th>
@@ -308,6 +359,14 @@ const PublishResult = () => {
                                                 filteredResult.map((r, i) => {
                                                     return (
                                                         <tr>
+                                                            <td>
+                                                                <input
+                                                                    className='form-check-input'
+                                                                    type="checkbox"
+                                                                    checked={selectedResult.includes(r._id)}
+                                                                    onChange={() => handleSelectResult(r._id)}
+                                                                />
+                                                            </td>
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{r?.grade?.name}</td>
                                                             <td>
