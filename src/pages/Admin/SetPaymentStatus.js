@@ -437,35 +437,45 @@ const SetPaymentStatus = () => {
                         </Modal>
 
                         <h6 className='d-flex justify-content-between'>
-                            <span>Payment Count: {filteredPayment.length}</span>
-                            <span>Total Received: TK. {totalAmount}</span>
+                            <span>
+                                {
+                                    selectedPayment.length > 0 ?
+                                        <h6 className='justify-content-start'> Selected: {selectedPayment.length}</h6> :
+                                        <h6 className='justify-content-start'> Count: {filteredPayment.length}</h6>
+                                }
+                            </span>
+                            <span>
+                                <h6 className='justify-content-start'> Total Received: {totalAmount}</h6>
+                            </span>
                         </h6>
                         <div className='table-container'>
-                            <table className="table">
-                                <thead className='table-dark'>
-                                    <tr>
-                                    <th>
-                                            <input
-                                                type="checkbox"
-                                                onChange={handleSelectAll}
-                                                className='form-check-input'
-                                                checked={selectedPayment.length === filteredPayment.length && filteredPayment.length > 0}
-                                            />
-                                        </th>
-                                        <th>#</th>
-                                        <th>Grade</th>
-                                        <th>Name</th>
-                                        <th>Remark</th>
-                                        <th>Amount</th>
-                                        <th>Method</th>
-                                        <th>Trx ID</th>
-                                        <th>Date</th>
-                                        <th>Invoice</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                {
-                                    listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
+                            {
+                                listSpinnerLoading ? <div className="m-5 text-center">
+                                    <Spinner /><p>Loading payment status...</p>
+                                </div> :
+                                    <table className="table">
+                                        <thead className='table-dark'>
+                                            <tr>
+                                                <th>
+                                                    <input
+                                                        type="checkbox"
+                                                        onChange={handleSelectAll}
+                                                        className='form-check-input'
+                                                        checked={selectedPayment.length === filteredPayment.length && filteredPayment.length > 0}
+                                                    />
+                                                </th>
+                                                <th>#</th>
+                                                <th>Grade</th>
+                                                <th>Name</th>
+                                                <th>Remark</th>
+                                                <th>Amount</th>
+                                                <th>Method</th>
+                                                <th>Trx ID</th>
+                                                <th>Date</th>
+                                                <th>Invoice</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
                                             {filteredPayment.length === 0 ? (
                                                 <tr>
@@ -480,14 +490,14 @@ const SetPaymentStatus = () => {
                                                 filteredPayment.map((p, i) => {
                                                     return (
                                                         <tr key={p._id}>
-                                                             <td>
-                                                            <input
-                                                                type="checkbox"
-                                                                className='form-check-input'
-                                                                checked={selectedPayment.includes(p._id)}
-                                                                onChange={() => handleSelectPayment(p._id)}
-                                                            />
-                                                        </td>
+                                                            <td>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    className='form-check-input'
+                                                                    checked={selectedPayment.includes(p._id)}
+                                                                    onChange={() => handleSelectPayment(p._id)}
+                                                                />
+                                                            </td>
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{p?.grade?.name}</td>
                                                             <td>
@@ -518,8 +528,8 @@ const SetPaymentStatus = () => {
                                                 })
                                             )}
                                         </tbody>
-                                }
-                            </table>
+                                    </table>
+                            }
                         </div>
                     </div>
                 </div>

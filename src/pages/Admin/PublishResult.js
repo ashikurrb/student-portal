@@ -202,7 +202,7 @@ const PublishResult = () => {
 
     //delete selected result
     const handleDeleteSelected = async (rId) => {
-        let answer = window.confirm("Are you sure want to delete this result?")
+        let answer = window.confirm("Are you sure want to delete the selected result?")
         if (!answer) return;
         const loadingToastId = toast.loading('Deleting result...');
         try {
@@ -320,31 +320,37 @@ const PublishResult = () => {
                                 </div>
                             </form>
                         </Modal>
-                        <h6 className='justify-content-start'> Count: {filteredResult.length}</h6>
+                        {
+                            selectedResult.length > 0 ?
+                                <h6 className='d-flex justify-content-start'> Selected: {selectedResult.length}</h6> :
+                                <h6 className='justify-content-start'> Count: {filteredResult.length}</h6>
+                        }
                         <div className='table-container'>
-                            <table className="table">
-                                <thead className='table-dark'>
-                                    <tr>
-                                        <th>
-                                            <input
-                                                className='form-check-input'
-                                                type="checkbox"
-                                                onChange={handleSelectAll}
-                                                checked={selectedResult.length === filteredResult.length && filteredResult.length > 0}
-                                            />
-                                        </th>
-                                        <th>#</th>
-                                        <th>Grade</th>
-                                        <th>Name</th>
-                                        <th>Type</th>
-                                        <th>Subject</th>
-                                        <th>Result</th>
-                                        <th>Date</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                {
-                                    listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
+                            {
+                                listSpinnerLoading ? <div className="m-5 text-center">
+                                    <Spinner /><p>Loading results...</p>
+                                </div> :
+                                    <table className="table">
+                                        <thead className='table-dark'>
+                                            <tr>
+                                                <th>
+                                                    <input
+                                                        className='form-check-input'
+                                                        type="checkbox"
+                                                        onChange={handleSelectAll}
+                                                        checked={selectedResult.length === filteredResult.length && filteredResult.length > 0}
+                                                    />
+                                                </th>
+                                                <th>#</th>
+                                                <th>Grade</th>
+                                                <th>Name</th>
+                                                <th>Type</th>
+                                                <th>Subject</th>
+                                                <th>Result</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
                                             {filteredResult.length === 0 ? (
                                                 <tr>
@@ -391,8 +397,8 @@ const PublishResult = () => {
                                                 })
                                             )}
                                         </tbody>
-                                }
-                            </table>
+                                    </table>
+                            }
                         </div>
                     </div>
                 </div>

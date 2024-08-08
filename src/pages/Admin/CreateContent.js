@@ -290,31 +290,36 @@ const CreateContent = () => {
                                 </div>
                             </form>
                         </Modal>
-
-                        <h6 className='justify-content-start'> Count: {filteredContent.length}</h6>
+                        {
+                            selectedContent.length > 0 ?
+                                <h6 className='d-flex justify-content-start'> Selected: {selectedContent.length}</h6> :
+                                <h6 className='justify-content-start'> Count: {filteredContent.length}</h6>
+                        }
                         <div className='table-container'>
-                            <table className="table">
-                                <thead className='table-dark'>
-                                    <tr>
-                                        <th>
-                                            <input
-                                                className='form-check-input'
-                                                type="checkbox"
-                                                onChange={handleSelectAll}
-                                                checked={selectedContent.length === filteredContent.length && filteredContent.length > 0}
-                                            />
-                                        </th>
-                                        <th>#</th>
-                                        <th>Grade</th>
-                                        <th>Subject</th>
-                                        <th>Remark</th>
-                                        <th>Type</th>
-                                        <th>Link</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                {
-                                    listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
+                            {
+                                listSpinnerLoading ? <div className="text-center m-5">
+                                    <Spinner /> <p>Loading content...</p>
+                                </div> :
+                                    <table className="table">
+                                        <thead className='table-dark'>
+                                            <tr>
+                                                <th>
+                                                    <input
+                                                        className='form-check-input'
+                                                        type="checkbox"
+                                                        onChange={handleSelectAll}
+                                                        checked={selectedContent.length === filteredContent.length && filteredContent.length > 0}
+                                                    />
+                                                </th>
+                                                <th>#</th>
+                                                <th>Grade</th>
+                                                <th>Subject</th>
+                                                <th>Remark</th>
+                                                <th>Type</th>
+                                                <th>Link</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
                                             {filteredContent.length === 0 ? (
                                                 <tr>
@@ -362,8 +367,8 @@ const CreateContent = () => {
                                                 ))
                                             )}
                                         </tbody>
-                                }
-                            </table>
+                                    </table>
+                            }
                         </div>
                     </div>
                 </div>
