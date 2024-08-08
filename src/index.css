@@ -114,3 +114,12 @@ background-color: red;
   border:  px solid #713200 !important;
   color:#fff !important;
 }
+
+.floating-delete-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  font-size: 16px;
+  border-radius: 5px;
+}
