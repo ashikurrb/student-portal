@@ -173,7 +173,7 @@ const PublishResult = () => {
         setUpdatedSubject(result.subject);
         setUpdatedMarks(result.marks);
     };
-    
+
     // Filter content based on search query
     const filteredResult = result.filter(r =>
         r.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -182,7 +182,7 @@ const PublishResult = () => {
         r.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-      //delete individual result
+    //delete individual result
     const handleDelete = async (rId) => {
         let answer = window.confirm("Are you sure want to delete this result?")
         if (!answer) return;
@@ -327,6 +327,7 @@ const PublishResult = () => {
                                     <tr>
                                         <th>
                                             <input
+                                                className='form-check-input'
                                                 type="checkbox"
                                                 onChange={handleSelectAll}
                                                 checked={selectedResult.length === filteredResult.length && filteredResult.length > 0}
@@ -360,6 +361,7 @@ const PublishResult = () => {
                                                         <tr>
                                                             <td>
                                                                 <input
+                                                                    className='form-check-input'
                                                                     type="checkbox"
                                                                     checked={selectedResult.includes(r._id)}
                                                                     onChange={() => handleSelectResult(r._id)}

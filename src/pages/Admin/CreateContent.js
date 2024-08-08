@@ -298,6 +298,7 @@ const CreateContent = () => {
                                     <tr>
                                         <th>
                                             <input
+                                                className='form-check-input'
                                                 type="checkbox"
                                                 onChange={handleSelectAll}
                                                 checked={selectedContent.length === filteredContent.length && filteredContent.length > 0}
@@ -329,6 +330,7 @@ const CreateContent = () => {
                                                     <tr key={c._id}>
                                                         <td>
                                                             <input
+                                                                className='form-check-input'
                                                                 type="checkbox"
                                                                 checked={selectedContent.includes(c._id)}
                                                                 onChange={() => handleSelectContent(c._id)}

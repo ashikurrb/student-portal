@@ -258,7 +258,7 @@ const SetPaymentStatus = () => {
         toast.success("Invoice created");
         const doc = new jsPDF();
         doc.setFontSize(22);
-        const instituteName = '5Points Academy';
+        const instituteName = '5points Academy';
         const pageWidth1 = doc.internal.pageSize.getWidth();
         const titleWidth1 = doc.getTextWidth(instituteName);
         const titleX1 = (pageWidth1 - titleWidth1) / 2;
@@ -448,6 +448,7 @@ const SetPaymentStatus = () => {
                                             <input
                                                 type="checkbox"
                                                 onChange={handleSelectAll}
+                                                className='form-check-input'
                                                 checked={selectedPayment.length === filteredPayment.length && filteredPayment.length > 0}
                                             />
                                         </th>
@@ -482,6 +483,7 @@ const SetPaymentStatus = () => {
                                                              <td>
                                                             <input
                                                                 type="checkbox"
+                                                                className='form-check-input'
                                                                 checked={selectedPayment.includes(p._id)}
                                                                 onChange={() => handleSelectPayment(p._id)}
                                                             />
