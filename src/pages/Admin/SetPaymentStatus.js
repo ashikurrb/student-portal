@@ -361,7 +361,7 @@ const SetPaymentStatus = () => {
                             </button>
                             {selectedPayment.length > 0 && (
                                 <button onClick={handleDeleteSelected} className="btn btn-danger fw-bold mx-1 py-2 floating-delete-button">
-                                    <i className="fa-solid fa-trash"></i> Delete Selected
+                                    <i className="fa-solid fa-trash-can"></i> Delete Selected
                                 </button>
                             )}
                         </div>
