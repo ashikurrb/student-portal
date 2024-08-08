@@ -30,7 +30,7 @@ const CreateContent = () => {
     const [createModalVisible, setIsCreateModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const [selectedContent, setSelectedContent] = useState([]); // New state for selected items
+    const [selectedContent, setSelectedContent] = useState([]);
 
     //Get All Grades
     const getAllGrades = async (req, res) => {
@@ -143,6 +143,24 @@ const CreateContent = () => {
         setUpdatedType(content.type);
         setUpdatedContentLink(content.contentLink);
     };
+
+  //delete individual content
+  const handleDelete = async (cId) => {
+    let answer = window.confirm("Are you sure want to delete this content?")
+    if (!answer) return;
+    const loadingToastId = toast.loading('Deleting content...');
+    try {
+        const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/content/delete-content/${cId}`);
+        if (data.success) {
+            toast.success(data.message, { id: loadingToastId });
+            getAllContent();
+        } else {
+            toast.error(data.message, { id: loadingToastId })
+        }
+    } catch (error) {
+        toast.error('Something wrong while delete', { id: loadingToastId })
+    }
+}
 
     //delete selected contents
     const handleDeleteSelected = async () => {
@@ -334,7 +352,7 @@ const CreateContent = () => {
                                                             <button className='btn btn-primary mx-1' onClick={() => { openModal(c) }}>
                                                                 <i className="fa-solid fa-pen-to-square"></i> Edit
                                                             </button>
-                                                            <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDeleteSelected([c._id])}>
+                                                            <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}>
                                                                 <i className="fa-solid fa-trash-can"></i> Delete
                                                             </button>
                                                         </td>
