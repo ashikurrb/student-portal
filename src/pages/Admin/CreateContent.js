@@ -144,23 +144,30 @@ const CreateContent = () => {
         setUpdatedContentLink(content.contentLink);
     };
 
-  //delete individual content
-  const handleDelete = async (cId) => {
-    let answer = window.confirm("Are you sure want to delete this content?")
-    if (!answer) return;
-    const loadingToastId = toast.loading('Deleting content...');
-    try {
-        const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/content/delete-content/${cId}`);
-        if (data.success) {
-            toast.success(data.message, { id: loadingToastId });
-            getAllContent();
-        } else {
-            toast.error(data.message, { id: loadingToastId })
+    // Filter content based on search query
+    const filteredContent = content.filter(c =>
+        c.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        c.remark.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        c.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    //delete individual content
+    const handleDelete = async (cId) => {
+        let answer = window.confirm("Are you sure want to delete this content?")
+        if (!answer) return;
+        const loadingToastId = toast.loading('Deleting content...');
+        try {
+            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/content/delete-content/${cId}`);
+            if (data.success) {
+                toast.success(data.message, { id: loadingToastId });
+                getAllContent();
+            } else {
+                toast.error(data.message, { id: loadingToastId })
+            }
+        } catch (error) {
+            toast.error('Something wrong while delete', { id: loadingToastId })
         }
-    } catch (error) {
-        toast.error('Something wrong while delete', { id: loadingToastId })
     }
-}
 
     //delete selected contents
     const handleDeleteSelected = async () => {
@@ -198,13 +205,6 @@ const CreateContent = () => {
             setSelectedContent([...selectedContent, cId]);
         }
     };
-
-    // Filter content based on search query
-    const filteredContent = content.filter(c =>
-        c.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        c.remark.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        c.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
 
     return (
         <Layout title={"Admin - Create Content Link"}>

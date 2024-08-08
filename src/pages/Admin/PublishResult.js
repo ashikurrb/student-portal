@@ -220,7 +220,7 @@ const PublishResult = () => {
     // Handle selecting all content
     const handleSelectAll = (e) => {
         if (e.target.checked) {
-            const allResultIds = filteredResult.map(c => c._id);
+            const allResultIds = filteredResult.map(r => r._id);
             setSelectedResult(allResultIds);
         } else {
             setSelectedResult([]);
