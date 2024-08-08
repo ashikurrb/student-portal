@@ -197,6 +197,8 @@ const SetPaymentStatus = () => {
 
     //total payment amount calculate
     const totalAmount = filteredPayment.reduce((sum, p) => sum + p.amount, 0);
+    // const totalAmountSelected = selectedPayment.amount.reduce((sum, p) => sum + p.amount, 0);
+    console.log(selectedPayment);
 
     //delete individual payment status
     const handleDelete = async (pId) => {
@@ -440,7 +442,7 @@ const SetPaymentStatus = () => {
                             <span>
                                 {
                                     selectedPayment.length > 0 ?
-                                        <h6 className='justify-content-start'> Selected: {selectedPayment.length}</h6> :
+                                        <h6 className='justify-content-start'> {selectedPayment.length} selected</h6> :
                                         <h6 className='justify-content-start'> Count: {filteredPayment.length}</h6>
                                 }
                             </span>

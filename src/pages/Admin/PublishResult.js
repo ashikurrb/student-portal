@@ -322,7 +322,7 @@ const PublishResult = () => {
                         </Modal>
                         {
                             selectedResult.length > 0 ?
-                                <h6 className='d-flex justify-content-start'> Selected: {selectedResult.length}</h6> :
+                                <h6 className='d-flex justify-content-start'>{selectedResult.length} selected</h6> :
                                 <h6 className='justify-content-start'> Count: {filteredResult.length}</h6>
                         }
                         <div className='table-container'>

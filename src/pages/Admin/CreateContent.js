@@ -292,7 +292,7 @@ const CreateContent = () => {
                         </Modal>
                         {
                             selectedContent.length > 0 ?
-                                <h6 className='d-flex justify-content-start'> Selected: {selectedContent.length}</h6> :
+                                <h6 className='d-flex justify-content-start'>{selectedContent.length} selected</h6> :
                                 <h6 className='justify-content-start'> Count: {filteredContent.length}</h6>
                         }
                         <div className='table-container'>
