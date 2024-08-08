@@ -35,91 +35,153 @@ const ViewPayment = () => {
     // Function to generate invoice PDF
     const generateInvoice = (payment) => {
         toast.success("Invoice created");
-        const doc = new jsPDF();
-        doc.setFontSize(22);
-        const instituteName = '5points Academy';
-        const pageWidth1 = doc.internal.pageSize.getWidth();
-        const titleWidth1 = doc.getTextWidth(instituteName);
-        const titleX1 = (pageWidth1 - titleWidth1) / 2;
-        doc.text(instituteName, titleX1, 12);
-        doc.setFontSize(11);
-        const addressName = 'Tajmahal Road, Dhaka - 1207';
-        const pageWidth2 = doc.internal.pageSize.getWidth();
-        const titleWidth2 = doc.getTextWidth(addressName);
-        const titleX2 = (pageWidth2 - titleWidth2) / 2;
-        doc.text(addressName, titleX2, 19);
-        doc.setFontSize(11);
-        const mobile = '+880 1853-660115';
-        const pageWidth3 = doc.internal.pageSize.getWidth();
-        const titleWidth3 = doc.getTextWidth(mobile);
-        const titleX3 = (pageWidth3 - titleWidth3) / 2;
-        doc.text(mobile, titleX3, 25);
-        doc.setFontSize(16);
-        const title = 'Payment Invoice';
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const titleWidth = doc.getTextWidth(title);
-        const titleX = (pageWidth - titleWidth) / 2; // Center the title
-        doc.text(title, titleX, 36);
-        doc.setFontSize(12);
-        doc.text(`Date: ${moment(payment.paymentDate).format('ll')}`, 14, 54);
-        doc.text(`Name: ${auth.user.name}`, 14, 64);
-        doc.text(`Grade: ${auth.user.grade.name}`, 14, 74);
-        doc.text(`Email: ${auth.user.email }`, 14, 84);
-        doc.text(`Mobile: ${auth.user.phone}`, 14, 94);
 
-        doc.autoTable({
-            startY: 104,
-            head: [['Remark', 'Amount', "Method", "Trx ID / Receipt No"]],
-            body: [
-                [`${payment.remark}`, `TK. ${payment.amount}`, `${payment.method}`, `${payment.trxId}`]
-            ],
+        // Set page size to A5
+        const doc = new jsPDF({
+            format: 'a5',
+            unit: 'mm'
         });
 
-        const img = new Image();
-        img.src = "/images/authoritySign.png"; // Adjust the path as needed
-        img.onload = () => {
-            const finalY = doc.autoTable.previous.finalY;
+        // Define margins
+        const leftMargin = 10; // Adjust as needed
+        const rightMargin = 10; // Adjust as needed
+
+        // Add background watermark
+        const logo = new Image();
+        logo.src = "/images/logoBrand.png"; // Adjust the path as needed
+        logo.onload = () => {
             const pageWidth = doc.internal.pageSize.getWidth();
-            const imgWidth = 50; // Width of the image
-            const imgHeight = 20; // Height of the image
-            const marginRight = 14; // Right margin
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const imgWidth = pageWidth * 0.5; // Scale the logo to 50% of page width
+            const imgHeight = (imgWidth * logo.height) / logo.width; // Maintain aspect ratio
 
-            const imgX = pageWidth - imgWidth - marginRight; // X coordinate to place the image on the right side
-            const imgY = finalY + 10; // Y coordinate to place the image below the table
+            const imgX = (pageWidth - imgWidth) / 2; // Center horizontally
+            const imgY = (pageHeight - imgHeight) / 2; // Center vertically
 
-            // Add the signature image
-            doc.addImage(img, 'PNG', imgX, imgY, imgWidth, imgHeight);
+            // Add the watermark image with low opacity to simulate blur
+            doc.addImage(logo, 'PNG', imgX, imgY, imgWidth, imgHeight, '', 'NONE', 0.05); // Adjust opacity to 0.05 for a lighter watermark effect
 
-            // Add a line below the image
-            const lineY = imgY + imgHeight + 1; // Y coordinate for the line, a bit below the image
-            doc.line(imgX, lineY, imgX + imgWidth, lineY);
+            // Add text and other elements
+            doc.setFontSize(22);
+            const instituteName = '5points Academy';
+            const titleWidth1 = doc.getTextWidth(instituteName);
+            const titleX1 = (pageWidth - titleWidth1) / 2; // Center text horizontally
+            doc.text(instituteName, titleX1, 12);
 
-            // Add the word "Authority" under the line
-            const textX = imgX + imgWidth / 2; // Center text below the image
-            const textY = lineY + 10; // Y coordinate for the text
-            doc.text('Authority', textX, textY, { align: 'center' });
+            doc.setFontSize(11);
+            const addressName = 'Tajmahal Road, Dhaka - 1207';
+            const titleWidth2 = doc.getTextWidth(addressName);
+            const titleX2 = (pageWidth - titleWidth2) / 2; // Center text horizontally
+            doc.text(addressName, titleX2, 19);
 
-            // Create a Blob URL and open it in a new window for printing
-        const blob = doc.output('blob');
-        const url = URL.createObjectURL(blob);
-        const printWindow = window.open(url, '_blank');
-        if (printWindow) {
-            printWindow.focus();
-            printWindow.onload = function () {
-                printWindow.print();
+            const mobile = 'Mobile: +880 1794-744343';
+            const titleWidth3 = doc.getTextWidth(mobile);
+            const titleX3 = (pageWidth - titleWidth3) / 2; // Center text horizontally
+            doc.text(mobile, titleX3, 25);
+
+            doc.setFontSize(16);
+            const title = 'Payment Invoice';
+            const titleWidth = doc.getTextWidth(title);
+            const titleX = (pageWidth - titleWidth) / 2; // Center text horizontally
+            doc.text(title, titleX, 36);
+
+            //Identify portion
+            doc.setFontSize(10);
+            const verticalSpacing = 8; // Adjust this value to reduce the spacing
+
+            // Bold Date: and labels
+            doc.setFont('helvetica', 'bold'); // Set font to bold
+            const dateText = `${moment(payment.paymentDate).format('ll')}`;
+            doc.text('Date:', pageWidth - rightMargin - doc.getTextWidth(dateText) - doc.getTextWidth('Date:'), 54);
+            doc.text('Name:', leftMargin, 54 + verticalSpacing);
+            doc.text('Grade:', leftMargin, 54 + 2 * verticalSpacing);
+            doc.text('Email:', leftMargin, 54 + 3 * verticalSpacing);
+            doc.text('Mobile:', leftMargin, 54 + 4 * verticalSpacing);
+
+            // Normal text
+            doc.setFont('helvetica', 'normal'); // Revert font to normal
+            doc.text(dateText, pageWidth - rightMargin - doc.getTextWidth(dateText), 54); // Position date text
+            doc.text(`${auth.user.name}`, leftMargin + doc.getTextWidth('Name:') + 2, 54 + verticalSpacing);
+            doc.text(`${auth.user.grade.name}`, leftMargin + doc.getTextWidth('Grade:') + 2, 54 + 2 * verticalSpacing);
+            doc.text(`${auth.user.email}`, leftMargin + doc.getTextWidth('Email:') + 2, 54 + 3 * verticalSpacing);
+            doc.text(`${auth.user.phone}`, leftMargin + doc.getTextWidth('Mobile:') + 2, 54 + 4 * verticalSpacing);
+
+
+            doc.autoTable({
+                startY: 100,
+                margin: { left: leftMargin, right: rightMargin },
+                head: [['Remark', 'Amount', 'Method', 'Trx ID / Receipt No']],
+                body: [
+                    [`${payment.remark}`, `TK. ${payment.amount}`, `${payment.method}`, `${payment.trxId}`]
+                ],
+                styles: {
+                    cellPadding: 2, // Adjust cell padding if needed
+                    valign: 'middle',
+                    halign: 'center', // Center-align text horizontally
+                },
+                columnStyles: {
+                    0: { halign: 'center' }, // Center-align the first column
+                    1: { halign: 'center' }, // Center-align the second column
+                    2: { halign: 'center' }, // Center-align the third column
+                    3: { halign: 'center' }  // Center-align the fourth column
+                }
+            });
+
+            const img = new Image();
+            img.src = "/images/authoritySign.png"; // Adjust the path as needed
+            img.onload = () => {
+                const finalY = doc.autoTable.previous.finalY;
+                const imgWidth = 50;
+                const imgHeight = 20;
+                const marginRight = rightMargin;
+
+                const imgX = pageWidth - imgWidth - marginRight;
+                const imgY = finalY + 50;
+
+                doc.addImage(img, 'PNG', imgX, imgY, imgWidth, imgHeight);
+
+                const lineY = imgY + imgHeight + 1;
+                doc.line(imgX, lineY, imgX + imgWidth, lineY);
+
+                const textX = imgX + imgWidth / 2;
+                const textY = lineY + 5;
+                doc.text('Authority', textX, textY, { align: 'center' });
+
+                // Add footer text with date and time
+                doc.setFontSize(8); // Adjust font size for footer
+                doc.setTextColor(128, 128, 128); // Set text color to grey
+                const currentDateTime = moment().format('MMMM D, YYYY h:mm A');
+                const footerText = `This is a system generated Invoice | Generated on: ${currentDateTime}`;
+                const footerWidth = doc.getTextWidth(footerText);
+                const footerX = (pageWidth - footerWidth) / 2; // Center text horizontally
+                const footerY = pageHeight - 10; // Adjust this value to position the footer correctly
+                doc.text(footerText, footerX, footerY);
+
+                const blob = doc.output('blob');
+                const url = URL.createObjectURL(blob);
+                const printWindow = window.open(url, '_blank');
+                if (printWindow) {
+                    printWindow.focus();
+                    printWindow.onload = function () {
+                        printWindow.print();
+                    };
+                } else {
+                    toast.error('Failed to open the print window');
+                }
             };
-        } else {
-            toast.error('Failed to open the print window');
-        }
 
+            img.onerror = (err) => {
+                console.error('Image loading error: ', err);
+                toast.error('Failed to load signature image');
+            };
         };
-        img.onerror = (err) => {
-            console.error('Image loading error: ', err);
-            toast.error('Failed to load signature image');
+
+        logo.onerror = (err) => {
+            console.error('Logo loading error: ', err);
+            toast.error('Failed to load logo image');
         };
     };
-    console.log(auth);
-    console.log(payment);
+
     return (
         <Layout title={"Dashboard - Payment Status"}>
             <div className="container-fluid mt-3 p-3">
