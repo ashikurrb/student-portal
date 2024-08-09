@@ -270,7 +270,7 @@ const SetPaymentStatus = () => {
 
         // Add background watermark
         const logo = new Image();
-        logo.src = "/images/logoBrand.png"; // Adjust the path as needed
+        logo.src = "/images/brandWatermark.png"; // Adjust the path as needed
         logo.onload = () => {
             const pageWidth = doc.internal.pageSize.getWidth();
             const pageHeight = doc.internal.pageSize.getHeight();
@@ -281,52 +281,56 @@ const SetPaymentStatus = () => {
             const imgY = (pageHeight - imgHeight) / 2; // Center vertically
 
             // Add the watermark image with low opacity to simulate blur
-            doc.addImage(logo, 'PNG', imgX, imgY, imgWidth, imgHeight, '', 'NONE', 0.05); // Adjust opacity to 0.05 for a lighter watermark effect
+            doc.addImage(logo, 'PNG', imgX, imgY, imgWidth, imgHeight, '', 'NONE');
 
             // Add text and other elements
             doc.setFontSize(22);
+            doc.setFont('helvetica', 'bold'); 
             const instituteName = '5points Academy';
             const titleWidth1 = doc.getTextWidth(instituteName);
             const titleX1 = (pageWidth - titleWidth1) / 2; // Center text horizontally
-            doc.text(instituteName, titleX1, 12);
+            doc.text(instituteName, titleX1, 16);
 
             doc.setFontSize(11);
+            doc.setFont('helvetica', 'normal'); 
             const addressName = 'Tajmahal Road, Dhaka - 1207';
             const titleWidth2 = doc.getTextWidth(addressName);
             const titleX2 = (pageWidth - titleWidth2) / 2; // Center text horizontally
-            doc.text(addressName, titleX2, 19);
+            doc.text(addressName, titleX2, 23);
 
             const mobile = 'Mobile: +880 1794-744343';
             const titleWidth3 = doc.getTextWidth(mobile);
             const titleX3 = (pageWidth - titleWidth3) / 2; // Center text horizontally
-            doc.text(mobile, titleX3, 25);
+            doc.text(mobile, titleX3, 29);
 
             doc.setFontSize(16);
+            doc.setFont('helvetica', 'bold'); 
             const title = 'Payment Invoice';
             const titleWidth = doc.getTextWidth(title);
             const titleX = (pageWidth - titleWidth) / 2; // Center text horizontally
-            doc.text(title, titleX, 36);
+            doc.text(title, titleX, 41);
 
             //Identify portion
             doc.setFontSize(10);
             const verticalSpacing = 8; // Adjust this value to reduce the spacing
 
             // Bold Date: and labels
-            doc.setFont('helvetica', 'bold'); // Set font to bold
+            doc.setFont('helvetica', 'bold');
             const dateText = `${moment(payment.paymentDate).format('ll')}`;
-            doc.text('Date:', pageWidth - rightMargin - doc.getTextWidth(dateText) - doc.getTextWidth('Date:'), 54);
-            doc.text('Name:', leftMargin, 54 + verticalSpacing);
-            doc.text('Grade:', leftMargin, 54 + 2 * verticalSpacing);
-            doc.text('Email:', leftMargin, 54 + 3 * verticalSpacing);
-            doc.text('Mobile:', leftMargin, 54 + 4 * verticalSpacing);
+            doc.text('Date:', pageWidth - rightMargin - doc.getTextWidth(dateText) - doc.getTextWidth('Date:'), 57);
+            doc.text('Name:', leftMargin, 57 + verticalSpacing);
+            doc.text('Grade:', leftMargin, 57 + 2 * verticalSpacing);
+            doc.text('Email:', leftMargin, 57 + 3 * verticalSpacing);
+            doc.text('Mobile:', leftMargin, 57 + 4 * verticalSpacing);
 
             // Normal text
             doc.setFont('helvetica', 'normal'); // Revert font to normal
-            doc.text(dateText, pageWidth - rightMargin - doc.getTextWidth(dateText), 54); // Position date text
-            doc.text(`${payment.user.name}`, leftMargin + doc.getTextWidth('Name:') + 2, 54 + verticalSpacing);
-            doc.text(`${payment.grade.name}`, leftMargin + doc.getTextWidth('Grade:') + 2, 54 + 2 * verticalSpacing);
-            doc.text(`${payment.user.email}`, leftMargin + doc.getTextWidth('Email:') + 2, 54 + 3 * verticalSpacing);
-            doc.text(`${payment.user.phone}`, leftMargin + doc.getTextWidth('Mobile:') + 2, 54 + 4 * verticalSpacing);
+            doc.text(dateText, pageWidth - rightMargin - doc.getTextWidth(dateText), 57); // Position date text
+            doc.text(`${auth.user.name}`, leftMargin + doc.getTextWidth('Name:') + 2, 57 + verticalSpacing);
+            doc.text(`${auth.user.grade.name}`, leftMargin + doc.getTextWidth('Grade:') + 2, 57 + 2 * verticalSpacing);
+            doc.text(`${auth.user.email}`, leftMargin + doc.getTextWidth('Email:') + 2, 57 + 3 * verticalSpacing);
+            doc.text(`${auth.user.phone}`, leftMargin + doc.getTextWidth('Mobile:') + 2, 57 + 4 * verticalSpacing);
+
 
             doc.autoTable({
                 startY: 100,
