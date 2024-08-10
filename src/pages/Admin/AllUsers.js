@@ -183,7 +183,7 @@ const AllUsers = () => {
                                                     </td>
                                                     <td>
                                                         <Tooltip title="Click here to update grade">
-                                                            <button className="btn d-flex justify-content-between align-items-center w-100"
+                                                            <button className="btn px-0 d-flex justify-content-between align-items-center w-100"
                                                                 onClick={() => { openModal(u) }}
                                                                 disabled={u?.grade?.name === "Administration"}>
                                                                 <span className='text-start'>
