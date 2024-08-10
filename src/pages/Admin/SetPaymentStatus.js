@@ -285,14 +285,14 @@ const SetPaymentStatus = () => {
 
             // Add text and other elements
             doc.setFontSize(22);
-            doc.setFont('helvetica', 'bold'); 
+            doc.setFont('helvetica', 'bold');
             const instituteName = '5points Academy';
             const titleWidth1 = doc.getTextWidth(instituteName);
             const titleX1 = (pageWidth - titleWidth1) / 2; // Center text horizontally
             doc.text(instituteName, titleX1, 16);
 
             doc.setFontSize(11);
-            doc.setFont('helvetica', 'normal'); 
+            doc.setFont('helvetica', 'normal');
             const addressName = 'Tajmahal Road, Dhaka - 1207';
             const titleWidth2 = doc.getTextWidth(addressName);
             const titleX2 = (pageWidth - titleWidth2) / 2; // Center text horizontally
@@ -304,7 +304,7 @@ const SetPaymentStatus = () => {
             doc.text(mobile, titleX3, 29);
 
             doc.setFontSize(16);
-            doc.setFont('helvetica', 'bold'); 
+            doc.setFont('helvetica', 'bold');
             const title = 'Payment Invoice';
             const titleWidth = doc.getTextWidth(title);
             const titleX = (pageWidth - titleWidth) / 2; // Center text horizontally
@@ -326,11 +326,10 @@ const SetPaymentStatus = () => {
             // Normal text
             doc.setFont('helvetica', 'normal'); // Revert font to normal
             doc.text(dateText, pageWidth - rightMargin - doc.getTextWidth(dateText), 57); // Position date text
-            doc.text(`${auth.user.name}`, leftMargin + doc.getTextWidth('Name:') + 2, 57 + verticalSpacing);
-            doc.text(`${auth.user.grade.name}`, leftMargin + doc.getTextWidth('Grade:') + 2, 57 + 2 * verticalSpacing);
-            doc.text(`${auth.user.email}`, leftMargin + doc.getTextWidth('Email:') + 2, 57 + 3 * verticalSpacing);
-            doc.text(`${auth.user.phone}`, leftMargin + doc.getTextWidth('Mobile:') + 2, 57 + 4 * verticalSpacing);
-
+            doc.text(`${payment.user.name}`, leftMargin + doc.getTextWidth('Name:') + 2, 57 + verticalSpacing);
+            doc.text(`${payment.grade.name}`, leftMargin + doc.getTextWidth('Grade:') + 2, 57 + 2 * verticalSpacing);
+            doc.text(`${payment.user.email}`, leftMargin + doc.getTextWidth('Email:') + 2, 57 + 3 * verticalSpacing);
+            doc.text(`${payment.user.phone}`, leftMargin + doc.getTextWidth('Mobile:') + 2, 57 + 4 * verticalSpacing);
 
             doc.autoTable({
                 startY: 100,
