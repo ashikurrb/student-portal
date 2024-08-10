@@ -433,7 +433,7 @@ const SetPaymentStatus = () => {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2">
+                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-success fw-bold mx-1 py-2">
                                 <i class="fa-solid fa-plus"></i>  Set Payment
                             </button>
                             {selectedPayment.length > 0 && (
@@ -450,7 +450,7 @@ const SetPaymentStatus = () => {
                                     <Select bordered={false}
                                         placeholder="Select Grade"
                                         size='large'
-                                        className='form-select mb-2 me-2'
+                                        className='form-select mb-3 me-2'
                                         value={grade || undefined}
                                         onChange={(value) => { setGrade(value) }}>
                                         {grades?.map(g => (
@@ -460,7 +460,7 @@ const SetPaymentStatus = () => {
                                     <Select bordered={false}
                                         placeholder="Select Student"
                                         size='large'
-                                        className='form-select mb-2'
+                                        className='form-select mb-3'
                                         value={user || undefined}
                                         onChange={(value) => { setUser(value) }} required>
                                         {filteredUsers?.map(u => (
@@ -472,24 +472,24 @@ const SetPaymentStatus = () => {
                                     <input
                                         type="text"
                                         placeholder='Remark'
-                                        className='form-control mb-2 me-2'
+                                        className='form-control mb-3 me-2'
                                         value={remark}
                                         onChange={(e) => setRemark(e.target.value)} required
                                     />
                                     <input
                                         type="number"
                                         placeholder='Amount'
-                                        className='form-control mb-2 me-2'
+                                        className='form-control mb-3 me-2'
                                         value={amount}
                                         onChange={(e) => setAmount(e.target.value)} required
                                     />
-                                    <DatePicker format={dateFormat} className='form-control w-100 mb-2' value={paymentDate} onChange={(date) => setPaymentDate(date)} required />
+                                    <DatePicker format={dateFormat} className='form-control w-100 mb-3' value={paymentDate} onChange={(date) => setPaymentDate(date)} required />
                                 </div>
                                 <div className="d-lg-flex">
                                     <Select bordered={false}
                                         placeholder="Select Method"
                                         size='large'
-                                        className='form-select mb-2 me-2'
+                                        className='form-select mb-3 me-2'
                                         value={method}
                                         onChange={(value) => { setMethod(value) }}
                                         required>
@@ -500,13 +500,13 @@ const SetPaymentStatus = () => {
                                     <input
                                         type="text"
                                         placeholder='Transaction ID / Receipt No'
-                                        className='form-control mb-2'
+                                        className='form-control mb-3'
                                         value={trxId}
                                         onChange={(e) => setTrxId(e.target.value)} required
                                     />
                                 </div>
                                 <div className="text-center">
-                                    <button type="submit" className="btn btn-warning fw-bold mt-3">
+                                    <button type="submit" className="btn btn-warning fw-bold mt-2">
                                         {spinnerLoading ? <Spinner /> : "Create Payment Status"}
                                     </button>
                                 </div>
@@ -625,25 +625,25 @@ const SetPaymentStatus = () => {
                         <input
                             type="text"
                             placeholder='Remark'
-                            className='form-control mb-2 mx-1'
+                            className='form-control mb-3 me-2'
                             value={updatedRemark}
                             onChange={(e) => setUpdatedRemark(e.target.value)} required
                         />
                         <input
                             type="number"
                             placeholder='Amount'
-                            className='form-control mb-2 mx-1'
+                            className='form-control mb-3 me-2'
                             value={updatedAmount}
                             onChange={(e) => setUpdatedAmount(e.target.value)} required
                         />
-                        <DatePicker format={dateFormat} value={updatedPaymentDate} className='form-control w-100 mb-2 mx-1'
+                        <DatePicker format={dateFormat} value={updatedPaymentDate} className='form-control w-100 mb-3 me-2'
                             onChange={(date) => setUpdatedPaymentDate(date)} required />
                     </div>
-                    <div className="mb-3 d-lg-flex">
+                    <div className="mb-2 d-lg-flex">
                         <Select bordered={false}
                             placeholder="Select Method"
                             size='large'
-                            className='form-select mb-2 mx-1'
+                            className='form-select mb-3 me-2'
                             value={updatedMethod}
                             onChange={(value) => { setUpdatedMethod(value) }}
                             required>
@@ -654,7 +654,7 @@ const SetPaymentStatus = () => {
                         <input
                             type="text"
                             placeholder='Transaction ID / Receipt No'
-                            className='form-control mb-2 mx-1'
+                            className='form-control mb-3 me-2'
                             value={updatedTrxId}
                             onChange={(e) => setUpdatedTrxId(e.target.value)} required
                         />

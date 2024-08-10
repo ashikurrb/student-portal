@@ -252,7 +252,7 @@ const PublishResult = () => {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2">
+                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-success fw-bold mx-1 py-2">
                                 <i class="fa-solid fa-plus"></i> Publish Result
                             </button>
                             {selectedResult.length > 0 && (
@@ -268,7 +268,7 @@ const PublishResult = () => {
                                     <Select bordered={false}
                                         placeholder="Select Grade"
                                         size='large'
-                                        className='form-select mb-2 me-2'
+                                        className='form-select mb-3 me-2'
                                         value={grade || undefined}
                                         onChange={(value) => { setGrade(value) }}>
                                         {grades?.map(g => (
@@ -278,7 +278,7 @@ const PublishResult = () => {
                                     <Select bordered={false}
                                         placeholder="Select Student"
                                         size='large'
-                                        className='form-select mb-2'
+                                        className='form-select mb-3'
                                         value={user || undefined}
                                         onChange={(value) => { setUser(value) }}
                                         required>
@@ -291,30 +291,30 @@ const PublishResult = () => {
                                     <input
                                         type="text"
                                         placeholder='Exam Type'
-                                        className='form-control form-input mb-2 me-2'
+                                        className='form-control form-input mb-3 me-2'
                                         value={type}
                                         onChange={(e) => setType(e.target.value)} required
                                     />
                                     <input
                                         type="text"
                                         placeholder='Subject'
-                                        className='form-control form-input mb-2'
+                                        className='form-control form-input mb-3'
                                         value={subject}
                                         onChange={(e) => setSubject(e.target.value)} required
                                     />
                                 </div>
                                 <div className="d-lg-flex">
-                                    <DatePicker format={dateFormat} className='w-100 mb-2 me-2 form-control' value={examDate} onChange={(date) => setExamDate(date)} required />
+                                    <DatePicker format={dateFormat} className='w-100 mb-3 me-2 form-control' value={examDate} onChange={(date) => setExamDate(date)} required />
                                     <input
                                         type="text"
                                         placeholder='Marks'
-                                        className='form-control mb-2'
+                                        className='form-control mb-3'
                                         value={marks}
                                         onChange={(e) => setMarks(e.target.value)} required
                                     />
                                 </div>
                                 <div className="text-center">
-                                    <button type="submit" className="btn btn-warning fw-bold mt-3">
+                                    <button type="submit" className="btn btn-warning fw-bold mt-2">
                                         {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}
                                     </button>
                                 </div>
@@ -417,24 +417,24 @@ const PublishResult = () => {
                         <input
                             type="text"
                             placeholder='Exam Type'
-                            className='form-control form-input mb-2 me-2'
+                            className='form-control form-input mb-3 me-2'
                             value={updatedType}
                             onChange={(e) => setUpdatedType(e.target.value)} required
                         />
                         <input
                             type="text"
                             placeholder='Subject'
-                            className='form-control form-input mb-2'
+                            className='form-control form-input mb-3'
                             value={updatedSubject}
                             onChange={(e) => setUpdatedSubject(e.target.value)} required
                         />
                     </div>
-                    <div className='mb-3'>
-                        <DatePicker format={dateFormat} value={updatedExamDate} className='w-100 mb-2 me-2 form-control' onChange={(date) => setUpdatedExamDate(date)} required />
+                    <div className='mb-2 d-lg-flex'>
+                        <DatePicker format={dateFormat} value={updatedExamDate} className='w-100 mb-3 me-2 form-control' onChange={(date) => setUpdatedExamDate(date)} required />
                         <input
                             type="text"
                             placeholder='Marks'
-                            className='form-control'
+                            className='form-control mb-3'
                             value={updatedMarks}
                             onChange={(e) => setUpdatedMarks(e.target.value)} required
                         />

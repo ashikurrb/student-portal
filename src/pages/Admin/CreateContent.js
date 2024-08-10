@@ -222,7 +222,7 @@ const CreateContent = () => {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-warning fw-bold mx-1 py-2">
+                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-success fw-bold mx-1 py-2">
                                 <i className="fa-solid fa-plus"></i> Create Content
                             </button>
                             {selectedContent.length > 0 && (
@@ -284,7 +284,7 @@ const CreateContent = () => {
                                     />
                                 </div>
                                 <div className=" text-center">
-                                    <button type="submit" className="btn btn-warning fw-bold mt-3">
+                                    <button type="submit" className="btn btn-warning fw-bold mt-2">
                                         {spinnerLoading ? <Spinner /> : "Create Content Link"}
                                     </button>
                                 </div>
@@ -385,14 +385,14 @@ const CreateContent = () => {
                         <input
                             type="text"
                             placeholder='Subject'
-                            className='form-control mb-2 me-2'
+                            className='form-control mb-3 me-2'
                             value={updatedSubject}
                             onChange={(e) => setUpdatedSubject(e.target.value)} required
                         />
                         <input
                             type="text"
                             placeholder='Remark'
-                            className='form-control mb-2'
+                            className='form-control mb-3'
                             value={updatedReMark}
                             onChange={(e) => setUpdatedReMark(e.target.value)} required
                         />
@@ -401,7 +401,7 @@ const CreateContent = () => {
                         <Select bordered={false}
                             placeholder="Select Content Type"
                             size='large'
-                            className='form-select mb-2'
+                            className='form-select mb-3'
                             value={updatedType}
                             onChange={(value) => { setUpdatedType(value) }}
                             required>
@@ -412,13 +412,13 @@ const CreateContent = () => {
                         <input
                             type="text"
                             placeholder='Paste Link Here'
-                            className='form-control mb-2'
+                            className='form-control mb-4'
                             value={updatedContentLink}
                             onChange={(e) => setUpdatedContentLink(e.target.value)} required
                         />
                     </div>
                     <div className="text-center">
-                        <button type="submit" className="btn btn-warning fw-bold mt-2">
+                        <button type="submit" className="btn btn-warning fw-bold">
                             {updateSpinnerLoading ? <Spinner /> : "Update Content"}
                         </button>
                     </div>
