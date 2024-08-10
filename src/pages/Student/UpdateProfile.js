@@ -13,7 +13,8 @@ const UpdateProfile = () => {
     const [auth, setAuth] = useAuth();
     const [email, setEmail] = useState('');
     const [grade, setGrade] = useState('');
-    const [password, setPassword] = useState('');
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [answer, setAnswer] = useState('');
@@ -64,7 +65,8 @@ const UpdateProfile = () => {
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/auth/update-profile`, {
                 name,
                 email,
-                password,
+                oldPassword,
+                newPassword,
                 phone,
                 answer,
                 avatar,
@@ -124,7 +126,7 @@ const UpdateProfile = () => {
                                         message={
                                             <>
                                                 <b>Security Answer:</b> Enter new answer to update or Leave blank to unchanged.<br />
-                                                <b>Password:</b> Enter new password to update or Enter current password to continue.
+                                                <b>Password:</b> Enter only old password to continue or Enter both old and new password to update password. 
                                             </>
                                         }
                                         type="info"
@@ -147,7 +149,10 @@ const UpdateProfile = () => {
                                     <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" placeholder='Security Answer' />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" placeholder='Password' required />
+                                    <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} className="form-control" placeholder='Old Password' required />
+                                </div>
+                                <div className="mb-3">
+                                    <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="form-control" placeholder='New Password' />
                                 </div>
                                 <div className="text-center">
                                     <button type="submit" className=" btn btn-primary">
