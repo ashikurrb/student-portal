@@ -276,7 +276,7 @@ const CreateContent = () => {
                                 </div>
                                 <div>
                                     <input
-                                        type="text"
+                                        type="url"
                                         placeholder='Paste Link Here'
                                         className='form-control mb-3'
                                         value={contentLink}
@@ -410,7 +410,7 @@ const CreateContent = () => {
                             ))}
                         </Select>
                         <input
-                            type="text"
+                            type="url"
                             placeholder='Paste Link Here'
                             className='form-control mb-4'
                             value={updatedContentLink}
