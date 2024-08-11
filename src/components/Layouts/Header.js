@@ -46,11 +46,6 @@ const Header = () => {
                         <DarkModeButton />
                     </div>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <form className="d-flex ms-auto" role="search">
-                            <input className="form-control " type="search" placeholder="Search" aria-label="Search" />
-                            &nbsp;
-                            <button className="btn btn-outline-success" type="submit"> Search</button>
-                        </form>
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <li className="nav-item">
