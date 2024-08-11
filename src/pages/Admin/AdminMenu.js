@@ -13,7 +13,7 @@ const AdminMenu = () => {
                                 <GoBackButton />
                             </div>
                             <div className="col mb-1">
-                                <NavLink to="/dashboard/admin" className="product-link">
+                                <NavLink to="/dashboard/admin" className="link">
                                     <h4 className="mb-0 me-5 text-center">Admin Profile</h4>
                                 </NavLink>
                             </div>

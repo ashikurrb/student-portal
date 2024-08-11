@@ -539,7 +539,7 @@ const SetPaymentStatus = () => {
                                 listSpinnerLoading ? <div className="m-5 text-center">
                                     <Spinner /><p>Loading payment status...</p>
                                 </div> :
-                                    <table className="table">
+                                    <table className="table table-fixed-header">
                                         <thead className='table-dark'>
                                             <tr>
                                                 <th>
@@ -568,7 +568,7 @@ const SetPaymentStatus = () => {
                                                     <td colSpan="10" className="text-center">
                                                         <h3 className='mt-5 text-secondary'>No Payment Status Found</h3>
                                                         <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">
-                                                            Reset Search
+                                                        <i class="fa-solid fa-xmark"></i>  Reset Search
                                                         </button>
                                                     </td>
                                                 </tr>

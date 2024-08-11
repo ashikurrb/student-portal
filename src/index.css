@@ -79,18 +79,10 @@
   padding:10px;
   margin-top: 10px;
 }
+
 .pnf-btn:hover{
-background-color: black;
-color: white;
-}
-
-.product-link{
-  text-decoration: none !important;
-  color: #0a58ca !important;
-}
-
-.table-container {
-  overflow-x: auto;
+  background-color: black;
+  color: white;
 }
 
 table {
@@ -98,13 +90,24 @@ table {
   border-collapse: collapse;
 }
 
+.table-container {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 450px;
+}
+
+.table-fixed-header thead th {
+  position: sticky;
+  top:0;
+  z-index: 850;
+}
+
 .list-custom {
-background-color: red;
+  background-color: red;
 }
 
 .link{
   text-decoration: none;
-  color: grey;
   font-weight: bold;
 }
 

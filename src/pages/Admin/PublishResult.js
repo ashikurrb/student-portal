@@ -367,7 +367,7 @@ const PublishResult = () => {
                                                     <td colSpan="8" className="text-center">
                                                         <h3 className='mt-5 text-secondary'>No Result Found</h3>
                                                         <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">
-                                                            Reset Search
+                                                        <i class="fa-solid fa-xmark"></i>  Reset Search
                                                         </button>
                                                     </td>
                                                 </tr>

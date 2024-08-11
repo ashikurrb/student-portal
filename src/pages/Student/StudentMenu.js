@@ -13,7 +13,7 @@ const StudentMenu = () => {
                                 <GoBackButton />
                             </div>
                             <div className="col mb-1">
-                                <NavLink to="/dashboard/student" className="product-link">
+                                <NavLink to="/dashboard/student" className="link">
                                     <h4 className="mb-0 me-5 text-center">Student Profile</h4>
                                 </NavLink>
                             </div>
