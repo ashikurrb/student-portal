@@ -27,7 +27,7 @@ const CreateGrade = () => {
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/grade/create-grade`, gradeData)
             if (data?.success) {
                 setSpinnerLoading(false);
-                toast.success(`${name} - ${data.message}`)
+                toast.success(`${data.message}`)
                 getAllGrades();
                 //clear fields
                 setName("");
@@ -37,11 +37,16 @@ const CreateGrade = () => {
             }
 
         } catch (error) {
-            console.log(error);
-            toast.error("Something went wrong");
-            setSpinnerLoading(false);
+            console.error("Error details:", error);
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message);
+                setSpinnerLoading(false);
+            } else {
+                toast.error("Something went wrong");
+                setSpinnerLoading(false);
+            }
         }
-    }
+    };
 
     //Get All Grades
     const getAllGrades = async (req, res) => {
@@ -72,7 +77,7 @@ const CreateGrade = () => {
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/grade/update-grade/${selected._id}`, updatedGradeData)
             if (data.success) {
                 setUpdateSpinnerLoading(false);
-                toast.success(`${updatedName} - ${data.message}`)
+                toast.success(`${data.message}`)
                 getAllGrades();
                 //clear fields
                 setSelected(null);
@@ -83,11 +88,17 @@ const CreateGrade = () => {
                 toast.error(data.message);
             }
         } catch (error) {
-            console.log(error);
-            toast.error("Error updating grade");
-            setUpdateSpinnerLoading(false);
+            console.error("Error details:", error);
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message);
+                setUpdateSpinnerLoading(false);
+            } else {
+                toast.error("Something went wrong");
+                setUpdateSpinnerLoading(false);
+            }
         }
-    }
+    };
+    
     // Open modal with selected result data
     const openModal = (grade) => {
         setVisible(true);

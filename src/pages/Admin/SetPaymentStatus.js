@@ -114,9 +114,14 @@ const SetPaymentStatus = () => {
                 toast.success(data.message);
             }
         } catch (error) {
-            console.log(error);
-            toast.error('Something went wrong');
-            setSpinnerLoading(false);
+            console.error("Error details:", error);
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message);
+                setSpinnerLoading(false);
+            } else {
+                toast.error("Something went wrong");
+                setSpinnerLoading(false);
+            }
         }
     };
 
@@ -168,9 +173,14 @@ const SetPaymentStatus = () => {
             }
 
         } catch (error) {
-            console.log(error);
-            toast.error('Something went wrong')
-            setUpdateSpinnerLoading(false)
+            console.error("Error details:", error);
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message);
+                setUpdateSpinnerLoading(false);
+            } else {
+                toast.error("Something went wrong");
+                setUpdateSpinnerLoading(false);
+            }
         }
     };
 

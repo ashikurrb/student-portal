@@ -228,7 +228,7 @@ const AllUsers = () => {
                                                         <div className='text-center my-2'>
                                                             {
                                                                 <div className='text-center my-3'>
-                                                                    <b> Student: {selected?.name} - {selected?.grade?.name}</b>
+                                                                    <b>{selected?.name} - {selected?.grade?.name}</b>
                                                                 </div>
                                                             }
                                                         </div>

@@ -29,7 +29,7 @@ const UpdateProfile = () => {
         setEmail(email);
         setPhone(phone);
         setAvatar(avatar);
-        setPhoto(avatar); // Set photo with avatar URL
+        setPhoto(avatar);
     }, [auth?.user]);
 
     // Upload photo function
@@ -84,8 +84,12 @@ const UpdateProfile = () => {
                 toast.success(data.message, { id: loadingToastId });
             }
         } catch (error) {
-            console.log(error);
-            toast.error("Something went wrong", { id: loadingToastId });
+            console.error("Error details:", error);
+            if (error.response && error.response.data && error.response.data.error) {
+                toast.error(error.response.data.error, { id: loadingToastId });
+            } else {
+                toast.error("Something went wrong", { id: loadingToastId });
+            }
         }
     };
 
@@ -126,7 +130,7 @@ const UpdateProfile = () => {
                                         message={
                                             <>
                                                 <b>Security Answer:</b> Enter new answer to update or Leave blank to unchanged.<br />
-                                                <b>Password:</b> Enter only old password to continue or Enter both old and new password to update password. 
+                                                <b>Password:</b> Enter only old password to continue or Enter both old and new password to update password.
                                             </>
                                         }
                                         type="info"
@@ -137,19 +141,19 @@ const UpdateProfile = () => {
                                     <input type="text" value={grade} onChange={(e) => setGrade(e.target.value)} className="form-control" placeholder='Grade' readOnly disabled />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder='Updated Name' required />
+                                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder='Name' required />
                                 </div>
                                 <div className="mb-3">
                                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" placeholder='Email' readOnly required disabled />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" placeholder='Updated Phone Number' required />
+                                    <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" placeholder='Phone Number' required />
                                 </div>
                                 <div className="mb-3">
                                     <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" placeholder='Security Answer' />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} className="form-control" placeholder='Old Password' required />
+                                    <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} className="form-control" placeholder='Password' required />
                                 </div>
                                 <div className="mb-3">
                                     <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="form-control" placeholder='New Password' />

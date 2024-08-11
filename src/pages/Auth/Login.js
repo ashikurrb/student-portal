@@ -41,10 +41,14 @@ const Login = () => {
                 toast.error(res.data.message, { id: loadingToastId });
             }
         } catch (error) {
-            console.log(error);
-            toast.error("Something went wrong", { id: loadingToastId });
+            console.error("Error details:", error); // Log the full error object
+            if (error.response && error.response.data && error.response.data.error) {
+                toast.error(error.response.data.error, { id: loadingToastId });
+            } else {
+                toast.error("Something went wrong", { id: loadingToastId });
+            }
         }
-    }
+    };
 
     //redirection based on auth
     if (auth.token) {
