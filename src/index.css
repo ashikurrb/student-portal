@@ -6,6 +6,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+body{
+  background-color: #edeef0;
+}
 
 /* font-family: "Poppins", sans-serif; */
 /* font-family: "Playfair Display", serif; */
@@ -20,6 +23,7 @@
   position: sticky;
   top: 0%;
   z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adjust shadow as needed */
  }
 
 .nav-link{
@@ -94,6 +98,7 @@ table {
   overflow-x: auto;
   overflow-y: auto;
   max-height: 450px;
+  border-radius: 5px;
 }
 
 .table-fixed-header thead th {

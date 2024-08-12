@@ -162,7 +162,7 @@ const AllUsers = () => {
                                 <tbody>
                                     {filteredUser.length === 0 ? (
                                         <tr>
-                                            <td colSpan="8" className="text-center">
+                                            <td colSpan="9" className="text-center">
                                                 <h3 className='mt-5 text-secondary'>No User Found</h3>
                                                 <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">Reset Search</button>
                                             </td>
