@@ -98,7 +98,7 @@ const CreateGrade = () => {
             }
         }
     };
-    
+
     // Open modal with selected result data
     const openModal = (grade) => {
         setVisible(true);
@@ -165,37 +165,40 @@ const CreateGrade = () => {
                         </div>
                         <h6 className='text-start'>Total Grade: {grades.length}</h6>
                         <div className="table-container">
-                            <table className='table'>
-                                <thead className='table-dark'>
-                                    <tr>
-                                        <th scope='row'>#</th>
-                                        <th>Grade</th>
-                                        <th>Created</th>
-                                        <th>Modified</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                {listSpinnerLoading ? <div className="m-5"><Spinner /></div> : <tbody>
-                                    {grades.map((g, i) => (
-                                        <tr>
-                                            <th scope='row'>{i + 1}</th>
-                                            <td className='fs-5 fw-bold'>{g.name}</td>
-                                            <td>{moment(g?.createdAt).fromNow()}</td>
-                                            <td>{moment(g?.updatedAt).fromNow()}</td>
-                                            <td className='d-flex'>
-                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(g) }}
-                                                    disabled={g.name === "Administration"}>
-                                                    <i class="fa-solid fa-pen-to-square"></i> Edit
-                                                </button>
-                                                <button className='btn btn-danger mx-1' onClick={() => { handleDelete(g._id) }}
-                                                    disabled={g.name === "Administration"}>
-                                                    <i class="fa-solid fa-trash-can"></i> Delete
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>}
-                            </table>
+                            {
+                                listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
+                                    <table className='table table-fixed-header'>
+                                        <thead className='table-dark'>
+                                            <tr>
+                                                <th scope='row'>#</th>
+                                                <th>Grade</th>
+                                                <th>Created</th>
+                                                <th>Modified</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {grades.map((g, i) => (
+                                                <tr>
+                                                    <th scope='row'>{i + 1}</th>
+                                                    <td className='fs-5 fw-bold'>{g.name}</td>
+                                                    <td>{moment(g?.createdAt).fromNow()}</td>
+                                                    <td>{moment(g?.updatedAt).fromNow()}</td>
+                                                    <td className='d-flex'>
+                                                        <button className='btn btn-primary mx-1' onClick={() => { openModal(g) }}
+                                                            disabled={g.name === "Administration"}>
+                                                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                        </button>
+                                                        <button className='btn btn-danger mx-1' onClick={() => { handleDelete(g._id) }}
+                                                            disabled={g.name === "Administration"}>
+                                                            <i class="fa-solid fa-trash-can"></i> Delete
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                            }
                         </div>
                     </div>
                     <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>

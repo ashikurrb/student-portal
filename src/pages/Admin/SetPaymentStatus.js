@@ -432,7 +432,7 @@ const SetPaymentStatus = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h2 className='text-center my-3'>Create Payment Status</h2>
+                        <h2 className='text-center my-3'>Create Payment Status ({payment.length})</h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <input
                                 type="text"

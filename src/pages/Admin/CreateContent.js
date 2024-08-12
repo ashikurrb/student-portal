@@ -222,7 +222,7 @@ const CreateContent = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h2 className='text-center my-3'>Create Content Link</h2>
+                        <h2 className='text-center my-3'>Create Content Link ({content.length})</h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <input
                                 type="text"
@@ -310,7 +310,7 @@ const CreateContent = () => {
                                 listSpinnerLoading ? <div className="text-center m-5">
                                     <Spinner /> <p>Loading content...</p>
                                 </div> :
-                                    <table className="table">
+                                    <table className="table table-fixed-header">
                                         <thead className='table-dark'>
                                             <tr>
                                                 <th>

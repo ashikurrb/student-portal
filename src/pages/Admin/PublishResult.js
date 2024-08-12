@@ -252,7 +252,7 @@ const PublishResult = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h2 className='text-center my-3'>Publish Result</h2>
+                        <h2 className='text-center my-3'>Publish Result ({result.length})</h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <input
                                 type="text"
@@ -340,7 +340,7 @@ const PublishResult = () => {
                                 listSpinnerLoading ? <div className="m-5 text-center">
                                     <Spinner /><p>Loading results...</p>
                                 </div> :
-                                    <table className="table">
+                                    <table className="table table-fixed-header">
                                         <thead className='table-dark'>
                                             <tr>
                                                 <th>

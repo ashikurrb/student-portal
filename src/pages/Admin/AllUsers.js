@@ -145,7 +145,7 @@ const AllUsers = () => {
                         </div>
                         <h6 className='justify-content-start'> Count: {filteredUser.length}</h6>
                         {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <div className="table-container">
-                            <table className='table'>
+                            <table className='table table-fixed-header'>
                                 <thead className='table-dark'>
                                     <tr>
                                         <th scope='col'>#</th>
