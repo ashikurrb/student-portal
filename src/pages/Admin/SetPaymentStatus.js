@@ -531,7 +531,7 @@ const SetPaymentStatus = () => {
                                 }
                             </span>
                             <span>
-                                <h6 className='justify-content-start'> Total Received: {totalAmount}</h6>
+                                <h6 className='justify-content-start'> Total: {totalAmount} TK</h6>
                             </span>
                         </h6>
                         <div className='table-container'>
@@ -566,10 +566,17 @@ const SetPaymentStatus = () => {
                                             {filteredPayment.length === 0 ? (
                                                 <tr>
                                                     <td colSpan="10" className="text-center">
-                                                        <h3 className='mt-5 text-secondary'>No Payment Status Found</h3>
-                                                        <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">
-                                                        <i class="fa-solid fa-xmark"></i>  Reset Search
-                                                        </button>
+                                                    <div className="my-5">
+                                                        <h3 className='text-secondary'>No Payment Status Found</h3>
+                                                        {searchQuery && (
+                                                            <button
+                                                                onClick={() => setSearchQuery('')}
+                                                                className="btn btn-warning mt-2 fw-bold"
+                                                            >
+                                                                <i className="fa-solid fa-xmark"></i> Reset Search
+                                                            </button>
+                                                        )}
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             ) : (
@@ -587,11 +594,11 @@ const SetPaymentStatus = () => {
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{p?.grade?.name}</td>
                                                             <td>
-                                                                <Tooltip title={`Created: ${moment(p.createdAt).format('llll')} Updated: ${moment(p.updatedAt).format('llll')}`}>
-                                                                    <span>{p?.user?.name}</span>
-                                                                </Tooltip>
+                                                                {p?.user?.name}
                                                             </td>
-                                                            <td>{p.remark}</td>
+                                                            <Tooltip title={`Created: ${moment(p.createdAt).format('llll')} Updated: ${moment(p.updatedAt).format('llll')}`}>
+                                                                <span>{p.remark}</span>
+                                                            </Tooltip>
                                                             <td>TK. {p.amount}</td>
                                                             <td>{p.method}</td>
                                                             <td>{p.trxId}</td>
@@ -609,6 +616,7 @@ const SetPaymentStatus = () => {
                                                                     <i className="fa-solid fa-trash-can"></i> Delete
                                                                 </button>
                                                             </td>
+                                                            <td></td>
                                                         </tr>
                                                     );
                                                 })
@@ -624,9 +632,9 @@ const SetPaymentStatus = () => {
                 <h5 className='text-center'>Update Payment Status</h5>
                 <div className='text-center my-3'>
                     {
-                        <p>
-                            {selected?.user?.name} - {selected?.grade?.name}
-                        </p>
+                        <span>
+                            {selected?.user?.name} - {selected?.grade?.name} - {moment(selected?.paymentDate).format('ll')}
+                        </span>
                     }
                 </div>
                 <form onSubmit={handleUpdate}>

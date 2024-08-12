@@ -182,6 +182,7 @@ const PublishResult = () => {
         setUpdatedType(result.type);
         setUpdatedSubject(result.subject);
         setUpdatedMarks(result.marks);
+        // setUpdatedExamDate(moment(result.examDate))
     };
 
     // Filter content based on search query
@@ -365,10 +366,17 @@ const PublishResult = () => {
                                             {filteredResult.length === 0 ? (
                                                 <tr>
                                                     <td colSpan="8" className="text-center">
-                                                        <h3 className='mt-5 text-secondary'>No Result Found</h3>
-                                                        <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">
-                                                        <i class="fa-solid fa-xmark"></i>  Reset Search
-                                                        </button>
+                                                        <div className="my-5">
+                                                            <h3 className='text-secondary'>No Result Found</h3>
+                                                            {searchQuery && (
+                                                                <button
+                                                                    onClick={() => setSearchQuery('')}
+                                                                    className="btn btn-warning mt-2 fw-bold"
+                                                                >
+                                                                    <i className="fa-solid fa-xmark"></i> Reset Search
+                                                                </button>
+                                                            )}
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             ) : (
