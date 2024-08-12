@@ -595,9 +595,11 @@ const SetPaymentStatus = () => {
                                                         <td>
                                                             {p?.user?.name}
                                                         </td>
-                                                        <Tooltip title={`Created: ${moment(p.createdAt).format('llll')} Updated: ${moment(p.updatedAt).format('llll')}`}>
-                                                            <span>{p.remark}</span>
-                                                        </Tooltip>
+                                                        <td>
+                                                            <Tooltip title={`Created: ${moment(p.createdAt).format('llll')} Updated: ${moment(p.updatedAt).format('llll')}`}>
+                                                                <span>{p.remark}</span>
+                                                            </Tooltip>
+                                                        </td>
                                                         <td>TK. {p.amount}</td>
                                                         <td>{p.method}</td>
                                                         <td>{p.trxId}</td>
@@ -607,13 +609,15 @@ const SetPaymentStatus = () => {
                                                                 <i className="fa-solid fa-download"></i>
                                                             </button>
                                                         </td>
-                                                        <td className='d-flex'>
-                                                            <button className='btn btn-primary mx-1' onClick={() => { openModal(p) }}>
-                                                                <i class="fa-solid fa-pen-to-square"></i> Edit
-                                                            </button>
-                                                            <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}>
-                                                                <i className="fa-solid fa-trash-can"></i> Delete
-                                                            </button>
+                                                        <td>
+                                                            <div className='d-flex'>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(p) }}>
+                                                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                                </button>
+                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}>
+                                                                    <i className="fa-solid fa-trash-can"></i> Delete
+                                                                </button>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 ))
