@@ -44,21 +44,33 @@ const ViewContent = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {content.map((c, i) => {
-                                        return (
-                                            <tr key={c._id}>
-                                                <th scope='row'>{i + 1}</th>
-                                                <td>{c.subject}</td>
-                                                <td>{c.remark}</td>
-                                                <td>{c.type}</td>
-                                                <td>
-                                                    <Link className='link' to={c.contentLink} target='_blank'>
-                                                        <i class="fa-solid fa-up-right-from-square"></i> Open
-                                                    </Link>
+                                    {
+                                        content.length === 0 ? (
+                                            <tr>
+                                                <td colSpan="5" className="text-center">
+                                                    <div className="my-5">
+                                                        <h3 className='text-secondary'>No Content Found</h3>
+                                                    </div>
                                                 </td>
                                             </tr>
+                                        ) : (
+                                            content.map((c, i) => {
+                                                return (
+                                                    <tr key={c._id}>
+                                                        <th scope='row'>{i + 1}</th>
+                                                        <td>{c.subject}</td>
+                                                        <td>{c.remark}</td>
+                                                        <td>{c.type}</td>
+                                                        <td>
+                                                            <Link className='link' to={c.contentLink} target='_blank'>
+                                                                <i class="fa-solid fa-up-right-from-square"></i> Open
+                                                            </Link>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })
                                         )
-                                    })}
+                                    }
                                 </tbody>
                             </table>}
                         </div>

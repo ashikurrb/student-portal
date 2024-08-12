@@ -163,15 +163,23 @@ const AllUsers = () => {
                                     {filteredUser.length === 0 ? (
                                         <tr>
                                             <td colSpan="9" className="text-center">
-                                                <h3 className='mt-5 text-secondary'>No User Found</h3>
-                                                <button onClick={() => { setSearchQuery('') }} className="btn btn-warning mt-2 mb-5 fw-bold">Reset Search</button>
+                                                <div className="my-5">
+                                                    <h3 className='text-secondary'>No User Found</h3>
+                                                    {searchQuery && (
+                                                        <button
+                                                            onClick={() => setSearchQuery('')}
+                                                            className="btn btn-warning mt-2 fw-bold"
+                                                        >
+                                                            <i className="fa-solid fa-xmark"></i> Reset Search
+                                                        </button>
+                                                    )}
+                                                </div>
                                             </td>
                                         </tr>
                                     ) : (
 
                                         filteredUser.map((u, i) => {
                                             return (
-
                                                 <tr>
                                                     <th scope='row'>{i + 1}</th>
                                                     <td className=''>

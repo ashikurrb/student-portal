@@ -209,23 +209,35 @@ const ViewPayment = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {payment.map((p, i) => {
-                                        return (
-                                            <tr key={p._id}>
-                                                <th scope='row'>{i + 1}</th>
-                                                <td>{p.remark}</td>
-                                                <td>TK. {p.amount}</td>
-                                                <td>{p.method}</td>
-                                                <td>{p.trxId}</td>
-                                                <td>{moment(p.paymentDate).format('ll')}</td>
-                                                <td>
-                                                    <button className="btn btn-secondary" onClick={() => generateInvoice(p)}>
-                                                        <i className="fa-solid fa-download"></i>
-                                                    </button>
+                                    {
+                                        payment.length === 0 ? (
+                                            <tr>
+                                                <td colSpan="7" className="text-center">
+                                                    <div className="my-5">
+                                                        <h3 className='text-secondary'>No Payment Status Found</h3>
+                                                    </div>
                                                 </td>
                                             </tr>
+                                        ) : (
+                                            payment.map((p, i) => {
+                                                return (
+                                                    <tr key={p._id}>
+                                                        <th scope='row'>{i + 1}</th>
+                                                        <td>{p.remark}</td>
+                                                        <td>TK. {p.amount}</td>
+                                                        <td>{p.method}</td>
+                                                        <td>{p.trxId}</td>
+                                                        <td>{moment(p.paymentDate).format('ll')}</td>
+                                                        <td>
+                                                            <button className="btn btn-secondary" onClick={() => generateInvoice(p)}>
+                                                                <i className="fa-solid fa-download"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })
                                         )
-                                    })}
+                                    }
                                 </tbody>
                             </table>}
 

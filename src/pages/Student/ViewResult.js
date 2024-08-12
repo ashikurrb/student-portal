@@ -36,7 +36,7 @@ const ViewResult = () => {
                     <div className="col-md-9">
                         <h3 className='text-center pt-3'> Result</h3>
                         <div className="card mt-3 p-4 table-container">
-                        {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> :<table className="table">
+                            {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <table className="table">
                                 <thead className='table-dark'>
                                     <tr>
                                         <th scope="col">#</th>
@@ -46,26 +46,38 @@ const ViewResult = () => {
                                         <th scope="col">Date</th>
                                     </tr>
                                 </thead>
-                               <tbody>
-                                    {results.map((r, i) => {
-                                        return (
-                                            <tr key={r._id}>
-                                                <th scope='row'>{i + 1}</th>
-                                                <td>{r.type}</td>
-                                                <td>{r.subject}</td>
-                                                <td>{r.marks}</td>
-                                                <td>{moment(r.examDate).format('ll')}</td>
-                                                </tr>
+                                <tbody>
+                                    {
+                                        results.length === 0 ? (
+                                            <tr>
+                                                <td colSpan="5" className="text-center">
+                                                    <div className="my-5">
+                                                        <h3 className='text-secondary'>No Result Found</h3>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ) : (
+                                            results.map((r, i) => {
+                                                return (
+                                                    <tr key={r._id}>
+                                                        <th scope='row'>{i + 1}</th>
+                                                        <td>{r.type}</td>
+                                                        <td>{r.subject}</td>
+                                                        <td>{r.marks}</td>
+                                                        <td>{moment(r.examDate).format('ll')}</td>
+                                                    </tr>
+                                                )
+                                            })
                                         )
-                                    })}
+                                    }
                                 </tbody>
-                            </table> }
-                            
+                            </table>}
+
                         </div>
                     </div>
                 </div>
             </div>
-        </Layout>
+        </Layout >
     );
 };
 
