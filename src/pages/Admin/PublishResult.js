@@ -363,55 +363,59 @@ const PublishResult = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {filteredResult.length === 0 ? (
-                                                <tr>
-                                                    <td colSpan="9" className="text-center">
-                                                        <div className="my-5">
-                                                            <h3 className='text-secondary'>No Result Found</h3>
-                                                            {searchQuery && (
-                                                                <button
-                                                                    onClick={() => setSearchQuery('')}
-                                                                    className="btn btn-warning mt-2 fw-bold"
-                                                                >
-                                                                    <i className="fa-solid fa-xmark"></i> Reset Search
-                                                                </button>
-                                                            )}
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ) : (
-                                                filteredResult.map((r, i) => (
-                                                    <tr key={r._id}>
-                                                        <td>
-                                                            <input
-                                                                className='form-check-input'
-                                                                type="checkbox"
-                                                                checked={selectedResult.includes(r._id)}
-                                                                onChange={() => handleSelectResult(r._id)}
-                                                            />
-                                                        </td>
-                                                        <th scope="row">{i + 1}</th>
-                                                        <td>{r?.grade?.name}</td>
-                                                        <td>
-                                                            <Tooltip title={`Created: ${moment(r.createdAt).format('llll')} Updated: ${moment(r.updatedAt).format('llll')}`}>
-                                                                <span>{r?.user?.name}</span>
-                                                            </Tooltip>
-                                                        </td>
-                                                        <td>{r.type}</td>
-                                                        <td>{r.subject}</td>
-                                                        <td>{r.marks}</td>
-                                                        <td>{moment(r.examDate).format('ll')}</td>
-                                                        <td className='d-flex'>
-                                                            <button className='btn btn-primary mx-1' onClick={() => { openModal(r) }}>
-                                                                <i class="fa-solid fa-pen-to-square"></i> Edit
-                                                            </button>
-                                                            <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(r._id)}>
-                                                                <i class="fa-solid fa-trash-can"></i>  Delete
-                                                            </button>
+                                            {
+                                                filteredResult.length === 0 ? (
+                                                    <tr>
+                                                        <td colSpan="9" className="text-center">
+                                                            <div className="my-5">
+                                                                <h3 className='text-secondary'>No Result Found</h3>
+                                                                {searchQuery && (
+                                                                    <button
+                                                                        onClick={() => setSearchQuery('')}
+                                                                        className="btn btn-warning mt-2 fw-bold"
+                                                                    >
+                                                                        <i className="fa-solid fa-xmark"></i> Reset Search
+                                                                    </button>
+                                                                )}
+                                                            </div>
                                                         </td>
                                                     </tr>
-                                                ))
-                                            )}
+                                                ) : (
+                                                    filteredResult.map((r, i) => (
+                                                        <tr key={r._id}>
+                                                            <td>
+                                                                <input
+                                                                    className='form-check-input'
+                                                                    type="checkbox"
+                                                                    checked={selectedResult.includes(r._id)}
+                                                                    onChange={() => handleSelectResult(r._id)}
+                                                                />
+                                                            </td>
+                                                            <th scope="row">{i + 1}</th>
+                                                            <td>{r?.grade?.name}</td>
+                                                            <td>
+                                                                <Tooltip title={`Created: ${moment(r.createdAt).format('llll')} Updated: ${moment(r.updatedAt).format('llll')}`}>
+                                                                    <span>{r?.user?.name}</span>
+                                                                </Tooltip>
+                                                            </td>
+                                                            <td>{r.type}</td>
+                                                            <td>{r.subject}</td>
+                                                            <td>{r.marks}</td>
+                                                            <td>{moment(r.examDate).format('ll')}</td>
+                                                            <td>
+                                                                <div className="d-flex">
+                                                                    <button className='btn btn-primary mx-1' onClick={() => { openModal(r) }}>
+                                                                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                                    </button>
+                                                                    <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(r._id)}>
+                                                                        <i class="fa-solid fa-trash-can"></i>  Delete
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                )
+                                            }
                                         </tbody>
                                     </table>
                             }
