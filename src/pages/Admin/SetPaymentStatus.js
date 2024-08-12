@@ -565,61 +565,58 @@ const SetPaymentStatus = () => {
                                         <tbody>
                                             {filteredPayment.length === 0 ? (
                                                 <tr>
-                                                    <td colSpan="10" className="text-center">
-                                                    <div className="my-5">
-                                                        <h3 className='text-secondary'>No Payment Status Found</h3>
-                                                        {searchQuery && (
-                                                            <button
-                                                                onClick={() => setSearchQuery('')}
-                                                                className="btn btn-warning mt-2 fw-bold"
-                                                            >
-                                                                <i className="fa-solid fa-xmark"></i> Reset Search
-                                                            </button>
-                                                        )}
+                                                    <td colSpan="11" className="text-center">
+                                                        <div className="my-5">
+                                                            <h3 className='text-secondary'>No Payment Status Found</h3>
+                                                            {searchQuery && (
+                                                                <button
+                                                                    onClick={() => setSearchQuery('')}
+                                                                    className="btn btn-warning mt-2 fw-bold"
+                                                                >
+                                                                    <i className="fa-solid fa-xmark"></i> Reset Search
+                                                                </button>
+                                                            )}
                                                         </div>
                                                     </td>
                                                 </tr>
                                             ) : (
-                                                filteredPayment.map((p, i) => {
-                                                    return (
-                                                        <tr key={p._id}>
-                                                            <td>
-                                                                <input
-                                                                    type="checkbox"
-                                                                    className='form-check-input'
-                                                                    checked={selectedPayment.includes(p._id)}
-                                                                    onChange={() => handleSelectPayment(p._id)}
-                                                                />
-                                                            </td>
-                                                            <th scope="row">{i + 1}</th>
-                                                            <td>{p?.grade?.name}</td>
-                                                            <td>
-                                                                {p?.user?.name}
-                                                            </td>
-                                                            <Tooltip title={`Created: ${moment(p.createdAt).format('llll')} Updated: ${moment(p.updatedAt).format('llll')}`}>
-                                                                <span>{p.remark}</span>
-                                                            </Tooltip>
-                                                            <td>TK. {p.amount}</td>
-                                                            <td>{p.method}</td>
-                                                            <td>{p.trxId}</td>
-                                                            <td>{moment(p?.paymentDate).format('ll')}</td>
-                                                            <td className='text-center'>
-                                                                <button className="btn btn-outline-dark" onClick={() => generateInvoice(p)}>
-                                                                    <i className="fa-solid fa-download"></i>
-                                                                </button>
-                                                            </td>
-                                                            <td className='d-flex'>
-                                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(p) }}>
-                                                                    <i class="fa-solid fa-pen-to-square"></i> Edit
-                                                                </button>
-                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}>
-                                                                    <i className="fa-solid fa-trash-can"></i> Delete
-                                                                </button>
-                                                            </td>
-                                                            <td></td>
-                                                        </tr>
-                                                    );
-                                                })
+                                                filteredPayment.map((p, i) => (
+                                                    <tr key={p._id}>
+                                                        <td>
+                                                            <input
+                                                                type="checkbox"
+                                                                className='form-check-input'
+                                                                checked={selectedPayment.includes(p._id)}
+                                                                onChange={() => handleSelectPayment(p._id)}
+                                                            />
+                                                        </td>
+                                                        <th scope="row">{i + 1}</th>
+                                                        <td>{p?.grade?.name}</td>
+                                                        <td>
+                                                            {p?.user?.name}
+                                                        </td>
+                                                        <Tooltip title={`Created: ${moment(p.createdAt).format('llll')} Updated: ${moment(p.updatedAt).format('llll')}`}>
+                                                            <span>{p.remark}</span>
+                                                        </Tooltip>
+                                                        <td>TK. {p.amount}</td>
+                                                        <td>{p.method}</td>
+                                                        <td>{p.trxId}</td>
+                                                        <td>{moment(p?.paymentDate).format('ll')}</td>
+                                                        <td className='text-center'>
+                                                            <button className="btn btn-outline-dark" onClick={() => generateInvoice(p)}>
+                                                                <i className="fa-solid fa-download"></i>
+                                                            </button>
+                                                        </td>
+                                                        <td className='d-flex'>
+                                                            <button className='btn btn-primary mx-1' onClick={() => { openModal(p) }}>
+                                                                <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                            </button>
+                                                            <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}>
+                                                                <i className="fa-solid fa-trash-can"></i> Delete
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))
                                             )}
                                         </tbody>
                                     </table>
