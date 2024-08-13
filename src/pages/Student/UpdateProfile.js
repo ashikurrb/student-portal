@@ -138,13 +138,13 @@ const UpdateProfile = () => {
                                     />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="text" value={grade} onChange={(e) => setGrade(e.target.value)} className="form-control" placeholder='Grade' readOnly disabled />
+                                    <input type="text" value={grade} onChange={(e) => setGrade(e.target.value)} className="form-control bg-white border border-3 " placeholder='Grade' readOnly disabled />
                                 </div>
                                 <div className="mb-3">
                                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder='Name' required />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" placeholder='Email' readOnly required disabled />
+                                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control bg-white border border-3 " placeholder='Email' readOnly disabled />
                                 </div>
                                 <div className="mb-3">
                                     <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" placeholder='Phone Number' required />
