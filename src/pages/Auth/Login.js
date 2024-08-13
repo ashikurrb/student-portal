@@ -56,7 +56,7 @@ const Login = () => {
     }
 
     return (
-        <Layout title={"5Points - Log In"}>
+        <Layout title={"Log In - 5points Academy"}>
             <div className="form-container">
                 <div className="container d-md-flex">
                     <div className="row m-3">
@@ -74,13 +74,16 @@ const Login = () => {
                             </div>
                             <div className="mb-3">
                                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />
+                                <div className="form-text text-end pt-1">
+                                    <Link to="/forgot-password">Forgot Password?</Link>
+                                </div>
                             </div>
                             <div className="text-center">
                                 <button type="submit" className="btn btn-primary">
                                     Login
                                 </button>
                             </div>
-                            <div className="text-center py-3">Forgot Password? <Link to="/forgot-password">Reset Here</Link></div>
+                            <div className="text-center pt-3">Don't have an account? <Link to="/register">Register Here</Link></div>
                         </form>
                     </div>
                 </div>

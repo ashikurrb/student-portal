@@ -23,8 +23,7 @@
   
   .form-container form input {
     border: none;
-    border-bottom: 1px solid #000;
-    border-radius: 0;
+    border-radius: 1;
   }
   
   .form-container form button {
@@ -56,4 +55,8 @@
 
   .custom-profile{
     margin: 5%;
+  }
+
+  a{
+    text-decoration: none;
   }

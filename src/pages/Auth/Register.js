@@ -69,7 +69,7 @@ const Register = () => {
     }
 
     return (
-        <Layout title={"5Points - Register Now"}>
+        <Layout title={"Register Now - 5points Academy"}>
             <div className="form-container">
                 <div className="container">
                     <div className="row">
@@ -119,7 +119,7 @@ const Register = () => {
                                         REGISTER
                                     </button>
                                 </div>
-                                <div className="text-center py-3">Already Registered? <Link to="/login">Log In</Link></div>
+                                <div className="text-center py-3">Have an account? <Link to="/login">Log in</Link></div>
                             </form>
                         </div>
                     </div>
