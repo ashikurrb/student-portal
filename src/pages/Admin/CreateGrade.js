@@ -139,7 +139,7 @@ const CreateGrade = () => {
                             <div>
                                 <input
                                     type="text"
-                                    placeholder='New Grade Name'
+                                    placeholder='Enter grade'
                                     className='form-control m-2'
                                     value={name}
                                     onChange={(e) => setName(e.target.value)} required
@@ -163,7 +163,7 @@ const CreateGrade = () => {
                                 showIcon
                             />
                         </div>
-                        <h6 className='text-start'>Total Grade: {grades.length}</h6>
+                        <h6 className='text-start'>Count: {grades.length}</h6>
                         <div className="table-container">
                             {
                                 listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
