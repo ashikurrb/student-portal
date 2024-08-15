@@ -428,7 +428,7 @@ const PublishResult = () => {
                 <div className='text-center my-3'>
                     {
                         <p>
-                            {selected?.user?.name} - {selected?.grade?.name}
+                            {selected?.user?.name} - {selected?.grade?.name} - {moment(selected?.examDate).format('ll')}
                         </p>
                     }
                 </div>
