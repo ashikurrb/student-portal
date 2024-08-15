@@ -442,7 +442,7 @@ const SetPaymentStatus = () => {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-success fw-bold mx-1 py-2">
+                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-success fw-bold mx-1 py-2 px-4">
                                 <i class="fa-solid fa-plus"></i>  Set Payment
                             </button>
                             {selectedPayment.length > 0 && (
