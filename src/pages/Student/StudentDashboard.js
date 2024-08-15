@@ -17,7 +17,7 @@ const StudentDashboard = () => {
                         <h3 className='text-center my-3'>Your Profile</h3>
                         <div className="card px-4 py-2">
                             <div className="text-center">
-                                <img className='img img-fluid rounded m-3' src={auth?.user?.avatar} alt="DP" style={{ width: "20%" }} />
+                                <img className='img rounded m-3' src={auth?.user?.avatar} alt="DP" style={{ width: "200px", height:"200px" }} />
                             </div>
                             <h5>Name: {auth?.user?.name} </h5>
                             <p>Email: {auth?.user?.email} </p>

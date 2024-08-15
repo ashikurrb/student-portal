@@ -26,8 +26,8 @@ const AdminDashboard = () => {
                                 </div>
                             </div>
                             <div className="col-12 col-md-6 mb-2 order-1 order-md-2">
-                                <div className='card h-100 p-3 d-flex align-items-center justify-content-center'>
-                                    <img className='img img-fluid rounded' src={auth?.user?.avatar} alt="DP" style={{ width: "50%" }} />
+                                <div className='card h-100 d-flex align-items-center justify-content-center'>
+                                    <img className='img rounded m-3' src={auth?.user?.avatar} alt="DP" style={{ width: "200px", height: "200px" }} />
                                 </div>
                             </div>
                         </div>
