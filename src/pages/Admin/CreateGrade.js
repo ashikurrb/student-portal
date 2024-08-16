@@ -142,7 +142,9 @@ const CreateGrade = () => {
                                     placeholder='Enter grade'
                                     className='form-control m-2'
                                     value={name}
-                                    onChange={(e) => setName(e.target.value)} required
+                                    onChange={(e) => setName(e.target.value)} 
+                                    minLength={4} maxLength={25}
+                                    required
                                 />
                             </div>
                             <div className="mt-3 text-center">
@@ -210,7 +212,9 @@ const CreateGrade = () => {
                                     placeholder='Updated Grade Name'
                                     className='form-control mb-3'
                                     value={updatedName}
-                                    onChange={(e) => setUpdatedName(e.target.value)} required
+                                    onChange={(e) => setUpdatedName(e.target.value)} 
+                                    minLength={4} maxLength={10}
+                                    required
                                 />
                             </div>
                             <div className="text-center mt-2">

@@ -80,7 +80,7 @@ const Register = () => {
                             <form className='m-lg-5' onSubmit={handleSubmit}>
                                 <h4 className="title"><i class="fa-solid fa-user-plus"></i> &nbsp; REGISTER FORM</h4>
                                 <div className="mb-3">
-                                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" id="exampleInputName" placeholder='Name' required />
+                                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" id="exampleInputName" placeholder='Name' minLength={4} maxLength={10} required />
                                 </div>
                                 <div className="mb-3">
                                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email' required />
@@ -112,14 +112,14 @@ const Register = () => {
                                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" id="exampleInputAddress" placeholder='Security Answer' required />
+                                    <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" id="exampleInputAddress" placeholder='Security Answer' minLength={3} maxLength={10} required />
                                 </div>
-                                <div className="text-center">
+                                <div className="text-center mt-4">
                                     <button type="submit" className="btn btn-primary">
                                         REGISTER
                                     </button>
                                 </div>
-                                <div className="text-center py-3">Have an account? <Link to="/login">Log in</Link></div>
+                                <div className="text-center pt-3">Have an account? <Link to="/login">Log in</Link></div>
                             </form>
                         </div>
                     </div>
