@@ -20,6 +20,7 @@ const UpdateProfile = () => {
     const [answer, setAnswer] = useState('');
     const [photo, setPhoto] = useState(null);
     const [avatar, setAvatar] = useState('');
+    const [photoSize, setPhotoSize] = useState(''); // New state for file size
 
     // Get user data
     useEffect(() => {
@@ -47,6 +48,15 @@ const UpdateProfile = () => {
             console.error('Photo upload failed:', error);
             toast.error('Photo upload failed');
             throw error;
+        }
+    };
+
+    // Handle file change
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setPhoto(file);
+            setPhotoSize((file.size / (1024 * 1024)).toFixed(2) + ' MB');
         }
     };
 
@@ -105,7 +115,7 @@ const UpdateProfile = () => {
                             <form onSubmit={handleUpdate} className='custom-profile'>
                                 <h4 className="text-center pb-3">Update your Profile</h4>
                                 <div className="mb-3">
-                                    <h6 className='text-center my-3'>Maximum Photo size is 1 MB</h6>
+                                    <h6 className='text-center my-3'>Maximum Photo size is 3 MB</h6>
                                     {photo && (
                                         <div className="text-center">
                                             <img src={typeof photo === 'string' ? photo : URL.createObjectURL(photo)} alt='profile-img' height={'200px'} className='img img-responsive' />
@@ -113,13 +123,14 @@ const UpdateProfile = () => {
                                     )}
                                 </div>
                                 <div className="mb-3 text-center">
+                                {photo && <h6 className='my-2'> {photoSize}</h6>}
                                     <label className="btn btn-outline-secondary col-md-12">
                                         {photo ? (typeof photo === 'string' ? 'Change Photo' : photo.name) : "Upload Photo"}
                                         <input
                                             type="file"
                                             name="photo"
                                             accept="image/*"
-                                            onChange={(e) => setPhoto(e.target.files[0])}
+                                            onChange={handleFileChange}
                                             hidden
                                         />
                                     </label>
@@ -159,7 +170,7 @@ const UpdateProfile = () => {
                                     <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="form-control" placeholder='New Password' />
                                 </div>
                                 <div className="text-center">
-                                    <button type="submit" className=" btn btn-primary">
+                                    <button type="submit" className="btn btn-primary">
                                         Update Profile
                                     </button>
                                 </div>

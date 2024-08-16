@@ -142,7 +142,7 @@ const CreateGrade = () => {
                                     placeholder='Enter grade'
                                     className='form-control m-2'
                                     value={name}
-                                    onChange={(e) => setName(e.target.value)} 
+                                    onChange={(e) => setName(e.target.value)}
                                     minLength={4} maxLength={20}
                                     required
                                 />
@@ -212,7 +212,7 @@ const CreateGrade = () => {
                                     placeholder='Updated Grade Name'
                                     className='form-control mb-3'
                                     value={updatedName}
-                                    onChange={(e) => setUpdatedName(e.target.value)} 
+                                    onChange={(e) => setUpdatedName(e.target.value)}
                                     minLength={4} maxLength={20}
                                     required
                                 />
