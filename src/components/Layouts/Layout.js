@@ -25,7 +25,8 @@ const Layout = ({ children, title, description, keywords, author }) => {
             <main style={{ minHeight: "90vh" }}>
                 <Toaster toastOptions={{
                     className: 'toast-root'
-                }} />
+                }} position="bottom-center"
+                    reverseOrder={false} />
                 {children}
             </main>
             <Footer />

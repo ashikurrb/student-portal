@@ -114,9 +114,8 @@ table {
 }
 
 .toast-root{
-  margin-top: 4%;
+  margin: 4%;
   background: #2c324b !important;
-  border:  px solid #713200 !important;
   color:#fff !important;
 }
 
