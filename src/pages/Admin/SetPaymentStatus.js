@@ -264,19 +264,33 @@ const SetPaymentStatus = () => {
         }
     };
 
+    // Handle Escape key functionality
+    useEffect(() => {
+        const handleEscapeKey = (event) => {
+            if (event.key === 'Escape') {
+                // Clear search bar
+                setSearchQuery('');
+                // Clear selected content
+                setSelectedPayment([]);
+            }
+        };
+        document.addEventListener('keydown', handleEscapeKey);
+        return () => {
+            document.removeEventListener('keydown', handleEscapeKey);
+        };
+    }, []);
+
     // Function to generate invoice PDF
     const generateInvoice = (payment) => {
         toast.success("Invoice created");
-
         // Set page size to A5
         const doc = new jsPDF({
             format: 'a5',
             unit: 'mm'
         });
-
         // Define margins
-        const leftMargin = 10; // Adjust as needed
-        const rightMargin = 10; // Adjust as needed
+        const leftMargin = 8; // Adjust as needed
+        const rightMargin = 8; // Adjust as needed
 
         // Add background watermark
         const logo = new Image();
@@ -542,7 +556,7 @@ const SetPaymentStatus = () => {
                                     <table className="table table-fixed-header">
                                         <thead className='table-dark'>
                                             <tr>
-                                                <th>
+                                                <th className='ps-4'>
                                                     <input
                                                         type="checkbox"
                                                         onChange={handleSelectAll}
@@ -582,7 +596,7 @@ const SetPaymentStatus = () => {
                                             ) : (
                                                 filteredPayment.map((p, i) => (
                                                     <tr key={p._id}>
-                                                        <td>
+                                                        <td className='ps-4'>
                                                             <input
                                                                 type="checkbox"
                                                                 className='form-check-input'

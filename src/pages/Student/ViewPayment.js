@@ -43,8 +43,8 @@ const ViewPayment = () => {
         });
 
         // Define margins
-        const leftMargin = 10; // Adjust as needed
-        const rightMargin = 10; // Adjust as needed
+        const leftMargin = 8; // Adjust as needed
+        const rightMargin = 8; // Adjust as needed
 
         // Add background watermark
         const logo = new Image();

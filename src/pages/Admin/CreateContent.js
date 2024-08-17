@@ -216,6 +216,22 @@ const CreateContent = () => {
         }
     };
 
+    // Handle Escape key functionality
+    useEffect(() => {
+        const handleEscapeKey = (event) => {
+            if (event.key === 'Escape') {
+                // Clear search bar
+                setSearchQuery('');
+                // Clear selected content
+                setSelectedContent([]);
+            }
+        };
+        document.addEventListener('keydown', handleEscapeKey);
+        return () => {
+            document.removeEventListener('keydown', handleEscapeKey);
+        };
+    }, []);
+
     return (
         <Layout title={"Admin - Create Content Link"}>
             <div className="container-fluid mt-3 p-3">
@@ -313,7 +329,7 @@ const CreateContent = () => {
                                     <table className="table table-fixed-header">
                                         <thead className='table-dark'>
                                             <tr>
-                                                <th>
+                                                <th className='ps-4'>
                                                     <input
                                                         className='form-check-input'
                                                         type="checkbox"
@@ -350,7 +366,7 @@ const CreateContent = () => {
                                             ) : (
                                                 filteredContent.map((c, i) => (
                                                     <tr key={c._id}>
-                                                        <td>
+                                                        <td className='ps-4'>
                                                             <input
                                                                 className='form-check-input'
                                                                 type="checkbox"

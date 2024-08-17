@@ -36,7 +36,6 @@ const PublishResult = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedResult, setSelectedResult] = useState([]);
 
-
     //Get All Grades
     const getAllGrades = async (req, res) => {
         try {
@@ -247,6 +246,22 @@ const PublishResult = () => {
         }
     };
 
+    // Handle Escape key shortcut functionality
+    useEffect(() => {
+        const handleEscapeKey = (event) => {
+            if (event.key === 'Escape') {
+                // Clear search bar
+                setSearchQuery('');
+                // Clear selected content
+                setSelectedResult([]);
+            }
+        };
+        document.addEventListener('keydown', handleEscapeKey);
+        return () => {
+            document.removeEventListener('keydown', handleEscapeKey);
+        };
+    }, []);
+
     return (
         <Layout title={"Admin - Publish Result"}>
             <div className="container-fluid mt-3 p-3">
@@ -344,7 +359,7 @@ const PublishResult = () => {
                                     <table className="table table-fixed-header">
                                         <thead className='table-dark'>
                                             <tr>
-                                                <th>
+                                                <th className='ps-4'>
                                                     <input
                                                         className='form-check-input'
                                                         type="checkbox"
@@ -383,7 +398,7 @@ const PublishResult = () => {
                                                 ) : (
                                                     filteredResult.map((r, i) => (
                                                         <tr key={r._id}>
-                                                            <td>
+                                                            <td className='ps-4'>
                                                                 <input
                                                                     className='form-check-input'
                                                                     type="checkbox"

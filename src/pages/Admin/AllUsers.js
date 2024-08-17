@@ -114,6 +114,20 @@ const AllUsers = () => {
         u.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    // Handle Escape key functionality
+    useEffect(() => {
+        const handleEscapeKey = (event) => {
+            if (event.key === 'Escape') {
+                // Clear search bar
+                setSearchQuery('');
+            }
+        };
+        document.addEventListener('keydown', handleEscapeKey);
+        return () => {
+            document.removeEventListener('keydown', handleEscapeKey);
+        };
+    }, []);
+
     return (
         <Layout title={"Admin - User's List"}>
             <div className="container-fluid mt-3 p-3">
