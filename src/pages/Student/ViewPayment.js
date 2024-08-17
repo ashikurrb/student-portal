@@ -43,8 +43,8 @@ const ViewPayment = () => {
         });
 
         // Define margins
-        const leftMargin = 8; // Adjust as needed
-        const rightMargin = 8; // Adjust as needed
+        const leftMargin = 7; // Adjust as needed
+        const rightMargin = 7; // Adjust as needed
 
         // Add background watermark
         const logo = new Image();
@@ -67,26 +67,26 @@ const ViewPayment = () => {
             const instituteName = '5points Academy';
             const titleWidth1 = doc.getTextWidth(instituteName);
             const titleX1 = (pageWidth - titleWidth1) / 2; // Center text horizontally
-            doc.text(instituteName, titleX1, 16);
+            doc.text(instituteName, titleX1, 13);
 
             doc.setFontSize(11);
             doc.setFont('helvetica', 'normal');
             const addressName = 'Tajmahal Road, Dhaka - 1207';
             const titleWidth2 = doc.getTextWidth(addressName);
             const titleX2 = (pageWidth - titleWidth2) / 2; // Center text horizontally
-            doc.text(addressName, titleX2, 23);
+            doc.text(addressName, titleX2, 20);
 
             const mobile = 'Mobile: +880 1794-744343';
             const titleWidth3 = doc.getTextWidth(mobile);
             const titleX3 = (pageWidth - titleWidth3) / 2; // Center text horizontally
-            doc.text(mobile, titleX3, 29);
+            doc.text(mobile, titleX3, 26);
 
             doc.setFontSize(16);
             doc.setFont('helvetica', 'bold');
             const title = 'Payment Invoice';
             const titleWidth = doc.getTextWidth(title);
             const titleX = (pageWidth - titleWidth) / 2; // Center text horizontally
-            doc.text(title, titleX, 41);
+            doc.text(title, titleX, 38);
 
             //Identify portion
             doc.setFontSize(10);
@@ -95,19 +95,19 @@ const ViewPayment = () => {
             // Bold Date: and labels
             doc.setFont('helvetica', 'bold');
             const dateText = `${moment(payment.paymentDate).format('ll')}`;
-            doc.text('Date:', pageWidth - rightMargin - doc.getTextWidth(dateText) - doc.getTextWidth('Date:'), 57);
-            doc.text('Name:', leftMargin, 57 + verticalSpacing);
-            doc.text('Grade:', leftMargin, 57 + 2 * verticalSpacing);
-            doc.text('Email:', leftMargin, 57 + 3 * verticalSpacing);
-            doc.text('Mobile:', leftMargin, 57 + 4 * verticalSpacing);
+            doc.text('Date:', pageWidth - rightMargin - doc.getTextWidth(dateText) - doc.getTextWidth('Date:'), 54);
+            doc.text('Name:', leftMargin, 54 + verticalSpacing);
+            doc.text('Grade:', leftMargin, 54 + 2 * verticalSpacing);
+            doc.text('Email:', leftMargin, 54 + 3 * verticalSpacing);
+            doc.text('Mobile:', leftMargin, 54 + 4 * verticalSpacing);
 
             // Normal text
             doc.setFont('helvetica', 'normal'); // Revert font to normal
-            doc.text(dateText, pageWidth - rightMargin - doc.getTextWidth(dateText), 57); // Position date text
-            doc.text(`${auth.user.name}`, leftMargin + doc.getTextWidth('Name:') + 2, 57 + verticalSpacing);
-            doc.text(`${auth.user.grade.name}`, leftMargin + doc.getTextWidth('Grade:') + 2, 57 + 2 * verticalSpacing);
-            doc.text(`${auth.user.email}`, leftMargin + doc.getTextWidth('Email:') + 2, 57 + 3 * verticalSpacing);
-            doc.text(`${auth.user.phone}`, leftMargin + doc.getTextWidth('Mobile:') + 2, 57 + 4 * verticalSpacing);
+            doc.text(dateText, pageWidth - rightMargin - doc.getTextWidth(dateText), 54); // Position date text
+            doc.text(`${auth.user.name}`, leftMargin + doc.getTextWidth('Name:') + 2, 54 + verticalSpacing);
+            doc.text(`${auth.user.grade.name}`, leftMargin + doc.getTextWidth('Grade:') + 2, 54 + 2 * verticalSpacing);
+            doc.text(`${auth.user.email}`, leftMargin + doc.getTextWidth('Email:') + 2, 54 + 3 * verticalSpacing);
+            doc.text(`${auth.user.phone}`, leftMargin + doc.getTextWidth('Mobile:') + 2, 54 + 4 * verticalSpacing);
 
 
             doc.autoTable({
@@ -139,7 +139,7 @@ const ViewPayment = () => {
                 const marginRight = rightMargin;
 
                 const imgX = pageWidth - imgWidth - marginRight;
-                const imgY = finalY + 50;
+                const imgY = finalY + 55;
 
                 doc.addImage(img, 'PNG', imgX, imgY, imgWidth, imgHeight);
 
@@ -157,7 +157,7 @@ const ViewPayment = () => {
                 const footerText = `This is a system generated Invoice | Generated on: ${currentDateTime}`;
                 const footerWidth = doc.getTextWidth(footerText);
                 const footerX = (pageWidth - footerWidth) / 2; // Center text horizontally
-                const footerY = pageHeight - 10; // Adjust this value to position the footer correctly
+                const footerY = pageHeight - 5; // Adjust this value to position the footer correctly
                 doc.text(footerText, footerX, footerY);
 
                 const blob = doc.output('blob');
