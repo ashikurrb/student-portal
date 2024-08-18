@@ -162,7 +162,7 @@ const AllUsers = () => {
                             <table className='table table-fixed-header'>
                                 <thead className='table-dark'>
                                     <tr>
-                                        <th scope='col'>#</th>
+                                        <th scope='col' className='ps-3'>#</th>
                                         <th scope='col'>Name</th>
                                         <th scope='col'>Grade</th>
                                         <th scope='col'>Email</th>
@@ -195,7 +195,7 @@ const AllUsers = () => {
                                         filteredUser.map((u, i) => {
                                             return (
                                                 <tr>
-                                                    <th scope='row'>{i + 1}</th>
+                                                    <th scope='row' className='ps-3'>{i + 1}</th>
                                                     <td className=''>
                                                         <div className="d-flex align-items-center">
                                                             <img style={{ width: "27px", height: "27px", borderRadius: "100%" }}

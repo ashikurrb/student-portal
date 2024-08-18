@@ -172,7 +172,7 @@ const CreateGrade = () => {
                                     <table className='table table-fixed-header'>
                                         <thead className='table-dark'>
                                             <tr>
-                                                <th scope='row'>#</th>
+                                                <th scope='row' className='ps-4'>#</th>
                                                 <th>Grade</th>
                                                 <th>Created</th>
                                                 <th>Modified</th>
@@ -182,7 +182,7 @@ const CreateGrade = () => {
                                         <tbody>
                                             {grades.map((g, i) => (
                                                 <tr>
-                                                    <th scope='row'>{i + 1}</th>
+                                                    <th scope='row' className='ps-4'>{i + 1}</th>
                                                     <td className='fs-5 fw-bold'>{g.name}</td>
                                                     <td>{moment(g?.createdAt).fromNow()}</td>
                                                     <td>{moment(g?.updatedAt).fromNow()}</td>
