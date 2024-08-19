@@ -3,7 +3,7 @@ import Layout from '../components/Layouts/Layout';
 
 const HomePage = () => {
     return (
-        <Layout title={"5points - Best Coaching"}>
+        <Layout title={"5points Academy - Best Coaching"}>
             <div className="container">
                 <div className="row">
                     <div className="d-flex justify-content-center align-items-center my-3">
