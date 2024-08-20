@@ -19,18 +19,14 @@ const Footer = () => {
                         </div>
                         <div className='text-center'>
                             <h5>Follow Us</h5>
-                            <div className="d-md-flex justify-content-evenly">
-                                <Link to="https://www.facebook.com/ashikurrb85" target='_blank'>
+                            <div className="d-md-flex justify-content-between">
+                                <Link to="https://www.facebook.com/5pointsAcademy" target='_blank'>
                                     <i className="h3 fab fa-facebook-f"></i>
-                                </Link>
-                                <Link to="https://www.x.com/ashikurrb" target='_blank'>
-                                    <i className="h3 fab fa-x-twitter"></i>
                                 </Link>
                                 <Link to="https://www.instagram.com/ashikurrb" target='_blank'>
                                     <i className="h3 fab fa-instagram"></i>
-                                </Link>
-                                <Link to="https://www.linkedin.com/in/ashikurrb" target='_blank'>
-                                    <i className="h3 fab fa-linkedin-in"></i>
+                                </Link> <Link to="https://www.youtube.com/@5pointsAcademy" target='_blank'>
+                                    <i className="h3 fab fa-youtube"></i>
                                 </Link>
                             </div>
                         </div>
