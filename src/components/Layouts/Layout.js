@@ -33,9 +33,9 @@ const Layout = ({ children, title, description, keywords, author }) => {
     );
 };
 Layout.defaultProps = {
-    title: "5points Student Portal",
+    title: "5points-Academy Student Portal",
     description: "Best Coaching in Mohammadpur, Dhaka",
-    keywords: "5points, education, dhaka, mohammadpur, coaching, student",
+    keywords: "5points, academy, education, dhaka, tajamahal road, mohammadpur, coaching, student, 5points-Academy, class 6, class 7, class 8, class 9, class 10, hsc, ssc, admission coaching, admission preparation, job coaching, job preparation ",
     author: "@ashikurrb "
 }
 export default Layout;
