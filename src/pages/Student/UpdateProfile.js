@@ -20,7 +20,6 @@ const UpdateProfile = () => {
     const [answer, setAnswer] = useState('');
     const [photo, setPhoto] = useState(null);
     const [avatar, setAvatar] = useState('');
-    const [photoSize, setPhotoSize] = useState(''); // New state for file size
 
     // Get user data
     useEffect(() => {
@@ -56,7 +55,6 @@ const UpdateProfile = () => {
         const file = e.target.files[0];
         if (file) {
             setPhoto(file);
-            setPhotoSize((file.size / (1024 * 1024)).toFixed(2) + ' MB');
         }
     };
 
@@ -119,11 +117,13 @@ const UpdateProfile = () => {
                                     {photo && (
                                         <div className="text-center">
                                             <img src={typeof photo === 'string' ? photo : URL.createObjectURL(photo)} alt='profile-img' height={'200px'} className='img img-responsive' />
+                                            <h6 className='mt-3'>
+                                                {typeof photo === 'string' ? '' : `${(photo.size / 1048576).toFixed(2)} MB`}
+                                            </h6>
                                         </div>
                                     )}
                                 </div>
                                 <div className="mb-3 text-center">
-                                {photo && <h6 className='my-2'> {photoSize}</h6>}
                                     <label className="btn btn-outline-secondary col-md-12">
                                         {photo ? (typeof photo === 'string' ? 'Change Photo' : photo.name) : "Upload Photo"}
                                         <input

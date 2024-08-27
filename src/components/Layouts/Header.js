@@ -70,6 +70,9 @@ const Header = () => {
                                         <NavLink to="/login" className="nav-link"> <i class="fa-solid fa-right-to-bracket"></i> Login</NavLink>
                                     </li>
                                 </>) : (<>
+                                    <li className="nav-item">
+                                        <NavLink to="/view-notice" className="nav-link" >Notice</NavLink>
+                                    </li>
                                     <li className="nav-item dropdown">
                                         <NavLink className="nav-link dropdown-toggle mx-1" role="button" data-bs-toggle="dropdown" >
                                             <img style={{ width: "27px", height: "27px", borderRadius: "100%" }}

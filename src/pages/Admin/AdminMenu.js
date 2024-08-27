@@ -28,6 +28,9 @@ const AdminMenu = () => {
                         <NavLink to="/dashboard/admin/create-grade" className="list-group-item list-group-item-action">
                             Create Grade
                         </NavLink>
+                        <NavLink to="/dashboard/admin/create-notice" className="list-group-item list-group-item-action">
+                            Create Notice
+                        </NavLink>
                         <NavLink to="/dashboard/admin/create-course" className="list-group-item list-group-item-action">
                             Create Course
                         </NavLink>

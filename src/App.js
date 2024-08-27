@@ -23,6 +23,8 @@ import CreateCourse from './pages/Admin/CreateCourse';
 import AllCourses from './pages/Admin/AllCourses';
 import UpdateCourse from './pages/Admin/UpdateCourse';
 import SetPaymentStatus from './pages/Admin/SetPaymentStatus';
+import CreateNotice from './pages/Admin/CreateNotice';
+import ViewNotice from './pages/Student/ViewNotice';
 
 function App() {
   return (
@@ -42,6 +44,7 @@ function App() {
         <Route path='/dashboard' element={<AdminRoute />}>
           <Route path='admin' element={<AdminDashboard />} />
           <Route path='admin/create-grade' element={<CreateGrade />} />
+          <Route path='admin/create-notice' element={<CreateNotice />} />
           <Route path='admin/create-link' element={<CreateContent />} />
           <Route path='admin/create-course' element={<CreateCourse />} />
           <Route path='admin/all-courses' element={<AllCourses />} />
@@ -50,6 +53,7 @@ function App() {
           <Route path='admin/create-payment' element={<SetPaymentStatus />} />
           <Route path='admin/all-users' element={<AllUsers />} />
         </Route>
+        <Route path='/view-notice' element={<ViewNotice />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='*' element={<PageNotFound />} />
