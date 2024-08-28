@@ -13,7 +13,6 @@ const AllUsers = () => {
     const [auth, setAuth] = useAuth();
     const [users, setUsers] = useState([]);
     const [grades, setGrades] = useState([]);
-    const [grade, setGrade] = useState('');
     const [updatedGrade, setUpdatedGrade] = useState('');
     const [spinnerLoading, setSpinnerLoading] = useState(true);
     const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
@@ -116,15 +115,22 @@ const AllUsers = () => {
 
     // Handle Escape key functionality
     useEffect(() => {
-        const handleEscapeKey = (event) => {
+        const handleKeyDown = (event) => {
             if (event.key === 'Escape') {
                 // Clear search bar
                 setSearchQuery('');
+                // Clear selected content
+                setSelected([]);
+            } else if (event.key === '/') {
+                // Focus the search field
+                document.getElementById('searchField').focus();
+                event.preventDefault(); // Prevent the default action of '/'
             }
         };
-        document.addEventListener('keydown', handleEscapeKey);
+    
+        document.addEventListener('keydown', handleKeyDown);
         return () => {
-            document.removeEventListener('keydown', handleEscapeKey);
+            document.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
 
@@ -150,8 +156,8 @@ const AllUsers = () => {
                         <div className="d-flex justify-content-end">
                             <input
                                 type="text"
-                                placeholder='Search'
-                                className='form-control mt-4'
+                                id='searchField'
+                                placeholder='Click here or press "/" to search'                                className='form-control mt-4'
                                 style={{ flexBasis: '40%' }}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}

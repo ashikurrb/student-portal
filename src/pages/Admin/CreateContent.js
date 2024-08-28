@@ -218,19 +218,25 @@ const CreateContent = () => {
 
     // Handle Escape key functionality
     useEffect(() => {
-        const handleEscapeKey = (event) => {
+        const handleKeyDown = (event) => {
             if (event.key === 'Escape') {
                 // Clear search bar
                 setSearchQuery('');
                 // Clear selected content
                 setSelectedContent([]);
+            } else if (event.key === '/') {
+                // Focus the search field
+                document.getElementById('searchField').focus();
+                event.preventDefault(); // Prevent the default action of '/'
             }
         };
-        document.addEventListener('keydown', handleEscapeKey);
+    
+        document.addEventListener('keydown', handleKeyDown);
         return () => {
-            document.removeEventListener('keydown', handleEscapeKey);
+            document.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
+    
 
     return (
         <Layout title={"Admin - Create Content Link"}>
@@ -242,13 +248,14 @@ const CreateContent = () => {
                         <div className='d-flex justify-content-between mb-3'>
                             <input
                                 type="text"
-                                placeholder='Search'
+                                id='searchField'
+                                placeholder='Click here or press "/" to search'
                                 className='form-control mx-1'
                                 style={{ flexBasis: '50%' }}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-success fw-bold mx-1 py-2 px-4">
+                            <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-success fw-bold mx-1 py-2 px-3">
                                 <i className="fa-solid fa-plus"></i> Create Content
                             </button>
                             {selectedContent.length > 0 && (
