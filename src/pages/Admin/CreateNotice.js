@@ -416,7 +416,7 @@ const CreateNotice = () => {
                                                                 <span>{n?.title}</span>
                                                             </Tooltip>
                                                         </td>
-                                                        <td>{n.noticeInfo.substring(0, 50)}</td>
+                                                        <td>{n.noticeInfo.substring(0, 20)}...</td>
                                                         <td>
                                                             <img style={{ width: "30px" }} src={n.noticeImg} alt="notice" />
                                                         </td>

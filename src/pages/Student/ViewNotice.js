@@ -39,15 +39,15 @@ const ViewNotice = () => {
 
     return (
         <Layout title={"Notice"}>
-            <div className="container px-5 mb-3">
+            <div className="container-fluid px-5 mb-3">
                 <div className="d-flex align-items-center">
-                        <div className="col-auto">
-                            <GoBackButton />
-                        </div>
-                        <div className="col">
-                            <h2 className="p-3 mt-3 me-5 text-center">Notice</h2>
-                        </div>
+                    <div className="col-auto">
+                        <GoBackButton />
                     </div>
+                    <div className="col">
+                        <h2 className="p-3 mt-3 me-5 text-center">Notice</h2>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-md-12">
                         {
@@ -58,29 +58,37 @@ const ViewNotice = () => {
                                     notice.length === 0 ? <div className="card text-center h2 p-5 mt-5 text-secondary ">No Notice Found</div>
                                         :
                                         notice.map((n, i) => (
-                                            <div key={i} className="card me-5 my-2 ps-4 py-2 d-flex">
-                                                <span className="text-secondary">
-                                                    {moment(n.createdAt).fromNow()} | {n?.grade?.name}
-                                                </span>
-                                                <div className="row w-100">
-                                                    <div className="col-md-6">
-                                                        <h4>{n.title}</h4>
-                                                        <p
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: convertLinksToAnchorTags(n.noticeInfo)
-                                                            }}
-                                                        />
-                                                    </div>
-
-                                                    <div className="col-md-5 d-flex justify-content-center">
-                                                        <img style={{ width: "150px", height: "150px" }}
-                                                            src={n.noticeImg ? n.noticeImg : "/images/logoBrand.png"}
-                                                            alt="notice"
-                                                            className="img-thumbnail"
-                                                            onClick={() => openModal(n.noticeImg)} />
+                                            <div className="card mx-auto my-2 ps-4 py-2 d-flex col-12 col-md-8">
+                                                <div className="row">
+                                                    <span className="text-secondary d-flex justify-content-between mb-2">
+                                                        <span>
+                                                            {
+                                                                n?.grade?.name ? n?.grade?.name : "Official Notice"
+                                                            }
+                                                        </span>
+                                                        <span>
+                                                            {moment(n.createdAt).fromNow()}
+                                                        </span>
+                                                    </span>
+                                               
+                                                        <div className="col-md-6 order-2 order-md-1">
+                                                            <h4>{n.title}</h4>
+                                                            <p style={{ textAlign: "justify" }}
+                                                                dangerouslySetInnerHTML={{
+                                                                    __html: convertLinksToAnchorTags(n.noticeInfo)
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className="col-md-6 d-flex justify-content-center order-1 order-md-2">
+                                                            <img style={{ width: "150px", height: "150px" }}
+                                                                src={n.noticeImg ? n.noticeImg : "/images/logoBrand.png"}
+                                                                alt="notice"
+                                                                className="img-thumbnail img-fluid"
+                                                                onClick={() => openModal(n.noticeImg)} />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            
                                         ))
                                 }
                             </div>
