@@ -132,6 +132,11 @@ table {
   border: 1px solid;
 }
 
+.img-fluid{
+  max-width: 70%;
+  height: auto;
+}
+
 :root {  
   --background-color: #edeef0;
   --text-color: black;

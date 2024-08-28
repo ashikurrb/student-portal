@@ -279,7 +279,7 @@ const CreateNotice = () => {
                                             <h6 className='text-center my-3'>Maximum Photo size is 3 MB</h6>
                                             {noticeImg && (
                                                 <div className="text-center">
-                                                    <img src={typeof noticeImg === 'string' ? noticeImg : URL.createObjectURL(noticeImg)} alt='profile-img' height={'200px'} className='img img-responsive' />
+                                                    <img src={typeof noticeImg === 'string' ? noticeImg : URL.createObjectURL(noticeImg)} alt='profile-img' height={'200px'} className='img-fluid rounded' />
                                                     <h6 className='mt-3'>
                                                         {`${(noticeImg.size / 1048576).toFixed(2)} MB`}
                                                     </h6>
@@ -455,7 +455,7 @@ const CreateNotice = () => {
                             <h6 className='text-center my-3'>Maximum Photo size is 3 MB</h6>
                             {updatedNoticeImg && (
                                 <div className="text-center">
-                                    <img src={typeof updatedNoticeImg === 'string' ? updatedNoticeImg : URL.createObjectURL(updatedNoticeImg)} alt='notice-img' height={'200px'} className='img img-responsive' />
+                                    <img src={typeof updatedNoticeImg === 'string' ? updatedNoticeImg : URL.createObjectURL(updatedNoticeImg)} alt='notice-img' height={'200px'} className='img-fluid rounded' />
                                     <h6 className='mt-3'>
                                         {updatedNoticeImg?.size && `${(updatedNoticeImg.size / 1048576).toFixed(2)} MB`}
                                     </h6>
