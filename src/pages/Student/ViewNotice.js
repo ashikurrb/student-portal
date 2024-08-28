@@ -40,14 +40,16 @@ const ViewNotice = () => {
     return (
         <Layout title={"Notice"}>
             <div className="container px-5 mb-3">
-            <div className="row align-items-center mt-3">
+                <div className="d-flex align-items-center">
                         <div className="col-auto">
                             <GoBackButton />
+                        </div>
+                        <div className="col">
+                            <h2 className="p-3 mt-3 me-5 text-center">Notice</h2>
                         </div>
                     </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <h2 className='text-center'>Notice</h2>
                         {
                             spinnerLoading ? <div className="text-center m-5">
                                 <Spinner /> <p>Loading Notice...</p>
