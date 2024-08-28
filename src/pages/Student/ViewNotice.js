@@ -36,11 +36,11 @@ const ViewNotice = () => {
         <Layout title={"Notice"}>
             <div className="container px-5 mb-3">
                 <div className="row">
-                <div className="row align-items-center mt-3">
-                    <div className="col-auto">
-                        <GoBackButton />
+                    <div className="row align-items-center mt-3">
+                        <div className="col-auto">
+                            <GoBackButton />
+                        </div>
                     </div>
-                </div>
                     <div className="col-md-12">
                         <h2 className='text-center'>Notice</h2>
                         {
@@ -51,17 +51,21 @@ const ViewNotice = () => {
                                     notice.map((n, i) => {
                                         return (
                                             <div className="card me-5 my-2 ps-4 py-2 d-flex ">
-                                                     <span className="text-secondary">
+                                                <span className="text-secondary">
                                                     {moment(n.createdAt).fromNow()} | {n?.grade?.name}
                                                 </span>
                                                 <div className="row w-100">
-                                                     <div className="col-md-6">
+                                                    <div className="col-md-6">
                                                         <h4>{n.title}</h4>
                                                         <p>{n.noticeInfo}</p>
                                                     </div>
-                                                  
+
                                                     <div className="col-md-5 d-flex justify-content-center">
-                                                        <img style={{ width: "200px" }} src={n.noticeImg} alt="notice" className="img-thumbnail" onClick={() => openModal(n.noticeImg)} />
+                                                        <img style={{ width: "150px", height: "150px" }}
+                                                            src={n.noticeImg ? n.noticeImg : "/images/logoBrand.png"}
+                                                            alt="notice"
+                                                            className="img-thumbnail"
+                                                            onClick={() => openModal(n.noticeImg)} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -74,8 +78,11 @@ const ViewNotice = () => {
                 </div>
             </div>
             <Modal width={750} onCancel={() => setVisible(false)} visible={visible} footer={null}>
-                <h5>Image Privew</h5>
-                <img className='mt-2 rounded p-0' src={selectedImage} alt="Notice" style={{ width: '100%' }} />
+                <h5>Image Preview</h5>
+                <img className='mt-2 rounded p-0'
+                    src={selectedImage ? selectedImage: "/images/logoBrand.png"}
+                    alt="Notice"
+                    style={{ width: '100%' }} />
             </Modal>
         </Layout>
     );
