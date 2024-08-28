@@ -40,12 +40,12 @@ const ViewNotice = () => {
     return (
         <Layout title={"Notice"}>
             <div className="container px-5 mb-3">
-                <div className="row">
-                    <div className="row align-items-center mt-3">
+            <div className="row align-items-center mt-3">
                         <div className="col-auto">
                             <GoBackButton />
                         </div>
                     </div>
+                <div className="row">
                     <div className="col-md-12">
                         <h2 className='text-center'>Notice</h2>
                         {
@@ -53,31 +53,33 @@ const ViewNotice = () => {
                                 <Spinner /> <p>Loading Notice...</p>
                             </div> : <div className="row">
                                 {
-                                    notice.map((n, i) => (
-                                        <div key={i} className="card me-5 my-2 ps-4 py-2 d-flex">
-                                            <span className="text-secondary">
-                                                {moment(n.createdAt).fromNow()} | {n?.grade?.name}
-                                            </span>
-                                            <div className="row w-100">
-                                                <div className="col-md-6">
-                                                    <h4>{n.title}</h4>
-                                                    <p
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: convertLinksToAnchorTags(n.noticeInfo)
-                                                        }}
-                                                    />
-                                                </div>
+                                    notice.length === 0 ? <div className="card text-center h2 p-5 mt-5 text-secondary ">No Notice Found</div>
+                                        :
+                                        notice.map((n, i) => (
+                                            <div key={i} className="card me-5 my-2 ps-4 py-2 d-flex">
+                                                <span className="text-secondary">
+                                                    {moment(n.createdAt).fromNow()} | {n?.grade?.name}
+                                                </span>
+                                                <div className="row w-100">
+                                                    <div className="col-md-6">
+                                                        <h4>{n.title}</h4>
+                                                        <p
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: convertLinksToAnchorTags(n.noticeInfo)
+                                                            }}
+                                                        />
+                                                    </div>
 
-                                                <div className="col-md-5 d-flex justify-content-center">
-                                                    <img style={{ width: "150px", height: "150px" }}
-                                                        src={n.noticeImg ? n.noticeImg : "/images/logoBrand.png"}
-                                                        alt="notice"
-                                                        className="img-thumbnail"
-                                                        onClick={() => openModal(n.noticeImg)} />
+                                                    <div className="col-md-5 d-flex justify-content-center">
+                                                        <img style={{ width: "150px", height: "150px" }}
+                                                            src={n.noticeImg ? n.noticeImg : "/images/logoBrand.png"}
+                                                            alt="notice"
+                                                            className="img-thumbnail"
+                                                            onClick={() => openModal(n.noticeImg)} />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    ))
+                                        ))
                                 }
                             </div>
                         }
