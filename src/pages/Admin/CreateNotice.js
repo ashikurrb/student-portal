@@ -321,7 +321,9 @@ const CreateNotice = () => {
                                             placeholder='Title'
                                             className='form-control mb-3 me-2'
                                             value={title}
-                                            onChange={(e) => setTitle(e.target.value)} required
+                                            onChange={(e) => setTitle(e.target.value)}
+                                            minLength={4} maxLength={30}
+                                            required
                                         />
                                     </div>
                                     <div className="d-lg-flex">
@@ -330,7 +332,9 @@ const CreateNotice = () => {
                                             placeholder='Notice Message'
                                             className='form-control mb-3'
                                             value={noticeInfo}
-                                            onChange={(e) => setNoticeInfo(e.target.value)} required
+                                            onChange={(e) => setNoticeInfo(e.target.value)}
+                                            maxLength={200}
+                                            required
                                         />
                                     </div>
                                     <div>

@@ -4,6 +4,7 @@ import Spinner from '../../components/Spinner';
 import moment from 'moment';
 import axios from 'axios';
 import { Modal } from 'antd';
+import GoBackButton from '../../components/GoBackButton';
 
 const ViewNotice = () => {
     const [notice, setNotice] = useState([]);
@@ -33,10 +34,15 @@ const ViewNotice = () => {
 
     return (
         <Layout title={"Notice"}>
-            <div className="container-fluid mt-3 p-3">
+            <div className="container px-5 mb-3">
                 <div className="row">
+                <div className="row align-items-center mt-3">
+                    <div className="col-auto">
+                        <GoBackButton />
+                    </div>
+                </div>
                     <div className="col-md-12">
-                        <h2 className='text-center my-3'>Notice</h2>
+                        <h2 className='text-center'>Notice</h2>
                         {
                             spinnerLoading ? <div className="text-center m-5">
                                 <Spinner /> <p>Loading Notice...</p>
@@ -55,7 +61,7 @@ const ViewNotice = () => {
                                                     </div>
                                                   
                                                     <div className="col-md-5 d-flex justify-content-center">
-                                                        <img style={{ width: "200px" }} src={n.noticeImg} alt="notice" className="img-thumbnail my-3" onClick={() => openModal(n.noticeImg)} />
+                                                        <img style={{ width: "200px" }} src={n.noticeImg} alt="notice" className="img-thumbnail" onClick={() => openModal(n.noticeImg)} />
                                                     </div>
                                                 </div>
                                             </div>
