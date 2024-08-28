@@ -3,11 +3,13 @@ import Layout from '../../components/Layouts/Layout';
 import Spinner from '../../components/Spinner';
 import moment from 'moment';
 import axios from 'axios';
+import { Modal } from 'antd';
 
 const ViewNotice = () => {
     const [notice, setNotice] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
-    const [selectedImage, setSelectedImage] = useState(null); // State to hold the selected image
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [visible, setVisible] = useState(false);
 
     const getContent = async () => {
         try {
@@ -24,14 +26,9 @@ const ViewNotice = () => {
         getContent();
     }, []);
 
-    // Function to handle image click
-    const handleImageClick = (img) => {
+    const openModal = (img) => {
+        setVisible(true);
         setSelectedImage(img);
-    };
-
-    // Function to close the modal
-    const handleCloseModal = () => {
-        setSelectedImage(null);
     };
 
     return (
@@ -47,23 +44,18 @@ const ViewNotice = () => {
                                 {
                                     notice.map((n, i) => {
                                         return (
-                                            <div className="card me-5 my-2 ps-4 py-3" key={i}>
-                                                <div className="d-flex">
-                                                    <div className="col-md-6">
-                                                        <figcaption className='blockquote-footer'>{moment(n.createdAt).fromNow()}</figcaption>
-                                                        <h5>{n.title}</h5>
-                                                        <span>Grade: {n?.grade?.name}</span>
+                                            <div className="card me-5 my-2 ps-4 py-2 d-flex ">
+                                                     <span className="text-secondary">
+                                                    {moment(n.createdAt).fromNow()} | {n?.grade?.name}
+                                                </span>
+                                                <div className="row w-100">
+                                                     <div className="col-md-6">
+                                                        <h4>{n.title}</h4>
                                                         <p>{n.noticeInfo}</p>
                                                     </div>
-                                                    <div className="col-md-6">
-                                                        <div className='mx-5 my-22'>
-                                                            <img 
-                                                                style={{ width: "150px", cursor: "pointer" }} 
-                                                                src={n.noticeImg} 
-                                                                alt="" 
-                                                                onClick={() => handleImageClick(n.noticeImg)} 
-                                                            />
-                                                        </div>
+                                                  
+                                                    <div className="col-md-5 d-flex justify-content-center">
+                                                        <img style={{ width: "200px" }} src={n.noticeImg} alt="notice" className="img-thumbnail my-3" onClick={() => openModal(n.noticeImg)} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -75,23 +67,10 @@ const ViewNotice = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Modal */}
-            {selectedImage && (
-                <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
-                    <div className="modal-dialog modal-dialog-centered">
-                        <div className="modal-content shadow border border-3">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Image Preview</h5>
-                                <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseModal}></button>
-                            </div>
-                            <div className="modal-body">
-                                <img src={selectedImage} alt="Notice" style={{ width: '100%' }} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <Modal width={750} onCancel={() => setVisible(false)} visible={visible} footer={null}>
+                <h5>Image Privew</h5>
+                <img className='mt-2 rounded p-0' src={selectedImage} alt="Notice" style={{ width: '100%' }} />
+            </Modal>
         </Layout>
     );
 };
