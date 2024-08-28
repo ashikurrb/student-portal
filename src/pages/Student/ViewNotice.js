@@ -67,7 +67,7 @@ const ViewNotice = () => {
                                                             }
                                                         </span>
                                                         <span>
-                                                            {moment(n.createdAt).fromNow()}
+                                                            {moment(n.updatedAt).fromNow()}
                                                         </span>
                                                     </span>
                                                

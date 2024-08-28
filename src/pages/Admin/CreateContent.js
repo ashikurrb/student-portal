@@ -388,13 +388,15 @@ const CreateContent = () => {
                                                                 <i className="fa-solid fa-up-right-from-square"></i> Open
                                                             </Link>
                                                         </td>
-                                                        <td className='d-flex'>
+                                                        <td>
+                                                            <div className="d-flex">
                                                             <button className='btn btn-primary mx-1' onClick={() => { openModal(c) }}>
                                                                 <i className="fa-solid fa-pen-to-square"></i> Edit
                                                             </button>
                                                             <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}>
                                                                 <i className="fa-solid fa-trash-can"></i> Delete
                                                             </button>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 ))

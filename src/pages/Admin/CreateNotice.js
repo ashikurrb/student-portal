@@ -380,7 +380,7 @@ const CreateNotice = () => {
                                         <tbody>
                                             {filteredNotice.length === 0 ? (
                                                 <tr>
-                                                    <td colSpan="8" className="text-center">
+                                                    <td colSpan="7" className="text-center">
                                                         <div className="my-5">
                                                             <h3 className='text-secondary'>No Notice Found</h3>
                                                             {searchQuery && (
@@ -420,13 +420,15 @@ const CreateNotice = () => {
                                                         <td>
                                                             <img style={{ width: "30px" }} src={n.noticeImg} alt="notice" />
                                                         </td>
-                                                        <td className='d-flex'>
+                                                        <td>
+                                                            <div className="d-flex">
                                                             <button className='btn btn-primary mx-1' onClick={() => { openModal(n) }}>
                                                                 <i className="fa-solid fa-pen-to-square"></i> Edit
                                                             </button>
                                                             <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(n._id)}>
                                                                 <i className="fa-solid fa-trash-can"></i> Delete
                                                             </button>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 ))
@@ -487,7 +489,7 @@ const CreateNotice = () => {
                     <div className='mb-3'>
                         <textarea
                             type="text"
-                            placeholder='Remark'
+                            placeholder='Notice message'
                             className='form-control mb-3'
                             value={updatedNoticeInfo}
                             onChange={(e) => setUpdatedNoticeInfo(e.target.value)} required
