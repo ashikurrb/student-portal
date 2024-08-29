@@ -20,7 +20,7 @@ const About = () => {
                         <img src="https://raw.githubusercontent.com/techinfo-youtube/ecommerce-app-2023/main/client/public/images/contactus.jpeg" alt="about" style={{ width: "100%" }} />
                     </div>
                     <div className="col-md-7">
-                        <p className="justify-text">
+                        <p className='mt-5' style={{ textAlign: "justify" }}>
                             শিক্ষার এক নতুন যুগে প্রতিযোগিতামূলক সফলতা অর্জনের জন্য আমরা 5points school আছি সবসময় আপনাদের পাশে।
                             <br />
                             শিক্ষার্থীর যেকোনো ক্লাসের যেকোনো subject এর হাজারো সব সমস্যার সমাধান পাবেন একই প্লাটফর্মে যা পাওয়া যাবে খুবই সাশ্রয়ী মূল্যে।
