@@ -104,10 +104,10 @@ const ViewPayment = () => {
             // Normal text
             doc.setFont('helvetica', 'normal'); // Revert font to normal
             doc.text(dateText, pageWidth - rightMargin - doc.getTextWidth(dateText), 54); // Position date text
-            doc.text(`${auth.user.name}`, leftMargin + doc.getTextWidth('Name:') + 2, 54 + verticalSpacing);
-            doc.text(`${auth.user.grade.name}`, leftMargin + doc.getTextWidth('Grade:') + 2, 54 + 2 * verticalSpacing);
-            doc.text(`${auth.user.email}`, leftMargin + doc.getTextWidth('Email:') + 2, 54 + 3 * verticalSpacing);
-            doc.text(`${auth.user.phone}`, leftMargin + doc.getTextWidth('Mobile:') + 2, 54 + 4 * verticalSpacing);
+            doc.text(`${payment.user.name}`, leftMargin + doc.getTextWidth('Name:') + 2, 54 + verticalSpacing);
+            doc.text(`${payment.grade.name}`, leftMargin + doc.getTextWidth('Grade:') + 2, 54 + 2 * verticalSpacing);
+            doc.text(`${payment.user.email}`, leftMargin + doc.getTextWidth('Email:') + 2, 54 + 3 * verticalSpacing);
+            doc.text(`${payment.user.phone}`, leftMargin + doc.getTextWidth('Mobile:') + 2, 54 + 4 * verticalSpacing);
 
 
             doc.autoTable({
@@ -200,6 +200,7 @@ const ViewPayment = () => {
                                 <thead className='table-dark'>
                                     <tr>
                                         <th scope="col">#</th>
+                                        <th scope="col">Grade</th>
                                         <th scope="col">Remark</th>
                                         <th scope="col">Amount</th>
                                         <th scope="col">Method</th>
@@ -223,6 +224,7 @@ const ViewPayment = () => {
                                                 return (
                                                     <tr key={p._id}>
                                                         <th scope='row'>{i + 1}</th>
+                                                        <td>{p?.grade?.name}</td>
                                                         <td>{p.remark}</td>
                                                         <td>TK. {p.amount}</td>
                                                         <td>{p.method}</td>
