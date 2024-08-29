@@ -60,7 +60,7 @@ const ViewNotice = () => {
                                     notice.length === 0 ? <div className="card text-center h2 p-5 mt-5 text-secondary ">No Notice Found</div>
                                         :
                                         notice.map((n, i) => (
-                                            <div className="card mx-auto my-2 ps-4 py-2 d-flex col-12 col-md-8">
+                                            <div className="card mx-auto my-2 px-4 py-2 d-flex col-12 col-md-8">
                                                 <div className="row">
                                                     <span className="text-secondary d-flex justify-content-between">
                                                         <span>
