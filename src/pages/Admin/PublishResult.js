@@ -246,26 +246,21 @@ const PublishResult = () => {
         }
     };
 
-    // Handle Escape key shortcut functionality
-    useEffect(() => {
-        const handleKeyDown = (event) => {
-            if (event.key === 'Escape') {
-                // Clear search bar
-                setSearchQuery('');
-                // Clear selected content
-                setSelectedResult([]);
-            } else if (event.key === '/') {
-                // Focus the search field
-                document.getElementById('searchField').focus();
-                event.preventDefault(); // Prevent the default action of '/'
-            }
-        };
-    
-        document.addEventListener('keydown', handleKeyDown);
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-        };
-    }, []);    
+   // Handle Escape key functionality
+   useEffect(() => {
+    const handleEscapeKey = (event) => {
+        if (event.key === 'Escape') {
+            // Clear search bar
+            setSearchQuery('');
+            // Clear selected content
+            setSelectedResult([]);
+        }
+    };
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => {
+        document.removeEventListener('keydown', handleEscapeKey);
+    };
+}, []);   
 
     return (
         <Layout title={"Admin - Publish Result"}>
@@ -277,8 +272,7 @@ const PublishResult = () => {
                         <div className='d-flex justify-content-between mb-3'>
                             <input
                                 type="text"
-                                id='searchField'
-                                placeholder='Click here or press "/" to search'
+                                placeholder='Search'
                                 className='form-control mx-1'
                                 style={{ flexBasis: '50%' }}
                                 value={searchQuery}

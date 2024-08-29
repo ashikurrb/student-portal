@@ -115,22 +115,17 @@ const AllUsers = () => {
 
     // Handle Escape key functionality
     useEffect(() => {
-        const handleKeyDown = (event) => {
+        const handleEscapeKey = (event) => {
             if (event.key === 'Escape') {
                 // Clear search bar
                 setSearchQuery('');
                 // Clear selected content
                 setSelected([]);
-            } else if (event.key === '/') {
-                // Focus the search field
-                document.getElementById('searchField').focus();
-                event.preventDefault(); // Prevent the default action of '/'
             }
         };
-    
-        document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('keydown', handleEscapeKey);
         return () => {
-            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('keydown', handleEscapeKey);
         };
     }, []);
 
@@ -156,8 +151,8 @@ const AllUsers = () => {
                         <div className="d-flex justify-content-end">
                             <input
                                 type="text"
-                                id='searchField'
-                                placeholder='Click here or press "/" to search'                                className='form-control mt-4'
+                                placeholder='Search'
+                                className='form-control mt-4'
                                 style={{ flexBasis: '40%' }}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}

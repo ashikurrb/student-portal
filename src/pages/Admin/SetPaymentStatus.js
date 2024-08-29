@@ -266,22 +266,17 @@ const SetPaymentStatus = () => {
 
     // Handle Escape key functionality
     useEffect(() => {
-        const handleKeyDown = (event) => {
+        const handleEscapeKey = (event) => {
             if (event.key === 'Escape') {
                 // Clear search bar
                 setSearchQuery('');
                 // Clear selected content
                 setSelectedPayment([]);
-            } else if (event.key === '/') {
-                // Focus the search field
-                document.getElementById('searchField').focus();
-                event.preventDefault(); // Prevent the default action of '/'
             }
         };
-    
-        document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('keydown', handleEscapeKey);
         return () => {
-            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('keydown', handleEscapeKey);
         };
     }, []);
     
@@ -456,8 +451,7 @@ const SetPaymentStatus = () => {
                         <div className='d-flex justify-content-between mb-3'>
                             <input
                                 type="text"
-                                id='searchField'
-                                placeholder='Click here or press "/" to search'
+                                placeholder='Search'
                                 className='form-control mx-1'
                                 style={{ flexBasis: '50%' }}
                                 value={searchQuery}

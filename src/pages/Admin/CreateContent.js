@@ -218,25 +218,19 @@ const CreateContent = () => {
 
     // Handle Escape key functionality
     useEffect(() => {
-        const handleKeyDown = (event) => {
+        const handleEscapeKey = (event) => {
             if (event.key === 'Escape') {
                 // Clear search bar
                 setSearchQuery('');
                 // Clear selected content
                 setSelectedContent([]);
-            } else if (event.key === '/') {
-                // Focus the search field
-                document.getElementById('searchField').focus();
-                event.preventDefault(); // Prevent the default action of '/'
             }
         };
-    
-        document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('keydown', handleEscapeKey);
         return () => {
-            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('keydown', handleEscapeKey);
         };
     }, []);
-    
 
     return (
         <Layout title={"Admin - Create Content Link"}>
@@ -248,8 +242,7 @@ const CreateContent = () => {
                         <div className='d-flex justify-content-between mb-3'>
                             <input
                                 type="text"
-                                id='searchField'
-                                placeholder='Click here or press "/" to search'
+                                placeholder='Search'
                                 className='form-control mx-1'
                                 style={{ flexBasis: '50%' }}
                                 value={searchQuery}
@@ -397,12 +390,12 @@ const CreateContent = () => {
                                                         </td>
                                                         <td>
                                                             <div className="d-flex">
-                                                            <button className='btn btn-primary mx-1' onClick={() => { openModal(c) }}>
-                                                                <i className="fa-solid fa-pen-to-square"></i> Edit
-                                                            </button>
-                                                            <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}>
-                                                                <i className="fa-solid fa-trash-can"></i> Delete
-                                                            </button>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(c) }}>
+                                                                    <i className="fa-solid fa-pen-to-square"></i> Edit
+                                                                </button>
+                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(c._id)}>
+                                                                    <i className="fa-solid fa-trash-can"></i> Delete
+                                                                </button>
                                                             </div>
                                                         </td>
                                                     </tr>
