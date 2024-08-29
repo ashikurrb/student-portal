@@ -34,9 +34,11 @@ const ViewNotice = () => {
 
     const convertLinksToAnchorTags = (text) => {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
-        return text.replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
+        const textWithLinks = text.replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
+        const textWithNewLines = textWithLinks.replace(/\n/g, '<br>'); // Replace newlines with <br>
+        return textWithNewLines;
     };
-
+    
     return (
         <Layout title={"Notice"}>
             <div className="container-fluid px-5 mb-3">
@@ -60,7 +62,7 @@ const ViewNotice = () => {
                                         notice.map((n, i) => (
                                             <div className="card mx-auto my-2 ps-4 py-2 d-flex col-12 col-md-8">
                                                 <div className="row">
-                                                    <span className="text-secondary d-flex justify-content-between mb-2">
+                                                    <span className="text-secondary d-flex justify-content-between">
                                                         <span>
                                                             {
                                                                 n?.grade?.name ? n?.grade?.name : "Official Notice"
@@ -71,7 +73,7 @@ const ViewNotice = () => {
                                                         </span>
                                                     </span>
                                                
-                                                        <div className="col-md-6 order-2 order-md-1">
+                                                        <div className="col-md-6 mt-2 order-2 order-md-1">
                                                             <h4>{n.title}</h4>
                                                             <p style={{ textAlign: "justify" }}
                                                                 dangerouslySetInnerHTML={{
@@ -79,7 +81,7 @@ const ViewNotice = () => {
                                                                 }}
                                                             />
                                                         </div>
-                                                        <div className="col-md-6 d-flex justify-content-center order-1 order-md-2">
+                                                        <div className="col-md-6 mt-2 d-flex justify-content-center order-1 order-md-2">
                                                             <img style={{ width: "150px", height: "150px" }}
                                                                 src={n.noticeImg ? n.noticeImg : "/images/logoBrand.png"}
                                                                 alt="notice"
