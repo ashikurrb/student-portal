@@ -51,7 +51,7 @@ const ViewResult = () => {
                                     {
                                         results.length === 0 ? (
                                             <tr>
-                                                <td colSpan="5" className="text-center">
+                                                <td colSpan="6" className="text-center">
                                                     <div className="my-5">
                                                         <h3 className='text-secondary'>No Result Found</h3>
                                                     </div>

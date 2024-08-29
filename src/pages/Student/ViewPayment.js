@@ -213,7 +213,7 @@ const ViewPayment = () => {
                                     {
                                         payment.length === 0 ? (
                                             <tr>
-                                                <td colSpan="7" className="text-center">
+                                                <td colSpan="8" className="text-center">
                                                     <div className="my-5">
                                                         <h3 className='text-secondary'>No Payment Status Found</h3>
                                                     </div>
