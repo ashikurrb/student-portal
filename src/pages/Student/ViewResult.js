@@ -34,7 +34,7 @@ const ViewResult = () => {
                         <StudentMenu />
                     </div>
                     <div className="col-md-9">
-                        <h3 className='text-center pt-3'> Result</h3>
+                        <h3 className='text-center pt-3'><i class="fa-solid fa-square-poll-vertical pe-1"></i> Result</h3>
                         <div className="card mt-3 p-4 table-container">
                             {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <table className="table">
                                 <thead className='table-dark'>

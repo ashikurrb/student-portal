@@ -9,7 +9,7 @@ const StudentMenu = () => {
                 <div className="list-group">
                     <div className='border-bottom'>
                         <div className="row align-items-center">
-                        <div className="col-auto">
+                            <div className="col-auto">
                                 <GoBackButton />
                             </div>
                             <div className="col mb-1">
@@ -26,14 +26,18 @@ const StudentMenu = () => {
                     </div>
                     <div className='d-md-collapse show rounded' id="collapseExample">
                         <NavLink to="/dashboard/student/update-profile" className="list-group-item list-group-item-action ">
+                            <i className="fa-solid fa-pen-to-square pe-2" />
                             Update Profile
                         </NavLink>
-                         <NavLink to="/dashboard/student/view-content" className="list-group-item list-group-item-action">
+                        <NavLink to="/dashboard/student/view-content" className="list-group-item list-group-item-action">
+                            <i className="fa-solid fa-link pe-2" />
                             Content Links
                         </NavLink><NavLink to="/dashboard/student/view-result" className="list-group-item list-group-item-action">
+                            <i className="fa-solid fa-square-poll-vertical pe-2" />
                             View Result
                         </NavLink>
                         <NavLink to="/dashboard/student/view-payment" className="list-group-item list-group-item-action">
+                            <i className="fa-solid fa-credit-card pe-2" />
                             Payment Status
                         </NavLink>
                     </div>

@@ -47,7 +47,7 @@ const ViewNotice = () => {
                         <GoBackButton />
                     </div>
                     <div className="col">
-                        <h2 className="p-3 mt-3 me-5 text-center">Notice</h2>
+                        <h2 className="p-3 mt-3 me-5 text-center"><i class="fa-solid fa-bell pe-1"></i> Notice</h2>
                     </div>
                 </div>
                 <div className="row">
