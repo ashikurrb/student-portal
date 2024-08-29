@@ -238,7 +238,7 @@ const CreateContent = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h2 className='text-center my-3'>Create Content Link ({content.length})</h2>
+                        <h2 className='text-center my-4'><i class="fa-solid fa-link"></i> Create Content ({content.length})</h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <input
                                 type="text"
@@ -311,7 +311,7 @@ const CreateContent = () => {
                                 </div>
                                 <div className=" text-center">
                                     <button type="submit" className="btn btn-warning fw-bold mt-2">
-                                        {spinnerLoading ? <Spinner /> : "Create Content Link"}
+                                        {spinnerLoading ? <Spinner /> : "Create Content"}
                                     </button>
                                 </div>
                             </form>

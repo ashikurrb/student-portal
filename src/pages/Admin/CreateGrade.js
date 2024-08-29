@@ -134,13 +134,13 @@ const CreateGrade = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h2 className='text-center my-3'>Create Grade</h2>
+                        <h2 className='text-center mt-4'><i class="fa-solid fa-graduation-cap"></i> Create Grade</h2>
                         <form className="p-3" onSubmit={handleCreate}>
                             <div>
                                 <input
                                     type="text"
                                     placeholder='Enter grade'
-                                    className='form-control m-2'
+                                    className='form-control'
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     minLength={4} maxLength={20}
@@ -149,7 +149,7 @@ const CreateGrade = () => {
                             </div>
                             <div className="mt-3 text-center">
                                 <button type='submit' className="btn btn-warning fw-bold">
-                                    {spinnerLoading ? <Spinner /> : "Create Grade"}
+                                {spinnerLoading ? <Spinner /> : <span><i class="fa-solid fa-plus"></i> Create Grade</span>}
                                 </button>
                             </div>
                         </form>

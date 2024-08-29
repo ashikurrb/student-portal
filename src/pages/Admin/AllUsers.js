@@ -135,7 +135,7 @@ const AllUsers = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h2 className='text-center my-3'>All User's List ({users?.length})</h2>
+                        <h2 className='text-center my-3'><i class="fa-solid fa-users"></i> All User's List ({users?.length})</h2>
                         <div className="d-flex justify-content-center">
                             <Alert
                                 className='m-2 col-md-4'
