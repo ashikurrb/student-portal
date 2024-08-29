@@ -81,7 +81,7 @@ const ViewNotice = () => {
                                                                 }}
                                                             />
                                                         </div>
-                                                        <div className="col-md-6 mt-2 d-flex justify-content-center order-1 order-md-2">
+                                                        <div className="col-md-6 mt-2 d-flex justify-content-center align-items-center order-1 order-md-2">
                                                             <img style={{ width: "150px", height: "150px" }}
                                                                 src={n.noticeImg ? n.noticeImg : "/images/logoBrand.png"}
                                                                 alt="notice"
