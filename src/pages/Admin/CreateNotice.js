@@ -108,6 +108,14 @@ const CreateNotice = () => {
         }
     };
 
+    //clear create modal on cancel
+    const createModalCancel = () => {
+        setNoticeImg(null);
+        setGrade('');
+        setTitle('');
+        setNoticeInfo('');
+        setIsCreateModalVisible(false)
+    }
 
     //update notice
     const handleUpdate = async (e) => {
@@ -237,7 +245,7 @@ const CreateNotice = () => {
             document.removeEventListener('keydown', handleEscapeKey);
         };
     }, []);
-    
+
 
 
     return (
@@ -265,7 +273,7 @@ const CreateNotice = () => {
                                 </button>
                             )}
 
-                            <Modal width={650} visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
+                            <Modal width={650}  centered visible={createModalVisible} onCancel={createModalCancel} footer={null}  maskClosable={false}>
                                 <h5 className='text-center'>Create Notice</h5>
                                 <form onSubmit={handleCreate}>
                                     <div>
@@ -273,10 +281,16 @@ const CreateNotice = () => {
                                             <h6 className='text-center my-3'>Maximum Photo size is 3 MB</h6>
                                             {noticeImg && (
                                                 <div className="text-center">
-                                                    <img src={typeof noticeImg === 'string' ? noticeImg : URL.createObjectURL(noticeImg)} alt='profile-img' height={'200px'} className='img-fluid rounded' />
+                                                    <img src={typeof noticeImg === 'string' ? noticeImg : URL.createObjectURL(noticeImg)} alt='profile-img' style={{ height: "200px" }} className='img-fluid rounded'
+                                                    />
                                                     <h6 className='mt-3'>
                                                         {`${(noticeImg.size / 1048576).toFixed(2)} MB`}
                                                     </h6>
+                                                    <button
+                                                        onClick={() => setNoticeImg(null)} // Reset the image input
+                                                        className="btn btn-danger" >
+                                                        Remove photo
+                                                    </button>
                                                 </div>
                                             )}
                                         </div>
@@ -292,7 +306,6 @@ const CreateNotice = () => {
                                                     }}
                                                     hidden
                                                 />
-
                                             </label>
                                         </div>
                                     </div>
@@ -423,12 +436,12 @@ const CreateNotice = () => {
                                                         </td>
                                                         <td>
                                                             <div className="d-flex">
-                                                            <button className='btn btn-primary mx-1' onClick={() => { openModal(n) }}>
-                                                                <i className="fa-solid fa-pen-to-square"></i> Edit
-                                                            </button>
-                                                            <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(n._id)}>
-                                                                <i className="fa-solid fa-trash-can"></i> Delete
-                                                            </button>
+                                                                <button className='btn btn-primary mx-1' onClick={() => { openModal(n) }}>
+                                                                    <i className="fa-solid fa-pen-to-square"></i> Edit
+                                                                </button>
+                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(n._id)}>
+                                                                    <i className="fa-solid fa-trash-can"></i> Delete
+                                                                </button>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -441,7 +454,7 @@ const CreateNotice = () => {
                     </div>
                 </div>
             </div>
-            <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
+            <Modal centered onCancel={() => setVisible(false)} visible={visible} footer={null}>
                 <h5 className='text-center'>Update Notice</h5>
                 <form onSubmit={handleUpdate}>
                     <div>
@@ -449,7 +462,7 @@ const CreateNotice = () => {
                             <h6 className='text-center my-3'>Maximum Photo size is 3 MB</h6>
                             {updatedNoticeImg && (
                                 <div className="text-center">
-                                    <img src={typeof updatedNoticeImg === 'string' ? updatedNoticeImg : URL.createObjectURL(updatedNoticeImg)} alt='notice-img' height={'200px'} className='img-fluid rounded' />
+                                    <img src={typeof updatedNoticeImg === 'string' ? updatedNoticeImg : URL.createObjectURL(updatedNoticeImg)} alt='notice-img' style={{ height: "200px" }} className='img-fluid rounded' />
                                     <h6 className='mt-3'>
                                         {updatedNoticeImg?.size && `${(updatedNoticeImg.size / 1048576).toFixed(2)} MB`}
                                     </h6>

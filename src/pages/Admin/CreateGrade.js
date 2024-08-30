@@ -127,6 +127,19 @@ const CreateGrade = () => {
         }
     }
 
+  // Handle Escape key functionality
+  useEffect(() => {
+    const handleEscapeKey = (event) => {
+        if (event.key === 'Escape') {
+            // Clear search bar
+            setName('');
+        }
+    };
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => {
+        document.removeEventListener('keydown', handleEscapeKey);
+    };
+}, []);
 
     return (
         <Layout title={"Admin - Create Grade"}>

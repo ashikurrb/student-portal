@@ -104,6 +104,16 @@ const CreateContent = () => {
         }
     };
 
+    //clear create modal on cancel
+    const createModalCancel = () => {
+        setGrade('');
+        setType(undefined);
+        setSubject('');
+        setRemark('');
+        setContentLink('');
+        setIsCreateModalVisible(false)
+    }
+
     //update content link
     const handleUpdate = async (e) => {
         setUpdateSpinnerLoading(true);
@@ -258,7 +268,7 @@ const CreateContent = () => {
                             )}
                         </div>
 
-                        <Modal width={650} visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
+                        <Modal width={650} visible={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
                             <h5 className='text-center'>Create Content</h5>
                             <form onSubmit={handleCreate}>
                                 <div className="mt-4 d-lg-flex">

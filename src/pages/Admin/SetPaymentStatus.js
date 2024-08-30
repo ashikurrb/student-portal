@@ -125,6 +125,18 @@ const SetPaymentStatus = () => {
         }
     };
 
+    //clear create modal on cancel
+    const createModalCancel = () => {
+        setGrade('');
+        setUser('');
+        setRemark('');
+        setAmount('');
+        setMethod(undefined);
+        setTrxId('');
+        setPaymentDate('');
+        setIsCreateModalVisible(false)
+    }
+
     //get all payment list
     const getAllPayment = async () => {
         setListSpinnerLoading(true);
@@ -208,7 +220,6 @@ const SetPaymentStatus = () => {
     //total payment amount calculate
     const totalAmount = filteredPayment.reduce((sum, p) => sum + p.amount, 0);
     // const totalAmountSelected = selectedPayment.amount.reduce((sum, p) => sum + p.amount, 0);
-    console.log(selectedPayment);
 
     //delete individual payment status
     const handleDelete = async (pId) => {
@@ -279,7 +290,7 @@ const SetPaymentStatus = () => {
             document.removeEventListener('keydown', handleEscapeKey);
         };
     }, []);
-    
+
 
     // Function to generate invoice PDF
     const generateInvoice = (payment) => {
@@ -467,7 +478,7 @@ const SetPaymentStatus = () => {
                             )}
                         </div>
 
-                        <Modal width={650} visible={createModalVisible} onCancel={() => setIsCreateModalVisible(false)} footer={null}>
+                        <Modal width={650} visible={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
                             <form onSubmit={handleCreate}>
                                 <h5 className='text-center'>Create Payment Status</h5>
                                 <div className="mt-4 d-lg-flex">

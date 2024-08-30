@@ -32,6 +32,12 @@ const ViewNotice = () => {
         setSelectedImage(img);
     };
 
+    //clear create modal on cancel
+    const closeModal = () => {
+        setVisible(false);
+        setSelectedImage(null);
+    }
+
     const convertLinksToAnchorTags = (text) => {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
         const textWithLinks = text.replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
@@ -97,7 +103,7 @@ const ViewNotice = () => {
                     </div>
                 </div>
             </div>
-            <Modal width={600} onCancel={() => setVisible(false)} visible={visible} footer={null}>
+            <Modal width={600} centered onCancel={closeModal} visible={visible} footer={null}>
                 <h5>Image Preview</h5>
                 <img className='mt-2 rounded p-0'
                     src={selectedImage ? selectedImage : "/images/logoBrand.png"}
