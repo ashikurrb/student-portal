@@ -38,7 +38,7 @@ const ViewNotice = () => {
         const textWithNewLines = textWithLinks.replace(/\n/g, '<br>'); // Replace newlines with <br>
         return textWithNewLines;
     };
-    
+
     return (
         <Layout title={"Notice"}>
             <div className="container-fluid px-5 mb-3">
@@ -72,25 +72,24 @@ const ViewNotice = () => {
                                                             {moment(n.updatedAt).fromNow()}
                                                         </span>
                                                     </span>
-                                               
-                                                        <div className="col-md-6 mt-2 order-2 order-md-1">
-                                                            <h4>{n.title}</h4>
-                                                            <p style={{ textAlign: "justify" }}
-                                                                dangerouslySetInnerHTML={{
-                                                                    __html: convertLinksToAnchorTags(n.noticeInfo)
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <div className="col-md-6 mt-2 d-flex justify-content-center align-items-center order-1 order-md-2">
-                                                            <img style={{ width: "auto", height: "150px" }}
-                                                                src={n.noticeImg ? n.noticeImg : "/images/logoBrand.png"}
-                                                                alt="notice"
-                                                                className="img-thumbnail img-fluid"
-                                                                onClick={() => openModal(n.noticeImg)} />
-                                                        </div>
+
+                                                    <div className="col-md-6 mt-2 order-2 order-md-1">
+                                                        <h4>{n.title}</h4>
+                                                        <p style={{ textAlign: "justify" }}
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: convertLinksToAnchorTags(n.noticeInfo)
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-6 mt-2 d-flex justify-content-center align-items-center order-1 order-md-2">
+                                                        <img style={{ width: "auto", height: "150px" }}
+                                                            className="img-thumbnail img-fluid"
+                                                            src={n.noticeImg ? n.noticeImg : "/images/logoBrand.png"}
+                                                            alt="notice"
+                                                            onClick={() => openModal(n.noticeImg)} />
                                                     </div>
                                                 </div>
-                                            
+                                            </div>
                                         ))
                                 }
                             </div>
@@ -98,7 +97,7 @@ const ViewNotice = () => {
                     </div>
                 </div>
             </div>
-            <Modal width={750} onCancel={() => setVisible(false)} visible={visible} footer={null}>
+            <Modal width={600} onCancel={() => setVisible(false)} visible={visible} footer={null}>
                 <h5>Image Preview</h5>
                 <img className='mt-2 rounded p-0'
                     src={selectedImage ? selectedImage : "/images/logoBrand.png"}

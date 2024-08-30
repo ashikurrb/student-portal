@@ -18,7 +18,7 @@ const UpdateProfile = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [answer, setAnswer] = useState('');
-    const [photo, setPhoto] = useState(null);
+    // const [photo, setPhoto] = useState(null);
     const [avatar, setAvatar] = useState('');
 
     // Get user data
@@ -29,65 +29,42 @@ const UpdateProfile = () => {
         setEmail(email);
         setPhone(phone);
         setAvatar(avatar);
-        setPhoto(avatar);
+
     }, [auth?.user]);
 
-    // Upload photo function
-    const uploadPhoto = async (file) => {
-        const formData = new FormData();
-        formData.append('photo', file);
-        try {
-            const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/upload-avatar`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            return data.url; // Return the URL of the uploaded photo
-        } catch (error) {
-            console.error('Photo upload failed:', error);
-            toast.error('Photo upload failed');
-            throw error;
-        }
-    };
-
-    // Handle file change
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setPhoto(file);
-        }
-    };
-
-    // Update profile
     const handleUpdate = async (e) => {
         e.preventDefault();
         const loadingToastId = toast.loading('Updating your profile...');
         try {
-            let avatar = auth.user.photoUrl; // Keep existing photo URL if not updating
-
-            if (photo && photo !== auth.user.avatar) {
-                // Upload new photo and get the URL
-                avatar = await uploadPhoto(photo);
-            }
-
-            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/auth/update-profile`, {
-                name,
-                email,
-                oldPassword,
-                newPassword,
-                phone,
-                answer,
-                avatar,
-            });
-
+            const updateProfileData = new FormData();
+            if (name) updateProfileData.append("name", name);
+            if (phone) updateProfileData.append("phone", phone);
+            if (oldPassword) updateProfileData.append("oldPassword", oldPassword);
+            if (avatar) updateProfileData.append("photo", avatar);
+            if (answer) updateProfileData.append("answer", answer);
+            if (email) updateProfileData.append("email", email);
+            if (newPassword) updateProfileData.append("newPassword", newPassword);
+    
+            const { data } = await axios.put(
+                `${process.env.REACT_APP_API}/api/v1/auth/update-profile`,
+                updateProfileData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    }
+                }
+            );
+    
             if (data?.error) {
                 toast.error(data.error, { id: loadingToastId });
             } else {
                 setAuth({ ...auth, user: data?.updatedUser });
                 let ls = Cookies.get("auth");
-                ls = JSON.parse(ls);
-                ls.user = data.updatedUser;
-                Cookies.set("auth", JSON.stringify(ls));
+                if (ls) {
+                    ls = JSON.parse(ls);
+                    ls.user = data.updatedUser;
+                    Cookies.set("auth", JSON.stringify(ls));
+                }
                 navigate("/dashboard/student");
                 toast.success(data.message, { id: loadingToastId });
             }
@@ -99,7 +76,7 @@ const UpdateProfile = () => {
                 toast.error("Something went wrong", { id: loadingToastId });
             }
         }
-    };
+    };    
 
     return (
         <Layout title={"Dashboard - Update Profile"}>
@@ -114,23 +91,25 @@ const UpdateProfile = () => {
                                 <h4 className="text-center pb-3"><i class="fa-solid fa-pen-to-square"></i> Update your Profile</h4>
                                 <div className="mb-3">
                                     <h6 className='text-center my-3'>Maximum Photo size is 3 MB</h6>
-                                    {photo && (
+                                    {avatar && (
                                         <div className="text-center">
-                                            <img src={typeof photo === 'string' ? photo : URL.createObjectURL(photo)} alt='profile-img' height={'200px'} className='img img-responsive' />
+                                            <img src={typeof avatar === 'string' ? avatar : URL.createObjectURL(avatar)} alt='profile-img' height={'200px'} className='img img-responsive' />
                                             <h6 className='mt-3'>
-                                                {typeof photo === 'string' ? '' : `${(photo.size / 1048576).toFixed(2)} MB`}
+                                                {typeof avatar === 'string' ? '' : `${(avatar.size / 1048576).toFixed(2)} MB`}
                                             </h6>
                                         </div>
                                     )}
                                 </div>
                                 <div className="mb-3 text-center">
                                     <label className="btn btn-outline-secondary col-md-12">
-                                        {photo ? (typeof photo === 'string' ? 'Change Photo' : photo.name) : "Upload Photo"}
+                                        {avatar ? (typeof avatar === 'string' ? 'Change Photo' : avatar.name) : "Upload Photo"}
                                         <input
                                             type="file"
                                             name="photo"
                                             accept="image/*"
-                                            onChange={handleFileChange}
+                                            onChange={(e) => {
+                                                setAvatar(e.target.files[0]);
+                                            }}
                                             hidden
                                         />
                                     </label>

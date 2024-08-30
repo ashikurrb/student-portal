@@ -40,15 +40,16 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const loadingToastId = toast.loading('Registering you...');
+        // Create a FormData object
+        const registerData = new FormData();
+        registerData.append('name', name);
+        registerData.append('email', email);
+        registerData.append('phone', phone);
+        registerData.append('grade', grade);
+        registerData.append('password', password);
+        registerData.append('answer', answer);
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, {
-                name,
-                email,
-                password,
-                phone,
-                grade,
-                answer
-            });
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, registerData);
 
             if (res && res.data.success) {
                 // Show success toast

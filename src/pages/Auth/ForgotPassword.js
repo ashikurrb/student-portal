@@ -4,7 +4,6 @@ import '../../style/AuthStyle.css';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useState } from 'react';
-import Spinner from '../../components/Spinner';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
@@ -12,18 +11,25 @@ const ForgotPassword = () => {
     const [newPassword, setNewPassword] = useState("");
     const navigate = useNavigate();
 
-    //form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         const loadingToastId = toast.loading('Password resetting...');
+    
+        // Create a FormData object
+        const forgotPasswordData = new FormData();
+        forgotPasswordData.append('email', email);
+        forgotPasswordData.append('newPassword', newPassword);
+        forgotPasswordData.append('answer', answer);
+    
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/forgot-password`, {
-                email,
-                newPassword,
-                answer
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/forgot-password`, forgotPasswordData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
             });
+    
             if (res && res.data.success) {
-                toast.success(res.data && res.data.message, { id: loadingToastId });
+                toast.success(res.data.message, { id: loadingToastId });
                 navigate("/login");
             } else {
                 toast.error(res.data.message, { id: loadingToastId });
@@ -36,7 +42,7 @@ const ForgotPassword = () => {
                 toast.error("Something went wrong", { id: loadingToastId });
             }
         }
-    };
+    };    
 
     return (
         <Layout title={"Forget Password - Reset"}>
