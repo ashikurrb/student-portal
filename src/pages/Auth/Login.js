@@ -20,12 +20,13 @@ const Login = () => {
         e.preventDefault();
         // Show loading toast
         const loadingToastId = toast.loading('Logging in...');
+        // Create a FormData object
+        const loginData = new FormData();
+        loginData.append('email', email);
+        loginData.append('phone', phone);
+        loginData.append('password', password);
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, {
-                email,
-                phone,
-                password,
-            });
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, loginData);
             if (res && res.data.success) {
                 setAuth({
                     ...auth,
@@ -62,7 +63,7 @@ const Login = () => {
                     <div className="row m-3">
                         <div className="col-md-7 mb-5 mx-md-5">
                             <div className="text-center">
-                                <img src="/images/loginImg.png" style={{ width: "100%" }} alt="" />
+                            <img src="/images/loginImg.png" style={{ width: "100%" }} alt="" />
                             </div>
                         </div>
                     </div>
