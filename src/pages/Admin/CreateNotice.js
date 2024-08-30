@@ -273,7 +273,7 @@ const CreateNotice = () => {
                                 </button>
                             )}
 
-                            <Modal width={650}  centered visible={createModalVisible} onCancel={createModalCancel} footer={null}  maskClosable={false}>
+                            <Modal width={650} centered visible={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
                                 <h5 className='text-center'>Create Notice</h5>
                                 <form onSubmit={handleCreate}>
                                     <div>
@@ -303,6 +303,7 @@ const CreateNotice = () => {
                                                     accept="image/*"
                                                     onChange={(e) => {
                                                         setNoticeImg(e.target.files[0]);
+                                                        e.target.value = null; // Clear the input value after selection
                                                     }}
                                                     hidden
                                                 />
@@ -476,7 +477,10 @@ const CreateNotice = () => {
                                     type="file"
                                     name="photo"
                                     accept="image/*"
-                                    onChange={(e) => setUpdatedNoticeImg(e.target.files[0])}
+                                    onChange={(e) => {
+                                        setUpdatedNoticeImg(e.target.files[0]);
+                                        e.target.value = null; // Clear the input value after selection
+                                    }}
                                     hidden
                                 />
                             </label>
