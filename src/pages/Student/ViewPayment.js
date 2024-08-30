@@ -198,9 +198,11 @@ const ViewPayment = () => {
                         <StudentMenu />
                     </div>
                     <div className="col-md-9">
-                        <h3 className='text-center pt-3'><i class="fa-solid fa-credit-card pe-2"></i> Payment Status</h3>
+                    <h3 className="text-center my-4">
+                            <i class="fa-solid fa-credit-card pe-2"></i> Payment Status
+                        </h3>
                         <h6 className='text-end'>Total paid: TK. {totalAmount}</h6>
-                        <div className="card mt-3 p-4 table-container">
+                        <div className="card mt-2 p-4 table-container">
                             {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <table className="table">
                                 <thead className='table-dark'>
                                     <tr>

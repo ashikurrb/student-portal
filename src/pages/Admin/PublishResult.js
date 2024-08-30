@@ -117,8 +117,8 @@ const PublishResult = () => {
         }
     };
 
-     //clear create modal on cancel
-     const createModalCancel = () => {
+    //clear create modal on cancel
+    const createModalCancel = () => {
         setGrade('');
         setUser('');
         setSubject('');
@@ -257,21 +257,21 @@ const PublishResult = () => {
         }
     };
 
-   // Handle Escape key functionality
-   useEffect(() => {
-    const handleEscapeKey = (event) => {
-        if (event.key === 'Escape') {
-            // Clear search bar
-            setSearchQuery('');
-            // Clear selected content
-            setSelectedResult([]);
-        }
-    };
-    document.addEventListener('keydown', handleEscapeKey);
-    return () => {
-        document.removeEventListener('keydown', handleEscapeKey);
-    };
-}, []);   
+    // Handle Escape key functionality
+    useEffect(() => {
+        const handleEscapeKey = (event) => {
+            if (event.key === 'Escape') {
+                // Clear search bar
+                setSearchQuery('');
+                // Clear selected content
+                setSelectedResult([]);
+            }
+        };
+        document.addEventListener('keydown', handleEscapeKey);
+        return () => {
+            document.removeEventListener('keydown', handleEscapeKey);
+        };
+    }, []);
 
     return (
         <Layout title={"Admin - Publish Result"}>
@@ -279,7 +279,9 @@ const PublishResult = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h2 className='text-center my-4'><i class="fa-solid fa-square-poll-vertical"></i> Publish Result ({result.length})</h2>
+                        <h2 className="text-center my-4 mb-md-5">
+                            <i class="fa-solid fa-square-poll-vertical"></i> Publish Result ({result.length})
+                        </h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <input
                                 type="text"
@@ -298,7 +300,7 @@ const PublishResult = () => {
                                 </button>
                             )}
                         </div>
-                        <Modal width={650} visible={createModalVisible} onCancel={createModalCancel} footer={null}  maskClosable={false}>
+                        <Modal width={650} visible={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
                             <h5 className='text-center mb-3'>Publish Result</h5>
                             <form onSubmit={handlePublish}>
                                 <div className="mt-4 d-lg-flex">
