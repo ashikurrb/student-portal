@@ -17,6 +17,7 @@ const Footer = () => {
                                 <Link to="/policy">Privacy Policy</Link>
                             </p>
                         </div>
+    
                         <div className='text-center'>
                             <h5>Follow Us</h5>
                             <div className="d-md-flex justify-content-between">
@@ -34,14 +35,13 @@ const Footer = () => {
                 </div>
             </div>
             <hr />
-            <div className='text-center'>
-                <span className=''>Copyright &copy; 2024
+            <div className='text-center mb-3'>
+                <span>Copyright &copy; 2024
                     <Link className='text-warning' to="https://www.facebook.com/ashikurrb85" target='_blank'>
                         ashikurrb
                     </Link>
+                    All Rights Reserved
                 </span>
-                <br />
-                <p className='mt-2'> All Rights Reserved</p>
             </div>
         </div>
     );

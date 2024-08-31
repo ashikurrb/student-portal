@@ -638,7 +638,7 @@ const SetPaymentStatus = () => {
                                                         <td>{p.trxId}</td>
                                                         <td>{moment(p?.paymentDate).format('ll')}</td>
                                                         <td className='text-center'>
-                                                            <button className="btn btn-outline-dark" onClick={() => generateInvoice(p)}>
+                                                            <button className="btn btn-secondary" onClick={() => generateInvoice(p)}>
                                                                 <i className="fa-solid fa-download"></i>
                                                             </button>
                                                         </td>

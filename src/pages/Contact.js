@@ -28,7 +28,10 @@ const Contact = () => {
                                 <i className='fa-solid fa-envelope'></i> : 5pointschool@gmail.com
                             </p>
                             <p className="mt-3">
-                                <i className='fa-solid fa-phone-volume'></i>  :+880 1794-744343
+                                <i className='fa-solid fa-phone-volume'></i> : +880 1794-744343
+                            </p>
+                            <p className="mt-3">
+                                <i className="fas fa-map-marker-alt"></i> : Tajmahal Road, Mohammadpur, Dhaka - 1207, Bangladesh
                             </p>
                         </div>
                     </div>
