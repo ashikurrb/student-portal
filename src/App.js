@@ -32,6 +32,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<HomePage />} />
+        <Route path='/view-notice' element={<ViewNotice />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
@@ -46,7 +47,6 @@ function App() {
           <Route path='/dashboard/student/view-result' element={<ViewResult />} />
           <Route path='/dashboard/student/view-payment' element={<ViewPayment />} />
           <Route path='/dashboard/student/view-content' element={<ViewContent />} />
-          <Route path='/view-notice' element={<ViewNotice />} />
         </Route>
 
         {/* Admin routes */}
