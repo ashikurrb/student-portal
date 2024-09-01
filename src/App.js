@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import PageNotFound from './pages/PageNotFound';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import ViewCourse from './pages/ViewCourse';
 import Register from './pages/Auth/Register';
 import Login from './pages/Auth/Login';
 import AdminDashboard from './pages/Admin/AdminDashboard';
@@ -34,6 +35,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/view-course' element={<ViewCourse />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
 
