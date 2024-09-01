@@ -34,13 +34,16 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
-        <Route path='/dashboard' element={<PrivateRoute />}>
-          <Route path='student' element={<StudentDashboard />} />
-          <Route path='student/update-profile' element={<UpdateProfile />} />
-          <Route path='student/view-result' element={<ViewResult />} />
-          <Route path='student/view-payment' element={<ViewPayment />} />
-          <Route path='student/view-content' element={<ViewContent />} />
+
+        <Route path='/' element={<PrivateRoute />}>
+          <Route path='dashboard/student' element={<StudentDashboard />} />
+          <Route path='dashboard/student/update-profile' element={<UpdateProfile />} />
+          <Route path='dashboard/student/view-result' element={<ViewResult />} />
+          <Route path='dashboard/student/view-payment' element={<ViewPayment />} />
+          <Route path='dashboard/student/view-content' element={<ViewContent />} />
+          <Route path='/view-notice' element={<ViewNotice />} />
         </Route>
+
         <Route path='/dashboard' element={<AdminRoute />}>
           <Route path='admin' element={<AdminDashboard />} />
           <Route path='admin/create-grade' element={<CreateGrade />} />
@@ -53,12 +56,10 @@ function App() {
           <Route path='admin/create-payment' element={<SetPaymentStatus />} />
           <Route path='admin/all-users' element={<AllUsers />} />
         </Route>
-        <Route path='/view-notice' element={<ViewNotice />} />
+
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='*' element={<PageNotFound />} />
-
-
       </Routes>
     </>
   );

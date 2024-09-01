@@ -68,7 +68,9 @@ const Header = () => {
                                     </li>
                                 </>) : (<>
                                     <li className="nav-item">
-                                        <NavLink to="/view-notice" className="nav-link" >Notice</NavLink>
+                                        <NavLink to="/view-notice" className="nav-link" >
+                                            Notice
+                                        </NavLink>
                                     </li>
                                     <li className="nav-item dropdown">
                                         <NavLink className="nav-link dropdown-toggle mx-1" role="button" data-bs-toggle="dropdown" >
