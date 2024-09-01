@@ -34,14 +34,14 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/view-notice' element={<ViewNotice />} />
 
-        <Route path='/' element={<PrivateRoute />}>
-          <Route path='dashboard/student' element={<StudentDashboard />} />
-          <Route path='dashboard/student/update-profile' element={<UpdateProfile />} />
-          <Route path='dashboard/student/view-result' element={<ViewResult />} />
-          <Route path='dashboard/student/view-payment' element={<ViewPayment />} />
-          <Route path='dashboard/student/view-content' element={<ViewContent />} />
-          <Route path='/view-notice' element={<ViewNotice />} />
+        <Route path='/dashboard' element={<PrivateRoute />}>
+          <Route path='student' element={<StudentDashboard />} />
+          <Route path='student/update-profile' element={<UpdateProfile />} />
+          <Route path='student/view-result' element={<ViewResult />} />
+          <Route path='student/view-payment' element={<ViewPayment />} />
+          <Route path='student/view-content' element={<ViewContent />} />
         </Route>
 
         <Route path='/dashboard' element={<AdminRoute />}>
