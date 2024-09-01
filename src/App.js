@@ -34,31 +34,33 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
-        <Route path='/view-notice' element={<ViewNotice />} />
-
-        <Route path='/dashboard' element={<PrivateRoute />}>
-          <Route path='student' element={<StudentDashboard />} />
-          <Route path='student/update-profile' element={<UpdateProfile />} />
-          <Route path='student/view-result' element={<ViewResult />} />
-          <Route path='student/view-payment' element={<ViewPayment />} />
-          <Route path='student/view-content' element={<ViewContent />} />
-        </Route>
-
-        <Route path='/dashboard' element={<AdminRoute />}>
-          <Route path='admin' element={<AdminDashboard />} />
-          <Route path='admin/create-grade' element={<CreateGrade />} />
-          <Route path='admin/create-notice' element={<CreateNotice />} />
-          <Route path='admin/create-link' element={<CreateContent />} />
-          <Route path='admin/create-course' element={<CreateCourse />} />
-          <Route path='admin/all-courses' element={<AllCourses />} />
-          <Route path="admin/course/:slug" element={<UpdateCourse />} />
-          <Route path='admin/create-result' element={<PublishResult />} />
-          <Route path='admin/create-payment' element={<SetPaymentStatus />} />
-          <Route path='admin/all-users' element={<AllUsers />} />
-        </Route>
-
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
+
+        {/* Private routes for students */}
+        <Route element={<PrivateRoute />}>
+          <Route path='/dashboard/student' element={<StudentDashboard />} />
+          <Route path='/dashboard/student/update-profile' element={<UpdateProfile />} />
+          <Route path='/dashboard/student/view-result' element={<ViewResult />} />
+          <Route path='/dashboard/student/view-payment' element={<ViewPayment />} />
+          <Route path='/dashboard/student/view-content' element={<ViewContent />} />
+          <Route path='/view-notice' element={<ViewNotice />} />
+        </Route>
+
+        {/* Admin routes */}
+        <Route element={<AdminRoute />}>
+          <Route path='/dashboard/admin' element={<AdminDashboard />} />
+          <Route path='/dashboard/admin/create-grade' element={<CreateGrade />} />
+          <Route path='/dashboard/admin/create-notice' element={<CreateNotice />} />
+          <Route path='/dashboard/admin/create-link' element={<CreateContent />} />
+          <Route path='/dashboard/admin/create-course' element={<CreateCourse />} />
+          <Route path='/dashboard/admin/all-courses' element={<AllCourses />} />
+          <Route path='/dashboard/admin/course/:slug' element={<UpdateCourse />} />
+          <Route path='/dashboard/admin/create-result' element={<PublishResult />} />
+          <Route path='/dashboard/admin/create-payment' element={<SetPaymentStatus />} />
+          <Route path='/dashboard/admin/all-users' element={<AllUsers />} />
+        </Route>
+
         <Route path='*' element={<PageNotFound />} />
       </Routes>
     </>
