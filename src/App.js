@@ -38,6 +38,7 @@ function App() {
         <Route path='/view-course' element={<ViewCourse />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
+        <Route path='/view-notice' element={<ViewNotice />} />
 
         {/* Private routes for students */}
         <Route element={<PrivateRoute />}>
@@ -46,7 +47,6 @@ function App() {
           <Route path='/dashboard/student/view-result' element={<ViewResult />} />
           <Route path='/dashboard/student/view-payment' element={<ViewPayment />} />
           <Route path='/dashboard/student/view-content' element={<ViewContent />} />
-          <Route path='/view-notice' element={<ViewNotice />} />
         </Route>
 
         {/* Admin routes */}
