@@ -141,10 +141,10 @@ const AllUsers = () => {
                         </h2>
                         <div className="d-flex justify-content-center">
                             <Alert
-                                className='m-2 col-md-4'
+                                className='mb-3'
                                 message={
                                     <>
-                                        <b>Click on Grade value to update user's grade</b>
+                                        <b>Click on grade to update user's grade</b>
                                     </>
                                 }
                                 type="info"
@@ -220,17 +220,15 @@ const AllUsers = () => {
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <Tooltip title="Click here to update grade">
-                                                            <button className="btn px-0 d-flex justify-content-between align-items-center w-100"
-                                                                onClick={() => { openModal(u) }}
-                                                                disabled={u?.grade?.name === "Administration"}>
-                                                                <span className='text-start'>
-                                                                    {u?.grade?.name}
-                                                                </span>
-                                                                <span className='text-end'>                                                <i className="fa-solid fa-caret-down"></i>
-                                                                </span>
-                                                            </button>
-                                                        </Tooltip>
+                                                        <button className="btn px-0 d-flex justify-content-between align-items-center w-100"
+                                                            onClick={() => { openModal(u) }}
+                                                            disabled={u?.grade?.name === "Administration"}>
+                                                            <span className='text-start'>
+                                                                {u?.grade?.name}
+                                                            </span>
+                                                            <span className='text-end'>                                                <i className="fa-solid fa-caret-down"></i>
+                                                            </span>
+                                                        </button>
                                                     </td>
                                                     <td className='text-wrap'>{u.email}</td>
                                                     <td>{u.phone}</td>
@@ -271,7 +269,7 @@ const AllUsers = () => {
                                                             }
                                                         </div>
                                                         <Select
-                                                            className='w-100 justify-content-center'
+                                                            className='w-100'
                                                             placeholder="Select Grade"
                                                             size='large'
                                                             value={updatedGrade}

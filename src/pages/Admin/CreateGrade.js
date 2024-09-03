@@ -168,10 +168,10 @@ const CreateGrade = () => {
                         </form>
                         <div className="d-flex justify-content-center">
                             <Alert
-                                className='m-2 col-md-9'
+                                className='mb-2'
                                 message={
                                     <>
-                                        <b>Deleting a grade will also delete all associated users, their data (result, payment status etc), and associated content.</b>
+                                        <b>Deleting a grade will delete all associated content, users and their all data</b>
                                     </>
                                 }
                                 type="warning"

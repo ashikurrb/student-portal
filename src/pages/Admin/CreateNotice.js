@@ -321,16 +321,17 @@ const CreateNotice = () => {
                                             </label>
                                         </div>
                                     </div>
-                                    <Alert
-                                        className='m-3'
-                                        message={
-                                            <>
-                                                <span className='fw-bold'>Do not enter GRADE if you want to set Notice for ALL</span>
-                                            </>
-                                        }
-                                        type="warning"
-                                        showIcon
-                                    />
+                                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                        <Alert
+                                            message={
+                                                <>
+                                                    <span className='fw-bold'>Avoid grade when setting notice for all</span>
+                                                </>
+                                            }
+                                            type="warning"
+                                            showIcon
+                                        />
+                                    </div>
                                     <div className="mt-4 d-lg-flex">
                                         <Select
                                             allowClear={true}
@@ -449,7 +450,7 @@ const CreateNotice = () => {
                                                         <td>{n.noticeInfo.substring(0, 20)}...</td>
                                                         <td>
                                                             <Image
-                                                            fallback="https://demofree.sirv.com/nope-not-here.jpg"
+                                                                fallback="https://demofree.sirv.com/nope-not-here.jpg"
                                                                 preview={{
                                                                     mask: <EyeOutlined />
                                                                 }}
@@ -489,6 +490,8 @@ const CreateNotice = () => {
                                     <h6 className='mt-3'>
                                         {updatedNoticeImg?.size && `${(updatedNoticeImg.size / 1048576).toFixed(2)} MB`}
                                     </h6>
+                                    <button className="btn btn-danger" onClick={() => setUpdatedNoticeImg(null)}>Remove Photo</button>
+                                    <div className='form-text'>Photo may take longer to disappear after removal</div>
                                 </div>
                             )}
                         </div>

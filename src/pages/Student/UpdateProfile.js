@@ -114,9 +114,9 @@ const UpdateProfile = () => {
                                         />
                                     </label>
                                 </div>
-                                <div className="mb-3">
+
+                                <div className="d-flex justify-content-center my-3">
                                     <Alert
-                                        className='my-2 mx-4'
                                         message={
                                             <>
                                                 <b>Security Answer:</b> Enter new answer to update or Leave blank to unchanged.<br />
