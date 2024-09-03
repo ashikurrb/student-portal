@@ -3,14 +3,21 @@ import Layout from '../../components/Layouts/Layout';
 import Spinner from '../../components/Spinner';
 import moment from 'moment';
 import axios from 'axios';
-import { Modal } from 'antd';
+import {
+    DownloadOutlined,
+    RotateLeftOutlined,
+    RotateRightOutlined,
+    SwapOutlined,
+    UndoOutlined,
+    ZoomInOutlined,
+    ZoomOutOutlined,
+} from '@ant-design/icons';
+import { Image, Space } from 'antd';
 import GoBackButton from '../../components/GoBackButton';
 
 const ViewNotice = () => {
     const [notice, setNotice] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [visible, setVisible] = useState(false);
 
     const getContent = async () => {
         try {
@@ -27,16 +34,20 @@ const ViewNotice = () => {
         getContent();
     }, []);
 
-    const openModal = (img) => {
-        setVisible(true);
-        setSelectedImage(img);
+    const onDownload = (imgUrl) => {
+        fetch(imgUrl)
+            .then((response) => response.blob())
+            .then((blob) => {
+                const url = URL.createObjectURL(new Blob([blob]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'image.png';
+                document.body.appendChild(link);
+                link.click();
+                URL.revokeObjectURL(url);
+                link.remove();
+            });
     };
-
-    //clear create modal on cancel
-    const closeModal = () => {
-        setVisible(false);
-        setSelectedImage(null);
-    }
 
     const convertLinksToAnchorTags = (text) => {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -88,11 +99,12 @@ const ViewNotice = () => {
                                                         />
                                                     </div>
                                                     <div className="col-md-6 mt-2 d-flex justify-content-center align-items-center order-1 order-md-2">
-                                                        <img style={{ width: "auto", height: "150px" }}
-                                                            className="img-thumbnail img-fluid"
-                                                            src={n.noticeImg ? n.noticeImg : "/images/logoBrand.png"}
+                                                        <Image
+                                                            style={{ width: "auto", height: "150px" }}
+                                                            src={n.noticeImg}
+                                                            fallback="https://demofree.sirv.com/nope-not-here.jpg"
                                                             alt="notice"
-                                                            onClick={() => openModal(n.noticeImg)} />
+                                                        />
                                                     </div>
                                                 </div>
                                             </div>
@@ -103,13 +115,6 @@ const ViewNotice = () => {
                     </div>
                 </div>
             </div>
-            <Modal width={600} centered onCancel={closeModal} visible={visible} footer={null}>
-                <h5>Image Preview</h5>
-                <img className='mt-2 rounded p-0'
-                    src={selectedImage ? selectedImage : "/images/logoBrand.png"}
-                    alt="Notice"
-                    style={{ width: '100%' }} />
-            </Modal>
         </Layout>
     );
 };

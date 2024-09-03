@@ -6,7 +6,8 @@ import axios from 'axios';
 import moment from 'moment';
 import toast from 'react-hot-toast';
 import { SearchOutlined } from '@ant-design/icons';
-import { Alert, Input, Modal, Select, Tooltip } from 'antd';
+import { EyeOutlined } from '@ant-design/icons';
+import { Alert, Image, Input, Modal, Select, Tooltip } from 'antd';
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -443,7 +444,14 @@ const CreateNotice = () => {
                                                         </td>
                                                         <td>{n.noticeInfo.substring(0, 20)}...</td>
                                                         <td>
-                                                            <img style={{ width: "30px" }} src={n.noticeImg} alt="notice" />
+                                                            <Image
+                                                            fallback="https://demofree.sirv.com/nope-not-here.jpg"
+                                                                preview={{
+                                                                    mask: <EyeOutlined />
+                                                                }}
+                                                                style={{ width: "30px" }}
+                                                                src={n.noticeImg}
+                                                                alt="notice" />
                                                         </td>
                                                         <td>
                                                             <div className="d-flex">

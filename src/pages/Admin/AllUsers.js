@@ -6,7 +6,8 @@ import Spinner from '../../components/Spinner'; import axios from 'axios';
 import toast from 'react-hot-toast';
 import moment from "moment";
 import { SearchOutlined } from '@ant-design/icons';
-import { Modal, Select, Alert, Tooltip, Input } from 'antd';
+import { EyeOutlined } from '@ant-design/icons';
+import { Modal, Select, Alert, Tooltip, Input, Image } from 'antd';
 const { Option } = Select;
 
 const AllUsers = () => {
@@ -203,8 +204,14 @@ const AllUsers = () => {
                                                     <th scope='row' className='ps-3'>{i + 1}</th>
                                                     <td className=''>
                                                         <div className="d-flex align-items-center">
-                                                            <img style={{ width: "27px", height: "27px", borderRadius: "100%" }}
-                                                                className='border mx-2' src={u?.avatar} alt="dp" />
+                                                            <Image
+                                                                preview={{
+                                                                    mask: <EyeOutlined />,
+                                                                }}
+                                                                style={{ width: "27px", height: "27px", borderRadius: "100%" }}
+                                                                className='mx-2'
+                                                                src={u?.avatar}
+                                                                alt="dp" />
                                                             {u.name}
                                                         </div>
                                                     </td>
@@ -259,8 +266,8 @@ const AllUsers = () => {
                                                                 </div>
                                                             }
                                                         </div>
-                                                        <Select 
-                                                        className='w-100 justify-content-center'
+                                                        <Select
+                                                            className='w-100 justify-content-center'
                                                             placeholder="Select Grade"
                                                             size='large'
                                                             value={updatedGrade}
