@@ -6,7 +6,7 @@ import axios from 'axios';
 import moment from 'moment';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import { Modal, Select, Tooltip } from 'antd';
+import { Modal, Select, Tooltip, Input } from 'antd';
 const { Option } = Select;
 
 const CreateContent = () => {
@@ -248,7 +248,7 @@ const CreateContent = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                    <h2 className="text-center my-4 mb-md-5">
+                        <h2 className="text-center my-4 mb-md-5">
                             <i class="fa-solid fa-link"></i> Create Content ({content.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>

@@ -5,7 +5,8 @@ import Spinner from '../../components/Spinner';
 import axios from 'axios';
 import moment from 'moment';
 import toast from 'react-hot-toast';
-import { Alert, Modal, Select, Tooltip } from 'antd';
+import { Alert, Input, Modal, Select, Tooltip } from 'antd';
+const { TextArea } = Input;
 const { Option } = Select;
 
 const CreateNotice = () => {
@@ -254,18 +255,13 @@ const CreateNotice = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                    <h2 className="text-center my-4 mb-md-5">
+                        <h2 className="text-center my-4 mb-md-5">
                             <i class="fa-solid fa-bell"></i> Create Notice ({notice.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
-                            <input
-                                type="text"
-                                placeholder='Search'
-                                className='form-control mx-1'
-                                style={{ flexBasis: '50%' }}
+                            <Input allowClear={true} size="large" placeholder="Search" style={{ flexBasis: '50%' }}
                                 value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
+                                onChange={(e) => setSearchQuery(e.target.value)} />
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-success fw-bold mx-1 py-2 px-4">
                                 <i className="fa-solid fa-plus"></i> Create Notice
                             </button>
@@ -323,20 +319,26 @@ const CreateNotice = () => {
                                         showIcon
                                     />
                                     <div className="mt-4 d-lg-flex">
-                                        <Select bordered={false}
+                                        <Select
+                                            allowClear={true}
                                             placeholder="Select Grade"
                                             size='large'
-                                            className='form-select mb-3 me-2'
+                                            style={{
+                                                width: '100%',
+                                            }}
+                                            className='mb-3 me-2'
                                             value={grade || undefined}
                                             onChange={(value) => { setGrade(value) }}>
                                             {grades?.map(g => (
                                                 <Option key={g._id} value={g._id}>{g.name}</Option>
                                             ))}
                                         </Select>
-                                        <input
+                                        <Input
+                                            showCount
                                             type="text"
+                                            size='large'
                                             placeholder='Title'
-                                            className='form-control mb-3 me-2'
+                                            className='mb-3 me-2'
                                             value={title}
                                             onChange={(e) => setTitle(e.target.value)}
                                             minLength={4} maxLength={30}
@@ -344,10 +346,11 @@ const CreateNotice = () => {
                                         />
                                     </div>
                                     <div className="d-lg-flex">
-                                        <textarea
+                                        <TextArea showCount
                                             type="text"
+                                            size='large'
                                             placeholder='Notice Message'
-                                            className='form-control mb-3'
+                                            className=' mb-3'
                                             value={noticeInfo}
                                             onChange={(e) => setNoticeInfo(e.target.value)}
                                             maxLength={200}
@@ -498,21 +501,27 @@ const CreateNotice = () => {
                         }
                     </div>
                     <div className="mb-3">
-                        <input
+                        <Input
+                            showCount
+                            size='large'
+                            minLength={4} maxLength={30}
                             type="text"
                             placeholder='Subject'
-                            className='form-control mb-3 me-2'
                             value={updatedTitle}
-                            onChange={(e) => setUpdatedTitle(e.target.value)} required
+                            onChange={(e) => setUpdatedTitle(e.target.value)}
+                            required
                         />
                     </div>
                     <div className='mb-3'>
-                        <textarea
+                        <TextArea
+                            showCount
+                            maxLength={200}
+                            size='large'
                             type="text"
                             placeholder='Notice message'
-                            className='form-control mb-3'
                             value={updatedNoticeInfo}
-                            onChange={(e) => setUpdatedNoticeInfo(e.target.value)} required
+                            onChange={(e) => setUpdatedNoticeInfo(e.target.value)}
+                            required
                         />
                     </div>
                     <div className="text-center">
