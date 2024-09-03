@@ -3,16 +3,8 @@ import Layout from '../../components/Layouts/Layout';
 import Spinner from '../../components/Spinner';
 import moment from 'moment';
 import axios from 'axios';
-import {
-    DownloadOutlined,
-    RotateLeftOutlined,
-    RotateRightOutlined,
-    SwapOutlined,
-    UndoOutlined,
-    ZoomInOutlined,
-    ZoomOutOutlined,
-} from '@ant-design/icons';
-import { Image, Space } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
+import { Image } from 'antd';
 import GoBackButton from '../../components/GoBackButton';
 
 const ViewNotice = () => {
@@ -100,6 +92,19 @@ const ViewNotice = () => {
                                                     </div>
                                                     <div className="col-md-6 mt-2 d-flex justify-content-center align-items-center order-1 order-md-2">
                                                         <Image
+                                                            destroyOnClose={true}
+                                                            preview={{
+                                                                toolbarRender: (
+                                                                    _,
+                                                                    {
+                                                                        image: { url },
+                                                                    },
+                                                                ) => (
+                                                                    <DownloadOutlined
+                                                                        style={{ fontSize: '30px', color: "black", backgroundColor: 'white', borderRadius: '15%', padding: '5px' }}
+                                                                        onClick={() => onDownload(url)} />
+                                                                )
+                                                            }}
                                                             style={{ width: "auto", height: "150px" }}
                                                             src={n.noticeImg}
                                                             fallback="https://demofree.sirv.com/nope-not-here.jpg"
