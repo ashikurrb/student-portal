@@ -6,6 +6,7 @@ import axios from 'axios';
 import moment from 'moment';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import { SearchOutlined } from '@ant-design/icons';
 import { Modal, Select, Tooltip, Input } from 'antd';
 const { Option } = Select;
 
@@ -252,10 +253,12 @@ const CreateContent = () => {
                             <i class="fa-solid fa-link"></i> Create Content ({content.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
-                            <input
+                            <Input
+                                allowClear={true}
                                 type="text"
                                 placeholder='Search'
-                                className='form-control mx-1'
+                                size='large'
+                                prefix={<SearchOutlined />}
                                 style={{ flexBasis: '50%' }}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}

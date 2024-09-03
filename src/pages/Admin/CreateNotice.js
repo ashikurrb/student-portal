@@ -5,6 +5,7 @@ import Spinner from '../../components/Spinner';
 import axios from 'axios';
 import moment from 'moment';
 import toast from 'react-hot-toast';
+import { SearchOutlined } from '@ant-design/icons';
 import { Alert, Input, Modal, Select, Tooltip } from 'antd';
 const { TextArea } = Input;
 const { Option } = Select;
@@ -259,9 +260,16 @@ const CreateNotice = () => {
                             <i class="fa-solid fa-bell"></i> Create Notice ({notice.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
-                            <Input allowClear={true} size="large" placeholder="Search" style={{ flexBasis: '50%' }}
+                            <Input
+                                allowClear={true}
+                                type="text"
+                                placeholder='Search'
+                                size='large'
+                                prefix={<SearchOutlined />}
+                                style={{ flexBasis: '50%' }}
                                 value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)} />
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-success fw-bold mx-1 py-2 px-4">
                                 <i className="fa-solid fa-plus"></i> Create Notice
                             </button>
@@ -323,10 +331,7 @@ const CreateNotice = () => {
                                             allowClear={true}
                                             placeholder="Select Grade"
                                             size='large'
-                                            style={{
-                                                width: '100%',
-                                            }}
-                                            className='mb-3 me-2'
+                                            className='mb-3 me-2 w-100'
                                             value={grade || undefined}
                                             onChange={(value) => { setGrade(value) }}>
                                             {grades?.map(g => (

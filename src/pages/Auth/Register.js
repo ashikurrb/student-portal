@@ -5,8 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/auth';
-import { Select } from 'antd';
-const { Option } = Select;
 
 const Register = () => {
     const [name, setName] = useState("");
@@ -81,7 +79,9 @@ const Register = () => {
                             <form className='m-lg-5' onSubmit={handleSubmit}>
                                 <h4 className="title"><i class="fa-solid fa-user-plus"></i> &nbsp; REGISTER FORM</h4>
                                 <div className="mb-3">
-                                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" id="exampleInputName" placeholder='Name' minLength={4} maxLength={10} required />
+                                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" id="exampleInputName" placeholder='Name'
+                                        minLength={4} maxLength={25}
+                                        required />
                                 </div>
                                 <div className="mb-3">
                                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email' required />
@@ -90,14 +90,6 @@ const Register = () => {
                                     <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" id="exampleInputPhone" placeholder='Phone Number' required />
                                 </div>
                                 <div className="mb-3">
-                                    {/* <Select bordered={false}
-                                        placeholder="Select Grade"
-                                        size='large' 
-                                        className='form-select mb-3' onChange={(value) => { setGrade(value) }} required>
-                                        {grades?.map(g => (
-                                            <Option key={g._id} value={g._id}>{g.name}</Option>
-                                        ))}
-                                    </Select> */}
                                     <select className="form-select" aria-label="Default select example" onChange={(e) => { setGrade(e.target.value) }} required>
                                         <option selected disabled>Select Grade</option>
                                         {grades?.map(g => (

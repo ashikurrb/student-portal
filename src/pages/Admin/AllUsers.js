@@ -5,9 +5,9 @@ import { useAuth } from '../../context/auth';
 import Spinner from '../../components/Spinner'; import axios from 'axios';
 import toast from 'react-hot-toast';
 import moment from "moment";
+import { SearchOutlined } from '@ant-design/icons';
 import { Modal, Select, Alert, Tooltip, Input } from 'antd';
 const { Option } = Select;
-const { Search } = Input;
 
 const AllUsers = () => {
     const [auth, setAuth] = useAuth();
@@ -151,11 +151,13 @@ const AllUsers = () => {
                             />
                         </div>
                         <div className="d-flex justify-content-end">
-                            <input
+                            <Input
+                                allowClear={true}
                                 type="text"
+                                prefix={<SearchOutlined />}
                                 placeholder='Search'
-                                className='form-control mt-4'
-                                style={{ flexBasis: '40%' }}
+                                size='large'
+                                style={{ flexBasis: '50%' }}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
@@ -257,10 +259,10 @@ const AllUsers = () => {
                                                                 </div>
                                                             }
                                                         </div>
-                                                        <Select bordered={false}
+                                                        <Select 
+                                                        className='w-100 justify-content-center'
                                                             placeholder="Select Grade"
                                                             size='large'
-                                                            className='form-select m-2'
                                                             value={updatedGrade}
                                                             onChange={(value) => { setUpdatedGrade(value) }}>
                                                             {grades?.map(g => (

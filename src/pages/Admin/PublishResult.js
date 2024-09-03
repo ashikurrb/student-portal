@@ -6,7 +6,8 @@ import axios from 'axios';
 import moment from 'moment'
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
-import { Modal, DatePicker, Select, Tooltip } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import { Modal, DatePicker, Select, Tooltip, Input } from 'antd';
 const dateFormat = 'DD-MM-YYYY';
 const { Option } = Select;
 
@@ -283,10 +284,12 @@ const PublishResult = () => {
                             <i class="fa-solid fa-square-poll-vertical"></i> Publish Result ({result.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
-                            <input
+                            <Input
+                                allowClear={true}
                                 type="text"
                                 placeholder='Search'
-                                className='form-control mx-1'
+                                size='large'
+                                prefix={<SearchOutlined />}
                                 style={{ flexBasis: '50%' }}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}

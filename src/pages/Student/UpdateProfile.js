@@ -44,7 +44,7 @@ const UpdateProfile = () => {
             if (answer) updateProfileData.append("answer", answer);
             if (email) updateProfileData.append("email", email);
             if (newPassword) updateProfileData.append("newPassword", newPassword);
-    
+
             const { data } = await axios.put(
                 `${process.env.REACT_APP_API}/api/v1/auth/update-profile`,
                 updateProfileData,
@@ -54,7 +54,7 @@ const UpdateProfile = () => {
                     }
                 }
             );
-    
+
             if (data?.error) {
                 toast.error(data.error, { id: loadingToastId });
             } else {
@@ -76,7 +76,7 @@ const UpdateProfile = () => {
                 toast.error("Something went wrong", { id: loadingToastId });
             }
         }
-    };    
+    };
 
     return (
         <Layout title={"Dashboard - Update Profile"}>
@@ -131,7 +131,9 @@ const UpdateProfile = () => {
                                     <input type="text" value={grade} onChange={(e) => setGrade(e.target.value)} className="form-control" placeholder='Grade' readOnly />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder='Name' required />
+                                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder='Name'
+                                        minLength={4} maxLength={25}
+                                        required />
                                 </div>
                                 <div className="mb-3">
                                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" placeholder='Email' readOnly />
@@ -140,7 +142,7 @@ const UpdateProfile = () => {
                                     <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" placeholder='Phone Number' required />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" placeholder='Security Answer' />
+                                    <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" placeholder='Security Answer' minLength={3} maxLength={10}/>
                                 </div>
                                 <div className="mb-3">
                                     <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} className="form-control" placeholder='Password' required />
