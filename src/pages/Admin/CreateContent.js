@@ -7,7 +7,7 @@ import moment from 'moment';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
-import { Modal, Select, Tooltip, Input } from 'antd';
+import { Input, Modal, Select, Tooltip } from 'antd';
 const { Option } = Select;
 
 const CreateContent = () => {
@@ -253,12 +253,16 @@ const CreateContent = () => {
                             <i class="fa-solid fa-link"></i> Create Content ({content.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
-                            <Input
+                        <Input
                                 allowClear={true}
                                 type="text"
                                 placeholder='Search'
                                 size='large'
-                                prefix={<SearchOutlined />}
+                                prefix={
+                                    <span style={{ paddingRight: '4px' }}>
+                                        <SearchOutlined />
+                                    </span>
+                                }
                                 style={{ flexBasis: '50%' }}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -305,14 +309,18 @@ const CreateContent = () => {
                                         placeholder='Subject'
                                         className='form-control mb-3 me-2'
                                         value={subject}
-                                        onChange={(e) => setSubject(e.target.value)} required
+                                        onChange={(e) => setSubject(e.target.value)}
+                                        minLength={3} maxLength={20}
+                                        required
                                     />
                                     <input
                                         type="text"
                                         placeholder='Remark'
                                         className='form-control mb-3'
                                         value={remark}
-                                        onChange={(e) => setRemark(e.target.value)} required
+                                        onChange={(e) => setRemark(e.target.value)}
+                                        minLength={3} maxLength={30}
+                                        required
                                     />
                                 </div>
                                 <div>
@@ -437,14 +445,18 @@ const CreateContent = () => {
                             placeholder='Subject'
                             className='form-control mb-3 me-2'
                             value={updatedSubject}
-                            onChange={(e) => setUpdatedSubject(e.target.value)} required
+                            onChange={(e) => setUpdatedSubject(e.target.value)}
+                            minLength={3} maxLength={20}
+                            required
                         />
                         <input
                             type="text"
                             placeholder='Remark'
                             className='form-control mb-3'
                             value={updatedReMark}
-                            onChange={(e) => setUpdatedReMark(e.target.value)} required
+                            onChange={(e) => setUpdatedReMark(e.target.value)}
+                            minLength={3} maxLength={30}
+                            required
                         />
                     </div>
                     <div className='mb-3'>

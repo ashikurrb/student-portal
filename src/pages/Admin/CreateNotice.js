@@ -266,7 +266,11 @@ const CreateNotice = () => {
                                 type="text"
                                 placeholder='Search'
                                 size='large'
-                                prefix={<SearchOutlined />}
+                                prefix={
+                                    <span style={{ paddingRight: '4px' }}>
+                                        <SearchOutlined />
+                                    </span>
+                                }
                                 style={{ flexBasis: '50%' }}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}

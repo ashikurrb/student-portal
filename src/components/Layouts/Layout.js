@@ -3,7 +3,6 @@ import Header from './Header';
 import Footer from './Footer';
 import { Helmet } from 'react-helmet';
 import { Toaster } from 'react-hot-toast';
-
 //children is coming from props
 
 const Layout = ({ children, title, description, keywords, author }) => {

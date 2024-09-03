@@ -155,7 +155,11 @@ const AllUsers = () => {
                             <Input
                                 allowClear={true}
                                 type="text"
-                                prefix={<SearchOutlined />}
+                                prefix={
+                                    <span style={{ paddingRight: '4px' }}>
+                                        <SearchOutlined />
+                                    </span>
+                                }
                                 placeholder='Search'
                                 size='large'
                                 style={{ flexBasis: '50%' }}
