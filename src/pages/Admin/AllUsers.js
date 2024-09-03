@@ -213,10 +213,10 @@ const AllUsers = () => {
                                                                     mask: <EyeOutlined />,
                                                                 }}
                                                                 style={{ width: "27px", height: "27px", borderRadius: "100%" }}
-                                                                className='mx-2'
                                                                 src={u?.avatar}
                                                                 alt="dp" />
-                                                            {u.name}
+                                                            <span className='ms-2'>                                                      {u.name}
+                                                            </span>
                                                         </div>
                                                     </td>
                                                     <td>

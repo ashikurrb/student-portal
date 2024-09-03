@@ -28,7 +28,9 @@ const AdminDashboard = () => {
                             </div>
                             <div className="col-12 col-md-6 mb-2 order-1 order-md-2">
                                 <div className='card h-100 d-flex align-items-center justify-content-center'>
-                                    <Image className='rounded m-3' src={auth?.user?.avatar} alt="DP" style={{ width: "auto", height: "200px" }} />
+                                  <div className="m-3">
+                                  <Image className='rounded' src={auth?.user?.avatar} alt="DP" style={{ width: "auto", height: "200px" }} />
+                                  </div>
                                 </div>
                             </div>
                         </div>
