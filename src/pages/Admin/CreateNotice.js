@@ -490,8 +490,6 @@ const CreateNotice = () => {
                                     <h6 className='mt-3'>
                                         {updatedNoticeImg?.size && `${(updatedNoticeImg.size / 1048576).toFixed(2)} MB`}
                                     </h6>
-                                    <button className="btn btn-danger" onClick={() => setUpdatedNoticeImg(null)}>Remove Photo</button>
-                                    <div className='form-text'>Photo may take longer to disappear after removal</div>
                                 </div>
                             )}
                         </div>
