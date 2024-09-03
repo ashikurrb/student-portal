@@ -142,7 +142,9 @@ const UpdateProfile = () => {
                                     <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" placeholder='Phone Number' required />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" placeholder='Security Answer' minLength={3} maxLength={10}/>
+                                    <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" placeholder='Security Answer'
+                                        minLength={3} maxLength={10}
+                                    />
                                 </div>
                                 <div className="mb-3">
                                     <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} className="form-control" placeholder='Password' required />

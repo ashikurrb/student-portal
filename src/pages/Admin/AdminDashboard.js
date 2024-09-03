@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../../components/Layouts/Layout';
 import AdminMenu from './AdminMenu';
 import { useAuth } from '../../context/auth';
+import { Image } from 'antd';
 
 const AdminDashboard = () => {
     const [auth] = useAuth();
@@ -27,7 +28,7 @@ const AdminDashboard = () => {
                             </div>
                             <div className="col-12 col-md-6 mb-2 order-1 order-md-2">
                                 <div className='card h-100 d-flex align-items-center justify-content-center'>
-                                    <img className='img rounded m-3' src={auth?.user?.avatar} alt="DP" style={{ width: "200px", height: "200px" }} />
+                                    <Image className='rounded m-3' src={auth?.user?.avatar} alt="DP" style={{ width: "200px", height: "200px" }} />
                                 </div>
                             </div>
                         </div>
