@@ -197,23 +197,6 @@ const CreateNotice = () => {
         }
     }
 
-    //delete selected notices
-    const handleDeleteSelected = async () => {
-        let answer = window.confirm("Are you sure you want to delete the selected notice?");
-        if (!answer) return;
-        const loadingToastId = toast.loading('Deleting notices...');
-        try {
-            await Promise.all(selectedNotice.map(async (nId) => {
-                await axios.delete(`${process.env.REACT_APP_API}/api/v1/notice/delete-notice/${nId}`);
-            }));
-            toast.success('Selected notices deleted successfully', { id: loadingToastId });
-            setSelectedNotice([]);
-            getAllNotices();
-        } catch (error) {
-            toast.error('Something went wrong while deleting', { id: loadingToastId });
-        }
-    };
-
     // Handle selecting all notices
     const handleSelectAll = (e) => {
         if (e.target.checked) {
@@ -230,6 +213,23 @@ const CreateNotice = () => {
             setSelectedNotice(selectedNotice.filter(id => id !== nId));
         } else {
             setSelectedNotice([...selectedNotice, nId]);
+        }
+    };
+
+    //delete selected notices
+    const handleDeleteSelected = async () => {
+        let answer = window.confirm("Are you sure you want to delete the selected notice?");
+        if (!answer) return;
+        const loadingToastId = toast.loading('Deleting notices...');
+        try {
+            await Promise.all(selectedNotice.map(async (nId) => {
+                await axios.delete(`${process.env.REACT_APP_API}/api/v1/notice/delete-notice/${nId}`);
+            }));
+            toast.success('Selected notices deleted successfully', { id: loadingToastId });
+            setSelectedNotice([]);
+            getAllNotices();
+        } catch (error) {
+            toast.error('Something went wrong while deleting', { id: loadingToastId });
         }
     };
 
