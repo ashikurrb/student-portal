@@ -78,28 +78,21 @@ const Header = () => {
                                                 className='border mx-1' src={auth?.user?.avatar} alt="dp" />
                                             {auth?.user?.name}
                                         </NavLink>
-                                        <ul className="dropdown-menu" >
-                                            <li>
-                                                <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "student"}`} className="dropdown-item"> <i class="fa-solid fa-user"></i> Dashboard </NavLink>
+                                        <ul className="dropdown-menu py-2" >
+                                            <li className='px-1 mb-1'>
+                                                <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "student"}`} className="dropdown-item rounded">
+                                                    <i class="fa-solid fa-user"></i> Dashboard
+                                                </NavLink>
                                             </li>
-                                            <li>
-                                                <NavLink onClick={handleLogOut} to="/login" className="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i>  Logout </NavLink>
+                                            <li className='px-1'>
+                                                <NavLink onClick={handleLogOut} to="/login" className="dropdown-item rounded">
+                                                    <i class="fa-solid fa-right-from-bracket"></i>  Logout
+                                                </NavLink>
                                             </li>
                                         </ul>
                                     </li>
                                 </>)
                             }
-                            {/* <li className="nav-item d-none d-lg-block">
-                                <NavLink to="/cart" className="nav-link position-relative mx-1">
-                                    <i className='fa-solid fa-cart-shopping'></i> Cart
-                                    {
-                                        cart?.length > 0 ?
-                                            <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">
-                                                {cart.length}
-                                            </span> : ""
-                                    }
-                                </NavLink>
-                            </li> */}
                         </ul>
                     </div>
                     <div className="d-none d-lg-block">

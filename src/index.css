@@ -27,8 +27,12 @@
   font-weight: 300 !important;
 }
 
-.active{
-  border-bottom: 2px solid black;
+.navbar .active {
+  border-bottom: 2px solid;
+}
+
+.dropdown-menu .active {
+  border-bottom: none;
 }
 
 .navbar-brand{
