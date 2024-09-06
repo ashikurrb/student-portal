@@ -7,10 +7,8 @@ import moment from 'moment'
 import toast from 'react-hot-toast';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { useAuth } from '../../context/auth';
 
 const ViewPayment = () => {
-    const [auth] = useAuth();
     const [payment, setPayment] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
 
@@ -34,7 +32,7 @@ const ViewPayment = () => {
 
     // Function to generate invoice PDF
     const generateInvoice = (payment) => {
-        toast.success("Invoice created");
+        const loadingToastId = toast.loading('Invoice creating...');
 
         // Set page size to A5
         const doc = new jsPDF({
@@ -169,6 +167,7 @@ const ViewPayment = () => {
                 const url = URL.createObjectURL(blob);
                 const printWindow = window.open(url, '_blank');
                 if (printWindow) {
+                    toast.success("Invoice created", { id: loadingToastId });
                     printWindow.focus();
                     printWindow.onload = function () {
                         printWindow.print();
