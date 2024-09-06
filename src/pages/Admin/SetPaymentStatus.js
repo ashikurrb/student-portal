@@ -295,7 +295,8 @@ const SetPaymentStatus = () => {
 
     // Function to generate invoice PDF
     const generateInvoice = (payment) => {
-        toast.success("Invoice created");
+        const loadingToastId = toast.loading('Invoice creating...');
+        
         // Set page size to A5
         const doc = new jsPDF({
             format: 'a5',
@@ -435,12 +436,10 @@ const SetPaymentStatus = () => {
 
                 const blob = doc.output('blob');
                 const url = URL.createObjectURL(blob);
-                const printWindow = window.open(url, '_blank');
+                const printWindow = window.open(url);
                 if (printWindow) {
+                    toast.success("Invoice created", { id: loadingToastId });
                     printWindow.focus();
-                    printWindow.onload = function () {
-                        printWindow.print();
-                    };
                 } else {
                     toast.error('Failed to open the print window');
                 }
@@ -468,8 +467,8 @@ const SetPaymentStatus = () => {
                             <i className="fa-solid fa-credit-card"></i> Create Payment Status ({payment.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
-                        <Input
-                            allowClear={true}
+                            <Input
+                                allowClear={true}
                                 type="text"
                                 placeholder='Search'
                                 size='large'
