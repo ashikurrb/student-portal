@@ -641,10 +641,7 @@ const SetPaymentStatus = () => {
                                                         <th scope="row">{i + 1}</th>
                                                         <td>{p?.grade?.name}</td>
                                                         <td>
-                                                            {p?.user?.name}
-                                                        </td>
-                                                        <td>
-                                                            <Tooltip title={`Created: ${moment(p.createdAt).format('llll')} Updated: ${moment(p.updatedAt).format('llll')}`}>
+                                                        <Tooltip title={`Created: ${moment(p.createdAt).format('llll')} Updated: ${moment(p.updatedAt).format('llll')}`}>
                                                                 <div className="d-flex align-items-center">
                                                                     <img
                                                                         className='me-1'
@@ -654,6 +651,9 @@ const SetPaymentStatus = () => {
                                                                     <span>{p?.user?.name}</span>
                                                                 </div>
                                                             </Tooltip>
+                                                        </td>
+                                                        <td>
+                                                           {p.remark}
                                                         </td>
                                                         <td>TK. {p.amount}</td>
                                                         <td>{p.method}</td>
