@@ -295,7 +295,7 @@ const SetPaymentStatus = () => {
 
     // Function to generate invoice PDF
     const generateInvoice = (payment) => {
-        const loadingToastId = toast.loading('Invoice creating...');
+        const loadingToastId = toast.loading('Generating Invoice...');
 
         // Set page size to A5
         const doc = new jsPDF({
@@ -438,7 +438,7 @@ const SetPaymentStatus = () => {
                 const url = URL.createObjectURL(blob);
                 const printWindow = window.open(url);
                 if (printWindow) {
-                    toast.success("Invoice created", { id: loadingToastId });
+                    toast.success("Invoice generated", { id: loadingToastId });
                     printWindow.focus();
                 } else {
                     toast.error('Failed to open the print window');
