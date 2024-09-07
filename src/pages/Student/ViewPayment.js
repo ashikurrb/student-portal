@@ -165,9 +165,9 @@ const ViewPayment = () => {
 
                 const blob = doc.output('blob');
                 const url = URL.createObjectURL(blob);
+                toast.success("Invoice generated", { id: loadingToastId });
                 const printWindow = window.open(url);
                 if (printWindow) {
-                    toast.success("Invoice generated", { id: loadingToastId });
                     printWindow.focus();
                 } else {
                     toast.error('Failed to open the print window');
@@ -194,7 +194,7 @@ const ViewPayment = () => {
                         <StudentMenu />
                     </div>
                     <div className="col-md-9">
-                    <h3 className="text-center my-4">
+                        <h3 className="text-center my-4">
                             <i class="fa-solid fa-credit-card pe-2"></i> Payment Status
                         </h3>
                         <h6 className='text-end'>Total paid: TK. {totalAmount}</h6>

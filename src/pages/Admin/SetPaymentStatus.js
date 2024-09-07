@@ -434,11 +434,11 @@ const SetPaymentStatus = () => {
                 doc.text(footerText1, footerX1, footerY1);
                 doc.text(footerText2, footerX2, footerY2);
 
-                 const blob = doc.output('blob');
+                const blob = doc.output('blob');
                 const url = URL.createObjectURL(blob);
+                toast.success("Invoice generated", { id: loadingToastId });
                 const printWindow = window.open(url);
                 if (printWindow) {
-                    toast.success("Invoice generated", { id: loadingToastId });
                     printWindow.focus();
                 } else {
                     toast.error('Failed to open the print window');
@@ -641,7 +641,7 @@ const SetPaymentStatus = () => {
                                                         <th scope="row">{i + 1}</th>
                                                         <td>{p?.grade?.name}</td>
                                                         <td>
-                                                        <Tooltip title={`Created: ${moment(p.createdAt).format('llll')} Updated: ${moment(p.updatedAt).format('llll')}`}>
+                                                            <Tooltip title={`Created: ${moment(p.createdAt).format('llll')} Updated: ${moment(p.updatedAt).format('llll')}`}>
                                                                 <div className="d-flex align-items-center">
                                                                     <img
                                                                         className='me-1'
@@ -653,7 +653,7 @@ const SetPaymentStatus = () => {
                                                             </Tooltip>
                                                         </td>
                                                         <td>
-                                                           {p.remark}
+                                                            {p.remark}
                                                         </td>
                                                         <td>TK. {p.amount}</td>
                                                         <td>{p.method}</td>
