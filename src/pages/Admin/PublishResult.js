@@ -7,7 +7,7 @@ import moment from 'moment'
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 import { SearchOutlined } from '@ant-design/icons';
-import { Modal, DatePicker, Select, Tooltip, Input } from 'antd';
+import { Modal, DatePicker, Select, Tooltip, Input, Image } from 'antd';
 const dateFormat = 'DD-MM-YYYY';
 const { Option } = Select;
 
@@ -329,7 +329,16 @@ const PublishResult = () => {
                                         onChange={(value) => { setUser(value) }}
                                         required>
                                         {filteredUsers?.map(u => (
-                                            <Option key={u._id} value={u._id}>{u.name}</Option>
+                                            <Option key={u._id} value={u._id}>
+                                                <div className="d-flex align-items-center">
+                                                    <img
+                                                        className='me-1'
+                                                        style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                                                        src={u?.avatar}
+                                                        alt="dp" />
+                                                    {u.name}
+                                                </div>
+                                            </Option>
                                         ))}
                                     </Select>
                                 </div>
@@ -430,7 +439,14 @@ const PublishResult = () => {
                                                             <td>{r?.grade?.name}</td>
                                                             <td>
                                                                 <Tooltip title={`Created: ${moment(r.createdAt).format('llll')} Updated: ${moment(r.updatedAt).format('llll')}`}>
-                                                                    <span>{r?.user?.name}</span>
+                                                                    <div className="d-flex align-items-center">
+                                                                        <Image
+                                                                            className='me-1'
+                                                                            style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                                                                            src={r?.user.avatar}
+                                                                            alt="dp" />
+                                                                        <span>{r?.user?.name}</span>
+                                                                    </div>
                                                                 </Tooltip>
                                                             </td>
                                                             <td>{r.type}</td>
@@ -460,13 +476,19 @@ const PublishResult = () => {
             </div>
             <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
                 <h5 className='text-center'>Update Result</h5>
+
                 <div className='text-center my-3'>
-                    {
-                        <p>
-                            {selected?.user?.name} - {selected?.grade?.name} - {moment(selected?.examDate).format('ll')}
-                        </p>
-                    }
+                    <span className="d-flex justify-content-center align-items-center">
+                        <img
+                            className='me-1'
+                            style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                            src={selected?.user?.avatar}
+                            alt="dp"
+                        />
+                       <b>{selected?.user?.name}</b>&nbsp;- {selected?.grade?.name} - {moment(selected?.examDate).format('ll')}
+                    </span>
                 </div>
+
                 <form onSubmit={handleUpdate}>
                     <div className="mt-4 d-lg-flex">
                         <input

@@ -9,7 +9,7 @@ import moment from 'moment'
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { SearchOutlined } from '@ant-design/icons';
-import { Modal, DatePicker, Select, Tooltip, Input } from 'antd';
+import { Modal, DatePicker, Select, Tooltip, Input, Image } from 'antd';
 const dateFormat = 'DD-MM-YYYY';
 const { Option } = Select;
 
@@ -296,7 +296,7 @@ const SetPaymentStatus = () => {
     // Function to generate invoice PDF
     const generateInvoice = (payment) => {
         const loadingToastId = toast.loading('Invoice creating...');
-        
+
         // Set page size to A5
         const doc = new jsPDF({
             format: 'a5',
@@ -512,7 +512,16 @@ const SetPaymentStatus = () => {
                                         value={user || undefined}
                                         onChange={(value) => { setUser(value) }} required>
                                         {filteredUsers?.map(u => (
-                                            <Option key={u._id} value={u._id}>{u.name}</Option>
+                                            <Option key={u._id} value={u._id}>
+                                                <div className="d-flex align-items-center">
+                                                    <img
+                                                        className='me-1'
+                                                        style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                                                        src={u?.avatar}
+                                                        alt="dp" />
+                                                    {u.name}
+                                                </div>
+                                            </Option>
                                         ))}
                                     </Select>
                                 </div>
@@ -636,7 +645,14 @@ const SetPaymentStatus = () => {
                                                         </td>
                                                         <td>
                                                             <Tooltip title={`Created: ${moment(p.createdAt).format('llll')} Updated: ${moment(p.updatedAt).format('llll')}`}>
-                                                                <span>{p.remark}</span>
+                                                                <div className="d-flex align-items-center">
+                                                                    <Image
+                                                                        className='me-1'
+                                                                        style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                                                                        src={p?.user.avatar}
+                                                                        alt="dp" />
+                                                                    <span>{p?.user?.name}</span>
+                                                                </div>
                                                             </Tooltip>
                                                         </td>
                                                         <td>TK. {p.amount}</td>
@@ -671,12 +687,17 @@ const SetPaymentStatus = () => {
             <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
                 <h5 className='text-center'>Update Payment Status</h5>
                 <div className='text-center my-3'>
-                    {
-                        <span>
-                            {selected?.user?.name} - {selected?.grade?.name} - {moment(selected?.paymentDate).format('ll')}
-                        </span>
-                    }
+                    <span className="d-flex justify-content-center align-items-center">
+                        <img
+                            className='me-1'
+                            style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                            src={selected?.user?.avatar}
+                            alt="dp"
+                        />
+                        <b>{selected?.user?.name}</b>&nbsp;- {selected?.grade?.name} - {moment(selected?.examDate).format('ll')}
+                    </span>
                 </div>
+
                 <form onSubmit={handleUpdate}>
                     <div className="mt-4 d-lg-flex">
                         <input
