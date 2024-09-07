@@ -7,7 +7,7 @@ import moment from 'moment'
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 import { SearchOutlined } from '@ant-design/icons';
-import { Modal, DatePicker, Select, Tooltip, Input, Image } from 'antd';
+import { Modal, DatePicker, Select, Tooltip, Input } from 'antd';
 const dateFormat = 'DD-MM-YYYY';
 const { Option } = Select;
 
@@ -440,7 +440,7 @@ const PublishResult = () => {
                                                             <td>
                                                                 <Tooltip title={`Created: ${moment(r.createdAt).format('llll')} Updated: ${moment(r.updatedAt).format('llll')}`}>
                                                                     <div className="d-flex align-items-center">
-                                                                        <Image
+                                                                        <img
                                                                             className='me-1'
                                                                             style={{ width: "23px", height: "23px", borderRadius: "100%" }}
                                                                             src={r?.user.avatar}

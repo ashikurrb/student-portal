@@ -9,7 +9,7 @@ import moment from 'moment'
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { SearchOutlined } from '@ant-design/icons';
-import { Modal, DatePicker, Select, Tooltip, Input, Image } from 'antd';
+import { Modal, DatePicker, Select, Tooltip, Input } from 'antd';
 const dateFormat = 'DD-MM-YYYY';
 const { Option } = Select;
 
@@ -434,7 +434,7 @@ const SetPaymentStatus = () => {
                 doc.text(footerText1, footerX1, footerY1);
                 doc.text(footerText2, footerX2, footerY2);
 
-                const blob = doc.output('blob');
+                 const blob = doc.output('blob');
                 const url = URL.createObjectURL(blob);
                 const printWindow = window.open(url);
                 if (printWindow) {
@@ -646,7 +646,7 @@ const SetPaymentStatus = () => {
                                                         <td>
                                                             <Tooltip title={`Created: ${moment(p.createdAt).format('llll')} Updated: ${moment(p.updatedAt).format('llll')}`}>
                                                                 <div className="d-flex align-items-center">
-                                                                    <Image
+                                                                    <img
                                                                         className='me-1'
                                                                         style={{ width: "23px", height: "23px", borderRadius: "100%" }}
                                                                         src={p?.user.avatar}
