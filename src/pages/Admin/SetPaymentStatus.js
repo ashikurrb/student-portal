@@ -694,7 +694,7 @@ const SetPaymentStatus = () => {
                             src={selected?.user?.avatar}
                             alt="dp"
                         />
-                        <b>{selected?.user?.name}</b>&nbsp;- {selected?.grade?.name} - {moment(selected?.examDate).format('ll')}
+                        <b>{selected?.user?.name}</b>&nbsp;- {selected?.grade?.name} - {moment(selected?.paymentDate).format('ll')}
                     </span>
                 </div>
 
