@@ -42,7 +42,7 @@ const Login = () => {
                 toast.error(res.data.message, { id: loadingToastId });
             }
         } catch (error) {
-            console.error("Error details:", error); // Log the full error object
+            console.error("Error details:", error);
             if (error.response && error.response.data && error.response.data.error) {
                 toast.error(error.response.data.error, { id: loadingToastId });
             } else {
