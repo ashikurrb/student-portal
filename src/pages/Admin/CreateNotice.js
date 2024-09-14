@@ -513,7 +513,7 @@ const CreateNotice = () => {
                         {
                             <h6>
                                 {
-                                    selected?.grade ? selected?.grade?.name : "For all students"
+                                    selected?.grade ? selected?.grade?.name : "For all student"
                                 }
                             </h6>
                         }
