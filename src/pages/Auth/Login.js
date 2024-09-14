@@ -20,7 +20,7 @@ const Login = () => {
         e.preventDefault();
         // Show loading toast
         const loadingToastId = toast.loading('Logging in...');
-        // Create a FormData object
+        // Create a FormData
         const loginData = new FormData();
         loginData.append('email', email);
         loginData.append('phone', phone);
