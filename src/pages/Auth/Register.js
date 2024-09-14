@@ -26,7 +26,7 @@ const Register = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error("Getting error while fetching Grade")
+            toast.error("Error fetching grades")
         }
     }
     useEffect(() => {
