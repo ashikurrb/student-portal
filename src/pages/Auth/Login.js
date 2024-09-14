@@ -36,7 +36,6 @@ const Login = () => {
                 // Set login details in cookies
                 Cookies.set("auth", JSON.stringify(res.data), { expires: 7 }); // expires in 7 days
                 navigate(location.state || "/")
-                // Show success toast
                 toast.success(res.data && res.data.message, { id: loadingToastId });
             } else {
                 toast.error(res.data.message, { id: loadingToastId });
