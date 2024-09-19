@@ -28,7 +28,7 @@ const ViewCourse = () => {
     }, []);
 
     return (
-        <Layout>
+        <Layout title={"View Courses"}>
             <div className="container">
                 <div className="container">
                     <div className="row align-items-center">
@@ -37,19 +37,19 @@ const ViewCourse = () => {
                         </div>
                         <div className="col">
                             <h2 className="text-center my-4 me-5 mb-md-5">
-                                Available Grade
+                                Select Grade
                             </h2>
                         </div>
                     </div>
                     {spinnerLoading ?
                         <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
-                            <Spinner />
+                            <Spinner /> <p>Loading grades...</p>
                         </div> : <div className="row">
                             <div className="d-flex flex-wrap justify-content-center">
                                 {grades.map(g => (
-                                    g.name !== "Administration" && (
+                                    g.name !== "Administratio" && (
                                         <div className="col-md-2 card grade-btn border-dark p-3 m-2" key={g._id}>
-                                            <Link className='grade-link' to={`/grade/${g.slug}`}>{g.name}</Link>
+                                            <Link className='grade-link' to={`/view-course/${g.slug}`}>{g.name}</Link>
                                         </div>
                                     )
                                 ))}

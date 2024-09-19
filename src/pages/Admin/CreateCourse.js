@@ -6,13 +6,13 @@ import toast from 'react-hot-toast';
 import Spinner from '../../components/Spinner';
 import { SearchOutlined } from '@ant-design/icons';
 import { EyeOutlined } from '@ant-design/icons';
-import { Alert, Image, Input, Modal, Select, Tooltip, DatePicker, Card } from 'antd';
+import { Image, Input, Modal, Select, Tooltip, DatePicker } from 'antd';
 import moment from 'moment';
 const { RangePicker } = DatePicker;
 const dateFormat = 'DD-MM-YYYY';
 const { TextArea } = Input;
 const { Option } = Select;
-const { Meta } = Card;
+
 
 const CreateCourse = () => {
     const [spinnerLoading, setSpinnerLoading] = useState(false);
