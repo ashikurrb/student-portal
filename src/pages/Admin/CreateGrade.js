@@ -216,7 +216,7 @@ const CreateGrade = () => {
                             }
                         </div>
                     </div>
-                    <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
+                    <Modal onCancel={() => setVisible(false)} open={visible} footer={null}>
                         <h5 className='text-center'>Update Grade</h5>
                         <form onSubmit={handleUpdate}>
                             <div className='mt-4'>

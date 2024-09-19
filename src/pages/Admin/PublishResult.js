@@ -307,7 +307,7 @@ const PublishResult = () => {
                                 </button>
                             )}
                         </div>
-                        <Modal width={650} visible={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
+                        <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
                             <h5 className='text-center mb-3'>Publish Result</h5>
                             <form onSubmit={handlePublish}>
                                 <div className="mt-4 d-lg-flex">
@@ -474,7 +474,7 @@ const PublishResult = () => {
                     </div>
                 </div>
             </div>
-            <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
+            <Modal onCancel={() => setVisible(false)} open={visible} footer={null}>
                 <h5 className='text-center'>Update Result</h5>
 
                 <div className='text-center my-3'>

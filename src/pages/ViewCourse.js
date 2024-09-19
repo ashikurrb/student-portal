@@ -1,15 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layouts/Layout';
+import axios from 'axios';
+import GoBackButton from '../components/GoBackButton';
+import Spinner from '../components/Spinner';
+import { Link } from 'react-router-dom';
 
 const ViewCourse = () => {
+    const [grades, setGrades] = useState('');
+    const [spinnerLoading, setSpinnerLoading] = useState(true);
+
+    //Get All Grades
+    const getAllGrades = async (req, res) => {
+        try {
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/grade/all-grades`);
+            if (data?.success) {
+                setGrades(data?.grade);
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setSpinnerLoading(false);
+        }
+
+    };
+    useEffect(() => {
+        getAllGrades();
+    }, []);
+
     return (
         <Layout>
-        <div className="container">
-            <div className="row p-3">
-            <h3 className='text-center my-3'>Available Course</h3>
-            <div className="card text-center h2 p-5 mt-5 text-secondary ">No course available yet</div>
+            <div className="container">
+                <div className="container">
+                    <div className="row align-items-center">
+                        <div className="col-auto">
+                            <GoBackButton />
+                        </div>
+                        <div className="col">
+                            <h2 className="text-center my-4 mb-md-5">
+                                Available Grade
+                            </h2>
+                        </div>
+                    </div>
+                    {spinnerLoading ?
+                        <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
+                            <Spinner />
+                        </div> : <div className="row">
+                            <div className="d-flex flex-wrap justify-content-center">
+                                {grades.map(g => (
+                                    g.name !== "Administration" && (
+                                        <div className="col-md-2 card grade-btn border-dark p-3 m-2" key={g._id}>
+                                            <Link className='grade-link' to={`/grade/${g.slug}`}>{g.name}</Link>
+                                        </div>
+                                    )
+                                ))}
+                            </div>
+                        </div>}
+                </div>
             </div>
-        </div>
         </Layout>
     );
 };

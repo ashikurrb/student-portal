@@ -491,24 +491,24 @@ const SetPaymentStatus = () => {
                             )}
                         </div>
 
-                        <Modal width={650} visible={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
+                        <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
                             <form onSubmit={handleCreate}>
                                 <h5 className='text-center'>Create Payment Status</h5>
                                 <div className="mt-4 d-lg-flex">
-                                    <Select bordered={false}
+                                    <Select
                                         placeholder="Select Grade"
                                         size='large'
-                                        className='form-select mb-3 me-2'
+                                        className='mb-3 me-2 w-100'
                                         value={grade || undefined}
                                         onChange={(value) => { setGrade(value) }}>
                                         {grades?.map(g => (
                                             <Option key={g._id} value={g._id}>{g.name}</Option>
                                         ))}
                                     </Select>
-                                    <Select bordered={false}
+                                    <Select
                                         placeholder="Select Student"
                                         size='large'
-                                        className='form-select mb-3'
+                                        className='mb-3 w-100'
                                         value={user || undefined}
                                         onChange={(value) => { setUser(value) }} required>
                                         {filteredUsers?.map(u => (
@@ -543,10 +543,10 @@ const SetPaymentStatus = () => {
                                     <DatePicker format={dateFormat} className='form-control w-100 mb-3' value={paymentDate} onChange={(date) => setPaymentDate(date)} required />
                                 </div>
                                 <div className="d-lg-flex">
-                                    <Select bordered={false}
+                                    <Select
                                         placeholder="Select Method"
                                         size='large'
-                                        className='form-select mb-3 me-2'
+                                        className='mb-3 me-2 w-100'
                                         value={method}
                                         onChange={(value) => { setMethod(value) }}
                                         required>
@@ -684,7 +684,7 @@ const SetPaymentStatus = () => {
                     </div>
                 </div>
             </div>
-            <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
+            <Modal onCancel={() => setVisible(false)} open={visible} footer={null}>
                 <h5 className='text-center'>Update Payment Status</h5>
                 <div className='text-center my-3'>
                     <span className="d-flex justify-content-center align-items-center">

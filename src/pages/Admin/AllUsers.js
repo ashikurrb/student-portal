@@ -247,7 +247,7 @@ const AllUsers = () => {
                                                         }
                                                     </td>
                                                     <Modal
-                                                        visible={visible}
+                                                        open={visible}
                                                         onCancel={() => setVisible(false)}
                                                         footer={null}>
                                                         <h5 className='text-center'>User Grade Upgrading</h5>

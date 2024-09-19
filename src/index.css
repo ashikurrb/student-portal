@@ -155,3 +155,19 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
 }
+
+.grade-btn:hover{
+  background-color: #00984a;
+}
+
+.grade-link{
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  font-size: large;
+}
+
+.grade-link:hover{
+ color: white;
+}

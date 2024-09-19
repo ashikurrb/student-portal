@@ -21,7 +21,6 @@ import CreateGrade from './pages/Admin/CreateGrade';
 import CreateContent from './pages/Admin/CreateContent';
 import PublishResult from './pages/Admin/PublishResult';
 import CreateCourse from './pages/Admin/CreateCourse';
-import AllCourses from './pages/Admin/AllCourses';
 import SetPaymentStatus from './pages/Admin/SetPaymentStatus';
 import CreateNotice from './pages/Admin/CreateNotice';
 import ViewNotice from './pages/Student/ViewNotice';
@@ -55,7 +54,6 @@ function App() {
           <Route path='/dashboard/admin/create-notice' element={<CreateNotice />} />
           <Route path='/dashboard/admin/create-link' element={<CreateContent />} />
           <Route path='/dashboard/admin/create-course' element={<CreateCourse />} />
-          <Route path='/dashboard/admin/all-courses' element={<AllCourses />} />
           <Route path='/dashboard/admin/create-result' element={<PublishResult />} />
           <Route path='/dashboard/admin/create-payment' element={<SetPaymentStatus />} />
           <Route path='/dashboard/admin/all-users' element={<AllUsers />} />

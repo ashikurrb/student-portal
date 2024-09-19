@@ -38,7 +38,7 @@ const Footer = () => {
             <div className='text-center mb-3'>
                 <span>Copyright &copy; 2024
                     <Link className='text-warning' to="https://www.facebook.com/ashikurrb85" target='_blank'>
-                        ashikurrb
+                        @ashikurrb
                     </Link>
                     All Rights Reserved
                 </span>

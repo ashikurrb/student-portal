@@ -277,7 +277,7 @@ const CreateContent = () => {
                             )}
                         </div>
 
-                        <Modal width={650} visible={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
+                        <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
                             <h5 className='text-center'>Create Content</h5>
                             <form onSubmit={handleCreate}>
                                 <div className="mt-4 d-lg-flex">
@@ -431,7 +431,7 @@ const CreateContent = () => {
                     </div>
                 </div>
             </div>
-            <Modal onCancel={() => setVisible(false)} visible={visible} footer={null}>
+            <Modal onCancel={() => setVisible(false)} open={visible} footer={null}>
                 <h5 className='text-center'>Update Content</h5>
                 <div className='text-center my-3'>
                     {
