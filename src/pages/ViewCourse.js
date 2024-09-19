@@ -36,7 +36,7 @@ const ViewCourse = () => {
                             <GoBackButton />
                         </div>
                         <div className="col">
-                            <h2 className="text-center my-4 mb-md-5">
+                            <h2 className="text-center my-4 me-5 mb-md-5">
                                 Available Grade
                             </h2>
                         </div>

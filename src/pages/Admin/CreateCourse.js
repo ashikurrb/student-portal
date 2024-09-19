@@ -308,13 +308,13 @@ const CreateCourse = () => {
                                 <h5 className='text-center'>Create Course</h5>
                                 <form onSubmit={handleCreate}>
                                     <div>
-                                        <div className="mb-3">
+                                        <div className="mb-1">
                                             {courseImg && (
                                                 <div className="text-center">
                                                     <img src={typeof courseImg === 'string' ? courseImg : URL.createObjectURL(courseImg)} alt='profile-img' style={{ height: "200px" }} className='img-fluid rounded'
                                                     />
                                                     <div className="d-flex justify-content-center">
-                                                        <div className='mt-3 fw-bold'>
+                                                        <div className='mt-1 fw-bold'>
                                                             <span> Size: {`${(courseImg.size / 1048576).toFixed(2)} MB`}</span>
                                                             <span>{
                                                                 courseImg.size > 5000000 ? <p className='text-danger'>Image size should be less than 5 MB</p> : null
@@ -537,7 +537,7 @@ const CreateCourse = () => {
                             )}
                         </div>
                         <div className="text-center">
-                            <label className="btn btn-outline-secondary col-md-12">
+                            <label className="btn btn-outline-secondary col-md-8">
                                 {updatedCourseImg ? (typeof updatedCourseImg === 'string' ? 'Change Photo' : updatedCourseImg.name) : "Upload Photo"}
                                 <input
                                     type="file"
