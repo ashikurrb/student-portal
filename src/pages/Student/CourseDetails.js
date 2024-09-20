@@ -55,7 +55,6 @@ const CourseDetails = () => {
 
     const openModal = () => {
         setVisible(true);
-        console.log(course);
     };
 
     //handle create order
