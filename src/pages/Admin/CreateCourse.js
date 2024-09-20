@@ -442,6 +442,7 @@ const CreateCourse = () => {
                                                 <th>Title</th>
                                                 <th>Price</th>
                                                 <th>Starting Date</th>
+                                                <th>Status</th>
                                                 <th>Img</th>
                                                 <th>Action</th>
                                             </tr>
@@ -449,7 +450,7 @@ const CreateCourse = () => {
                                         <tbody>
                                             {filteredCourse.length === 0 ? (
                                                 <tr>
-                                                    <td colSpan="8" className="text-center">
+                                                    <td colSpan="9" className="text-center">
                                                         <div className="my-5">
                                                             <h3 className='text-secondary'>No Course Found</h3>
                                                             {searchQuery && (
@@ -485,6 +486,7 @@ const CreateCourse = () => {
                                                         </td>
                                                         <td>{c.price} Tk</td>
                                                         <td>{moment(c.dateRange).format('ll')}</td>
+                                                        <td>{c.status}</td>
                                                         <td>
                                                             <Image
                                                                 fallback="https://demofree.sirv.com/nope-not-here.jpg"

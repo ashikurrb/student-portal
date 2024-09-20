@@ -16,7 +16,7 @@ const CourseDetails = () => {
     const [auth] = useAuth();
     const [course, setCourse] = useState({});
     const [relatedCourse, setRelatedCourse] = useState([]);
-    const methods = ['bKash', 'Rocket', 'Nagad'];
+    const methods = ['bKash', 'Rocket'];
     const [method, setMethod] = useState(null);
     const [mfsNumber, setMfsNumber] = useState('');
     const [trxId, setTrxId] = useState('');
@@ -103,12 +103,19 @@ const CourseDetails = () => {
                                     <h6 className="card-text">Class start: {moment(course.dateRange).format('ll')}</h6>
                                 </div>
                                 {
-                                    auth.token ? <button className='btn btn-primary my-3 fw-bold' onClick={() => { openModal() }}>
-                                        <i className="fa-solid fa-plus"></i> Enroll Now
-                                    </button> :
-                                        <h5 className='my-3'>
-                                            Please <Link to={{ pathname: "/login", state: { from: location.pathname } }}>Login</Link> first to buy this course
-                                        </h5>
+                                    course.status === "Active" ? (
+                                        auth.token ? (
+                                            <button className='btn btn-primary my-3 fw-bold' onClick={openModal}>
+                                                <i className="fa-solid fa-plus"></i> Enroll Now
+                                            </button>
+                                        ) : (
+                                            <h5 className='my-3'>
+                                                Please <Link to={{ pathname: "/login", state: { from: location.pathname } }}>Login</Link> first to buy this course
+                                            </h5>
+                                        )
+                                    ) : (
+                                        <h5 className='text-danger my-3'>Coming soon</h5>
+                                    )
                                 }
                             </div>
                         </div>
@@ -121,8 +128,8 @@ const CourseDetails = () => {
                         <li>সবকিছু সম্মত থাকলে Enroll Now বাটনে ক্লিক করুন</li>
                         <li>Enroll Now বাটন না পেলে Login করুন। রেজিস্ট্রেশন করা না থাকলে আগে রেজিস্ট্রেশন করুন। রেজিস্ট্রেশনের সময় WhatsApp একাউন্ট আছে এরকম একটি নাম্বার ব্যাবহার করুন।</li>
                         <li>ওয়েবসাইটে Login করা হলে Enroll Now বাটন দেখাবে, সেটিতে ক্লিক করুন </li>
-                        <li>একটা পপ-আপ ওপেন হবে। প্রদর্শনকৃত MFS (bKash, Nagad, Rocket) নাম্বারে কোর্স এর সমপরিমান মূল্য পরিশোধ করুন</li>
-                        <li>পেমেন্ট মেথড (bKash, Nagad, Rocket), যেই MFS নাম্বার থেকে মূল্য পরিশোধ করেছেন সেটা এবং MFS থেকে প্রাপ্ত Transaction/Trx ID টি প্রবেশ করান এবং Sumbit Payment বাটনে ক্লিক করুন </li>
+                        <li>একটা পপ-আপ ওপেন হবে। প্রদর্শনকৃত MFS (bKash: 01794-744343, Rocket: 01794-744343) নাম্বারে কোর্স এর সমপরিমান মূল্য পরিশোধ (Send Money) করুন</li>
+                        <li>পেমেন্ট মেথড (bKash, Rocket), যেই MFS নাম্বার থেকে মূল্য পরিশোধ করেছেন সেটা এবং MFS থেকে প্রাপ্ত Transaction/Trx ID টি প্রবেশ করান এবং Sumbit Payment বাটনে ক্লিক করুন </li>
                         <li>এডমিন আপনার পেমেন্ট ভেরিফাই করে আপনাকে প্রাইভেট Messenger / WhatsApp গ্রুপে এড করবেন</li>
                         <li>পেমেন্ট ভেরিফাই সম্পন্ন হলে আপনি Dashboard এর <Link className='fw-bold' to="/dashboard/student/view-payment">Payment Status</Link> অপশন থেকে আপনার Invoice টি ডাউনলোড করতে পারবেন </li>
                     </ol>
@@ -152,32 +159,35 @@ const CourseDetails = () => {
                 <h5 className='text-center mb-3'>Payment Details</h5>
                 <div className="row">
                     <div className='col-md-6 order-2 order-md-1 mt-2'>
-                        <Image src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
+                       <div className="d-flex">
+                       <Image src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
+                       <Image src={"/images/rocketPayment.jpg"} alt={"rocketQR"} />
+                       </div>
                         <h6 className='text-primary text-center mb-3'>Click QR to view large</h6>
                         <form>
                             <div className="d-flex">
-                            <Select
-                                placeholder="Select Payment Method"
-                                size='large'
-                                className='mb-3 me-2 w-100'
-                                value={method}
-                                onChange={(value) => setMethod(value)}
-                                required>
-                                {methods.map((m, i) => (
-                                    <Option key={i} value={m}>{m}</Option>
-                                ))}
-                            </Select>
-                            <Input
-                                showCount
-                                type="number"
-                                size='large'
-                                placeholder='MFS Number'
-                                className='mb-3 me-2'
-                                value={mfsNumber}
-                                onChange={(e) => setMfsNumber(e.target.value)}
-                                minLength={11} maxLength={11}
-                                required
-                            />
+                                <Select
+                                    placeholder="Select Payment Method"
+                                    size='large'
+                                    className='mb-3 me-2 w-100'
+                                    value={method}
+                                    onChange={(value) => setMethod(value)}
+                                    required>
+                                    {methods.map((m, i) => (
+                                        <Option key={i} value={m}>{m}</Option>
+                                    ))}
+                                </Select>
+                                <Input
+                                    showCount
+                                    type="number"
+                                    size='large'
+                                    placeholder='MFS Number'
+                                    className='mb-3 me-2'
+                                    value={mfsNumber}
+                                    onChange={(e) => setMfsNumber(e.target.value)}
+                                    minLength={11} maxLength={11}
+                                    required
+                                />
                             </div>
                             <Input
                                 type="text"
@@ -205,10 +215,9 @@ const CourseDetails = () => {
                             <h6 className="">Price: <span className='fw-bold'>৳</span>{course.price}</h6>
                         </div>
                         <ol className='list'>
-                            <li>রাজি থাকলে প্রদর্শনকৃত যেকনো MFS (bKash, Nagad, Rocket) নাম্বারে কোর্স এর সমপরিমান মূল্য পরিশোধ করুন</li>
-                            <li>যেই MFS নাম্বার থেকে মূল্য পরিশোধ করেছেন সেটা এবং MFS থেকে প্রাপ্ত Transaction/Trx ID টি প্রবেশ করান এবং Sumbit Payment বাটনে ক্লিক করুন </li>
-                            <li>এডমিন আপনার পেমেন্ট ভেরিফাই করে আপনাকে প্রাইভেট Messenger / WhatsApp গ্রুপে এড করবেন</li>
-                            <li>পেমেন্ট ভেরিফাই সম্পন্ন হলে আপনি Dashboard এর <Link className='fw-bold' to="/dashboard/student/view-payment">Payment Status</Link> অপশন থেকে আপনার Invoice টি ডাউনলোড করতে পারবেন </li>
+                            <li>প্রদর্শনকৃত MFS (<b>bKash: </b>01794-744343 অথবা <b>Rocket:</b> 01794-744343) নাম্বারে কোর্স এর সমপরিমান মূল্য পরিশোধ (Send Money) করুন</li>
+                            <li>MFS Number, Payment Mothod এবং Transaction/Trx Id প্রবেশ করিয়ে Sumbit Payment বাটনে ক্লিক করুন </li>
+                            <li>পেমেন্ট ভেরিফিকেশন কমপ্লিট হলে <Link className='fw-bold' to="/dashboard/student/view-payment">Payment Status</Link> অপশন থেকে Invoice টি ডাউনলোড করতে পারবেন </li>
                         </ol>
                     </div>
                 </div>
