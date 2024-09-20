@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layouts/Layout';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import GoBackButton from '../../components/GoBackButton';
 import Spinner from '../../components/Spinner';
 import { Image, Input, Modal } from 'antd';
 import moment from 'moment';
+import { useAuth } from '../../context/auth';
 
 const CourseDetails = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const params = useParams();
+    const [auth] = useAuth();
     const [course, setCourse] = useState({});
     const [relatedCourse, setRelatedCourse] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
@@ -52,7 +55,12 @@ const CourseDetails = () => {
         window.scrollTo(0, 0);
     }, [navigate]);
 
-
+    const refinedDocView = (text) => {
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
+        const textWithLinks = text.replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
+        const textWithNewLines = textWithLinks.replace(/\n/g, '<br>');
+        return textWithNewLines;
+    };
     return (
         <Layout title={"Course Details"}>
             <div className="container">
@@ -76,13 +84,23 @@ const CourseDetails = () => {
                             <div className="col-md-7">
                                 <div className="card-body">
                                     <h2>{course.title}</h2>
-                                    <p className="card-text">{course.description}</p>
+                                    <p style={{ textAlign: "justify" }}
+                                        dangerouslySetInnerHTML={{
+                                            __html: refinedDocView(course.description)
+                                        }}
+                                    />
                                     <Link to={`/view-course/${course.grade.slug}`}><p className="card-text">Grade: <b>{course?.grade?.name}</b></p></Link>
                                     <h6 className="card-text fs-3"><span className='fs-2 fw-bold'>৳</span>{course.price}</h6>
-                                    <h6 className="card-text">Class start: {course.dateRange}</h6>
+                                    <h6 className="card-text">Class start: {moment(course.dateRange).format('ll')}</h6>
                                 </div>
-                                <button className='btn btn-secondary my-3' onClick={() => { openModal() }}>
-                                    <i className="fa-solid fa-plus"></i> Enroll Now </button>
+                                {
+                                    auth.token ? <button className='btn btn-secondary my-3' onClick={() => { openModal() }}>
+                                        <i className="fa-solid fa-plus"></i> Enroll Now
+                                    </button> :
+                                        <h5 className='my-3'>
+                                            Please <Link to={{ pathname: "/login", state: { from: location.pathname } }}>Login</Link> first to buy this course
+                                        </h5>
+                                }
                             </div>
                         </div>
                 }

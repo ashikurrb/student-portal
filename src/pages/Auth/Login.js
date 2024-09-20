@@ -35,8 +35,8 @@ const Login = () => {
                 });
                 // Set login details in cookies
                 Cookies.set("auth", JSON.stringify(res.data), { expires: 1 }); // expires in 1 day
-                navigate(location.state || "/")
                 toast.success(res.data && res.data.message, { id: loadingToastId });
+                navigate(location.state || "/");
             } else {
                 toast.error(res.data.message, { id: loadingToastId });
             }
@@ -68,7 +68,7 @@ const Login = () => {
                     </div>
                     <div className="col-md-5">
                         <form className='m-lg-5 mb-2' onSubmit={handleSubmit}>
-                            <h4 className="title"><i class="fa-solid fa-right-to-bracket"></i> &nbsp; Login Here</h4>
+                            <h4 className="title"><i className="fa-solid fa-right-to-bracket"></i> &nbsp; Login Here</h4>
                             <div className="mb-3">
                                 <input type="text" value={email || phone} onChange={(e) => setEmail(e.target.value) || setPhone(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email or Phone' required />
                             </div>
