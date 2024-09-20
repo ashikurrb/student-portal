@@ -49,7 +49,7 @@ const ViewCourse = () => {
                         <div className="row">
                             <div className="d-flex flex-wrap justify-content-center">
                                 {grades.map(g => (
-                                    g.name !== "Administratio" && (
+                                    g.name !== "Administration" && (
                                         <div className="col-md-2 card grade-btn border-dark p-3 m-2" key={g._id}>
                                             <Link className='grade-link' to={`/view-course/${g.slug}`}>{g.name} </Link>
                                         </div>
