@@ -59,7 +59,7 @@ const OrderList = () => {
                 toast.error(data.message, { id: loadingToastId })
             }
         } catch (error) {
-            toast.error('Something wrong while delete', { id: loadingToastId })
+            toast.error('Something wrong during delete', { id: loadingToastId })
         }
     }
 
