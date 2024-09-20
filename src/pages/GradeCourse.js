@@ -32,7 +32,7 @@ const GradeCourse = () => {
     }, [params?.slug])
 
     return (
-        <Layout title={"View Courses"}>
+        <Layout title={`Courses - ${grade.name}`}>
             <div className="container">
                 <div className="row align-items-center mt-4">
                     <div className="col-auto">
