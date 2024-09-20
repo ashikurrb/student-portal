@@ -25,7 +25,7 @@ const CreateCourse = () => {
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
     const [dateRange, setDateRange] = useState('');
-    const [statuses] = useState(["Active", "Closed", "Upcoming"]);
+    const [statuses] = useState(["Active", "Upcoming"]);
     const [status, setStatus] = useState(null);
     const [description, setDescription] = useState('');
     const [courseImg, setCourseImg] = useState('');

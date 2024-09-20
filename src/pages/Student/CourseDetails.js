@@ -155,71 +155,65 @@ const CourseDetails = () => {
                     }
                 </div> */}
             </div>
-            <Modal style={{top: 30}} width={1000} onCancel={() => setVisible(false)} open={visible} footer={null} maskClosable={false}>
+            <Modal style={{ top: 30 }} width={800} onCancel={() => setVisible(false)} open={visible} footer={null} maskClosable={false}>
                 <h5 className='text-center mb-3'>Payment Details</h5>
+                <div>
+                    <h6>আপনি কিনতে চাচ্ছেন:</h6>
+                    <div className='text-center my-2 border border-2 rounded'>
+                        <h6>Course: <b>{course.title}</b> ({course?.grade?.name})</h6>
+                        <h6 className="">Price: <span className='fw-bold'>৳</span>{course.price}</h6>
+                    </div>
+                    <p className='text-center'>
+                        প্রদর্শনকৃত MFS (<b>bKash: </b>01794-744343 অথবা <b>Rocket:</b> 01794-744343) নাম্বারে কোর্স এর সমপরিমান মূল্য পরিশোধ (Send Money) করুন এবং MFS Number, Payment Method এবং Transaction/Trx Id প্রবেশ করিয়ে সাবমিট করুন। পেমেন্ট ভেরিফিকেশন কমপ্লিট হলে <Link className='fw-bold' to="/dashboard/student/view-payment">Payment Status</Link> অপশন থেকে Invoice টি ডাউনলোড করতে পারবেন
+                    </p>
+                </div>
                 <div className="row">
-                    <div className='col-md-6 order-2 order-md-1 mt-2'>
+                    <div className="d-flex justify-content-center">
+                        <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px", marginRight:"5px" }} src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
+                        <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px", marginLeft:"5px"}} src={"/images/rocketPayment.jpg"} alt={"rocketQR"} />
+                    </div>
+                    <h6 className='text-primary text-center mb-3'>Click QR to view large</h6>
+                    <form>
                         <div className="d-flex">
-                            <Image src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
-                            <Image src={"/images/rocketPayment.jpg"} alt={"rocketQR"} />
-                        </div>
-                        <h6 className='text-primary text-center mb-3'>Click QR to view large</h6>
-                        <form>
-                            <div className="d-flex">
-                                <Select
-                                    placeholder="Method"
-                                    size='large'
-                                    className='mb-3 me-2 w-100'
-                                    value={method}
-                                    onChange={(value) => setMethod(value)}
-                                    required>
-                                    {methods.map((m, i) => (
-                                        <Option key={i} value={m}>{m}</Option>
-                                    ))}
-                                </Select>
-                                <Input
-                                    showCount
-                                    type="number"
-                                    size='large'
-                                    placeholder='MFS Number'
-                                    className='mb-3 me-2'
-                                    value={mfsNumber}
-                                    onChange={(e) => setMfsNumber(e.target.value)}
-                                    minLength={11} maxLength={11}
-                                    required
-                                />
-                            </div>
-                            <Input
-                                type="text"
+                            <Select
+                                placeholder="Method"
                                 size='large'
-                                placeholder='Transaction ID'
+                                className='mb-3 me-2 w-100'
+                                value={method}
+                                onChange={(value) => setMethod(value)}
+                                required>
+                                {methods.map((m, i) => (
+                                    <Option key={i} value={m}>{m}</Option>
+                                ))}
+                            </Select>
+                            <Input
+                                showCount
+                                type="number"
+                                size='large'
+                                placeholder='MFS Number'
                                 className='mb-3 me-2'
-                                value={trxId}
-                                onChange={(e) => setTrxId(e.target.value)}
-                                minLength={4} maxLength={25}
+                                value={mfsNumber}
+                                onChange={(e) => setMfsNumber(e.target.value)}
+                                minLength={11} maxLength={11}
                                 required
                             />
-                            <div className="text-center">
-                                <button type="submit" className="btn btn-warning fw-bold mt-2">
-                                    {spinnerLoading ? <div><Spinner /> </div> : "Submit Payment"}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <div className='col-md-6 order-1 order-md-2 mt-2'>
-                        <h5 className='text-center'>কোর্স বিস্তারিত</h5>
-                        <hr />
-                        <h6>আপনি কিনতে চাচ্ছেন:</h6>
-                        <div className='text-center my-2 border border-2 rounded'>
-                            <h6>Course: <b>{course.title}</b> ({course?.grade?.name})</h6>
-                            <h6 className="">Price: <span className='fw-bold'>৳</span>{course.price}</h6>
                         </div>
-                        <ol className='list'>
-                            <li>প্রদর্শনকৃত MFS (<b>bKash: </b>01794-744343 অথবা <b>Rocket:</b> 01794-744343) নাম্বারে কোর্স এর সমপরিমান মূল্য পরিশোধ (Send Money) করুন</li>
-                            <li>MFS Number, Payment Mothod এবং Transaction/Trx Id প্রবেশ করিয়ে Sumbit Payment বাটনে ক্লিক করুন </li>
-                            <li>পেমেন্ট ভেরিফিকেশন কমপ্লিট হলে <Link className='fw-bold' to="/dashboard/student/view-payment">Payment Status</Link> অপশন থেকে Invoice টি ডাউনলোড করতে পারবেন </li>
-                        </ol>
-                    </div>
+                        <Input
+                            type="text"
+                            size='large'
+                            placeholder='Transaction ID'
+                            className='mb-3 me-2'
+                            value={trxId}
+                            onChange={(e) => setTrxId(e.target.value)}
+                            minLength={4} maxLength={25}
+                            required
+                        />
+                        <div className="text-center">
+                            <button type="submit" className="btn btn-warning fw-bold mt-2">
+                                {spinnerLoading ? <div><Spinner /> </div> : "Submit Payment"}
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </Modal>
         </Layout>
