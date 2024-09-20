@@ -155,19 +155,19 @@ const CourseDetails = () => {
                     }
                 </div> */}
             </div>
-            <Modal width={1000} onCancel={() => setVisible(false)} open={visible} footer={null} maskClosable={false}>
+            <Modal style={{top: 30}} width={1000} onCancel={() => setVisible(false)} open={visible} footer={null} maskClosable={false}>
                 <h5 className='text-center mb-3'>Payment Details</h5>
                 <div className="row">
                     <div className='col-md-6 order-2 order-md-1 mt-2'>
-                       <div className="d-flex">
-                       <Image src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
-                       <Image src={"/images/rocketPayment.jpg"} alt={"rocketQR"} />
-                       </div>
+                        <div className="d-flex">
+                            <Image src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
+                            <Image src={"/images/rocketPayment.jpg"} alt={"rocketQR"} />
+                        </div>
                         <h6 className='text-primary text-center mb-3'>Click QR to view large</h6>
                         <form>
                             <div className="d-flex">
                                 <Select
-                                    placeholder="Select Payment Method"
+                                    placeholder="Method"
                                     size='large'
                                     className='mb-3 me-2 w-100'
                                     value={method}
