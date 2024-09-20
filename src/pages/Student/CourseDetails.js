@@ -4,9 +4,10 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import GoBackButton from '../../components/GoBackButton';
 import Spinner from '../../components/Spinner';
-import { Image, Input, Modal } from 'antd';
 import moment from 'moment';
 import { useAuth } from '../../context/auth';
+import { Image, Input, Modal, Select } from 'antd';
+const { Option } = Select;
 
 const CourseDetails = () => {
     const navigate = useNavigate();
@@ -15,6 +16,10 @@ const CourseDetails = () => {
     const [auth] = useAuth();
     const [course, setCourse] = useState({});
     const [relatedCourse, setRelatedCourse] = useState([]);
+    const methods = ['bKash', 'Rocket', 'Nagad'];
+    const [method, setMethod] = useState(null);
+    const [mfsNumber, setMfsNumber] = useState('');
+    const [trxId, setTrxId] = useState('');
     const [spinnerLoading, setSpinnerLoading] = useState(true);
     const [visible, setVisible] = useState(false);
 
@@ -108,20 +113,20 @@ const CourseDetails = () => {
                             </div>
                         </div>
                 }
-                 <hr />
-                 <div className='col-md-12 my-4'>
-                        <h5 className='text-center'><u>নিয়মাবলী</u></h5>
-                        <ol className='list'>
-                            <li> যেই কোর্স কিনতে চান সেটায় প্রবেশ করে বিস্তারিত পড়ুন</li>
-                            <li>সবকিছু সম্মত থাকলে Enroll Now বাটনে ক্লিক করুন</li>
-                            <li>Enroll Now বাটন না পেলে Login করুন। রেজিস্ট্রেশন করা না থাকলে আগে রেজিস্ট্রেশন করুন। রেজিস্ট্রেশনের সময় WhatsApp একাউন্ট আছে এরকম একটি নাম্বার ব্যাবহার করুন।</li>
-                            <li>ওয়েবসাইটে Login করা হলে Enroll Now বাটন দেখাবে, সেটিতে ক্লিক করুন </li>
-                            <li>একটা পপ-আপ ওপেন হবে। প্রদর্শনকৃত bKash নাম্বারে কোর্স এর সমপরিমান মূল্য পরিশোধ করুন</li>
-                            <li>যেই বিকাশ নাম্বার থেকে মূল্য পরিশোধ করেছেন সেটা এবং বিকাশ থেকে প্রাপ্ত Transaction/Trx ID টি প্রবেশ করান এবং Sumbit Payment বাটনে ক্লিক করুন </li>
-                            <li>এডমিন আপনার পেমেন্ট ভেরিফাই করে আপনাকে প্রাইভেট Messenger / WhatsApp গ্রুপে এড করবেন</li>
-                            <li>পেমেন্ট ভেরিফাই সম্পন্ন হলে আপনি Dashboard এর <Link className='fw-bold' to="/dashboard/student/view-payment">Payment Status</Link> অপশন থেকে আপনার Invoice টি ডাউনলোড করতে পারবেন </li>
-                        </ol>
-                    </div>
+                <hr />
+                <div className='col-md-12 my-4'>
+                    <h5 className='text-center'><u>নিয়মাবলী</u></h5>
+                    <ol className='list'>
+                        <li> যেই কোর্স কিনতে চান সেটায় প্রবেশ করে বিস্তারিত পড়ুন</li>
+                        <li>সবকিছু সম্মত থাকলে Enroll Now বাটনে ক্লিক করুন</li>
+                        <li>Enroll Now বাটন না পেলে Login করুন। রেজিস্ট্রেশন করা না থাকলে আগে রেজিস্ট্রেশন করুন। রেজিস্ট্রেশনের সময় WhatsApp একাউন্ট আছে এরকম একটি নাম্বার ব্যাবহার করুন।</li>
+                        <li>ওয়েবসাইটে Login করা হলে Enroll Now বাটন দেখাবে, সেটিতে ক্লিক করুন </li>
+                        <li>একটা পপ-আপ ওপেন হবে। প্রদর্শনকৃত MFS (bKash, Nagad, Rocket) নাম্বারে কোর্স এর সমপরিমান মূল্য পরিশোধ করুন</li>
+                        <li>পেমেন্ট মেথড (bKash, Nagad, Rocket), যেই MFS নাম্বার থেকে মূল্য পরিশোধ করেছেন সেটা এবং MFS থেকে প্রাপ্ত Transaction/Trx ID টি প্রবেশ করান এবং Sumbit Payment বাটনে ক্লিক করুন </li>
+                        <li>এডমিন আপনার পেমেন্ট ভেরিফাই করে আপনাকে প্রাইভেট Messenger / WhatsApp গ্রুপে এড করবেন</li>
+                        <li>পেমেন্ট ভেরিফাই সম্পন্ন হলে আপনি Dashboard এর <Link className='fw-bold' to="/dashboard/student/view-payment">Payment Status</Link> অপশন থেকে আপনার Invoice টি ডাউনলোড করতে পারবেন </li>
+                    </ol>
+                </div>
                 {/*<div className="row">
                     <h4 className='text-center'>Similar Course</h4>
                     {spinnerLoading ? <div className='my-5'><Spinner /></div> : <>
@@ -150,20 +155,37 @@ const CourseDetails = () => {
                         <Image src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
                         <h6 className='text-primary text-center mb-3'>Click QR to view large</h6>
                         <form>
+                            <div className="d-flex">
+                            <Select
+                                placeholder="Select Payment Method"
+                                size='large'
+                                className='mb-3 me-2 w-100'
+                                value={method}
+                                onChange={(value) => setMethod(value)}
+                                required>
+                                {methods.map((m, i) => (
+                                    <Option key={i} value={m}>{m}</Option>
+                                ))}
+                            </Select>
                             <Input
                                 showCount
                                 type="number"
                                 size='large'
-                                placeholder='bKash Number'
+                                placeholder='MFS Number'
                                 className='mb-3 me-2'
+                                value={mfsNumber}
+                                onChange={(e) => setMfsNumber(e.target.value)}
                                 minLength={11} maxLength={11}
                                 required
                             />
+                            </div>
                             <Input
                                 type="text"
                                 size='large'
                                 placeholder='Transaction ID'
                                 className='mb-3 me-2'
+                                value={trxId}
+                                onChange={(e) => setTrxId(e.target.value)}
                                 minLength={4} maxLength={25}
                                 required
                             />
@@ -183,8 +205,8 @@ const CourseDetails = () => {
                             <h6 className="">Price: <span className='fw-bold'>৳</span>{course.price}</h6>
                         </div>
                         <ol className='list'>
-                            <li>রাজি থাকলে প্রদর্শনকৃত bKash নাম্বারে কোর্স এর সমপরিমান মূল্য পরিশোধ করুন</li>
-                            <li>যেই বিকাশ নাম্বার থেকে মূল্য পরিশোধ করেছেন সেটা এবং বিকাশ থেকে প্রাপ্ত Transaction/Trx ID টি প্রবেশ করান এবং Sumbit Payment বাটনে ক্লিক করুন </li>
+                            <li>রাজি থাকলে প্রদর্শনকৃত যেকনো MFS (bKash, Nagad, Rocket) নাম্বারে কোর্স এর সমপরিমান মূল্য পরিশোধ করুন</li>
+                            <li>যেই MFS নাম্বার থেকে মূল্য পরিশোধ করেছেন সেটা এবং MFS থেকে প্রাপ্ত Transaction/Trx ID টি প্রবেশ করান এবং Sumbit Payment বাটনে ক্লিক করুন </li>
                             <li>এডমিন আপনার পেমেন্ট ভেরিফাই করে আপনাকে প্রাইভেট Messenger / WhatsApp গ্রুপে এড করবেন</li>
                             <li>পেমেন্ট ভেরিফাই সম্পন্ন হলে আপনি Dashboard এর <Link className='fw-bold' to="/dashboard/student/view-payment">Payment Status</Link> অপশন থেকে আপনার Invoice টি ডাউনলোড করতে পারবেন </li>
                         </ol>
