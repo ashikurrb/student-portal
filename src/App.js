@@ -25,6 +25,7 @@ import SetPaymentStatus from './pages/Admin/SetPaymentStatus';
 import CreateNotice from './pages/Admin/CreateNotice';
 import ViewNotice from './pages/Student/ViewNotice';
 import GradeCourse from './pages/GradeCourse';
+import CourseDetails from './pages/Student/CourseDetails';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/view-course' element={<ViewCourse />} />
         <Route path='/view-course/:slug' element={<GradeCourse />} />
+        <Route path='/view-course/:slug/:slug' element={<CourseDetails />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
 

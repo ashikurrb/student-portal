@@ -34,32 +34,44 @@ const GradeCourse = () => {
     return (
         <Layout title={"View Courses"}>
             <div className="container">
-                <div className="mt-3 mb-0">
-                    <GoBackButton />
+                <div className="row align-items-center mt-4">
+                    <div className="col-auto">
+                        <GoBackButton />
+                    </div>
+                    <div className="col">
+                        <h4 className="mb-0 me-5 p-3 text-center">{grade?.name} </h4>
+                    </div>
                 </div>
-                {spinnerLoading ?
-                    <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
-                        <Spinner /> <p>Loading courses...</p>
-                    </div> :
-                    <div className="row mt-5">
-                        <h4 className='text-center'>{grade.name}</h4>
-                        <h6 className='text-center'>{courses.length} courses found</h6>
-                        {
-                            courses.map((c, i) =>
-                               <div className="d-flex flex-wrap justify-content-center">
-                                 <div className="card m-2" style={{ width: '15rem' }} key={c._id}>
-                                    <img src={c.courseImg}
-                                        className="p-1 cardImg card-img-top h-75" alt={c.name} />
-                                    <div className="card-body">
-                                        <h4 className="card-title">{c.title}</h4>
-                                        <h6 className="card-text">Price: {c.price} Tk</h6>
-                                        <p className="card-text">Starting Date: {c.dateRange} </p>
-                                    </div>
-                                </div>
-                               </div>
-                            )
-                        }
-                    </div>}
+                {
+                    spinnerLoading ?
+                        <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
+                            <Spinner /> <p>Loading courses...</p>
+                        </div> :
+                        <div className="row">
+                            {
+                                courses.length < 1 ?
+                                    <div className="card text-center h2 p-5 mt-3 text-secondary">
+                                        <h4>No courses available yet for this grade</h4>
+                                    </div> : <h6 className='text-center'>{courses.length} courses found</h6>
+                            }
+                            <div className="d-flex flex-wrap justify-content-center">
+                                {
+                                    courses.map((c, i) =>
+                                        <div className="card m-2" style={{ width: '15rem' }} key={c._id}>
+                                            <img src={c.courseImg}
+                                                className="p-1 cardImg card-img-top h-75" alt={c.name} />
+                                            <div className="card-body">
+                                                <h4 className="card-title">{c.title}</h4>
+                                                <h6 className="card-text"><span className='fs-3 fw-bold'>৳</span>{c.price}</h6>
+                                                <p className="card-text">Start:  {moment(c.dateRange).format("ll")} </p>
+                                                <button className="btn btn-primary w-100" onClick={() => navigate(`/view-course/${grade.slug}/${c.slug}`)}>Details</button>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        </div>
+                }
             </div>
         </Layout>
     );

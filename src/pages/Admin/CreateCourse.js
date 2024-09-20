@@ -325,7 +325,7 @@ const CreateCourse = () => {
                                             )}
                                         </div>
                                         <div className="mb-3 text-center">
-                                            <label className="btn btn-outline-secondary col-md-12">
+                                            <label className="btn btn-outline-secondary col-md-8">
                                                 {courseImg ? (typeof courseImg === 'string' ? 'Change Photo' : courseImg.name) : "Upload Photo"}
                                                 <input
                                                     type="file"
@@ -519,17 +519,25 @@ const CreateCourse = () => {
                 <h5 className='text-center'>Update Course</h5>
                 <form onSubmit={handleUpdate}>
                     <div>
-                        <div className="">
+                        <div>
                             {updatedCourseImg && (
                                 <div className="text-center">
                                     <img src={typeof updatedCourseImg === 'string' ? updatedCourseImg : URL.createObjectURL(updatedCourseImg)} alt='profile-img' style={{ height: "200px" }} className='img-fluid rounded'
                                     />
                                     <div className="d-flex justify-content-center">
-                                        <div className='mt-3 fw-bold'>
-                                            <span> Size: {`${(updatedCourseImg.size / 1048576).toFixed(2)} MB`}</span>
-                                            <span>{
-                                                updatedCourseImg.size > 5000000 ? <p className='text-danger'>Image size should be less than 5 MB</p> : null
-                                            }
+                                        <div className='fw-bold'>
+                                            <span className='m-1'>
+                                                {
+                                                    updatedCourseImg && updatedCourseImg.size > 0
+                                                        ? `${(updatedCourseImg.size / 1048576).toFixed(2)} MB`
+                                                        : null
+                                                }
+                                            </span>
+
+                                            <span>
+                                                {
+                                                    updatedCourseImg.size > 5000000 ? <p className='text-danger'>Image size should be less than 5 MB</p> : null
+                                                }
                                             </span>
                                         </div>
                                     </div>

@@ -44,7 +44,8 @@ const ViewCourse = () => {
                     {spinnerLoading ?
                         <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
                             <Spinner /> <p>Loading grades...</p>
-                        </div> : <div className="row">
+                        </div> :
+                        <div className="row">
                             <div className="d-flex flex-wrap justify-content-center">
                                 {grades.map(g => (
                                     g.name !== "Administratio" && (
@@ -54,7 +55,8 @@ const ViewCourse = () => {
                                     )
                                 ))}
                             </div>
-                        </div>}
+                        </div>
+                    }
                 </div>
             </div>
         </Layout>

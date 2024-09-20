@@ -171,3 +171,8 @@ body {
 .grade-link:hover{
  color: white;
 }
+
+.cardImg{
+  height: 150px;
+  object-fit:contain;
+}
