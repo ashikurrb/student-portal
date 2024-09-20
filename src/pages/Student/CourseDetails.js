@@ -7,6 +7,7 @@ import Spinner from '../../components/Spinner';
 import moment from 'moment';
 import { useAuth } from '../../context/auth';
 import { Image, Input, Modal, Select } from 'antd';
+import toast from 'react-hot-toast';
 const { Option } = Select;
 
 const CourseDetails = () => {
@@ -18,7 +19,7 @@ const CourseDetails = () => {
     const [relatedCourse, setRelatedCourse] = useState([]);
     const methods = ['bKash', 'Rocket'];
     const [method, setMethod] = useState(null);
-    const [mfsNumber, setMfsNumber] = useState('');
+    const [accNumber, setAccNumber] = useState('');
     const [trxId, setTrxId] = useState('');
     const [spinnerLoading, setSpinnerLoading] = useState(true);
     const [visible, setVisible] = useState(false);
@@ -54,6 +55,43 @@ const CourseDetails = () => {
 
     const openModal = () => {
         setVisible(true);
+        console.log(course);
+    };
+
+    //handle create order
+    const handleCreate = async (e) => {
+        e.preventDefault();
+        setSpinnerLoading(true);
+        try {
+            const courseId = course._id;
+            console.log(courseId);
+            const orderData = new FormData();
+            orderData.append('course', courseId);
+            orderData.append('method', method);
+            orderData.append('accNumber', accNumber);
+            orderData.append('trxId', trxId);
+            const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/order/create-order`, orderData);
+            if (data?.success) {
+                setSpinnerLoading(false);
+                toast.success(data?.message);
+                // Clear form fields
+                setMethod(undefined);
+                setAccNumber('');
+                setTrxId('');
+                setVisible(false);
+            } else {
+                toast.success(data.message);
+            }
+        } catch (error) {
+            console.error("Error details:", error);
+            if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message);
+                setSpinnerLoading(false);
+            } else {
+                toast.error("Something went wrong");
+                setSpinnerLoading(false);
+            }
+        }
     };
 
     useEffect(() => {
@@ -169,11 +207,11 @@ const CourseDetails = () => {
                 </div>
                 <div className="row">
                     <div className="d-flex justify-content-center">
-                        <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px", marginRight:"5px" }} src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
-                        <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px", marginLeft:"5px"}} src={"/images/rocketPayment.jpg"} alt={"rocketQR"} />
+                        <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px", marginRight: "5px" }} src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
+                        <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px", marginLeft: "5px" }} src={"/images/rocketPayment.jpg"} alt={"rocketQR"} />
                     </div>
                     <h6 className='text-primary text-center mb-3'>Click QR to view large</h6>
-                    <form>
+                    <form onSubmit={handleCreate}>
                         <div className="d-flex">
                             <Select
                                 placeholder="Method"
@@ -192,8 +230,8 @@ const CourseDetails = () => {
                                 size='large'
                                 placeholder='MFS Number'
                                 className='mb-3 me-2'
-                                value={mfsNumber}
-                                onChange={(e) => setMfsNumber(e.target.value)}
+                                value={accNumber}
+                                onChange={(e) => setAccNumber(e.target.value)}
                                 minLength={11} maxLength={11}
                                 required
                             />

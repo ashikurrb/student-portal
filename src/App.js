@@ -26,6 +26,8 @@ import CreateNotice from './pages/Admin/CreateNotice';
 import ViewNotice from './pages/Student/ViewNotice';
 import GradeCourse from './pages/GradeCourse';
 import CourseDetails from './pages/Student/CourseDetails';
+import ViewOrder from './pages/Student/ViewOrder';
+import OrderList from './pages/Admin/OrderList';
 
 function App() {
   return (
@@ -48,6 +50,7 @@ function App() {
           <Route path='/dashboard/student/view-result' element={<ViewResult />} />
           <Route path='/dashboard/student/view-payment' element={<ViewPayment />} />
           <Route path='/dashboard/student/view-content' element={<ViewContent />} />
+          <Route path='/dashboard/student/view-order' element={<ViewOrder />} />
           <Route path='/view-notice' element={<ViewNotice />} />
         </Route>
 
@@ -60,6 +63,7 @@ function App() {
           <Route path='/dashboard/admin/create-course' element={<CreateCourse />} />
           <Route path='/dashboard/admin/create-result' element={<PublishResult />} />
           <Route path='/dashboard/admin/create-payment' element={<SetPaymentStatus />} />
+          <Route path='/dashboard/admin/order-list' element={<OrderList />} />
           <Route path='/dashboard/admin/all-users' element={<AllUsers />} />
         </Route>
 
