@@ -36,9 +36,10 @@ const ViewCourse = () => {
                             <GoBackButton />
                         </div>
                         <div className="col">
-                            <h2 className="text-center my-4 me-5 mb-md-5">
+                            <h2 className="text-center mt-4 me-5">
                                 Select Grade
                             </h2>
+                            <p className="form-text text-center me-5">Click on grade to view and buy course</p>
                         </div>
                     </div>
                     {spinnerLoading ?
@@ -50,7 +51,7 @@ const ViewCourse = () => {
                                 {grades.map(g => (
                                     g.name !== "Administratio" && (
                                         <div className="col-md-2 card grade-btn border-dark p-3 m-2" key={g._id}>
-                                            <Link className='grade-link' to={`/view-course/${g.slug}`}>{g.name}</Link>
+                                            <Link className='grade-link' to={`/view-course/${g.slug}`}>{g.name} </Link>
                                         </div>
                                     )
                                 ))}
