@@ -56,11 +56,15 @@ const CourseDetails = () => {
     }, [navigate]);
 
     const refinedDocView = (text) => {
+        if (!text) {
+            return ''; // Return an empty string or handle accordingly if text is undefined/null
+        }
         const urlRegex = /(https?:\/\/[^\s]+)/g;
         const textWithLinks = text.replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
         const textWithNewLines = textWithLinks.replace(/\n/g, '<br>');
         return textWithNewLines;
     };
+
     return (
         <Layout title={"Course Details"}>
             <div className="container">
@@ -94,7 +98,7 @@ const CourseDetails = () => {
                                     <h6 className="card-text">Class start: {moment(course.dateRange).format('ll')}</h6>
                                 </div>
                                 {
-                                    auth.token ? <button className='btn btn-secondary my-3' onClick={() => { openModal() }}>
+                                    auth.token ? <button className='btn btn-primary my-3 fw-bold' onClick={() => { openModal() }}>
                                         <i className="fa-solid fa-plus"></i> Enroll Now
                                     </button> :
                                         <h5 className='my-3'>
@@ -104,8 +108,21 @@ const CourseDetails = () => {
                             </div>
                         </div>
                 }
-                {/* <hr />
-                <div className="row">
+                 <hr />
+                 <div className='col-md-12 my-4'>
+                        <h5 className='text-center'><u>নিয়মাবলী</u></h5>
+                        <ol className='list'>
+                            <li> যেই কোর্স কিনতে চান সেটায় প্রবেশ করে বিস্তারিত পড়ুন</li>
+                            <li>সবকিছু সম্মত থাকলে Enroll Now বাটনে ক্লিক করুন</li>
+                            <li>Enroll Now বাটন না পেলে Login করুন। রেজিস্ট্রেশন করা না থাকলে আগে রেজিস্ট্রেশন করুন। রেজিস্ট্রেশনের সময় WhatsApp একাউন্ট আছে এরকম একটি নাম্বার ব্যাবহার করুন।</li>
+                            <li>ওয়েবসাইটে Login করা হলে Enroll Now বাটন দেখাবে, সেটিতে ক্লিক করুন </li>
+                            <li>একটা পপ-আপ ওপেন হবে। প্রদর্শনকৃত bKash নাম্বারে কোর্স এর সমপরিমান মূল্য পরিশোধ করুন</li>
+                            <li>যেই বিকাশ নাম্বার থেকে মূল্য পরিশোধ করেছেন সেটা এবং বিকাশ থেকে প্রাপ্ত Transaction/Trx ID টি প্রবেশ করান এবং Sumbit Payment বাটনে ক্লিক করুন </li>
+                            <li>এডমিন আপনার পেমেন্ট ভেরিফাই করে আপনাকে প্রাইভেট Messenger / WhatsApp গ্রুপে এড করবেন</li>
+                            <li>পেমেন্ট ভেরিফাই সম্পন্ন হলে আপনি Dashboard এর <Link className='fw-bold' to="/dashboard/student/view-payment">Payment Status</Link> অপশন থেকে আপনার Invoice টি ডাউনলোড করতে পারবেন </li>
+                        </ol>
+                    </div>
+                {/*<div className="row">
                     <h4 className='text-center'>Similar Course</h4>
                     {spinnerLoading ? <div className='my-5'><Spinner /></div> : <>
                         {relatedCourse?.length < 1 && (<p className="text-center">No Similar Course Found</p>)}
@@ -129,7 +146,7 @@ const CourseDetails = () => {
             <Modal width={1000} onCancel={() => setVisible(false)} open={visible} footer={null} maskClosable={false}>
                 <h5 className='text-center mb-3'>Payment Details</h5>
                 <div className="row">
-                    <div className='col-md-6'>
+                    <div className='col-md-6 order-2 order-md-1 mt-2'>
                         <Image src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
                         <h6 className='text-primary text-center mb-3'>Click QR to view large</h6>
                         <form>
@@ -157,13 +174,16 @@ const CourseDetails = () => {
                             </div>
                         </form>
                     </div>
-                    <div className='col-md-6'>
+                    <div className='col-md-6 order-1 order-md-2 mt-2'>
                         <h5 className='text-center'>কোর্স বিস্তারিত</h5>
                         <hr />
+                        <h6>আপনি কিনতে চাচ্ছেন:</h6>
+                        <div className='text-center my-2 border border-2 rounded'>
+                            <h6>Course: <b>{course.title}</b> ({course?.grade?.name})</h6>
+                            <h6 className="">Price: <span className='fw-bold'>৳</span>{course.price}</h6>
+                        </div>
                         <ol className='list'>
-                            <li> যেই কোর্স কিনতে চান সেটায় প্রবেশ করে বিস্তারিত পড়ুন</li>
-                            <li>সবকিছু সম্মত থাকলে Enroll Now বাটনে ক্লিক করুন</li>
-                            <li>একটা পপ-আপ ওপেন হবে। প্রদর্শনকৃত bKash নাম্বারে কোর্স এর সমপরিমান মূল্য পরিশোধ করুন</li>
+                            <li>রাজি থাকলে প্রদর্শনকৃত bKash নাম্বারে কোর্স এর সমপরিমান মূল্য পরিশোধ করুন</li>
                             <li>যেই বিকাশ নাম্বার থেকে মূল্য পরিশোধ করেছেন সেটা এবং বিকাশ থেকে প্রাপ্ত Transaction/Trx ID টি প্রবেশ করান এবং Sumbit Payment বাটনে ক্লিক করুন </li>
                             <li>এডমিন আপনার পেমেন্ট ভেরিফাই করে আপনাকে প্রাইভেট Messenger / WhatsApp গ্রুপে এড করবেন</li>
                             <li>পেমেন্ট ভেরিফাই সম্পন্ন হলে আপনি Dashboard এর <Link className='fw-bold' to="/dashboard/student/view-payment">Payment Status</Link> অপশন থেকে আপনার Invoice টি ডাউনলোড করতে পারবেন </li>
