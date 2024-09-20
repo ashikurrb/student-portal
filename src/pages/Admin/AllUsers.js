@@ -206,7 +206,7 @@ const AllUsers = () => {
                                             return (
                                                 <tr>
                                                     <th scope='row' className='ps-3'>{i + 1}</th>
-                                                    <td className=''>
+                                                    <td>
                                                         <div className="d-flex align-items-center">
                                                             <Image
                                                                 preview={{

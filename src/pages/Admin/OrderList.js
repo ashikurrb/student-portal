@@ -4,6 +4,7 @@ import AdminMenu from './AdminMenu';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Spinner from '../../components/Spinner';
+import { EyeOutlined } from '@ant-design/icons';
 import { Image } from 'antd';
 
 const OrderList = () => {
@@ -55,7 +56,7 @@ const OrderList = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className="text-center my-4 mb-md-5">
-                            <i class="fa-solid fa-box"></i> Order List
+                            <i class="fa-solid fa-box"></i> Order List ({orders.length})
                         </h2>
                         {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <div className="table-container">
                             <table className='table table-fixed-header'>
@@ -99,7 +100,17 @@ const OrderList = () => {
                                                         {o.status}
                                                     </td>
                                                     <td>
-                                                        {o.buyer.name}
+                                                        <div className="d-flex align-items-center">
+                                                            <Image
+                                                                preview={{
+                                                                    mask: <EyeOutlined />,
+                                                                }}
+                                                                style={{ width: "27px", height: "27px", borderRadius: "100%" }}
+                                                                src={o.buyer.avatar}
+                                                                alt="dp" />
+                                                            <span className='ms-2'>                                                      {o.buyer.name}
+                                                            </span>
+                                                        </div>
                                                     </td>
                                                     <td >{o.course.title}</td>
                                                     <td>{o.course.price}</td>
