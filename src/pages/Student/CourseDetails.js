@@ -74,6 +74,7 @@ const CourseDetails = () => {
             if (data?.success) {
                 setSpinnerLoading(false);
                 toast.success(data?.message);
+                navigate("/dashboard/student/view-order");
                 // Clear form fields
                 setMethod(undefined);
                 setAccNumber('');
