@@ -5,10 +5,13 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import Spinner from '../../components/Spinner';
 import { EyeOutlined } from '@ant-design/icons';
-import { Image } from 'antd';
+import { Image, Select } from 'antd';
+const { Option } = Select;
 
 const OrderList = () => {
     const [orders, setOrders] = useState([]);
+    const [statuses] = useState(["Pending", "Approved", "Canceled"]);
+    const [status, setStatus] = useState('');
     const [spinnerLoading, setSpinnerLoading] = useState(true);
     const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
     const [selected, setSelected] = useState({});
@@ -29,6 +32,18 @@ const OrderList = () => {
     useEffect(() => {
         getOrderList();
     }, []);
+
+    //order status change
+    const handleChange = async (oId, value) => {
+        try {
+            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/order/order-status/${oId}`, { status: value });
+            toast.success(data.message)
+            getOrderList();
+        } catch (error) {
+            console.error(error);
+            toast.error("Error update status")
+        }
+    }
 
     //delete individual order
     const handleDelete = async (oId) => {
@@ -97,7 +112,16 @@ const OrderList = () => {
                                                 <tr>
                                                     <th scope='row' className='ps-3'>{i + 1}</th>
                                                     <td>
-                                                        {o.status}
+                                                        <Select
+                                                            size='large'
+                                                            className='mb-3 me-2'
+                                                            defaultValue={o?.status}
+                                                            onChange={(value) => handleChange(o._id, value)}
+                                                            required>
+                                                            {statuses.map((s, i) => (
+                                                                <Option key={i} value={s}>{s}</Option>
+                                                            ))}
+                                                        </Select>
                                                     </td>
                                                     <td>
                                                         <div className="d-flex align-items-center">
