@@ -201,16 +201,16 @@ const CourseDetails = () => {
                         <h6>Course: <b>{course.title}</b> ({course?.grade?.name})</h6>
                         <h6 className="">Price: <span className='fw-bold'>৳</span>{course.price}</h6>
                     </div>
-                    <p className='text-center'>
-                        প্রদর্শনকৃত MFS (<b>bKash: </b>01794-744343 অথবা <b>Rocket:</b> 01794-744343) নাম্বারে কোর্স এর সমপরিমান মূল্য পরিশোধ (Send Money) করুন এবং MFS Number, Payment Method এবং Transaction/Trx Id প্রবেশ করিয়ে সাবমিট করুন। পেমেন্ট ভেরিফিকেশন কমপ্লিট হলে <Link className='fw-bold' to="/dashboard/student/view-payment">Payment Status</Link> অপশন থেকে Invoice টি ডাউনলোড করতে পারবেন
+                    <p className='text-center my-3'>
+                    Send Money করুন <b>bKash/Rocket: </b>01794-744343 নাম্বারে
                     </p>
                 </div>
                 <div className="row">
-                    <div className="d-flex justify-content-center">
-                        <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px", marginRight: "5px" }} src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
-                        <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px", marginLeft: "5px" }} src={"/images/rocketPayment.jpg"} alt={"rocketQR"} />
+                    <div className="d-flex justify-content-evenly">
+                        <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px"}} src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
+                        <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px" }} src={"/images/rocketPayment.jpg"} alt={"rocketQR"} />
                     </div>
-                    <h6 className='text-primary text-center mb-3'>Click QR to view large</h6>
+                    <h6 className='text-primary text-center my-3'>Click QR to view large</h6>
                     <form onSubmit={handleCreate}>
                         <div className="d-flex">
                             <Select
