@@ -73,8 +73,6 @@ const CourseDetails = () => {
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/order/create-order`, orderData);
             if (data?.success) {
                 setSpinnerLoading(false);
-                toast.success(data?.message);
-                // navigate("/dashboard/student/view-order");
                 setVisibleOrderModal(true);
                 // Clear form fields
                 setMethod(undefined);
