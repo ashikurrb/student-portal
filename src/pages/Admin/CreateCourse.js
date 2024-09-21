@@ -623,7 +623,6 @@ const CreateCourse = () => {
                             className=' mb-3'
                             value={updatedDescription}
                             onChange={(e) => setUpdatedDescription(e.target.value)}
-                            maxLength={200}
                             required
                         />
                     </div>

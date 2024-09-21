@@ -33,7 +33,7 @@ const CourseDetails = () => {
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/course/get-course/${params.slug}`);
             setCourse(data);
-            getRelatedCourse(data?.course?._id, data?.course?.grade?._id);
+            // getRelatedCourse(data?.course?._id, data?.course?.grade?._id);
         } catch (error) {
             console.log(error);
         }
@@ -42,16 +42,16 @@ const CourseDetails = () => {
         }
     }
 
-    //get similar course
-    const getRelatedCourse = async (cid, gid) => {
-        try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/course/related-course/${cid}/${gid}`);
-            setRelatedCourse(data?.course);
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    // //get similar course
+    // const getRelatedCourse = async (cid, gid) => {
+    //     try {
+    //         const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/course/related-course/${cid}/${gid}`);
+    //         setRelatedCourse(data?.course);
+    //         console.log(data);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
     const openModal = () => {
         setVisible(true);
@@ -124,20 +124,20 @@ const CourseDetails = () => {
                         <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
                             <Spinner />
                         </div> :
-                        <div className="row mt-5">
-                            <div className="col-md-4">
-                                <img src={course.courseImg} className="card-img-top cardImg" alt={course.title} />
+                        <div className="d-flex flex-wrap justify-content-evenly align-items-center mb-3 mx-4">
+                            <div className='mt-4'>
+                                <Image src={course.courseImg} style={{ width: "auto", height: "200px", borderRadius: "5px" }} className="cardImg" alt={course.title} />
                             </div>
-                            <div className="col-md-7">
+                            <div className='me-md-5 mt-4'>
                                 <div className="card-body">
-                                    <h2>{course.title}</h2>
+                                    <h1>{course.title}</h1>
+                                    <h4 className="card-text">Price: <span className='fs-2 fw-bold'>৳</span>{course.price}</h4>
                                     <p style={{ textAlign: "justify" }}
                                         dangerouslySetInnerHTML={{
                                             __html: refinedDocView(course.description)
                                         }}
                                     />
                                     <Link to={`/view-course/${course.grade.slug}`}><p className="card-text">Grade: <b>{course?.grade?.name}</b></p></Link>
-                                    <h6 className="card-text fs-3"><span className='fs-2 fw-bold'>৳</span>{course.price}</h6>
                                     <h6 className="card-text">Class start: {moment(course.dateRange).format('ll')}</h6>
                                 </div>
                                 {
