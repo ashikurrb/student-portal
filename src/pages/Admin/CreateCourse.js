@@ -279,7 +279,7 @@ const CreateCourse = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className="text-center my-4 mb-md-5">
-                            <i class="fa-solid fa-book"></i>    Create Course ({course.length})
+                            <i class="fa-solid fa-book"></i> Create Course ({course.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <Input
@@ -305,7 +305,7 @@ const CreateCourse = () => {
                                 </button>
                             )}
                             <Modal width={800} centered open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
-                                <h5 className='text-center'>Create Course</h5>
+                                <h5 className='text-center mb-4'>Create Course</h5>
                                 <form onSubmit={handleCreate}>
                                     <div>
                                         <div className="mb-1">
@@ -518,7 +518,7 @@ const CreateCourse = () => {
                 </div>
             </div>
             <Modal width={800} centered onCancel={() => setVisible(false)} open={visible} footer={null}>
-                <h5 className='text-center'>Update Course</h5>
+                <h5 className='text-center mb-4'>Update Course</h5>
                 <form onSubmit={handleUpdate}>
                     <div>
                         <div>
