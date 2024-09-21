@@ -23,6 +23,7 @@ const CourseDetails = () => {
     const [trxId, setTrxId] = useState('');
     const [spinnerLoading, setSpinnerLoading] = useState(true);
     const [visible, setVisible] = useState(false);
+    const [visibleOrderModal, setVisibleOrderModal] = useState(false);
 
     useEffect(() => {
         if (params?.slug) getCourse();
@@ -73,7 +74,8 @@ const CourseDetails = () => {
             if (data?.success) {
                 setSpinnerLoading(false);
                 toast.success(data?.message);
-                navigate("/dashboard/student/view-order");
+                // navigate("/dashboard/student/view-order");
+                setVisibleOrderModal(true);
                 // Clear form fields
                 setMethod(undefined);
                 setAccNumber('');
@@ -202,12 +204,12 @@ const CourseDetails = () => {
                         <h6 className="">Price: <span className='fw-bold'>৳</span>{course.price}</h6>
                     </div>
                     <p className='text-center my-3'>
-                    Send Money করুন <b>bKash/Rocket: </b>01794-744343 নাম্বারে
+                        Send Money করুন <b>bKash/Rocket: </b>01794-744343 নাম্বারে
                     </p>
                 </div>
                 <div className="row">
                     <div className="d-flex justify-content-evenly">
-                        <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px"}} src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
+                        <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px" }} src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
                         <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px" }} src={"/images/rocketPayment.jpg"} alt={"rocketQR"} />
                     </div>
                     <h6 className='text-primary text-center my-3'>Click QR to view large</h6>
@@ -252,6 +254,16 @@ const CourseDetails = () => {
                             </button>
                         </div>
                     </form>
+                </div>
+            </Modal>
+            <Modal centered width={700} onCancel={() => setVisibleOrderModal(false)} open={visibleOrderModal} footer={null} maskClosable={false}>
+                <h3 className='text-center mb-3'>Your order has been placed successfully</h3>
+                <div className="d-flex justify-content-center align-items-center">
+                <img style={{width:"40%"}} src="/images/success.gif" alt="success" />
+                </div>
+                <h6 className='text-center my-3'>Please wait for admin approval. Check your email for purchase details.</h6>
+                <div className="text-center">
+                    <button className="btn btn-primary fw-bold" onClick={() => navigate("/dashboard/student/view-order")}>View Order</button>
                 </div>
             </Modal>
         </Layout>
