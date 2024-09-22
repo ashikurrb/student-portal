@@ -62,10 +62,11 @@ const GradeCourse = () => {
                                             <img src={c.courseImg}
                                                 className="p-1 cardImg card-img-top h-75" alt={c.name} />
                                             <div className="card-body">
-                                                <h4 className="card-title">{c.title}</h4>
-                                                <h6 className="card-text"><span className='fs-3 fw-bold'>৳</span>{c.price}</h6>
+                                                <h4>{c.title}</h4>
+                                                <p className="form-text">{c.grade.name}</p>
                                                 <p className="card-text">Start:  {moment(c.dateRange).format("ll")} </p>
-                                                <button className="btn btn-primary w-100" onClick={() => navigate(`/view-course/${grade.slug}/${c.slug}`)}>Details</button>
+                                                <h5><span className='fs-3 fw-bold'>৳</span>{c.price}</h5>
+                                                <button className="btn btn-primary w-100" onClick={() => navigate(`/view-course/${grade.slug}/${c.slug}`)}><b>Details</b></button>
                                             </div>
                                         </div>
                                     )

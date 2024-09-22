@@ -135,13 +135,17 @@ const CourseDetails = () => {
                                     <div className='ms-md-5 mt-4'>
                                         <div className="card-body">
                                             <h1>{course.title}</h1>
-                                            <Link to={`/view-course/${course.grade.slug}`}><p className="card-text">Grade: <b>{course?.grade?.name}</b></p></Link>
-                                            <h6 className="card-text">Class start: {moment(course.dateRange).format('ll')}</h6>
+                                            <h6>
+                                                <Link to={`/view-course/${course.grade.slug}`}>
+                                                    Grade: <b>{course?.grade?.name}</b>
+                                                </Link>
+                                            </h6>
+                                            <h6 className="card-text">Starting from: {moment(course.dateRange).format('ll')}</h6>
                                             <h4 className="card-text"> <span className='fs-2 fw-bold'>৳</span>{course.price}</h4>
                                             {
                                                 course.status === "Active" ? (
                                                     auth.token ? (
-                                                        <button className='btn btn-primary mb-3 fw-bold' onClick={openModal}>
+                                                        <button className='btn btn-success mb-3 fw-bold' onClick={openModal}>
                                                             <i className="fa-solid fa-plus"></i> Enroll Now
                                                         </button>
                                                     ) : (
@@ -215,12 +219,12 @@ const CourseDetails = () => {
                 </div>
                 <div className="row">
                     <div className="d-flex justify-content-evenly">
-                       <div className="me-2">
-                       <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px" }} src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
-                       </div>
-                      <div className="ms-2">
-                      <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px" }} src={"/images/rocketPayment.jpg"} alt={"rocketQR"} />
-                      </div>
+                        <div className="me-2">
+                            <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px" }} src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
+                        </div>
+                        <div className="ms-2">
+                            <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px" }} src={"/images/rocketPayment.jpg"} alt={"rocketQR"} />
+                        </div>
                     </div>
                     <h6 className='text-primary text-center my-3'>Click QR to view large</h6>
                     <form onSubmit={handleCreate}>
