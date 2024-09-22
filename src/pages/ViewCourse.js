@@ -8,7 +8,7 @@ import { useAuth } from '../context/auth';
 
 const ViewCourse = () => {
     const [auth] = useAuth();
-    const [grades, setGrades] = useState('');
+    const [grades, setGrades] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
 
     //Get All Grades

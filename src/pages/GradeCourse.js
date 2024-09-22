@@ -50,9 +50,10 @@ const GradeCourse = () => {
                         <div className="row">
                             {
                                 courses.length < 1 ?
-                                    <div className="card text-center h2 p-5 mt-3 text-secondary">
-                                        <h4>No courses available yet for this grade</h4>
-                                    </div> : <h6 className='text-center'>{courses.length} courses found</h6>
+                                    <div className="d-flex justify-content-center">
+                                        <p className='card text-center h3 p-5 mt-3 text-secondary w-75'>
+                                            No courses available yet for this grade</p>
+                                    </div> : <h6 className='text-center'>{courses.length} course found</h6>
                             }
                             <div className="d-flex flex-wrap justify-content-center">
                                 {
