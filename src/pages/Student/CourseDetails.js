@@ -126,7 +126,7 @@ const CourseDetails = () => {
                         </div> :
                         <div className="d-lg-flex justify-content-evenly  mb-3 ms-lg-5">
                             <div className='mt-lg-5 me-md-5 text-center'>
-                                <Image src={course.courseImg} style={{ width: "auto", height: "300px", borderRadius: "5px" }} className="cardImg" alt={course.title} />
+                                <Image src={course.courseImg} style={{ width: "auto", height: "280px", borderRadius: "5px" }} className="cardImg" alt={course.title} />
                             </div>
                             <div className='me-md-5 mt-4'>
                                 <div className="card-body">
@@ -256,12 +256,12 @@ const CourseDetails = () => {
                     </form>
                 </div>
             </Modal>
-            <Modal centered width={700} onCancel={() => setVisibleOrderModal(false)} open={visibleOrderModal} footer={null} maskClosable={false}>
+            <Modal centered width={700} onCancel={() => setVisibleOrderModal(false)} open={visibleOrderModal} footer={null}>
                 <h3 className='text-center mb-3'>Your order has been placed successfully</h3>
                 <div className="d-flex justify-content-center align-items-center">
                     <img style={{ width: "40%" }} src="/images/success.gif" alt="success" />
                 </div>
-                <h6 className='text-center my-3'>Please wait for admin approval. Check your email for purchase details.</h6>
+                <h6 className='text-center my-3'>Please check your email for the purchase details and further instructions</h6>
                 <div className="text-center">
                     <button className="btn btn-primary fw-bold" onClick={() => navigate("/dashboard/student/view-order")}>View Order</button>
                 </div>
