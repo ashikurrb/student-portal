@@ -215,8 +215,12 @@ const CourseDetails = () => {
                 </div>
                 <div className="row">
                     <div className="d-flex justify-content-evenly">
-                        <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px" }} src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
-                        <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px" }} src={"/images/rocketPayment.jpg"} alt={"rocketQR"} />
+                       <div className="me-2">
+                       <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px" }} src={"/images/bKashPayment.jpg"} alt={"bKashQR"} />
+                       </div>
+                      <div className="ms-2">
+                      <Image style={{ height: "200px", border: "1px solid black", borderRadius: "5px" }} src={"/images/rocketPayment.jpg"} alt={"rocketQR"} />
+                      </div>
                     </div>
                     <h6 className='text-primary text-center my-3'>Click QR to view large</h6>
                     <form onSubmit={handleCreate}>
