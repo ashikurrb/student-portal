@@ -124,11 +124,11 @@ const CourseDetails = () => {
                         <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
                             <Spinner />
                         </div> :
-                        <div className="d-lg-flex justify-content-evenly  mb-3 ms-lg-5">
-                            <div className='mt-lg-5 me-md-5 text-center'>
-                                <Image src={course.courseImg} style={{ width: "auto", height: "280px", borderRadius: "5px" }} className="cardImg" alt={course.title} />
+                        <div className="d-lg-flex justify-content-evenly mb-3">
+                            <div className='mt-lg-5 text-center container-lg'>
+                                <Image src={course.courseImg} className="img-fluid" alt={course.title} />
                             </div>
-                            <div className='me-md-5 mt-4'>
+                            <div className='mt-4'>
                                 <div className="card-body">
                                     <h1>{course.title}</h1>
                                     <Link to={`/view-course/${course.grade.slug}`}><p className="card-text">Grade: <b>{course?.grade?.name}</b></p></Link>
@@ -148,7 +148,7 @@ const CourseDetails = () => {
                                             </button>
                                         ) : (
                                             <h5 className='my-3'>
-                                                Please <span style={{ cursor: 'pointer', textDecoration: 'underline', color:"blue" }} onClick={() => navigate("/login", { state: { from: location.pathname } })}>
+                                                Please <span style={{ cursor: 'pointer', textDecoration: 'underline', color: "blue" }} onClick={() => navigate("/login", { state: { from: location.pathname } })}>
                                                     <u>Login</u>
                                                 </span> to buy this course
                                             </h5>
