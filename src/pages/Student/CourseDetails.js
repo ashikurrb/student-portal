@@ -124,39 +124,45 @@ const CourseDetails = () => {
                         <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
                             <Spinner />
                         </div> :
-                        <div className="d-lg-flex justify-content-evenly mb-3">
-                            <div className='mt-lg-5 text-center container-lg'>
-                                <Image src={course.courseImg} className="img-fluid" alt={course.title} />
-                            </div>
-                            <div className='mt-4'>
-                                <div className="card-body">
-                                    <h1>{course.title}</h1>
-                                    <Link to={`/view-course/${course.grade.slug}`}><p className="card-text">Grade: <b>{course?.grade?.name}</b></p></Link>
-                                    <h6 className="card-text">Class start: {moment(course.dateRange).format('ll')}</h6>
-                                    <h4 className="card-text"> <span className='fs-2 fw-bold'>৳</span>{course.price}</h4>
-                                    <p style={{ textAlign: "justify" }}
-                                        dangerouslySetInnerHTML={{
-                                            __html: refinedDocView(course.description)
-                                        }}
-                                    />
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-md-5">
+                                    <div className="ms-md-5 mt-4">
+                                        <Image className='border rounded' src={course.courseImg} alt={course.title} style={{ width: "100%" }} />
+                                    </div>
                                 </div>
-                                {
-                                    course.status === "Active" ? (
-                                        auth.token ? (
-                                            <button className='btn btn-primary mb-3 fw-bold' onClick={openModal}>
-                                                <i className="fa-solid fa-plus"></i> Enroll Now
-                                            </button>
-                                        ) : (
-                                            <h5 className='my-3'>
-                                                Please <span style={{ cursor: 'pointer', textDecoration: 'underline', color: "blue" }} onClick={() => navigate("/login", { state: { from: location.pathname } })}>
-                                                    <u>Login</u>
-                                                </span> to buy this course
-                                            </h5>
-                                        )
-                                    ) : (
-                                        <h5 className='text-danger my-3'>Coming soon</h5>
-                                    )
-                                }
+                                <div className="col-md-7">
+                                    <div className='ms-md-5 mt-4'>
+                                        <div className="card-body">
+                                            <h1>{course.title}</h1>
+                                            <Link to={`/view-course/${course.grade.slug}`}><p className="card-text">Grade: <b>{course?.grade?.name}</b></p></Link>
+                                            <h6 className="card-text">Class start: {moment(course.dateRange).format('ll')}</h6>
+                                            <h4 className="card-text"> <span className='fs-2 fw-bold'>৳</span>{course.price}</h4>
+                                            {
+                                                course.status === "Active" ? (
+                                                    auth.token ? (
+                                                        <button className='btn btn-primary mb-3 fw-bold' onClick={openModal}>
+                                                            <i className="fa-solid fa-plus"></i> Enroll Now
+                                                        </button>
+                                                    ) : (
+                                                        <h5 className='my-3'>
+                                                            Please <span style={{ cursor: 'pointer', textDecoration: 'underline', color: "blue" }} onClick={() => navigate("/login", { state: { from: location.pathname } })}>
+                                                                <u>Login</u>
+                                                            </span> to buy this course
+                                                        </h5>
+                                                    )
+                                                ) : (
+                                                    <h5 className='text-danger my-3'>Coming soon</h5>
+                                                )
+                                            }
+                                            <p style={{ textAlign: "justify" }}
+                                                dangerouslySetInnerHTML={{
+                                                    __html: refinedDocView(course.description)
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                 }
