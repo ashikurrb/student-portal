@@ -36,7 +36,8 @@ const Login = () => {
                 // Set login details in cookies
                 Cookies.set("auth", JSON.stringify(res.data), { expires: 1 }); // expires in 1 day
                 toast.success(res.data && res.data.message, { id: loadingToastId });
-                navigate(location.state || "/");
+                const redirectTo = location.state?.from || (res.data.user.role === 1 ? '/dashboard/admin' : '/dashboard/student');
+                navigate(redirectTo); 
             } else {
                 toast.error(res.data.message, { id: loadingToastId });
             }

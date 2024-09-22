@@ -124,31 +124,33 @@ const CourseDetails = () => {
                         <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
                             <Spinner />
                         </div> :
-                        <div className="d-flex flex-wrap justify-content-evenly align-items-center mb-3 mx-4">
-                            <div className='mt-4'>
-                                <Image src={course.courseImg} style={{ width: "auto", height: "200px", borderRadius: "5px" }} className="cardImg" alt={course.title} />
+                        <div className="d-lg-flex justify-content-evenly  mb-3 ms-lg-5">
+                            <div className='mt-lg-5 me-md-5 text-center'>
+                                <Image src={course.courseImg} style={{ width: "auto", height: "300px", borderRadius: "5px" }} className="cardImg" alt={course.title} />
                             </div>
                             <div className='me-md-5 mt-4'>
                                 <div className="card-body">
                                     <h1>{course.title}</h1>
-                                    <h4 className="card-text">Price: <span className='fs-2 fw-bold'>৳</span>{course.price}</h4>
+                                    <Link to={`/view-course/${course.grade.slug}`}><p className="card-text">Grade: <b>{course?.grade?.name}</b></p></Link>
+                                    <h6 className="card-text">Class start: {moment(course.dateRange).format('ll')}</h6>
+                                    <h4 className="card-text"> <span className='fs-2 fw-bold'>৳</span>{course.price}</h4>
                                     <p style={{ textAlign: "justify" }}
                                         dangerouslySetInnerHTML={{
                                             __html: refinedDocView(course.description)
                                         }}
                                     />
-                                    <Link to={`/view-course/${course.grade.slug}`}><p className="card-text">Grade: <b>{course?.grade?.name}</b></p></Link>
-                                    <h6 className="card-text">Class start: {moment(course.dateRange).format('ll')}</h6>
                                 </div>
                                 {
                                     course.status === "Active" ? (
                                         auth.token ? (
-                                            <button className='btn btn-primary my-3 fw-bold' onClick={openModal}>
+                                            <button className='btn btn-primary mb-3 fw-bold' onClick={openModal}>
                                                 <i className="fa-solid fa-plus"></i> Enroll Now
                                             </button>
                                         ) : (
                                             <h5 className='my-3'>
-                                                Please <Link to={{ pathname: "/login", state: { from: location.pathname } }}>Login</Link> first to buy this course
+                                                Please <span style={{ cursor: 'pointer', textDecoration: 'underline', color:"blue" }} onClick={() => navigate("/login", { state: { from: location.pathname } })}>
+                                                    <u>Login</u>
+                                                </span> to buy this course
                                             </h5>
                                         )
                                     ) : (
@@ -257,7 +259,7 @@ const CourseDetails = () => {
             <Modal centered width={700} onCancel={() => setVisibleOrderModal(false)} open={visibleOrderModal} footer={null} maskClosable={false}>
                 <h3 className='text-center mb-3'>Your order has been placed successfully</h3>
                 <div className="d-flex justify-content-center align-items-center">
-                <img style={{width:"40%"}} src="/images/success.gif" alt="success" />
+                    <img style={{ width: "40%" }} src="/images/success.gif" alt="success" />
                 </div>
                 <h6 className='text-center my-3'>Please wait for admin approval. Check your email for purchase details.</h6>
                 <div className="text-center">

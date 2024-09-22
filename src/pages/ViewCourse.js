@@ -8,7 +8,7 @@ import { useAuth } from '../context/auth';
 
 const ViewCourse = () => {
     const [auth] = useAuth();
-    const [grades, setGrades] = useState([]);
+    const [grades, setGrades] = useState({});
     const [spinnerLoading, setSpinnerLoading] = useState(true);
 
     //Get All Grades
@@ -51,7 +51,7 @@ const ViewCourse = () => {
                         <div className="row">
                             <div className="d-flex flex-wrap justify-content-center">
                                 {grades.map(g => (
-                                    (g.name !== "Administration" || auth.user.role === 1) && (
+                                    (g.name !== "Administration" || auth?.user?.role === 1) && (
                                         <div className="col-md-2 card grade-btn border-dark p-3 m-2" key={g._id}>
                                             <Link className='grade-link' to={`/view-course/${g.slug}`}>{g.name} </Link>
                                         </div>

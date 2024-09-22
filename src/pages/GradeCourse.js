@@ -11,7 +11,7 @@ const GradeCourse = () => {
     const navigate = useNavigate();
     const [spinnerLoading, setSpinnerLoading] = useState(false);
     const [courses, setCourses] = useState([]);
-    const [grade, setGrade] = useState([]);
+    const [grade, setGrade] = useState({});
 
     //Get courses by grade
     const getGradeCourse = async () => {
