@@ -32,7 +32,7 @@ const Login = () => {
                     ...auth,
                     user: res.data.user,
                     token: res.data.token
-                });
+                })
                 // Set login details in cookies
                 Cookies.set("auth", JSON.stringify(res.data), { expires: 1 }); // expires in 1 day
                 toast.success(res.data && res.data.message, { id: loadingToastId });

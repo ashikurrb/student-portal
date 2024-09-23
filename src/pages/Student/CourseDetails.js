@@ -125,14 +125,18 @@ const CourseDetails = () => {
                             <Spinner />
                         </div> :
                         <div className="container">
-                            <div className="row">
+                            <div className="row mt-4 mt-md-3">
                                 <div className="col-md-5">
-                                    <div className="ms-md-5 mt-4">
-                                        <Image className='border rounded' src={course.courseImg} alt={course.title} style={{ width: "100%" }} />
+                                    <div className="ms-md-5 d-flex justify-content-center align-items-center">
+                                        <Image className='border rounded'
+                                            src={course.courseImg}
+                                            alt={course.title}
+                                            style={{ width: "100%", height: "300px", objectFit: "contain" }}
+                                        />
                                     </div>
                                 </div>
                                 <div className="col-md-7">
-                                    <div className='ms-md-5 mt-4'>
+                                    <div className='ms-md-5'>
                                         <div className="card-body">
                                             <h1>{course.title}</h1>
                                             <h6>
