@@ -61,15 +61,21 @@ const GradeCourse = () => {
                                         <div className="card m-2" style={{ width: '15rem' }} key={c._id}>
                                             <img
                                                 src={c.courseImg}
-                                                className="p-1 cardImg card-img-top"
+                                                className="card-img-top"
                                                 style={{ height: '200px' }}
                                                 alt={c.name} />
                                             <div className="card-body">
-                                                <h4>{c.title}</h4>
-                                                <p className="form-text">{c.grade.name}</p>
-                                                <p className="form-text">Start:  {moment(c.dateRange).format("ll")} </p>
-                                                <h5><span className='fs-3 fw-bold'>৳</span>{c.price}</h5>
-                                                <button className="btn btn-primary w-100" onClick={() => navigate(`/view-course/${grade.slug}/${c.slug}`)}><b>Details</b></button>
+                                                <h4 className='card-title'>{c.title}</h4>
+                                                <p className="form-text">Grade: <b>{c.grade.name}</b>
+                                                    <br />
+                                                    Start:  {moment(c.dateRange).format("ll")}
+                                                </p>
+                                                <h5><span className='fw-bold'>৳</span>{c.price}</h5>
+                                                <button
+                                                    className="btn btn-primary w-100"
+                                                    onClick={() => navigate(`/view-course/${grade.slug}/${c.slug}`)}>
+                                                    <b>Details</b>
+                                                </button>
                                             </div>
                                         </div>
                                     )
