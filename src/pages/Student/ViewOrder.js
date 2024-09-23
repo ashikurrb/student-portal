@@ -86,23 +86,23 @@ const ViewOrder = () => {
                                                         <th scope='row'>{i + 1}</th>
                                                         <td>
                                                             {o.status === 'Pending' ? (
-                                                                <span className="badge bg-warning text-dark">{o.status}</span>
-                                                            ) : o.status === 'Approved' ? (
-                                                                <span className="badge bg-success">{o.status}</span>
-                                                            ) : o.status === 'Canceled' ? (
-                                                                <span className="badge bg-danger">{o.status}</span>
+                                                                <span className="badge bg-warning text-dark">{o?.status}</span>
+                                                            ) : o?.status === 'Approved' ? (
+                                                                <span className="badge bg-success">{o?.status}</span>
+                                                            ) : o?.status === 'Canceled' ? (
+                                                                <span className="badge bg-danger">{o?.status}</span>
                                                             ) : null}
                                                         </td>
 
                                                         <td>
                                                             <div style={{ cursor: "pointer" }} className='fw-bold text-primary' onClick={() => { openModal(o) }}>
-                                                                {o.course.title}  <i class="fa-solid fa-arrow-right"></i>
+                                                                {o?.course?.title}  <i class="fa-solid fa-arrow-right"></i>
                                                             </div>
                                                         </td>
-                                                        <td>{o.course.price}</td>
-                                                        <td>{o.method}</td>
-                                                        <td>{o.trxId}</td>
-                                                        <td>{o.accNumber}</td>
+                                                        <td>{o?.course?.price}</td>
+                                                        <td>{o?.method}</td>
+                                                        <td>{o?.trxId}</td>
+                                                        <td>{o?.accNumber}</td>
                                                     </tr>
                                                 )
                                             })
@@ -123,28 +123,28 @@ const ViewOrder = () => {
                             <div className="col-md-12">
                                 <div className="card">
                                     <div className="card-body">
-                                        <h4 className="card-title">{selectedOrder.course.title}</h4>
-                                        <p>Class Start: <b>{moment(selectedOrder.course.dateRange).format("ll")}</b></p>
+                                        <h4 className="card-title">{selectedOrder?.course?.title}</h4>
+                                        <p>Class Start: <b>{moment(selectedOrder?.course?.dateRange).format("ll")}</b></p>
                                         <p className="card-text">
-                                            Price: <span className='fw-bold'>৳</span> {selectedOrder.course.price}
+                                            Price: <span className='fw-bold'>৳</span> {selectedOrder?.course?.price}
                                         </p>
                                         <p className="card-text">
-                                            Payment Method: {selectedOrder.method}
+                                            Payment Method: {selectedOrder?.method}
                                         </p>
                                         <p className="card-text">Order Status: &nbsp;
                                             {selectedOrder.status === 'Pending' ? (
-                                                <span className="badge bg-warning text-dark">{selectedOrder.status}</span>
+                                                <span className="badge bg-warning text-dark">{selectedOrder?.status}</span>
                                             ) : selectedOrder.status === 'Approved' ? (
-                                                <span className="badge bg-success">{selectedOrder.status}</span>
+                                                <span className="badge bg-success">{selectedOrder?.status}</span>
                                             ) : selectedOrder.status === 'Canceled' ? (
-                                                <span className="badge bg-danger">{selectedOrder.status}</span>
+                                                <span className="badge bg-danger">{selectedOrder?.status}</span>
                                             ) : null}
                                         </p>
-                                        <p className="card-text">Transaction ID: {selectedOrder.trxId}</p>
-                                        <p className="card-text">Account Number: {selectedOrder.accNumber}</p>
-                                        <p className="card-text">Ordered on: {moment(selectedOrder.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                                        <p className="card-text">Transaction ID: {selectedOrder?.trxId}</p>
+                                        <p className="card-text">Account Number: {selectedOrder?.accNumber}</p>
+                                        <p className="card-text">Ordered on: {moment(selectedOrder?.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
                                         {
-                                            selectedOrder.status === 'Approved' && (
+                                            selectedOrder?.status === 'Approved' && (
                                                 <div className='text-end'>
                                                     <Link className='fw-bold' to="/dashboard/student/view-payment">
                                                         <i className="fa-solid fa-file-invoice"></i> Check Invoice

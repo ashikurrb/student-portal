@@ -8,7 +8,6 @@ import { EyeOutlined } from '@ant-design/icons';
 import { SearchOutlined } from '@ant-design/icons';
 import { Image, Input, Modal, Select } from 'antd';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
 const { Option } = Select;
 
 const OrderList = () => {
@@ -68,11 +67,11 @@ const OrderList = () => {
 
     // Filter order based on search query
     const filteredOrder = orders.filter(o =>
-        o.buyer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        o.course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        o.accNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        o.trxId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        o.buyer.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+        o?.buyer?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        o?.course?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        o?.accNumber?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        o?.trxId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        o?.buyer?.grade?.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     //delete selected order
@@ -158,10 +157,10 @@ const OrderList = () => {
                             />
                         </div>
                         {selectedOrder.length > 0 && (
-                                <button onClick={handleDeleteSelected} className="btn btn-danger fw-bold mx-1 py-2 floating-delete-button">
-                                    <i className="fa-solid fa-trash-can"></i> Delete Selected
-                                </button>
-                            )}
+                            <button onClick={handleDeleteSelected} className="btn btn-danger fw-bold mx-1 py-2 floating-delete-button">
+                                <i className="fa-solid fa-trash-can"></i> Delete Selected
+                            </button>
+                        )}
                         <h6 className='justify-content-start'> Count: {filteredOrder.length}</h6>
                         <div className='table-container'>
                             {
@@ -241,16 +240,16 @@ const OrderList = () => {
                                                                                 mask: <EyeOutlined />,
                                                                             }}
                                                                             style={{ width: "27px", height: "27px", borderRadius: "100%" }}
-                                                                            src={o.buyer.avatar}
+                                                                            src={o?.buyer?.avatar}
                                                                             alt="dp" />
                                                                         <span className='ms-2'>                                                      <div style={{ cursor: "pointer" }} className='fw-bold text-primary' onClick={() => { openModal(o) }}>
-                                                                            {o.buyer.name}  <i class="fa-solid fa-arrow-right"></i>
+                                                                            {o?.buyer?.name}  <i class="fa-solid fa-arrow-right"></i>
                                                                         </div>
                                                                         </span>
                                                                     </div>
                                                                 </td>
-                                                                <td >{o.course.title} ({o.course.grade.name})</td>
-                                                                <td>{o.course.price}</td>
+                                                                <td >{o?.course?.title} ({o?.course?.grade?.name})</td>
+                                                                <td>{o?.course?.price}</td>
                                                                 <td>{o.method}</td>
                                                                 <td>{o.trxId}</td>
                                                                 <td>{o.accNumber}</td>
@@ -280,11 +279,11 @@ const OrderList = () => {
                             <div className="col-md-12">
                                 <div className="card">
                                     <div className="card-body">
-                                        <h4 className="card-title">{modalOrder.course.title}</h4>
-                                        <p>Grade: <b>{modalOrder.course.grade.name}</b></p>
-                                        <p>Class Start: <b>{moment(modalOrder.course.dateRange).format("ll")}</b></p>
+                                        <h4 className="card-title">{modalOrder?.course?.title}</h4>
+                                        <p>Grade: <b>{modalOrder?.course?.grade?.name}</b></p>
+                                        <p>Class Start: <b>{moment(modalOrder?.course?.dateRange).format("ll")}</b></p>
                                         <p className="card-text">
-                                            Price: <span className='fw-bold'>৳</span> {modalOrder.course.price}
+                                            Price: <span className='fw-bold'>৳</span> {modalOrder?.course?.price}
                                         </p>
                                         <p className="card-text">
                                             Payment Method: {modalOrder.method}
@@ -304,7 +303,7 @@ const OrderList = () => {
                                         <p className="card-text">Updated: {moment(modalOrder.updatedAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
                                         <p className="card-text">Buyer: &nbsp;
                                             <b>
-                                                {modalOrder.buyer.name} ({modalOrder.buyer.grade.name}) - {modalOrder.buyer.phone}
+                                                {modalOrder?.buyer?.name} ({modalOrder?.buyer?.grade?.name}) - {modalOrder?.buyer?.phone}
                                             </b>
                                         </p>
                                     </div>

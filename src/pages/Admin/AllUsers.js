@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import moment from "moment";
 import { SearchOutlined } from '@ant-design/icons';
 import { EyeOutlined } from '@ant-design/icons';
-import { Modal, Select, Alert, Tooltip, Input, Image } from 'antd';
+import { Modal, Select, Alert, Input, Image } from 'antd';
 const { Option } = Select;
 
 const AllUsers = () => {
