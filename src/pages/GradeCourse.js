@@ -13,7 +13,7 @@ const GradeCourse = () => {
     const [courses, setCourses] = useState([]);
     const [grade, setGrade] = useState({});
 
-    //Get courses by grade
+    //Fetch courses by grade
     const getGradeCourse = async () => {
         setSpinnerLoading(true);
         try {
