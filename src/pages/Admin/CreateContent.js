@@ -3,11 +3,11 @@ import Layout from '../../components/Layouts/Layout';
 import AdminMenu from './AdminMenu';
 import Spinner from '../../components/Spinner';
 import axios from 'axios';
-import moment from 'moment';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
 import { Input, Modal, Select, Tooltip } from 'antd';
+import dayjs from 'dayjs';
 const { Option } = Select;
 
 const CreateContent = () => {
@@ -22,7 +22,6 @@ const CreateContent = () => {
     const [types] = useState(["PDF", "Doc", "Video", "Audio", "PPT"]);
     const [type, setType] = useState(null);
     const [content, setContent] = useState([]);
-    const [contentId, setContentId] = useState([]);
     const [updatedSubject, setUpdatedSubject] = useState('');
     const [updatedReMark, setUpdatedReMark] = useState('');
     const [updatedType, setUpdatedType] = useState('');
@@ -158,7 +157,6 @@ const CreateContent = () => {
     const openModal = (content) => {
         setVisible(true);
         setSelected(content);
-        setContentId(content._id);
         setUpdatedSubject(content.subject);
         setUpdatedReMark(content.remark);
         setUpdatedType(content.type);
@@ -253,7 +251,7 @@ const CreateContent = () => {
                             <i class="fa-solid fa-link"></i> Create Content ({content.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
-                        <Input
+                            <Input
                                 allowClear={true}
                                 type="text"
                                 placeholder='Search'
@@ -281,20 +279,20 @@ const CreateContent = () => {
                             <h5 className='text-center'>Create Content</h5>
                             <form onSubmit={handleCreate}>
                                 <div className="mt-4 d-lg-flex">
-                                    <Select bordered={false}
+                                    <Select
                                         placeholder="Select Grade"
                                         size='large'
-                                        className='form-select mb-3 me-2'
+                                        className='mb-3 me-2 w-100'
                                         value={grade || undefined}
                                         onChange={(value) => { setGrade(value) }}>
                                         {grades?.map(g => (
                                             <Option key={g._id} value={g._id}>{g.name}</Option>
                                         ))}
                                     </Select>
-                                    <Select bordered={false}
+                                    <Select
                                         placeholder="Select Content Type"
                                         size='large'
-                                        className='form-select mb-3'
+                                        className='mb-3 w-100'
                                         value={type}
                                         onChange={(value) => { setType(value) }}
                                         required>
@@ -304,19 +302,21 @@ const CreateContent = () => {
                                     </Select>
                                 </div>
                                 <div className="d-lg-flex">
-                                    <input
+                                    <Input
                                         type="text"
                                         placeholder='Subject'
-                                        className='form-control mb-3 me-2'
+                                        className='mb-3 me-2 w-100'
+                                        size='large'
                                         value={subject}
                                         onChange={(e) => setSubject(e.target.value)}
                                         minLength={3} maxLength={20}
                                         required
                                     />
-                                    <input
+                                    <Input
                                         type="text"
                                         placeholder='Remark'
-                                        className='form-control mb-3'
+                                        className='mb-3 w-100'
+                                        size="large"
                                         value={remark}
                                         onChange={(e) => setRemark(e.target.value)}
                                         minLength={3} maxLength={30}
@@ -324,10 +324,11 @@ const CreateContent = () => {
                                     />
                                 </div>
                                 <div>
-                                    <input
+                                    <Input
                                         type="url"
                                         placeholder='Paste Link Here'
-                                        className='form-control mb-3'
+                                        className='mb-3 w-100'
+                                        size="large"
                                         value={contentLink}
                                         onChange={(e) => setContentLink(e.target.value)} required
                                     />
@@ -400,7 +401,7 @@ const CreateContent = () => {
                                                         <th scope='row'>{i + 1}</th>
                                                         <td>{c?.grade?.name}</td>
                                                         <td>
-                                                            <Tooltip title={`Created: ${moment(c.createdAt).format('llll')} Updated: ${moment(c.updatedAt).format('llll')}`}>
+                                                            <Tooltip title={`Created: ${dayjs(c.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(c.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
                                                                 <span>{c?.subject}</span>
                                                             </Tooltip>
                                                         </td>
@@ -440,19 +441,21 @@ const CreateContent = () => {
                 </div>
                 <form onSubmit={handleUpdate}>
                     <div className="mt-4 d-lg-flex">
-                        <input
+                        <Input
                             type="text"
                             placeholder='Subject'
-                            className='form-control mb-3 me-2'
+                            className='mb-3 me-2 w-100'
+                            size='large'
                             value={updatedSubject}
                             onChange={(e) => setUpdatedSubject(e.target.value)}
                             minLength={3} maxLength={20}
                             required
                         />
-                        <input
+                        <Input
                             type="text"
                             placeholder='Remark'
-                            className='form-control mb-3'
+                            className='mb-3 w-100'
+                            size="large"
                             value={updatedReMark}
                             onChange={(e) => setUpdatedReMark(e.target.value)}
                             minLength={3} maxLength={30}
@@ -460,10 +463,10 @@ const CreateContent = () => {
                         />
                     </div>
                     <div className='mb-3'>
-                        <Select bordered={false}
+                        <Select
                             placeholder="Select Content Type"
                             size='large'
-                            className='form-select mb-3'
+                            className='mb-3 w-100'
                             value={updatedType}
                             onChange={(value) => { setUpdatedType(value) }}
                             required>
@@ -471,10 +474,11 @@ const CreateContent = () => {
                                 <Option key={i} value={t}>{t}</Option>
                             ))}
                         </Select>
-                        <input
+                        <Input
                             type="url"
                             placeholder='Paste Link Here'
-                            className='form-control mb-4'
+                            size="large"
+                            className='mb-4 w-100'
                             value={updatedContentLink}
                             onChange={(e) => setUpdatedContentLink(e.target.value)} required
                         />

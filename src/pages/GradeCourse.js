@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layouts/Layout';
-import moment from 'moment';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 import GoBackButton from '../components/GoBackButton';
+import dayjs from 'dayjs';
 
 const GradeCourse = () => {
     const params = useParams();
@@ -68,7 +68,7 @@ const GradeCourse = () => {
                                                 <h4 className='card-title'>{c.title}</h4>
                                                 <p className="form-text">Grade: <b>{c.grade.name}</b>
                                                     <br />
-                                                    Start:  {moment(c.dateRange).format("ll")}
+                                                    Start:  {dayjs(c.dateRange).format("MMM DD, YYYY")}
                                                 </p>
                                                 <h5><span className='fw-bold'>৳</span>{c.price}</h5>
                                                 <button

@@ -7,7 +7,7 @@ import Spinner from '../../components/Spinner';
 import { EyeOutlined } from '@ant-design/icons';
 import { SearchOutlined } from '@ant-design/icons';
 import { Image, Input, Modal, Select } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 const { Option } = Select;
 
 const OrderList = () => {
@@ -253,7 +253,7 @@ const OrderList = () => {
                                                                 <td>{o.method}</td>
                                                                 <td>{o.trxId}</td>
                                                                 <td>{o.accNumber}</td>
-                                                                <td>{moment(o.createdAt).format('ll')}</td>
+                                                                <td>{dayjs(o.createdAt).format('MMM DD, YYYY')}</td>
                                                                 <td>
                                                                     <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(o._id)}>
                                                                         <i class="fa-solid fa-trash-can"></i>  Delete
@@ -281,7 +281,7 @@ const OrderList = () => {
                                     <div className="card-body">
                                         <h4 className="card-title">{modalOrder?.course?.title}</h4>
                                         <p>Grade: <b>{modalOrder?.course?.grade?.name}</b></p>
-                                        <p>Class Start: <b>{moment(modalOrder?.course?.dateRange).format("ll")}</b></p>
+                                        <p>Class Start: <b>{dayjs(modalOrder?.course?.dateRange).format("MMM DD, YYYY")}</b></p>
                                         <p className="card-text">
                                             Price: <span className='fw-bold'>৳</span> {modalOrder?.course?.price}
                                         </p>
@@ -299,8 +299,8 @@ const OrderList = () => {
                                         </p>
                                         <p className="card-text">Transaction ID: {modalOrder.trxId}</p>
                                         <p className="card-text">Account Number: {modalOrder.accNumber}</p>
-                                        <p className="card-text">Ordered on: {moment(modalOrder.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
-                                        <p className="card-text">Updated: {moment(modalOrder.updatedAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                                        <p className="card-text">Ordered on: {dayjs(modalOrder.createdAt).format('MMM DD, YYYY  h:mm:ss A')}</p>
+                                        <p className="card-text">Updated: {dayjs(modalOrder.updatedAt).format('MMM DD, YYYY h:mm:ss A')}</p>
                                         <p className="card-text">Buyer: &nbsp;
                                             <b>
                                                 {modalOrder?.buyer?.name} ({modalOrder?.buyer?.grade?.name}) - {modalOrder?.buyer?.phone}

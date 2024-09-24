@@ -4,9 +4,9 @@ import StudentMenu from './StudentMenu';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Spinner from '../../components/Spinner';
-import moment from 'moment';
 import { Modal } from 'antd';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 const ViewOrder = () => {
     const [orders, setOrders] = useState([]);
@@ -124,7 +124,7 @@ const ViewOrder = () => {
                                 <div className="card">
                                     <div className="card-body">
                                         <h4 className="card-title">{selectedOrder?.course?.title}</h4>
-                                        <p>Class Start: <b>{moment(selectedOrder?.course?.dateRange).format("ll")}</b></p>
+                                        <p>Class Start: <b>{dayjs(selectedOrder?.course?.dateRange).format("MMM DD, YYYY")}</b></p>
                                         <p className="card-text">
                                             Price: <span className='fw-bold'>৳</span> {selectedOrder?.course?.price}
                                         </p>
@@ -142,7 +142,7 @@ const ViewOrder = () => {
                                         </p>
                                         <p className="card-text">Transaction ID: {selectedOrder?.trxId}</p>
                                         <p className="card-text">Account Number: {selectedOrder?.accNumber}</p>
-                                        <p className="card-text">Ordered on: {moment(selectedOrder?.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                                        <p className="card-text">Ordered on: {dayjs(selectedOrder?.createdAt).format('MMM DD, YYYY hh:mm:ss A')}</p>
                                         {
                                             selectedOrder?.status === 'Approved' && (
                                                 <div className='text-end'>

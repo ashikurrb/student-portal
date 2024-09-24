@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layouts/Layout'
 import Spinner from '../../components/Spinner';
 import StudentMenu from './StudentMenu';
-import moment from 'moment'
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import dayjs from 'dayjs';
 
 const ViewResult = () => {
     const [results, setResults] = useState([]);
@@ -68,7 +68,7 @@ const ViewResult = () => {
                                                         <td>{r.type}</td>
                                                         <td>{r.subject}</td>
                                                         <td>{r.marks}</td>
-                                                        <td>{moment(r.examDate).format('ll')}</td>
+                                                        <td>{dayjs(r.examDate).format('MMM DD, YYYY')}</td>
                                                     </tr>
                                                 )
                                             })

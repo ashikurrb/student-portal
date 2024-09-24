@@ -5,11 +5,11 @@ import Spinner from '../../components/Spinner';
 import axios from 'axios';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
-import moment from 'moment'
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { SearchOutlined } from '@ant-design/icons';
 import { Modal, DatePicker, Select, Tooltip, Input } from 'antd';
+import dayjs from 'dayjs';
 const dateFormat = 'DD-MM-YYYY';
 const { Option } = Select;
 
@@ -17,7 +17,7 @@ const SetPaymentStatus = () => {
     const [spinnerLoading, setSpinnerLoading] = useState(false);
     const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
-    const [auth, setAuth] = useAuth();
+    const [auth] = useAuth();
     const [users, setUsers] = useState([]);
     const [user, setUser] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
@@ -30,7 +30,6 @@ const SetPaymentStatus = () => {
     const [amount, setAmount] = useState('');
     const [paymentDate, setPaymentDate] = useState('');
     const [payment, setPayment] = useState([]);
-    const [paymentId, setPaymentId] = useState([]);
     const [updatedRemark, setUpdatedRemark] = useState('');
     const [updatedTrxId, setUpdatedTrxId] = useState('');
     const [updatedMethod, setUpdatedMethod] = useState('');
@@ -201,12 +200,11 @@ const SetPaymentStatus = () => {
     const openModal = (payment) => {
         setVisible(true);
         setSelected(payment);
-        setPaymentId(payment._id);
         setUpdatedRemark(payment.remark);
         setUpdatedTrxId(payment.trxId);
         setUpdatedMethod(payment.method);
         setUpdatedAmount(payment.amount);
-        // setUpdatedPaymentDate(payment.paymentDate);
+        setUpdatedPaymentDate(dayjs(payment.paymentDate));
     };
 
     // Filter content based on search query
@@ -359,8 +357,8 @@ const SetPaymentStatus = () => {
 
             // Bold Date: and labels
             doc.setFont('helvetica', 'bold');
-            const dateText = `${moment(payment.paymentDate).format('ll')}`;
-            doc.text('Date:', pageWidth - rightMargin - doc.getTextWidth(dateText) - doc.getTextWidth('Date:'), 57);
+            const dateText = `${dayjs(payment.paymentDate).format('DD-MM-YYYY')}`;
+            doc.text('Date:', pageWidth - rightMargin - doc.getTextWidth(dateText) - doc.getTextWidth('Date: '), 57);
             doc.text('Name:', leftMargin, 57 + verticalSpacing);
             doc.text('Grade:', leftMargin, 57 + 2 * verticalSpacing);
             doc.text('Email:', leftMargin, 57 + 3 * verticalSpacing);
@@ -368,7 +366,7 @@ const SetPaymentStatus = () => {
 
             // Normal text
             doc.setFont('helvetica', 'normal'); // Revert font to normal
-            doc.text(dateText, pageWidth - rightMargin - doc.getTextWidth(dateText), 57); // Position date text
+            doc.text(dateText, pageWidth - rightMargin - doc.getTextWidth(dateText), 57);
             doc.text(`${payment.user.name}`, leftMargin + doc.getTextWidth('Name:') + 2, 57 + verticalSpacing);
             doc.text(`${payment.grade.name}`, leftMargin + doc.getTextWidth('Grade:') + 2, 57 + 2 * verticalSpacing);
             doc.text(`${payment.user.email}`, leftMargin + doc.getTextWidth('Email:') + 2, 57 + 3 * verticalSpacing);
@@ -417,9 +415,9 @@ const SetPaymentStatus = () => {
                 // Add footer text with date and time
                 doc.setFontSize(8); // Adjust font size for footer
                 doc.setTextColor(128, 128, 128); // Set text color to grey
-                const currentDateTime = moment().format('MMMM D, YYYY h:mm A');
+                const currentDateTime = dayjs().format('MMMM D, YYYY h:mm A');
                 const footerText1 = `This is a system generated Invoice | Generated on: ${currentDateTime}`;
-                const footerText2 = `Created by Admin | System Entry: ${moment(payment.createdAt).format('MMMM D, YYYY h:mm A')} / ${moment(payment.updatedAt).format('MMMM D, YYYY h:mm A')}`;
+                const footerText2 = `Created by Admin | System Entry: ${dayjs(payment.createdAt).format('MMMM D, YYYY h:mm A')} / ${dayjs(payment.updatedAt).format('MMMM D, YYYY h:mm A')}`;
 
                 const footerWidth1 = doc.getTextWidth(footerText1);
                 const footerWidth2 = doc.getTextWidth(footerText2);
@@ -526,21 +524,30 @@ const SetPaymentStatus = () => {
                                     </Select>
                                 </div>
                                 <div className="d-lg-flex">
-                                    <input
+                                    <Input
                                         type="text"
                                         placeholder='Remark'
-                                        className='form-control mb-3 me-2'
+                                        size="large"
+                                        className='mb-3 me-2 w-100'
                                         value={remark}
                                         onChange={(e) => setRemark(e.target.value)} required
                                     />
-                                    <input
+                                    <Input
                                         type="number"
                                         placeholder='Amount'
-                                        className='form-control mb-3 me-2'
+                                        size="large"
+                                        className='mb-3 me-2 w-100'
                                         value={amount}
                                         onChange={(e) => setAmount(e.target.value)} required
                                     />
-                                    <DatePicker format={dateFormat} className='form-control w-100 mb-3' value={paymentDate} onChange={(date) => setPaymentDate(date)} required />
+                                    <DatePicker
+                                        format={dateFormat}
+                                        className='w-100 mb-3'
+                                        size='large'
+                                        value={paymentDate}
+                                        onChange={(date) => setPaymentDate(date)}
+                                        required
+                                    />
                                 </div>
                                 <div className="d-lg-flex">
                                     <Select
@@ -554,10 +561,11 @@ const SetPaymentStatus = () => {
                                             <Option key={i} value={m}>{m}</Option>
                                         ))}
                                     </Select>
-                                    <input
+                                    <Input
                                         type="text"
                                         placeholder='Transaction ID / Receipt No'
-                                        className='form-control mb-3'
+                                        size="large"
+                                        className='mb-3 w-100'
                                         value={trxId}
                                         onChange={(e) => setTrxId(e.target.value)} required
                                     />
@@ -641,7 +649,7 @@ const SetPaymentStatus = () => {
                                                         <th scope="row">{i + 1}</th>
                                                         <td>{p?.grade?.name}</td>
                                                         <td>
-                                                            <Tooltip title={`Created: ${moment(p.createdAt).format('llll')} Updated: ${moment(p.updatedAt).format('llll')}`}>
+                                                            <Tooltip title={`Created: ${dayjs(p.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(p.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
                                                                 <div className="d-flex align-items-center">
                                                                     <img
                                                                         className='me-1'
@@ -658,7 +666,7 @@ const SetPaymentStatus = () => {
                                                         <td>TK. {p.amount}</td>
                                                         <td>{p.method}</td>
                                                         <td>{p.trxId}</td>
-                                                        <td>{moment(p?.paymentDate).format('ll')}</td>
+                                                        <td>{dayjs(p?.paymentDate).format('DD MMM YYYY')}</td>
                                                         <td className='text-center'>
                                                             <button className="btn btn-secondary" onClick={() => generateInvoice(p)}>
                                                                 <i className="fa-solid fa-download"></i>
@@ -694,34 +702,42 @@ const SetPaymentStatus = () => {
                             src={selected?.user?.avatar}
                             alt="dp"
                         />
-                        <b>{selected?.user?.name}</b>&nbsp;- {selected?.grade?.name} - {moment(selected?.paymentDate).format('ll')}
+                        <b>{selected?.user?.name}</b>&nbsp;- {selected?.grade?.name}
                     </span>
                 </div>
 
                 <form onSubmit={handleUpdate}>
                     <div className="mt-4 d-lg-flex">
-                        <input
+                        <Input
                             type="text"
                             placeholder='Remark'
-                            className='form-control mb-3 me-2'
+                            size='large'
+                            className='mb-3 me-2 w-100'
                             value={updatedRemark}
                             onChange={(e) => setUpdatedRemark(e.target.value)} required
                         />
-                        <input
+                        <Input
                             type="number"
                             placeholder='Amount'
-                            className='form-control mb-3 me-2'
+                            size='large'
+                            className='mb-3 me-2 w-100'
                             value={updatedAmount}
                             onChange={(e) => setUpdatedAmount(e.target.value)} required
                         />
-                        <DatePicker format={dateFormat} value={updatedPaymentDate} className='form-control w-100 mb-3 me-2'
-                            onChange={(date) => setUpdatedPaymentDate(date)} required />
+                        <DatePicker
+                            format={dateFormat}
+                            value={updatedPaymentDate}
+                            className='w-100 mb-3 me-2'
+                            size='large'
+                            onChange={(date) => setUpdatedPaymentDate(date)}
+                            required
+                        />
                     </div>
                     <div className="mb-2 d-lg-flex">
-                        <Select bordered={false}
+                        <Select
                             placeholder="Select Method"
                             size='large'
-                            className='form-select mb-3 me-2'
+                            className='mb-3 me-2 w-100'
                             value={updatedMethod}
                             onChange={(value) => { setUpdatedMethod(value) }}
                             required>
@@ -729,10 +745,11 @@ const SetPaymentStatus = () => {
                                 <Option key={i} value={m}>{m}</Option>
                             ))}
                         </Select>
-                        <input
+                        <Input
                             type="text"
                             placeholder='Transaction ID / Receipt No'
-                            className='form-control mb-3 me-2'
+                            size='large'
+                            className='mb-3 me-2 w-100'
                             value={updatedTrxId}
                             onChange={(e) => setUpdatedTrxId(e.target.value)} required
                         />

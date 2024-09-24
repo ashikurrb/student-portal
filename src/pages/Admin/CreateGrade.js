@@ -3,9 +3,11 @@ import Layout from '../../components/Layouts/Layout';
 import AdminMenu from './AdminMenu';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import moment from "moment";
 import Spinner from '../../components/Spinner';
-import { Modal, Alert } from 'antd';
+import { Modal, Alert, Input } from 'antd';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime)
 
 const CreateGrade = () => {
     const [grades, setGrades] = useState([]);
@@ -150,10 +152,10 @@ const CreateGrade = () => {
                         <h2 className='text-center mt-4'><i class="fa-solid fa-graduation-cap"></i> Create Grade</h2>
                         <form className="p-3" onSubmit={handleCreate}>
                             <div>
-                                <input
+                                <Input
                                     type="text"
                                     placeholder='Enter grade'
-                                    className='form-control'
+                                    size='large'
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     minLength={4} maxLength={20}
@@ -197,8 +199,8 @@ const CreateGrade = () => {
                                                 <tr>
                                                     <th scope='row' className='ps-4'>{i + 1}</th>
                                                     <td className='fs-5 fw-bold'>{g.name}</td>
-                                                    <td>{moment(g?.createdAt).fromNow()}</td>
-                                                    <td>{moment(g?.updatedAt).fromNow()}</td>
+                                                    <td>{dayjs(g?.createdAt).fromNow()}</td>
+                                                    <td>{dayjs(g?.updatedAt).fromNow()}</td>
                                                     <td className='d-flex'>
                                                         <button className='btn btn-primary mx-1' onClick={() => { openModal(g) }}
                                                             disabled={g.name === "Administration"}>
@@ -220,10 +222,11 @@ const CreateGrade = () => {
                         <h5 className='text-center'>Update Grade</h5>
                         <form onSubmit={handleUpdate}>
                             <div className='mt-4'>
-                                <input
+                                <Input
                                     type="text"
                                     placeholder='Updated Grade Name'
-                                    className='form-control mb-3'
+                                    className='mb-3'
+                                    size="large"
                                     value={updatedName}
                                     onChange={(e) => setUpdatedName(e.target.value)}
                                     minLength={4} maxLength={20}

@@ -3,11 +3,11 @@ import Layout from '../../components/Layouts/Layout';
 import AdminMenu from './AdminMenu';
 import Spinner from '../../components/Spinner';
 import axios from 'axios';
-import moment from 'moment';
 import toast from 'react-hot-toast';
 import { SearchOutlined } from '@ant-design/icons';
 import { EyeOutlined } from '@ant-design/icons';
 import { Alert, Image, Input, Modal, Select, Tooltip } from 'antd';
+import dayjs from 'dayjs';
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -18,7 +18,6 @@ const CreateNotice = () => {
     const [grades, setGrades] = useState([]);
     const [grade, setGrade] = useState("");
     const [notice, setNotice] = useState([]);
-    const [noticeId, setNoticeId] = useState([]);
     const [title, setTitle] = useState('');
     const [noticeInfo, setNoticeInfo] = useState('');
     const [noticeImg, setNoticeImg] = useState('');
@@ -167,7 +166,6 @@ const CreateNotice = () => {
     const openModal = (notice) => {
         setVisible(true);
         setSelected(notice);
-        setNoticeId(notice._id);
         setUpdatedTitle(notice.title);
         setUpdatedNoticeInfo(notice.noticeInfo);
         setUpdatedNoticeImg(notice.noticeImg);
@@ -443,7 +441,7 @@ const CreateNotice = () => {
                                                             }
                                                         </td>
                                                         <td>
-                                                            <Tooltip title={`Created: ${moment(n.createdAt).format('llll')} Updated: ${moment(n.updatedAt).format('llll')}`}>
+                                                        <Tooltip title={`Created: ${dayjs(n.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(n.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
                                                                 <span>{n?.title}</span>
                                                             </Tooltip>
                                                         </td>

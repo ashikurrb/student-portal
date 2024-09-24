@@ -7,7 +7,7 @@ import Spinner from '../../components/Spinner';
 import { SearchOutlined } from '@ant-design/icons';
 import { EyeOutlined } from '@ant-design/icons';
 import { Image, Input, Modal, Select, Tooltip, DatePicker } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 const { RangePicker } = DatePicker;
 const dateFormat = 'DD-MM-YYYY';
 const { TextArea } = Input;
@@ -16,11 +16,9 @@ const { Option } = Select;
 
 const CreateCourse = () => {
     const [spinnerLoading, setSpinnerLoading] = useState(false);
-    const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
     const [grades, setGrades] = useState([]);
     const [course, setCourse] = useState([]);
-    const [courseId, setCourseId] = useState([]);
     const [grade, setGrade] = useState('');
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
@@ -140,9 +138,9 @@ const CreateCourse = () => {
     const openModal = (course) => {
         setVisible(true);
         setSelected(course);
-        setCourseId(course._id);
         setUpdatedTitle(course.title);
         setUpdatedPrice(course.price);
+        setUpdatedDateRange(dayjs(course.dateRange));
         setUpdatedStatus(course.status);
         setUpdatedDescription(course.description);
         setUpdatedCourseImg(course.courseImg);
@@ -480,12 +478,12 @@ const CreateCourse = () => {
                                                             {c.grade.name}
                                                         </td>
                                                         <td>
-                                                            <Tooltip title={`Created: ${moment(c.createdAt).format('llll')} Updated: ${moment(c.updatedAt).format('llll')}`}>
+                                                            <Tooltip title={`Created: ${dayjs(c.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(c.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
                                                                 <span>{c?.title}</span>
                                                             </Tooltip>
                                                         </td>
                                                         <td>{c.price} Tk</td>
-                                                        <td>{moment(c.dateRange).format('ll')}</td>
+                                                        <td>{dayjs(c.dateRange).format('DD MMM YYYY')}</td>
                                                         <td>{c.status}</td>
                                                         <td>
                                                             <Image
@@ -567,7 +565,7 @@ const CreateCourse = () => {
                     <div className='text-center my-3'>
                         {
                             <h6>
-                                {selected?.grade?.name} - {moment(selected?.dateRange).format('ll')}
+                                {selected?.grade?.name}
                             </h6>
                         }
                     </div>

@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layouts/Layout';
 import Spinner from '../../components/Spinner';
-import moment from 'moment';
 import axios from 'axios';
 import { DownloadOutlined } from '@ant-design/icons';
 import { Image } from 'antd';
 import GoBackButton from '../../components/GoBackButton';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime)
+
 
 const ViewNotice = () => {
     const [notice, setNotice] = useState([]);
@@ -78,7 +81,7 @@ const ViewNotice = () => {
                                                             }
                                                         </span>
                                                         <span>
-                                                            {moment(n.updatedAt).fromNow()}
+                                                            {dayjs(n.updatedAt).fromNow()}
                                                         </span>
                                                     </span>
 

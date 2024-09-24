@@ -3,7 +3,7 @@ import Layout from '../../components/Layouts/Layout'
 import Spinner from '../../components/Spinner';
 import StudentMenu from './StudentMenu';
 import axios from 'axios';
-import moment from 'moment'
+import dayjs from 'dayjs';
 import toast from 'react-hot-toast';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -97,8 +97,8 @@ const ViewPayment = () => {
 
             // Bold Date: and labels
             doc.setFont('helvetica', 'bold');
-            const dateText = `${moment(payment.paymentDate).format('ll')}`;
-            doc.text('Date:', pageWidth - rightMargin - doc.getTextWidth(dateText) - doc.getTextWidth('Date:'), 57);
+            const dateText = `${dayjs(payment.paymentDate).format('DD-MM-YYYY')}`;
+            doc.text('Date:', pageWidth - rightMargin - doc.getTextWidth(dateText) - doc.getTextWidth('Date: '), 57);
             doc.text('Name:', leftMargin, 57 + verticalSpacing);
             doc.text('Grade:', leftMargin, 57 + 2 * verticalSpacing);
             doc.text('Email:', leftMargin, 57 + 3 * verticalSpacing);
@@ -156,7 +156,7 @@ const ViewPayment = () => {
                 // Add footer text with date and time
                 doc.setFontSize(8); // Adjust font size for footer
                 doc.setTextColor(128, 128, 128); // Set text color to grey
-                const currentDateTime = moment().format('MMMM D, YYYY h:mm A');
+                const currentDateTime = dayjs().format('MMMM D, YYYY h:mm A');
                 const footerText = `This is a system generated Invoice | Generated on: ${currentDateTime}`;
                 const footerWidth = doc.getTextWidth(footerText);
                 const footerX = (pageWidth - footerWidth) / 2; // Center text horizontally
@@ -232,7 +232,7 @@ const ViewPayment = () => {
                                                         <td>TK. {p.amount}</td>
                                                         <td>{p.method}</td>
                                                         <td>{p.trxId}</td>
-                                                        <td>{moment(p.paymentDate).format('ll')}</td>
+                                                        <td>{dayjs(p.paymentDate).format('MMM DD, YYYY')}</td>
                                                         <td>
                                                             <button className="btn btn-secondary" onClick={() => generateInvoice(p)}>
                                                                 <i className="fa-solid fa-download"></i>

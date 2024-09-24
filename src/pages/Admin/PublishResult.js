@@ -3,11 +3,11 @@ import Layout from '../../components/Layouts/Layout';
 import AdminMenu from './AdminMenu';
 import Spinner from '../../components/Spinner'
 import axios from 'axios';
-import moment from 'moment'
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 import { SearchOutlined } from '@ant-design/icons';
 import { Modal, DatePicker, Select, Tooltip, Input } from 'antd';
+import dayjs from 'dayjs';
 const dateFormat = 'DD-MM-YYYY';
 const { Option } = Select;
 
@@ -15,7 +15,7 @@ const PublishResult = () => {
     const [spinnerLoading, setSpinnerLoading] = useState(false);
     const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
-    const [auth, setAuth] = useAuth();
+    const [auth] = useAuth();
     const [grades, setGrades] = useState([]);
     const [grade, setGrade] = useState("");
     const [users, setUsers] = useState([]);
@@ -26,7 +26,6 @@ const PublishResult = () => {
     const [marks, setMarks] = useState('');
     const [examDate, setExamDate] = useState('');
     const [result, setResult] = useState([]);
-    const [resultId, setResultId] = useState([]);
     const [updatedType, setUpdatedType] = useState('');
     const [updatedSubject, setUpdatedSubject] = useState('');
     const [updatedMarks, setUpdatedMarks] = useState('');
@@ -189,11 +188,10 @@ const PublishResult = () => {
     const openModal = (result) => {
         setVisible(true);
         setSelected(result);
-        setResultId(result._id);
         setUpdatedType(result.type);
         setUpdatedSubject(result.subject);
         setUpdatedMarks(result.marks);
-        // setUpdatedExamDate(moment(result.examDate))
+        setUpdatedExamDate(dayjs(result.examDate))
     };
 
     // Filter content based on search query
@@ -311,20 +309,20 @@ const PublishResult = () => {
                             <h5 className='text-center mb-3'>Publish Result</h5>
                             <form onSubmit={handlePublish}>
                                 <div className="mt-4 d-lg-flex">
-                                    <Select bordered={false}
+                                    <Select
                                         placeholder="Select Grade"
                                         size='large'
-                                        className='form-select mb-3 me-2'
+                                        className='mb-3 me-2 w-100'
                                         value={grade || undefined}
                                         onChange={(value) => { setGrade(value) }}>
                                         {grades?.map(g => (
                                             <Option key={g._id} value={g._id}>{g.name}</Option>
                                         ))}
                                     </Select>
-                                    <Select bordered={false}
+                                    <Select
                                         placeholder="Select Student"
                                         size='large'
-                                        className='form-select mb-3'
+                                        className='mb-3 w-100'
                                         value={user || undefined}
                                         onChange={(value) => { setUser(value) }}
                                         required>
@@ -343,29 +341,40 @@ const PublishResult = () => {
                                     </Select>
                                 </div>
                                 <div className="d-lg-flex">
-                                    <input
+                                    <Input
                                         type="text"
                                         placeholder='Exam Type'
-                                        className='form-control form-input mb-3 me-2'
+                                        className='mb-3 me-2 w-100'
+                                        size='large'
                                         value={type}
                                         onChange={(e) => setType(e.target.value)} required
                                     />
-                                    <input
+                                    <Input
                                         type="text"
                                         placeholder='Subject'
-                                        className='form-control form-input mb-3'
+                                        className='mb-3 w-100'
+                                        size='large'
                                         value={subject}
                                         onChange={(e) => setSubject(e.target.value)} required
                                     />
                                 </div>
                                 <div className="d-lg-flex">
-                                    <DatePicker format={dateFormat} className='w-100 mb-3 me-2 form-control' value={examDate} onChange={(date) => setExamDate(date)} required />
-                                    <input
+                                    <DatePicker
+                                        format={dateFormat}
+                                        className='mb-3 me-2 w-100'
+                                        size='large'
+                                        value={examDate}
+                                        onChange={(date) => setExamDate(date)}
+                                        required
+                                    />
+                                    <Input
                                         type="text"
                                         placeholder='Marks'
-                                        className='form-control mb-3'
+                                        className='mb-3 w-100'
+                                        size='large'
                                         value={marks}
-                                        onChange={(e) => setMarks(e.target.value)} required
+                                        onChange={(e) => setMarks(e.target.value)}
+                                        required
                                     />
                                 </div>
                                 <div className="text-center">
@@ -438,7 +447,7 @@ const PublishResult = () => {
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{r?.grade?.name}</td>
                                                             <td>
-                                                                <Tooltip title={`Created: ${moment(r.createdAt).format('llll')} Updated: ${moment(r.updatedAt).format('llll')}`}>
+                                                                <Tooltip title={`Created: ${dayjs(r.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(r.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
                                                                     <div className="d-flex align-items-center">
                                                                         <img
                                                                             className='me-1'
@@ -452,7 +461,7 @@ const PublishResult = () => {
                                                             <td>{r.type}</td>
                                                             <td>{r.subject}</td>
                                                             <td>{r.marks}</td>
-                                                            <td>{moment(r.examDate).format('ll')}</td>
+                                                            <td>{dayjs(r.examDate).format('DD MMM YYYY')}</td>
                                                             <td>
                                                                 <div className="d-flex">
                                                                     <button className='btn btn-primary mx-1' onClick={() => { openModal(r) }}>
@@ -485,33 +494,43 @@ const PublishResult = () => {
                             src={selected?.user?.avatar}
                             alt="dp"
                         />
-                       <b>{selected?.user?.name}</b>&nbsp;- {selected?.grade?.name} - {moment(selected?.examDate).format('ll')}
+                        <b>{selected?.user?.name}</b>&nbsp;- {selected?.grade?.name}
                     </span>
                 </div>
 
                 <form onSubmit={handleUpdate}>
                     <div className="mt-4 d-lg-flex">
-                        <input
+                        <Input
                             type="text"
                             placeholder='Exam Type'
-                            className='form-control form-input mb-3 me-2'
+                            className='mb-3 me-2 w-100'
+                            size='large'
                             value={updatedType}
                             onChange={(e) => setUpdatedType(e.target.value)} required
                         />
-                        <input
+                        <Input
                             type="text"
                             placeholder='Subject'
-                            className='form-control form-input mb-3'
+                            className='mb-3 w-100'
+                            size='large'
                             value={updatedSubject}
                             onChange={(e) => setUpdatedSubject(e.target.value)} required
                         />
                     </div>
                     <div className='mb-2 d-lg-flex'>
-                        <DatePicker format={dateFormat} value={updatedExamDate} className='w-100 mb-3 me-2 form-control' onChange={(date) => setUpdatedExamDate(date)} required />
-                        <input
+                        <DatePicker
+                            value={updatedExamDate}
+                            format={dateFormat}
+                            className='w-100 mb-3 me-2'
+                            size='large'
+                            onChange={(date) => setUpdatedExamDate(date)}
+                            required
+                        />
+                        <Input
                             type="text"
                             placeholder='Marks'
-                            className='form-control mb-3'
+                            className='mb-3 w-100'
+                            size='large'
                             value={updatedMarks}
                             onChange={(e) => setUpdatedMarks(e.target.value)} required
                         />

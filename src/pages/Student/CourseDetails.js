@@ -4,10 +4,10 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import GoBackButton from '../../components/GoBackButton';
 import Spinner from '../../components/Spinner';
-import moment from 'moment';
 import { useAuth } from '../../context/auth';
 import { Image, Input, Modal, Select } from 'antd';
 import toast from 'react-hot-toast';
+import dayjs from 'dayjs';
 const { Option } = Select;
 
 const CourseDetails = () => {
@@ -144,7 +144,7 @@ const CourseDetails = () => {
                                                     Grade: <b>{course?.grade?.name}</b>
                                                 </Link>
                                             </h6>
-                                            <h6 className="card-text">Starting from: {moment(course.dateRange).format('ll')}</h6>
+                                            <h6 className="card-text">Starting from: {dayjs(course.dateRange).format('MMM DD, YYYY')}</h6>
                                             <h4 className="card-text"> <span className='fs-2 fw-bold'>৳</span>{course.price}</h4>
                                             {
                                                 course.status === "Active" ? (
@@ -200,7 +200,7 @@ const CourseDetails = () => {
                                     <div className="card-body">
                                         <h4 className="card-title">{c.title}</h4>
                                         <h6 className="card-text"><span className='fs-3 fw-bold'>৳</span>{c.price}</h6>
-                                        <p className="card-text">Start:  {moment(c.dateRange).format("ll")} </p>
+                                        <p className="card-text">Start:  {dayjs(c.dateRange).format("MMM DD, YYYY")} </p>
                                         <button className="btn btn-primary w-100" onClick={() => navigate(`/view-course/${c.grade.slug}/${c.slug}`)}>Details</button>
                                     </div>
                                 </div>

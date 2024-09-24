@@ -4,14 +4,14 @@ import AdminMenu from '../../pages/Admin/AdminMenu';
 import { useAuth } from '../../context/auth';
 import Spinner from '../../components/Spinner'; import axios from 'axios';
 import toast from 'react-hot-toast';
-import moment from "moment";
 import { SearchOutlined } from '@ant-design/icons';
 import { EyeOutlined } from '@ant-design/icons';
-import { Modal, Select, Alert, Input, Image } from 'antd';
+import { Modal, Select, Alert, Input, Image, Tooltip } from 'antd';
+import dayjs from 'dayjs';
 const { Option } = Select;
 
 const AllUsers = () => {
-    const [auth, setAuth] = useAuth();
+    const [auth] = useAuth();
     const [users, setUsers] = useState([]);
     const [grades, setGrades] = useState([]);
     const [updatedGrade, setUpdatedGrade] = useState('');
@@ -215,7 +215,10 @@ const AllUsers = () => {
                                                                 style={{ width: "27px", height: "27px", borderRadius: "100%" }}
                                                                 src={u?.avatar}
                                                                 alt="dp" />
-                                                            <span className='ms-2'>                                                      {u.name}
+                                                            <span className='ms-2'>
+                                                                <Tooltip title={`Created: ${dayjs(u.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(u.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
+                                                                    {u.name}
+                                                                </Tooltip>
                                                             </span>
                                                         </div>
                                                     </td>
@@ -238,7 +241,7 @@ const AllUsers = () => {
                                                             u.role === 0 ? <span class="badge text-bg-success">Student</span> : u.role === 1 ? <span class="badge text-bg-warning">Admin</span> : <span class="badge text-bg-danger">{u.role}</span>
                                                         }
                                                     </td>
-                                                    <td>{moment(u?.createdAt).format('lll')}</td>
+                                                    <td>{dayjs(u?.createdAt).format('MMM DD, YYYY hh:mm A')}</td>
                                                     <td>
                                                         {
                                                             u.role === 1 ? <span class="badge text-bg-info">Restricted</span> : (
