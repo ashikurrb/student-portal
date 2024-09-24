@@ -9,10 +9,6 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 const ViewOrder = () => {
-    const methods = [
-        { name: "bKash", logo: "/images/paymentMethod/bKashLogo.png" },
-        { name: "Rocket", logo: "/images/paymentMethod/rocketLogo.png" },
-    ];
     const [orders, setOrders] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
     const [visible, setVisible] = useState(false);
@@ -74,12 +70,12 @@ const ViewOrder = () => {
                                                 <td colSpan="7" className="text-center">
                                                     <div className="my-5">
                                                         <h3 className='text-secondary'>
-                                                            No Orders Found.
+                                                            No Orders Found. 
                                                             <br />
-                                                            <p className='mt-3'>
-                                                                Visit <Link to={"/view-course"}><u>Courses</u></Link> to order.
-                                                            </p>
-                                                        </h3>
+                                                           <p className='mt-3'>
+                                                             Visit <Link to={"/view-course"}><u>Courses</u></Link> to order.
+                                                           </p>
+                                                             </h3>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -104,20 +100,7 @@ const ViewOrder = () => {
                                                             </div>
                                                         </td>
                                                         <td>{o?.course?.price}</td>
-                                                        <td>
-                                                            {methods.map((m) =>
-                                                                m.name === o?.method ? (
-                                                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                                        <img
-                                                                            src={m.logo}
-                                                                            alt={m.name}
-                                                                            style={{ width: 20, height: 20, marginRight: 8 }} // Adjust size as needed
-                                                                        />
-                                                                        {m.name}
-                                                                    </div>
-                                                                ) : null
-                                                            )}
-                                                        </td>
+                                                        <td>{o?.method}</td>
                                                         <td>{o?.trxId}</td>
                                                         <td>{o?.accNumber}</td>
                                                     </tr>
@@ -146,21 +129,8 @@ const ViewOrder = () => {
                                             Price: <span className='fw-bold'>৳</span> {selectedOrder?.course?.price}
                                         </p>
                                         <p className="card-text">
-                                            Payment Method:
-                                            {methods.map((m) =>
-                                                m.name === selectedOrder.method ? (
-                                                    <div style={{ display: 'inline-flex', alignItems: 'center' }} key={m.name}>
-                                                        <img
-                                                            src={m.logo}
-                                                            alt={m.name}
-                                                            style={{ width: 20, height: 20, marginLeft: 4, marginRight: 2 }}
-                                                        />
-                                                        {m.name}
-                                                    </div>
-                                                ) : null
-                                            )}
+                                            Payment Method: {selectedOrder?.method}
                                         </p>
-
                                         <p className="card-text">Order Status: &nbsp;
                                             {selectedOrder.status === 'Pending' ? (
                                                 <span className="badge bg-warning text-dark">{selectedOrder?.status}</span>

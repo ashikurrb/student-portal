@@ -18,10 +18,6 @@ const OrderList = () => {
     const [selectedOrder, setSelectedOrder] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [modalOrder, setModalOrder] = useState(null);
-    const methods = [
-        { name: "bKash", logo: "/images/paymentMethod/bKashLogo.png" },
-        { name: "Rocket", logo: "/images/paymentMethod/rocketLogo.png" },
-    ];
 
     //Get All Order
     const getOrderList = async () => {
@@ -254,20 +250,7 @@ const OrderList = () => {
                                                                 </td>
                                                                 <td >{o?.course?.title} ({o?.course?.grade?.name})</td>
                                                                 <td>{o?.course?.price}</td>
-                                                                <td>
-                                                                    {methods.map((m) =>
-                                                                        m.name === o.method ? (
-                                                                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                                                <img
-                                                                                    src={m.logo}
-                                                                                    alt={m.name}
-                                                                                    style={{ width: 20, height: 20, marginRight: 8 }} // Adjust size as needed
-                                                                                />
-                                                                                {m.name}
-                                                                            </div>
-                                                                        ) : null
-                                                                    )}
-                                                                </td>
+                                                                <td>{o.method}</td>
                                                                 <td>{o.trxId}</td>
                                                                 <td>{o.accNumber}</td>
                                                                 <td>{dayjs(o.createdAt).format('MMM DD, YYYY')}</td>
@@ -303,21 +286,8 @@ const OrderList = () => {
                                             Price: <span className='fw-bold'>৳</span> {modalOrder?.course?.price}
                                         </p>
                                         <p className="card-text">
-                                            Payment Method:
-                                            {methods.map((m) =>
-                                                m.name === modalOrder.method ? (
-                                                    <div style={{ display: 'inline-flex', alignItems: 'center' }} key={m.name}>
-                                                        <img
-                                                            src={m.logo}
-                                                            alt={m.name}
-                                                            style={{ width: 20, height: 20, marginRight: 2 }}
-                                                        />
-                                                        {m.name}
-                                                    </div>
-                                                ) : null
-                                            )}
+                                            Payment Method: {modalOrder.method}
                                         </p>
-
                                         <p className="card-text">Order Status: &nbsp;
                                             {modalOrder.status === 'Pending' ? (
                                                 <span className="badge bg-warning text-dark">{modalOrder.status}</span>

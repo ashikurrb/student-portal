@@ -17,10 +17,7 @@ const CourseDetails = () => {
     const [auth] = useAuth();
     const [course, setCourse] = useState({});
     const [relatedCourse, setRelatedCourse] = useState([]);
-    const methods = [
-        { name: "bKash", logo: "/images/paymentMethod/bKashLogo.png" },
-        { name: "Rocket", logo: "/images/paymentMethod/rocketLogo.png" },
-    ];
+    const methods = ['bKash', 'Rocket'];
     const [method, setMethod] = useState(null);
     const [accNumber, setAccNumber] = useState('');
     const [trxId, setTrxId] = useState('');
@@ -237,23 +234,14 @@ const CourseDetails = () => {
                     <form onSubmit={handleCreate}>
                         <div className="d-flex">
                             <Select
-                                placeholder="Select Method"
+                                placeholder="Method"
                                 size='large'
                                 className='mb-3 me-2 w-100'
                                 value={method}
-                                onChange={(value) => { setMethod(value) }}
+                                onChange={(value) => setMethod(value)}
                                 required>
-                                {methods.map((method, i) => (
-                                    <Option key={i} value={method.name}>
-                                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                                            <img
-                                                src={method.logo}
-                                                alt={method.name}
-                                                style={{ width: 20, height: 20, marginRight: 8 }}
-                                            />
-                                            {method.name}
-                                        </div>
-                                    </Option>
+                                {methods.map((m, i) => (
+                                    <Option key={i} value={m}>{m}</Option>
                                 ))}
                             </Select>
                             <Input

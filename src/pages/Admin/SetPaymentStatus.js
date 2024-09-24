@@ -25,15 +25,7 @@ const SetPaymentStatus = () => {
     const [grade, setGrade] = useState('');
     const [remark, setRemark] = useState('');
     const [trxId, setTrxId] = useState('');
-    const methods = [
-        { name: "Cash", logo: "/images/paymentMethod/cashLogo.png" },
-        { name: "bKash", logo: "/images/paymentMethod/bKashLogo.png" },
-        { name: "Nagad", logo: "/images/paymentMethod/nagadLogo.png" },
-        { name: "Upay", logo: "/images/paymentMethod/upayLogo.png" },
-        { name: "Rocket", logo: "/images/paymentMethod/rocketLogo.png" },
-        { name: "Debit/Credit Card", logo: "/images/paymentMethod/cardLogo.png" },
-        { name: "Bank Transfer", logo: "/images/paymentMethod/bankLogo.png" }
-    ];
+    const [methods] = useState(["Cash", "bKash", "Nagad", "Upay", "Rocket", "Debit/Credit Card", "Bank Transfer"]);
     const [method, setMethod] = useState(null);
     const [amount, setAmount] = useState('');
     const [paymentDate, setPaymentDate] = useState('');
@@ -565,17 +557,8 @@ const SetPaymentStatus = () => {
                                         value={method}
                                         onChange={(value) => { setMethod(value) }}
                                         required>
-                                        {methods.map((method, i) => (
-                                            <Option key={i} value={method.name}>
-                                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                    <img
-                                                        src={method.logo}
-                                                        alt={method.name}
-                                                        style={{ width: 20, height: 20, marginRight: 8 }}
-                                                    />
-                                                    {method.name}
-                                                </div>
-                                            </Option>
+                                        {methods.map((m, i) => (
+                                            <Option key={i} value={m}>{m}</Option>
                                         ))}
                                     </Select>
                                     <Input
@@ -681,20 +664,7 @@ const SetPaymentStatus = () => {
                                                             {p.remark}
                                                         </td>
                                                         <td>TK. {p.amount}</td>
-                                                        <td>
-                                                            {methods.map((m) =>
-                                                                m.name === p.method ? (
-                                                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                                        <img
-                                                                            src={m.logo}
-                                                                            alt={m.name}
-                                                                            style={{ width: 20, height: 20, marginRight: 8 }} // Adjust size as needed
-                                                                        />
-                                                                        {m.name}
-                                                                    </div>
-                                                                ) : null
-                                                            )}
-                                                        </td>
+                                                        <td>{p.method}</td>
                                                         <td>{p.trxId}</td>
                                                         <td>{dayjs(p?.paymentDate).format('DD MMM YYYY')}</td>
                                                         <td className='text-center'>
@@ -768,20 +738,11 @@ const SetPaymentStatus = () => {
                             placeholder="Select Method"
                             size='large'
                             className='mb-3 me-2 w-100'
-                            value={method}
-                            onChange={(value) => { setMethod(value) }}
+                            value={updatedMethod}
+                            onChange={(value) => { setUpdatedMethod(value) }}
                             required>
-                            {methods.map((method, i) => (
-                                <Option key={i} value={method.name}>
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <img
-                                            src={method.logo}
-                                            alt={method.name}
-                                            style={{ width: 20, height: 20, marginRight: 8 }}
-                                        />
-                                        {method.name}
-                                    </div>
-                                </Option>
+                            {methods.map((m, i) => (
+                                <Option key={i} value={m}>{m}</Option>
                             ))}
                         </Select>
                         <Input
