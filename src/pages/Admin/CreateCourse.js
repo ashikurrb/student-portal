@@ -9,7 +9,7 @@ import { EyeOutlined } from '@ant-design/icons';
 import { Image, Input, Modal, Select, Tooltip, DatePicker } from 'antd';
 import dayjs from 'dayjs';
 const { RangePicker } = DatePicker;
-const dateFormat = 'DD-MM-YYYY';
+const dateFormat = 'DD-MMM-YYYY';
 const { TextArea } = Input;
 const { Option } = Select;
 

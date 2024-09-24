@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import { SearchOutlined } from '@ant-design/icons';
 import { Modal, DatePicker, Select, Tooltip, Input } from 'antd';
 import dayjs from 'dayjs';
-const dateFormat = 'DD-MM-YYYY';
+const dateFormat = 'DD-MMM-YYYY';
 const { Option } = Select;
 
 const PublishResult = () => {
