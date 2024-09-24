@@ -216,7 +216,7 @@ const CourseDetails = () => {
                 <h5 className='text-center mb-3'>Payment Details</h5>
                 <div>
                     <h6>আপনি কিনতে চাচ্ছেন:</h6>
-                    <div className='text-center my-2 border border-2 rounded'>
+                    <div className='text-center my-2 border border-2 rounded py-2'>
                         <h6>Course: <b>{course.title}</b> ({course?.grade?.name})</h6>
                         <h6 className="">Price: <span className='fw-bold'>৳</span>{course.price}</h6>
                     </div>
