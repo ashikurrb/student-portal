@@ -9,6 +9,15 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
 const ViewPayment = () => {
+    const methods = [
+        { name: "Cash", logo: "/images/paymentMethod/cashLogo.png" },
+        { name: "bKash", logo: "/images/paymentMethod/bKashLogo.png" },
+        { name: "Nagad", logo: "/images/paymentMethod/nagadLogo.png" },
+        { name: "Upay", logo: "/images/paymentMethod/upayLogo.png" },
+        { name: "Rocket", logo: "/images/paymentMethod/rocketLogo.png" },
+        { name: "Debit/Credit Card", logo: "/images/paymentMethod/cardLogo.png" },
+        { name: "Bank Transfer", logo: "/images/paymentMethod/bankLogo.png" }
+    ];
     const [payment, setPayment] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
 
@@ -230,7 +239,20 @@ const ViewPayment = () => {
                                                         <td>{p?.grade?.name}</td>
                                                         <td>{p.remark}</td>
                                                         <td>TK. {p.amount}</td>
-                                                        <td>{p.method}</td>
+                                                        <td>
+                                                            {methods.map((m) =>
+                                                                m.name === p.method ? (
+                                                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                                        <img
+                                                                            src={m.logo}
+                                                                            alt={m.name}
+                                                                            style={{ width: 20, height: 20, marginRight: 8 }}
+                                                                        />
+                                                                        {m.name}
+                                                                    </div>
+                                                                ) : null
+                                                            )}
+                                                        </td>
                                                         <td>{p.trxId}</td>
                                                         <td>{dayjs(p.paymentDate).format('MMM DD, YYYY')}</td>
                                                         <td>
