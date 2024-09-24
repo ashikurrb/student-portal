@@ -128,17 +128,17 @@ const CourseDetails = () => {
                             <Spinner />
                         </div> :
                         <div className="container">
-                            <div className="row mt-4 mt-md-3">
-                                <div className="col-md-5">
+                            <div className="row">
+                                <div className="col-md-5 mt-4">
                                     <div className="ms-md-5 d-flex justify-content-center align-items-center">
                                         <Image className='border rounded'
                                             src={course.courseImg}
                                             alt={course.title}
-                                            style={{ width: "100%", height: "300px", objectFit: "contain" }}
+                                            style={{ width: "100%", height: "300px", objectFit: "cover" }}
                                         />
                                     </div>
                                 </div>
-                                <div className="col-md-7">
+                                <div className="col-md-7 mt-4">
                                     <div className='ms-md-5'>
                                         <div className="card-body">
                                             <h1>{course.title}</h1>
