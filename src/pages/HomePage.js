@@ -19,8 +19,6 @@ const HomePage = () => {
                     <div className='p-4'>
                         Call us for more information about admission and courses.
                         <br />
-                        <i className='fa-solid fa-envelope'></i> : 5pointschool@gmail.com
-                        <br />
                         <i className='fa-solid fa-phone-volume'></i> : +880 1794-744343
                     </div>
                 </div>
