@@ -14,6 +14,7 @@ const OrderList = () => {
     const [orders, setOrders] = useState([]);
     const [statuses] = useState(["Pending", "Approved", "Canceled"]);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(true);
+    const [statusUpdateLoading, setStatusUpdateLoading] = useState(false);
     const [visible, setVisible] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -41,9 +42,11 @@ const OrderList = () => {
 
     //order status change
     const handleChange = async (oId, value) => {
+        setStatusUpdateLoading(true);
         try {
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/order/order-status/${oId}`, { status: value });
             toast.success(data.message)
+            setStatusUpdateLoading(false);
             getOrderList();
         } catch (error) {
             console.error(error);
@@ -227,6 +230,7 @@ const OrderList = () => {
                                                                 <th scope='row' className='ps-3'>{i + 1}</th>
                                                                 <td>
                                                                     <Select
+                                                                        loading = {statusUpdateLoading}
                                                                         size='large'
                                                                         className='mb-3 me-2'
                                                                         defaultValue={o?.status}
