@@ -314,7 +314,12 @@ const PublishResult = () => {
                                         size='large'
                                         className='mb-3 me-2 w-100'
                                         value={grade || undefined}
-                                        onChange={(value) => { setGrade(value) }}>
+                                        onChange={(value) => { setGrade(value) }}
+                                        showSearch
+                                        filterOption={(input, option) =>
+                                            (option?.children || '').toLowerCase().includes(input.toLowerCase())
+                                        }
+                                    >
                                         {grades?.map(g => (
                                             <Option key={g._id} value={g._id}>{g.name}</Option>
                                         ))}

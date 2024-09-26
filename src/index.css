@@ -156,8 +156,12 @@ body {
   color: var(--text-color);
 }
 
+.grade-btn{
+  background-color: white;
+}
+
 .grade-btn:hover{
-  background-color: #00984a;
+  background-color: #139896;
 }
 
 .grade-link{
