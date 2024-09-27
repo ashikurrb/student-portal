@@ -95,7 +95,6 @@ const CreateCourse = () => {
             if (data?.success) {
                 toast.success(data?.message);
                 getAllCourses();
-                console.log(dateRange);
                 // Clear form fields
                 setGrade('');
                 setTitle('');
@@ -168,8 +167,6 @@ const CreateCourse = () => {
             if (data?.success) {
                 toast.success(data?.message);
                 getAllCourses();
-                console.log(dateRange);
-
                 // Clear form fields
                 setUpdatedTitle('');
                 setUpdatedPrice('');
@@ -374,6 +371,7 @@ const CreateCourse = () => {
                                             onChange={(date) => setDateRange(date)}
                                             required />
                                         <Input
+                                            prefix="৳"
                                             type="number"
                                             size='large'
                                             placeholder='Price'
@@ -395,14 +393,15 @@ const CreateCourse = () => {
                                         </Select>
                                     </div>
                                     <div className="d-lg-flex">
-                                        <TextArea showCount
+                                        <TextArea
                                             type="text"
                                             size='large'
                                             placeholder='Course description'
                                             className=' mb-3'
                                             value={description}
                                             onChange={(e) => setDescription(e.target.value)}
-                                            maxLength={200}
+                                            showCount
+                                            maxLength={500}
                                             required
                                         />
                                     </div>
@@ -593,6 +592,7 @@ const CreateCourse = () => {
                             required
                         />
                         <Input
+                            prefix="৳"
                             type="number"
                             size='large'
                             placeholder='Price'
@@ -614,13 +614,15 @@ const CreateCourse = () => {
                         </Select>
                     </div>
                     <div className="d-lg-flex">
-                        <TextArea showCount
+                        <TextArea
                             type="text"
                             size='large'
                             placeholder='Course description'
                             className=' mb-3'
                             value={updatedDescription}
                             onChange={(e) => setUpdatedDescription(e.target.value)}
+                            showCount
+                            maxLength={500}
                             required
                         />
                     </div>

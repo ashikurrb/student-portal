@@ -541,6 +541,7 @@ const SetPaymentStatus = () => {
                                         onChange={(e) => setRemark(e.target.value)} required
                                     />
                                     <Input
+                                    prefix="৳"
                                         type="number"
                                         placeholder='Amount'
                                         size="large"
@@ -747,6 +748,7 @@ const SetPaymentStatus = () => {
                             onChange={(e) => setUpdatedRemark(e.target.value)} required
                         />
                         <Input
+                         prefix="৳"
                             type="number"
                             placeholder='Amount'
                             size='large'
