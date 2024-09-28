@@ -95,7 +95,6 @@ const PublishResult = () => {
                 toast.success(data?.message);
                 getAllResults();
                 // Clear form fields
-                setGrade(undefined);
                 setUser(undefined);
                 setType('');
                 setSubject('');

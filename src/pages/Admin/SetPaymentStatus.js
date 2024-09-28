@@ -7,7 +7,7 @@ import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, XFilled } from '@ant-design/icons';
 import { Modal, DatePicker, Select, Tooltip, Input } from 'antd';
 import dayjs from 'dayjs';
 const dateFormat = 'DD-MMM-YYYY';
@@ -90,6 +90,38 @@ const SetPaymentStatus = () => {
         }
     }, [grade, users]);
 
+    //Trx ID gen: based on selected grade and current month
+    const generateTrxId = () => {
+        // Validation
+        if (!grade) {
+            alert("Grade is required");
+            return;
+        }
+        //date gen
+        const currentDate = new Date();
+        const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+        const month = months[currentDate.getMonth()];
+        const year = currentDate.getFullYear().toString().slice(-2);
+
+        //grade initial gen
+        const gradeName = grades.find(g => g._id === grade)?.name;
+        let gradeSign;
+        if (gradeName) {
+            const parts = gradeName.split(' ');
+            if (parts.length > 1) {
+                gradeSign = parts[0][0].toUpperCase() + parts[1].slice(0, 2).toUpperCase();
+            } else {
+                gradeSign = parts[0].slice(0, 3).toUpperCase();
+            }
+        }
+        
+        //trx id gen
+        const serialNumber = Math.floor(Math.random() * 101);
+        const formattedSerialNumber = serialNumber.toString().padStart(2, '0');
+        const newTrxId = `${month}${year}${gradeSign}${formattedSerialNumber}`;
+        setTrxId(newTrxId);
+    };
+
     //Create Payment Status
     const handleCreate = async (e) => {
         e.preventDefault();
@@ -110,7 +142,6 @@ const SetPaymentStatus = () => {
                 toast.success(data?.message);
                 getAllPayment();
                 // Clear form fields after submit
-                setGrade(undefined);
                 setUser(undefined);
                 setRemark('');
                 setPaymentDate(undefined);
@@ -297,7 +328,6 @@ const SetPaymentStatus = () => {
             document.removeEventListener('keydown', handleEscapeKey);
         };
     }, []);
-
 
     // Function to generate invoice PDF
     const generateInvoice = (payment) => {
@@ -541,7 +571,7 @@ const SetPaymentStatus = () => {
                                         onChange={(e) => setRemark(e.target.value)} required
                                     />
                                     <Input
-                                    prefix="৳"
+                                        prefix="৳"
                                         type="number"
                                         placeholder='Amount'
                                         size="large"
@@ -580,12 +610,18 @@ const SetPaymentStatus = () => {
                                         ))}
                                     </Select>
                                     <Input
+                                        suffix={
+                                            <span onClick={generateTrxId} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                                <XFilled />
+                                            </span>
+                                        }
                                         type="text"
                                         placeholder='Transaction ID / Receipt No'
                                         size="large"
                                         className='mb-3 w-100'
                                         value={trxId}
-                                        onChange={(e) => setTrxId(e.target.value)} required
+                                        onChange={(e) => setTrxId(e.target.value)}
+                                        required
                                     />
                                 </div>
                                 <div className="text-center">
@@ -689,7 +725,7 @@ const SetPaymentStatus = () => {
                                                                         <img
                                                                             src={m.logo}
                                                                             alt={m.name}
-                                                                            style={{ width: 20, height: 20, marginRight: 5 }} 
+                                                                            style={{ width: 20, height: 20, marginRight: 5 }}
                                                                         />
                                                                         {m.name}
                                                                     </div>
@@ -748,7 +784,7 @@ const SetPaymentStatus = () => {
                             onChange={(e) => setUpdatedRemark(e.target.value)} required
                         />
                         <Input
-                         prefix="৳"
+                            prefix="৳"
                             type="number"
                             placeholder='Amount'
                             size='large'
