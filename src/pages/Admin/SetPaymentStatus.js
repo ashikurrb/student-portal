@@ -611,9 +611,11 @@ const SetPaymentStatus = () => {
                                     </Select>
                                     <Input
                                         suffix={
-                                            <span onClick={generateTrxId} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                                                <XFilled />
-                                            </span>
+                                            method === "Cash" ? (
+                                                <span onClick={generateTrxId} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                                    <XFilled />
+                                                </span>
+                                            ) : null // Render nothing if the method is not "Cash"
                                         }
                                         type="text"
                                         placeholder='Transaction ID / Receipt No'
