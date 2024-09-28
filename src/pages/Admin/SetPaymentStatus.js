@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { SearchOutlined, XFilled } from '@ant-design/icons';
-import { Modal, DatePicker, Select, Tooltip, Input } from 'antd';
+import { Modal, DatePicker, Select, Tooltip, Input, Spin } from 'antd';
 import dayjs from 'dayjs';
 const dateFormat = 'DD-MMM-YYYY';
 const { Option } = Select;
@@ -17,6 +17,7 @@ const SetPaymentStatus = () => {
     const [spinnerLoading, setSpinnerLoading] = useState(false);
     const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(false);
+    const [trxIdLoading, setTrxIdLoading] = useState(false);
     const [auth] = useAuth();
     const [users, setUsers] = useState([]);
     const [user, setUser] = useState('');
@@ -107,50 +108,72 @@ const SetPaymentStatus = () => {
         getAllPayment();
     }, []);
 
-    //Transaction ID generator: based on selected grade and current month and year
-    const generateTrxId = () => {
-        // Validation
-        if (!grade) {
-            alert("Grade is required");
-            return;
-        }
-        // Date generation
-        const currentDate = new Date();
-        const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-        const month = months[currentDate.getMonth()];
-        const year = currentDate.getFullYear().toString().slice(-2);
-
-        // prefix generation from grade
-        const gradeName = grades.find(g => g._id === grade)?.name;
-        let gradeSign;
-        if (gradeName) {
-            const parts = gradeName.split(' ');
-            if (parts.length > 1) {
-                gradeSign = parts[0][0].toUpperCase() + parts[1].slice(0, 2).toUpperCase();
-            } else {
-                gradeSign = parts[0].slice(0, 3).toUpperCase();
+    //get trx id generated from backend
+    const getTrxIdGen = async (e) => {
+        e.preventDefault();
+        setTrxIdLoading(true);
+        try {
+            // Validation
+            if (!grade) {
+                alert("Grade is required");
+                return;
             }
+            const trxData = new FormData();
+            trxData.append("grade", grade);
+            const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/payment/trx-gen`, trxData);
+            setTrxId(data.trxId);
+        } catch (error) {
+            console.error(error);
+            toast.error(error.response?.data?.message);
+        } finally {
+            setTrxIdLoading(false);
         }
-        //set prefix
-        const newPrefix = `${month}${year}${gradeSign}`;
-        
-        //find available trx id
-        const availableTrxIds = payment.map(p => p.trxId);
-        const matchingTrxIds = availableTrxIds.filter(id => id.startsWith(newPrefix));
-
-        //last 2 digit serial number generate
-        let newSerialNumber;
-        if (matchingTrxIds.length > 0) {
-            const lastTwoDigits = matchingTrxIds.map(id => parseInt(id.slice(-2))).filter(num => !isNaN(num));
-            const maxSerialNumber = lastTwoDigits.length > 0 ? Math.max(...lastTwoDigits) : 0;
-            newSerialNumber = (maxSerialNumber + 1) % 100;
-        } else {
-            newSerialNumber = 1;
-        }
-        const formattedSerialNumber = newSerialNumber.toString().padStart(2, '0');
-        const newTrxId = `${newPrefix}${formattedSerialNumber}`;
-        setTrxId(newTrxId);
     };
+
+    //Transaction ID generator: based on selected grade and current month and year
+    // const generateTrxId = () => {
+    //     // Validation
+    //     if (!grade) {
+    //         alert("Grade is required");
+    //         return;
+    //     }
+    //     // Date generation
+    //     const currentDate = new Date();
+    //     const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    //     const month = months[currentDate.getMonth()];
+    //     const year = currentDate.getFullYear().toString().slice(-2);
+
+    //     // prefix generation from grade
+    //     const gradeName = grades.find(g => g._id === grade)?.name;
+    //     let gradeSign;
+    //     if (gradeName) {
+    //         const parts = gradeName.split(' ');
+    //         if (parts.length > 1) {
+    //             gradeSign = parts[0][0].toUpperCase() + parts[1].slice(0, 2).toUpperCase();
+    //         } else {
+    //             gradeSign = parts[0].slice(0, 3).toUpperCase();
+    //         }
+    //     }
+    //     //set prefix
+    //     const newPrefix = `${month}${year}${gradeSign}`;
+
+    //     //find available trx id
+    //     const availableTrxIds = payment.map(p => p.trxId);
+    //     const matchingTrxIds = availableTrxIds.filter(id => id.startsWith(newPrefix));
+
+    //     //last 2 digit serial number generate
+    //     let newSerialNumber;
+    //     if (matchingTrxIds.length > 0) {
+    //         const lastTwoDigits = matchingTrxIds.map(id => parseInt(id.slice(-2))).filter(num => !isNaN(num));
+    //         const maxSerialNumber = lastTwoDigits.length > 0 ? Math.max(...lastTwoDigits) : 0;
+    //         newSerialNumber = (maxSerialNumber + 1) % 100;
+    //     } else {
+    //         newSerialNumber = 1;
+    //     }
+    //     const formattedSerialNumber = newSerialNumber.toString().padStart(2, '0');
+    //     const newTrxId = `${newPrefix}${formattedSerialNumber}`;
+    //     setTrxId(newTrxId);
+    // };
 
     //Create Payment Status
     const handleCreate = async (e) => {
@@ -624,10 +647,11 @@ const SetPaymentStatus = () => {
                                     <Input
                                         suffix={
                                             method === "Cash" ? (
-                                                <span onClick={generateTrxId} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                                                    <XFilled />
-                                                </span>
-                                            ) : null // Render nothing if the method is not "Cash"
+                                                trxIdLoading ? <Spin size="small" />
+                                                    : <span onClick={getTrxIdGen} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                                        <XFilled />
+                                                    </span>
+                                            ) : null
                                         }
                                         type="text"
                                         placeholder='Transaction ID / Receipt No'
