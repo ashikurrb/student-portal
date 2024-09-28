@@ -188,24 +188,6 @@ const CreateContent = () => {
         }
     }
 
-    //delete selected contents
-    const handleDeleteSelected = async () => {
-        let answer = window.confirm("Are you sure you want to delete the selected content?");
-        if (!answer) return;
-
-        const loadingToastId = toast.loading('Deleting content...');
-        try {
-            await Promise.all(selectedContent.map(async (cId) => {
-                await axios.delete(`${process.env.REACT_APP_API}/api/v1/content/delete-content/${cId}`);
-            }));
-            toast.success('Selected content deleted successfully', { id: loadingToastId });
-            setSelectedContent([]);
-            getAllContent();
-        } catch (error) {
-            toast.error('Something went wrong while deleting', { id: loadingToastId });
-        }
-    };
-
     // Handle selecting all content
     const handleSelectAll = (e) => {
         if (e.target.checked) {
@@ -222,6 +204,24 @@ const CreateContent = () => {
             setSelectedContent(selectedContent.filter(id => id !== cId));
         } else {
             setSelectedContent([...selectedContent, cId]);
+        }
+    };
+
+     //delete selected contents
+     const handleDeleteSelected = async () => {
+        let answer = window.confirm("Are you sure you want to delete the selected content?");
+        if (!answer) return;
+
+        const loadingToastId = toast.loading('Deleting content...');
+        try {
+            await Promise.all(selectedContent.map(async (cId) => {
+                await axios.delete(`${process.env.REACT_APP_API}/api/v1/content/delete-content/${cId}`);
+            }));
+            toast.success('Selected content deleted successfully', { id: loadingToastId });
+            setSelectedContent([]);
+            getAllContent();
+        } catch (error) {
+            toast.error('Something went wrong while deleting', { id: loadingToastId });
         }
     };
 

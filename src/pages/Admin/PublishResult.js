@@ -77,6 +77,23 @@ const PublishResult = () => {
         }
     }, [grade, users]);
 
+    //get all result
+    const getAllResults = async () => {
+        setListSpinnerLoading(true)
+        try {
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/result/all-result`)
+            setResult(data)
+        } catch (error) {
+            console.log(error);
+            toast.error("Error fetching Results")
+        } finally {
+            setListSpinnerLoading(false)
+        }
+    }
+    useEffect(() => {
+        getAllResults();
+    }, [])
+
     //publish result
     const handlePublish = async (e) => {
         e.preventDefault();
@@ -126,24 +143,6 @@ const PublishResult = () => {
         setExamDate(undefined);
         setIsCreateModalVisible(false)
     }
-
-    //get all result
-    const getAllResults = async () => {
-        setListSpinnerLoading(true)
-        try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/result/all-result`)
-            setResult(data)
-        } catch (error) {
-            console.log(error);
-            toast.error("Error fetching Results")
-        } finally {
-            setListSpinnerLoading(false)
-        }
-    }
-    useEffect(() => {
-        getAllResults();
-    }, [])
-
 
     //update result
     const handleUpdate = async (e) => {
@@ -219,23 +218,6 @@ const PublishResult = () => {
         }
     }
 
-    //delete selected result
-    const handleDeleteSelected = async (rId) => {
-        let answer = window.confirm("Are you sure want to delete the selected result?")
-        if (!answer) return;
-        const loadingToastId = toast.loading('Deleting result...');
-        try {
-            await Promise.all(selectedResult.map(async (rId) => {
-                await axios.delete(`${process.env.REACT_APP_API}/api/v1/result/delete-result/${rId}`);
-            }));
-            toast.success('Selected result deleted successfully', { id: loadingToastId });
-            setSelectedResult([]);
-            getAllResults();
-        } catch (error) {
-            toast.error('Something wrong while Delete', { id: loadingToastId })
-        }
-    }
-
     // Handle selecting all content
     const handleSelectAll = (e) => {
         if (e.target.checked) {
@@ -254,6 +236,23 @@ const PublishResult = () => {
             setSelectedResult([...selectedResult, rId]);
         }
     };
+
+    //delete selected result
+    const handleDeleteSelected = async (rId) => {
+        let answer = window.confirm("Are you sure want to delete the selected result?")
+        if (!answer) return;
+        const loadingToastId = toast.loading('Deleting result...');
+        try {
+            await Promise.all(selectedResult.map(async (rId) => {
+                await axios.delete(`${process.env.REACT_APP_API}/api/v1/result/delete-result/${rId}`);
+            }));
+            toast.success('Selected result deleted successfully', { id: loadingToastId });
+            setSelectedResult([]);
+            getAllResults();
+        } catch (error) {
+            toast.error('Something wrong while Delete', { id: loadingToastId })
+        }
+    }
 
     // Handle Escape key functionality
     useEffect(() => {

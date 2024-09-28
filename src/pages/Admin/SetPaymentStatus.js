@@ -79,7 +79,7 @@ const SetPaymentStatus = () => {
         if (auth?.token) getAllUsers();
     }, [auth?.token]);
 
-    // Filter users by grade
+    // show user list based on grade selection
     useEffect(() => {
         if (grade) {
             const filtered = users.filter(user => user.grade._id === grade);
@@ -90,6 +90,23 @@ const SetPaymentStatus = () => {
         }
     }, [grade, users]);
 
+    //get all payment list
+    const getAllPayment = async () => {
+        setListSpinnerLoading(true);
+        try {
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/payment/all-payment`);
+            setPayment(data);
+        } catch (error) {
+            console.log(error);
+            toast.error("Error fetching Payments");
+        } finally {
+            setListSpinnerLoading(false);
+        }
+    };
+    useEffect(() => {
+        getAllPayment();
+    }, []);
+
     //Transaction ID generator: based on selected grade and current month and year
     const generateTrxId = () => {
         // Validation
@@ -97,7 +114,6 @@ const SetPaymentStatus = () => {
             alert("Grade is required");
             return;
         }
-
         // Date generation
         const currentDate = new Date();
         const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
@@ -115,28 +131,22 @@ const SetPaymentStatus = () => {
                 gradeSign = parts[0].slice(0, 3).toUpperCase();
             }
         }
-
-        //set prefix using current month, current year and selected grade
+        //set prefix
         const newPrefix = `${month}${year}${gradeSign}`;
-
         //find available trx id
-        const availableTrxIds = filteredPayment.map(p => p.trxId);
+        const availableTrxIds = payment.map(p => p.trxId);
         const matchingTrxIds = availableTrxIds.filter(id => id.startsWith(newPrefix));
 
+        //last 2 digit serial number generate
         let newSerialNumber;
         if (matchingTrxIds.length > 0) {
-            const lastTwoDigits = matchingTrxIds
-                .map(id => parseInt(id.slice(-2)))
-                .filter(num => !isNaN(num));
-
+            const lastTwoDigits = matchingTrxIds.map(id => parseInt(id.slice(-2))).filter(num => !isNaN(num));
             const maxSerialNumber = lastTwoDigits.length > 0 ? Math.max(...lastTwoDigits) : 0;
             newSerialNumber = (maxSerialNumber + 1) % 100;
         } else {
             newSerialNumber = 1;
         }
-
         const formattedSerialNumber = newSerialNumber.toString().padStart(2, '0');
-
         const newTrxId = `${newPrefix}${formattedSerialNumber}`;
         setTrxId(newTrxId);
     };
@@ -194,23 +204,6 @@ const SetPaymentStatus = () => {
         setPaymentDate('');
         setIsCreateModalVisible(false)
     }
-
-    //get all payment list
-    const getAllPayment = async () => {
-        setListSpinnerLoading(true);
-        try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/payment/all-payment`);
-            setPayment(data);
-        } catch (error) {
-            console.log(error);
-            toast.error("Error fetching Payments");
-        } finally {
-            setListSpinnerLoading(false);
-        }
-    };
-    useEffect(() => {
-        getAllPayment();
-    }, []);
 
     //update payment status
     const handleUpdate = async (e) => {
@@ -276,7 +269,6 @@ const SetPaymentStatus = () => {
 
     //total payment amount calculate
     const totalAmount = filteredPayment.reduce((sum, p) => sum + p.amount, 0);
-    // const totalAmountSelected = selectedPayment.amount.reduce((sum, p) => sum + p.amount, 0);
 
     //delete individual payment status
     const handleDelete = async (pId) => {
@@ -296,6 +288,25 @@ const SetPaymentStatus = () => {
         }
     };
 
+    // Handle selecting all payment status
+    const handleSelectAll = (e) => {
+        if (e.target.checked) {
+            const allPaymentIds = filteredPayment.map(p => p._id);
+            setSelectedPayment(allPaymentIds);
+        } else {
+            setSelectedPayment([]);
+        }
+    };
+
+    // Handle selecting individual payment status
+    const handleSelectPayment = (pId) => {
+        if (selectedPayment.includes(pId)) {
+            setSelectedPayment(selectedPayment.filter(id => id !== pId));
+        } else {
+            setSelectedPayment([...selectedPayment, pId]);
+        }
+    };
+
     //delete selected payment status
     const handleDeleteSelected = async () => {
         let answer = window.confirm("Are you sure you want to delete the selected payment status?");
@@ -310,25 +321,6 @@ const SetPaymentStatus = () => {
             getAllPayment();
         } catch (error) {
             toast.error('Something went wrong while deleting', { id: loadingToastId });
-        }
-    };
-
-    // Handle selecting all content
-    const handleSelectAll = (e) => {
-        if (e.target.checked) {
-            const allPaymentIds = filteredPayment.map(p => p._id);
-            setSelectedPayment(allPaymentIds);
-        } else {
-            setSelectedPayment([]);
-        }
-    };
-
-    // Handle selecting individual content
-    const handleSelectPayment = (pId) => {
-        if (selectedPayment.includes(pId)) {
-            setSelectedPayment(selectedPayment.filter(id => id !== pId));
-        } else {
-            setSelectedPayment([...selectedPayment, pId]);
         }
     };
 

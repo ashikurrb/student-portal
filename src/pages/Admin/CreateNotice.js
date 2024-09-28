@@ -63,7 +63,6 @@ const CreateNotice = () => {
         getAllNotices();
     }, []);
 
-
     //Create Notice
     const handleCreate = async (e) => {
         e.preventDefault();
@@ -246,8 +245,6 @@ const CreateNotice = () => {
             document.removeEventListener('keydown', handleEscapeKey);
         };
     }, []);
-
-
 
     return (
         <Layout title={"Admin - Create Notice"}>
