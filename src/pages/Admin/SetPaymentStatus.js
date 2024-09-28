@@ -602,7 +602,7 @@ const SetPaymentStatus = () => {
                                                     <img
                                                         src={method.logo}
                                                         alt={method.name}
-                                                        style={{ width: 20, height: 20, marginRight: 5 }}
+                                                        style={{ width: 20, height: 20, marginRight: 8 }}
                                                     />
                                                     {method.name}
                                                 </div>
@@ -817,7 +817,7 @@ const SetPaymentStatus = () => {
                                         <img
                                             src={method.logo}
                                             alt={method.name}
-                                            style={{ width: 20, height: 20, marginRight: 5 }}
+                                            style={{ width: 20, height: 20, marginRight: 8 }}
                                         />
                                         {method.name}
                                     </div>
