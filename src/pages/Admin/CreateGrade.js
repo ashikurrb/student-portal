@@ -158,7 +158,7 @@ const CreateGrade = () => {
                                     size='large'
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    minLength={4} maxLength={20}
+                                    minLength={3} maxLength={20}
                                     required
                                 />
                             </div>
@@ -229,7 +229,7 @@ const CreateGrade = () => {
                                     size="large"
                                     value={updatedName}
                                     onChange={(e) => setUpdatedName(e.target.value)}
-                                    minLength={4} maxLength={20}
+                                    minLength={3} maxLength={20}
                                     required
                                 />
                             </div>

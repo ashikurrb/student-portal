@@ -120,7 +120,7 @@ const SetPaymentStatus = () => {
         const month = months[currentDate.getMonth()];
         const year = currentDate.getFullYear().toString().slice(-2);
 
-        // Grade initial generation
+        // prefix generation from grade
         const gradeName = grades.find(g => g._id === grade)?.name;
         let gradeSign;
         if (gradeName) {
@@ -133,6 +133,7 @@ const SetPaymentStatus = () => {
         }
         //set prefix
         const newPrefix = `${month}${year}${gradeSign}`;
+        
         //find available trx id
         const availableTrxIds = payment.map(p => p.trxId);
         const matchingTrxIds = availableTrxIds.filter(id => id.startsWith(newPrefix));
