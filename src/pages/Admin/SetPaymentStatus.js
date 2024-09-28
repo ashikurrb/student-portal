@@ -90,20 +90,21 @@ const SetPaymentStatus = () => {
         }
     }, [grade, users]);
 
-    //Trx ID gen: based on selected grade and current month
+    //Transaction ID generator: based on selected grade and current month and year
     const generateTrxId = () => {
         // Validation
         if (!grade) {
             alert("Grade is required");
             return;
         }
-        //date gen
+
+        // Date generation
         const currentDate = new Date();
         const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
         const month = months[currentDate.getMonth()];
         const year = currentDate.getFullYear().toString().slice(-2);
 
-        //grade initial gen
+        // Grade initial generation
         const gradeName = grades.find(g => g._id === grade)?.name;
         let gradeSign;
         if (gradeName) {
@@ -114,11 +115,29 @@ const SetPaymentStatus = () => {
                 gradeSign = parts[0].slice(0, 3).toUpperCase();
             }
         }
-        
-        //trx id gen
-        const serialNumber = Math.floor(Math.random() * 101);
-        const formattedSerialNumber = serialNumber.toString().padStart(2, '0');
-        const newTrxId = `${month}${year}${gradeSign}${formattedSerialNumber}`;
+
+        //set prefix using current month, current year and selected grade
+        const newPrefix = `${month}${year}${gradeSign}`;
+
+        //find available trx id
+        const availableTrxIds = filteredPayment.map(p => p.trxId);
+        const matchingTrxIds = availableTrxIds.filter(id => id.startsWith(newPrefix));
+
+        let newSerialNumber;
+        if (matchingTrxIds.length > 0) {
+            const lastTwoDigits = matchingTrxIds
+                .map(id => parseInt(id.slice(-2)))
+                .filter(num => !isNaN(num));
+
+            const maxSerialNumber = lastTwoDigits.length > 0 ? Math.max(...lastTwoDigits) : 0;
+            newSerialNumber = (maxSerialNumber + 1) % 100;
+        } else {
+            newSerialNumber = 1;
+        }
+
+        const formattedSerialNumber = newSerialNumber.toString().padStart(2, '0');
+
+        const newTrxId = `${newPrefix}${formattedSerialNumber}`;
         setTrxId(newTrxId);
     };
 
