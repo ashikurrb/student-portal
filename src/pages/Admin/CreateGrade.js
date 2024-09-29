@@ -184,7 +184,7 @@ const CreateGrade = () => {
                         <div className="table-container">
                             {
                                 listSpinnerLoading ? <div className="m-5"><Spinner /></div> :
-                                    <table className='table table-fixed-header'>
+                                    <table className='table table-fixed-header table-hover'>
                                         <thead className='table-dark'>
                                             <tr>
                                                 <th scope='row' className='ps-4'>#</th>

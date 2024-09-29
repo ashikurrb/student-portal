@@ -687,7 +687,7 @@ const SetPaymentStatus = () => {
                                 listSpinnerLoading ? <div className="m-5 text-center">
                                     <Spinner /><p>Loading payment status...</p>
                                 </div> :
-                                    <table className="table table-fixed-header">
+                                    <table className="table table-fixed-header table-hover">
                                         <thead className='table-dark'>
                                             <tr>
                                                 <th className='ps-4'>
@@ -741,19 +741,19 @@ const SetPaymentStatus = () => {
                                                         <th scope="row">{i + 1}</th>
                                                         <td>{p?.grade?.name}</td>
                                                         <td>
-                                                            <Tooltip title={`Created: ${dayjs(p.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(p.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
-                                                                <div className="d-flex align-items-center">
-                                                                    <img
-                                                                        className='me-1'
-                                                                        style={{ width: "23px", height: "23px", borderRadius: "100%" }}
-                                                                        src={p?.user.avatar}
-                                                                        alt="dp" />
-                                                                    <span>{p?.user?.name}</span>
-                                                                </div>
-                                                            </Tooltip>
+                                                            <div className="d-flex align-items-center">
+                                                                <img
+                                                                    className='me-1'
+                                                                    style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                                                                    src={p?.user.avatar}
+                                                                    alt="dp" />
+                                                                <span>{p?.user?.name}</span>
+                                                            </div>
                                                         </td>
                                                         <td>
-                                                            {p.remark}
+                                                            <Tooltip title={`Created: ${dayjs(p.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(p.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
+                                                                {p.remark}
+                                                            </Tooltip>
                                                         </td>
                                                         <td>TK. {p.amount}</td>
                                                         <td>

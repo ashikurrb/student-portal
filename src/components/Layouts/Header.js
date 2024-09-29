@@ -75,7 +75,7 @@ const Header = () => {
                                     </li>
                                     <li className="nav-item dropdown">
                                         <NavLink className="nav-link dropdown-toggle mx-1" role="button" data-bs-toggle="dropdown" >
-                                            <img style={{ width: "25px", height: "25px", borderRadius: "100%" }}
+                                            <img style={{ width: "24px", height: "24px", borderRadius: "100%" }}
                                                 className='border mx-1' src={auth?.user?.avatar} alt="dp" />
                                             {auth?.user?.name}
                                         </NavLink>

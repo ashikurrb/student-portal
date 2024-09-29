@@ -12,6 +12,7 @@ const { Option } = Select;
 
 const OrderList = () => {
     const [orders, setOrders] = useState([]);
+    const [price, setPrice] = useState('');
     const [statuses] = useState(["Pending", "Approved", "Canceled"]);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(true);
     const [statusUpdateLoading, setStatusUpdateLoading] = useState(false);
@@ -80,6 +81,8 @@ const OrderList = () => {
         o?.trxId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         o?.buyer?.grade?.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
+    //total payment amount calculate
+    const totalAmount = filteredOrder.reduce((sum, o) => sum + o?.course?.price, 0);
 
     //delete selected order
     const handleDeleteSelected = async (rId) => {
@@ -147,7 +150,7 @@ const OrderList = () => {
                         <h2 className="text-center my-4 mb-md-5">
                             <i class="fa-solid fa-box"></i> Order List ({orders.length})
                         </h2>
-                        <div className="d-flex justify-content-end">
+                        <div className="d-flex justify-content-end mb-3">
                             <Input
                                 allowClear={true}
                                 type="text"
@@ -168,13 +171,24 @@ const OrderList = () => {
                                 <i className="fa-solid fa-trash-can"></i> Delete Selected
                             </button>
                         )}
-                        <h6 className='justify-content-start'> Count: {filteredOrder.length}</h6>
+                        <h6 className='d-flex justify-content-between'>
+                            <span>
+                                {
+                                    selectedOrder.length > 0 ?
+                                        <h6 className='justify-content-start'> {selectedOrder.length} selected</h6> :
+                                        <h6 className='justify-content-start'> Count: {filteredOrder.length}</h6>
+                                }
+                            </span>
+                            <span>
+                                <h6 className='justify-content-start'> Total: {totalAmount} TK</h6>
+                            </span>
+                        </h6>
                         <div className='table-container'>
                             {
                                 listSpinnerLoading ? <div className="m-5 text-center">
                                     <Spinner /><p>Loading orders...</p>
                                 </div> :
-                                    <table className="table table-fixed-header">
+                                    <table className="table table-fixed-header table-hover">
                                         <thead className='table-dark'>
                                             <tr>
                                                 <th className='ps-4'>
@@ -230,7 +244,7 @@ const OrderList = () => {
                                                                 <th scope='row' className='ps-3'>{i + 1}</th>
                                                                 <td>
                                                                     <Select
-                                                                        loading = {statusUpdateLoading}
+                                                                        loading={statusUpdateLoading}
                                                                         size='large'
                                                                         className='mb-3 me-2'
                                                                         defaultValue={o?.status}
@@ -257,7 +271,7 @@ const OrderList = () => {
                                                                     </div>
                                                                 </td>
                                                                 <td >{o?.course?.title} ({o?.course?.grade?.name})</td>
-                                                                <td>{o?.course?.price}</td>
+                                                                <td>৳{o?.course?.price}</td>
                                                                 <td>
                                                                     {methods.map((m) =>
                                                                         m.name === o.method ? (

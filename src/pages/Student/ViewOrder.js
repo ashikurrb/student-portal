@@ -56,22 +56,20 @@ const ViewOrder = () => {
                                     <Spinner />
                                 </div>
                             ) : (
-                                <table className="table">
+                                <table className="table table-striped">
                                     <thead className='table-dark'>
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Course</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Method</th>
-                                            <th scope="col">Trx Id</th>
-                                            <th scope="col">Account</th>
+                                            <th scope="col">Class Start</th>
+                                            <th scope="col">Ordered On</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {orders.length === 0 ? (
                                             <tr>
-                                                <td colSpan="7" className="text-center">
+                                                <td colSpan="5" className="text-center">
                                                     <div className="my-5">
                                                         <h3 className='text-secondary'>
                                                             No Orders Found.
@@ -103,23 +101,12 @@ const ViewOrder = () => {
                                                                 {o?.course?.title}  <i class="fa-solid fa-arrow-right"></i>
                                                             </div>
                                                         </td>
-                                                        <td>{o?.course?.price}</td>
                                                         <td>
-                                                            {methods.map((m) =>
-                                                                m.name === o?.method ? (
-                                                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                                        <img
-                                                                            src={m.logo}
-                                                                            alt={m.name}
-                                                                            style={{ width: 20, height: 20, marginRight: 8 }} // Adjust size as needed
-                                                                        />
-                                                                        {m.name}
-                                                                    </div>
-                                                                ) : null
-                                                            )}
+                                                            {dayjs(o?.course?.dateRange).format("MMM DD, YYYY")}
                                                         </td>
-                                                        <td>{o?.trxId}</td>
-                                                        <td>{o?.accNumber}</td>
+                                                        <td>
+                                                            {dayjs(o?.createdAt).format("MMM DD, YYYY hh:mm A")}
+                                                        </td>
                                                     </tr>
                                                 )
                                             })

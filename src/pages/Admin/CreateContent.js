@@ -350,7 +350,7 @@ const CreateContent = () => {
                                 listSpinnerLoading ? <div className="text-center m-5">
                                     <Spinner /> <p>Loading content...</p>
                                 </div> :
-                                    <table className="table table-fixed-header">
+                                    <table className="table table-fixed-header table-hover">
                                         <thead className='table-dark'>
                                             <tr>
                                                 <th className='ps-4'>

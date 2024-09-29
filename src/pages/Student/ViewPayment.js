@@ -208,7 +208,7 @@ const ViewPayment = () => {
                         </h3>
                         <h6 className='text-end'>Total paid: TK. {totalAmount}</h6>
                         <div className="card mt-2 p-4 table-container">
-                            {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <table className="table">
+                            {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <table className="table table-striped">
                                 <thead className='table-dark'>
                                     <tr>
                                         <th scope="col">#</th>

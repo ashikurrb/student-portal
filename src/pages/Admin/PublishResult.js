@@ -397,7 +397,7 @@ const PublishResult = () => {
                                 listSpinnerLoading ? <div className="m-5 text-center">
                                     <Spinner /><p>Loading results...</p>
                                 </div> :
-                                    <table className="table table-fixed-header">
+                                    <table className="table table-fixed-header table-hover">
                                         <thead className='table-dark'>
                                             <tr>
                                                 <th className='ps-4'>
@@ -450,19 +450,21 @@ const PublishResult = () => {
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{r?.grade?.name}</td>
                                                             <td>
-                                                                <Tooltip title={`Created: ${dayjs(r.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(r.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
-                                                                    <div className="d-flex align-items-center">
-                                                                        <img
-                                                                            className='me-1'
-                                                                            style={{ width: "23px", height: "23px", borderRadius: "100%" }}
-                                                                            src={r?.user.avatar}
-                                                                            alt="dp" />
-                                                                        <span>{r?.user?.name}</span>
-                                                                    </div>
-                                                                </Tooltip>
+                                                                <div className="d-flex align-items-center">
+                                                                    <img
+                                                                        className='me-1'
+                                                                        style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                                                                        src={r?.user.avatar}
+                                                                        alt="dp" />
+                                                                    <span>{r?.user?.name}</span>
+                                                                </div>
                                                             </td>
                                                             <td>{r.type}</td>
-                                                            <td>{r.subject}</td>
+                                                            <td>
+                                                                <Tooltip title={`Created: ${dayjs(r.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(r.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
+                                                                    {r.subject}
+                                                                </Tooltip>
+                                                            </td>
                                                             <td>{r.marks}</td>
                                                             <td>{dayjs(r.examDate).format('DD MMM YYYY')}</td>
                                                             <td>

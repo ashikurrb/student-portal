@@ -38,7 +38,7 @@ const ViewResult = () => {
                             <i class="fa-solid fa-square-poll-vertical pe-1"></i> Result
                         </h3>
                         <div className="card mt-3 p-4 table-container">
-                            {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <table className="table">
+                            {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <table className="table table-striped">
                                 <thead className='table-dark'>
                                     <tr>
                                         <th scope="col">#</th>

@@ -384,7 +384,7 @@ const CreateNotice = () => {
                                 listSpinnerLoading ? <div className="text-center m-5">
                                     <Spinner /> <p>Loading notices...</p>
                                 </div> :
-                                    <table className="table table-fixed-header">
+                                    <table className="table table-fixed-header table-hover">
                                         <thead className='table-dark'>
                                             <tr>
                                                 <th className='ps-4'>
