@@ -81,7 +81,8 @@ const OrderList = () => {
         o?.trxId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         o?.buyer?.grade?.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    //total payment amount calculate
+
+    //total sell amount calculate
     const totalAmount = filteredOrder.reduce((sum, o) => sum + o?.course?.price, 0);
 
     //delete selected order

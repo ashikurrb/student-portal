@@ -197,6 +197,9 @@ const CreateCourse = () => {
         c?.grade?.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+     //total price calculate
+     const totalAmount = filteredCourse.reduce((sum, c) => sum + c?.price, 0);
+
     //delete individual course
     const handleDelete = async (cId) => {
         let answer = window.confirm("Are you sure want to delete this course?")
@@ -413,11 +416,18 @@ const CreateCourse = () => {
                                 </form>
                             </Modal>
                         </div>
-                        {
-                            selectedCourse.length > 0 ?
-                                <h6 className='d-flex justify-content-start'>{selectedCourse.length} selected</h6> :
-                                <h6 className='justify-content-start'> Count: {filteredCourse.length}</h6>
-                        }
+                        <h6 className='d-flex justify-content-between'>
+                            <span>
+                                {
+                                    selectedCourse.length > 0 ?
+                                        <h6 className='justify-content-start'> {selectedCourse.length} selected</h6> :
+                                        <h6 className='justify-content-start'> Count: {filteredCourse.length}</h6>
+                                }
+                            </span>
+                            <span>
+                                <h6 className='justify-content-start'> Total: {totalAmount} TK</h6>
+                            </span>
+                        </h6>
                         <div className='table-container'>
                             {
                                 listSpinnerLoading ? <div className="text-center m-5">
