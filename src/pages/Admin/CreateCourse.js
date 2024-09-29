@@ -404,7 +404,7 @@ const CreateCourse = () => {
                                             value={description}
                                             onChange={(e) => setDescription(e.target.value)}
                                             showCount
-                                            maxLength={500}
+                                            maxLength={1000}
                                             required
                                         />
                                     </div>
@@ -632,7 +632,7 @@ const CreateCourse = () => {
                             value={updatedDescription}
                             onChange={(e) => setUpdatedDescription(e.target.value)}
                             showCount
-                            maxLength={500}
+                            maxLength={1000}
                             required
                         />
                     </div>
