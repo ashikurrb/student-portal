@@ -298,7 +298,7 @@ const CourseDetails = () => {
                     <button
                         className="btn btn-primary fw-bold"
                         onClick={() => navigate("/dashboard/student/view-order")}>
-                       <i className="fa-solid fa-arrow-right"></i> View Order
+                       View Order
                     </button>
                 </div>
             </Modal>

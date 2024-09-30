@@ -1,4 +1,3 @@
-// components/AnimatedTickMark.jsx
 import { motion } from "framer-motion";
 
 const AnimatedTickMark = () => {
