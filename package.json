@@ -10,6 +10,7 @@
     "antd": "^5.18.0",
     "axios": "^1.7.2",
     "dayjs": "^1.11.13",
+    "framer-motion": "^11.9.0",
     "js-cookie": "^3.0.5",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",

@@ -8,6 +8,7 @@ import { useAuth } from '../../context/auth';
 import { Image, Input, Modal, Select } from 'antd';
 import toast from 'react-hot-toast';
 import dayjs from 'dayjs';
+import AnimatedTickMark from '../../components/AnimatedTickMark';
 const { Option } = Select;
 
 const CourseDetails = () => {
@@ -289,12 +290,16 @@ const CourseDetails = () => {
             </Modal>
             <Modal centered width={700} onCancel={() => setVisibleOrderModal(false)} open={visibleOrderModal} footer={null}>
                 <h3 className='text-center mb-3'>Your order has been placed successfully</h3>
-                <div className="d-flex justify-content-center align-items-center">
-                    <img style={{ width: "40%" }} src="/images/success.gif" alt="success" />
+                <div className="d-flex justify-content-center align-items-center my-4">
+                    <AnimatedTickMark />
                 </div>
                 <h6 className='text-center my-3'>Please check your email for the purchase details and further instructions</h6>
                 <div className="text-center">
-                    <button className="btn btn-primary fw-bold" onClick={() => navigate("/dashboard/student/view-order")}>View Order</button>
+                    <button
+                        className="btn btn-primary fw-bold"
+                        onClick={() => navigate("/dashboard/student/view-order")}>
+                       <i className="fa-solid fa-arrow-right"></i> View Order
+                    </button>
                 </div>
             </Modal>
         </Layout>

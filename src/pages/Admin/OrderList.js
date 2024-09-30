@@ -12,7 +12,6 @@ const { Option } = Select;
 
 const OrderList = () => {
     const [orders, setOrders] = useState([]);
-    const [price, setPrice] = useState('');
     const [statuses] = useState(["Pending", "Approved", "Canceled"]);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(true);
     const [statusUpdateLoading, setStatusUpdateLoading] = useState(false);
