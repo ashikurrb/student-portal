@@ -160,7 +160,7 @@ const CourseDetails = () => {
                                                         <h5 className='my-3'>
                                                             Please <span style={{ cursor: 'pointer', textDecoration: 'underline', color: "blue" }} onClick={() => navigate("/login", { state: { from: location.pathname } })}>
                                                                 <u>Login</u>
-                                                            </span> to buy this course
+                                                            </span> to enroll this course
                                                         </h5>
                                                     )
                                                 ) : (

@@ -95,7 +95,7 @@ const Register = () => {
                                         {grades?.map(g => (
                                             <option key={g._id}
                                                 value={g._id}
-                                                disabled={g?.name === "Administration"}>
+                                                hidden={g?.name === "Administration"}>
                                                 {g.name}
                                             </option>
                                         ))}
