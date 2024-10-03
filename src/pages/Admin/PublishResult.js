@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 import { SearchOutlined } from '@ant-design/icons';
-import { Modal, DatePicker, Select, Tooltip, Input } from 'antd';
+import { Modal, DatePicker, Select, Tooltip, Input, Button } from 'antd';
 import dayjs from 'dayjs';
 const dateFormat = 'DD-MMM-YYYY';
 const { Option } = Select;
@@ -35,6 +35,7 @@ const PublishResult = () => {
     const [createModalVisible, setIsCreateModalVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedResult, setSelectedResult] = useState([]);
+    const [subjectFields, setSubjectFields] = useState([{ subject: '', marks: '' }]);
 
     //Get All Grades
     const getAllGrades = async (req, res) => {
@@ -94,6 +95,24 @@ const PublishResult = () => {
         getAllResults();
     }, [])
 
+    // Function to handle adding new subject and mark fields
+    const handleAddField = () => {
+        setSubjectFields([...subjectFields, { subject: '', marks: '' }]);
+    };
+
+    const handleRemoveField = () => {
+        if (subjectFields.length > 1) {
+            setSubjectFields(subjectFields.slice(0, -1));
+        }
+    };
+
+    // Function to handle changes in the dynamically added fields
+    const handleFieldChange = (index, field, value) => {
+        const newFields = [...subjectFields];
+        newFields[index][field] = value;
+        setSubjectFields(newFields);
+    };
+
     //publish result
     const handlePublish = async (e) => {
         e.preventDefault();
@@ -138,6 +157,7 @@ const PublishResult = () => {
         setGrade('');
         setUser('');
         setSubject('');
+        setSubjectFields([{ subject: '', marks: '' }]);
         setType('');
         setMarks('');
         setExamDate(undefined);
@@ -361,24 +381,42 @@ const PublishResult = () => {
                                         required
                                     />
                                 </div>
-                                <div className="d-lg-flex">
-                                    <Input
-                                        type="text"
-                                        placeholder='Subject'
-                                        className='mb-3 me-2 w-100'
-                                        size='large'
-                                        value={subject}
-                                        onChange={(e) => setSubject(e.target.value)} required
-                                    />
-                                    <Input
-                                        type="text"
-                                        placeholder='Marks'
-                                        className='mb-3 w-100'
-                                        size='large'
-                                        value={marks}
-                                        onChange={(e) => setMarks(e.target.value)}
-                                        required
-                                    />
+                                {subjectFields.map((field, index) => (
+                                    <div className="d-lg-flex" key={index}>
+                                        <Input
+                                            type="text"
+                                            placeholder='Subject'
+                                            className='mb-3 me-2 w-100'
+                                            size='large'
+                                            value={field.subject}
+                                            onChange={(e) => handleFieldChange(index, 'subject', e.target.value)}
+                                            required
+                                        />
+                                        <Input
+                                            type="text"
+                                            placeholder='Marks'
+                                            className='mb-3 w-100'
+                                            size='large'
+                                            value={field.marks}
+                                            onChange={(e) => handleFieldChange(index, 'marks', e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                ))}
+                                <div className='d-flex justify-content-end'>
+                                    <button
+                                        onClick={handleAddField}
+                                        type="button"
+                                        className='btn btn-outline me-2'>
+                                        <i className="fa-solid fa-plus" />
+                                    </button>
+                                    <button
+                                        onClick={handleRemoveField}
+                                        type="button"
+                                        className='btn btn-outline'
+                                        >
+                                        <i className="fa-solid fa-minus" />
+                                    </button>
                                 </div>
                                 <div className="text-center">
                                     <button type="submit" className="btn btn-warning fw-bold mt-2">
