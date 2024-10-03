@@ -112,8 +112,9 @@ const PublishResult = () => {
                 toast.success(data?.message);
                 getAllResults();
                 // Clear form fields
-                setUser(undefined);
-                setType('');
+                // setGrade(undefined);
+                // setUser(undefined);
+                // setType('');
                 setSubject('');
                 setExamDate(undefined);
                 setMarks('');
