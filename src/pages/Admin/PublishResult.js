@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
 import { SearchOutlined } from '@ant-design/icons';
-import { Modal, DatePicker, Select, Tooltip, Input, Button } from 'antd';
+import { Modal, DatePicker, Select, Tooltip, Input } from 'antd';
 import dayjs from 'dayjs';
 const dateFormat = 'DD-MMM-YYYY';
 const { Option } = Select;
