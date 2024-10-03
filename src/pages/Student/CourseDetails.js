@@ -200,7 +200,7 @@ const CourseDetails = () => {
                     </ol>
                 </div>
                 <div className="row">
-                    {relatedCourse?.length > 0 && <h3 className='text-center my-4'>Related Courses</h3>}
+                    {relatedCourse?.length > 0 && <h3 className='text-center my-4'>More {course.grade.name} Courses</h3>}
                     {spinnerLoading ? <div className='my-5'><Spinner /></div> : <>
                         <div className="d-flex flex-wrap justify-content-center justify-content-xl-between">
                             {relatedCourse?.map(c => (
