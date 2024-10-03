@@ -352,23 +352,23 @@ const PublishResult = () => {
                                         value={type}
                                         onChange={(e) => setType(e.target.value)} required
                                     />
-                                    <Input
-                                        type="text"
-                                        placeholder='Subject'
-                                        className='mb-3 w-100'
-                                        size='large'
-                                        value={subject}
-                                        onChange={(e) => setSubject(e.target.value)} required
-                                    />
-                                </div>
-                                <div className="d-lg-flex">
                                     <DatePicker
                                         format={dateFormat}
-                                        className='mb-3 me-2 w-100'
+                                        className='mb-3 w-100'
                                         size='large'
                                         value={examDate}
                                         onChange={(date) => setExamDate(date)}
                                         required
+                                    />
+                                </div>
+                                <div className="d-lg-flex">
+                                    <Input
+                                        type="text"
+                                        placeholder='Subject'
+                                        className='mb-3 me-2 w-100'
+                                        size='large'
+                                        value={subject}
+                                        onChange={(e) => setSubject(e.target.value)} required
                                     />
                                     <Input
                                         type="text"
@@ -513,23 +513,23 @@ const PublishResult = () => {
                             value={updatedType}
                             onChange={(e) => setUpdatedType(e.target.value)} required
                         />
-                        <Input
-                            type="text"
-                            placeholder='Subject'
-                            className='mb-3 w-100'
-                            size='large'
-                            value={updatedSubject}
-                            onChange={(e) => setUpdatedSubject(e.target.value)} required
-                        />
-                    </div>
-                    <div className='mb-2 d-lg-flex'>
                         <DatePicker
                             value={updatedExamDate}
                             format={dateFormat}
-                            className='w-100 mb-3 me-2'
+                            className='mb-3 w-100'
                             size='large'
                             onChange={(date) => setUpdatedExamDate(date)}
                             required
+                        />
+                    </div>
+                    <div className='mb-2 d-lg-flex'>
+                        <Input
+                            type="text"
+                            placeholder='Subject'
+                            className='w-100 mb-3 me-2'
+                            size='large'
+                            value={updatedSubject}
+                            onChange={(e) => setUpdatedSubject(e.target.value)} required
                         />
                         <Input
                             type="text"
