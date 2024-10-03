@@ -29,34 +29,41 @@ const CourseDetails = () => {
     const [visible, setVisible] = useState(false);
     const [visibleOrderModal, setVisibleOrderModal] = useState(false);
 
+    // initially call course
     useEffect(() => {
         if (params?.slug) getCourse();
-    }, [params?.slug])
+    }, [params?.slug]);
 
-    //get Course
+    // if related course available
+    useEffect(() => {
+        if (course?._id && course?.grade?._id) {
+            getRelatedCourse(course._id, course.grade._id);
+        }
+    }, [course]);
+
+    // single course
     const getCourse = async () => {
+        setSpinnerLoading(true);
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/course/get-course/${params.slug}`);
             setCourse(data);
-            // getRelatedCourse(data?.course?._id, data?.course?.grade?._id);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setSpinnerLoading(false);
+        }
+    };
+
+    // related course
+    const getRelatedCourse = async (cid, gid) => {
+        try {
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/course/related-course/${cid}/${gid}`);
+            setRelatedCourse(data);
+            console.log(data);
         } catch (error) {
             console.log(error);
         }
-        finally {
-            setSpinnerLoading(false)
-        }
-    }
-
-    // //get similar course
-    // const getRelatedCourse = async (cid, gid) => {
-    //     try {
-    //         const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/course/related-course/${cid}/${gid}`);
-    //         setRelatedCourse(data?.course);
-    //         console.log(data);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
+    };
 
     const openModal = () => {
         setVisible(true);
@@ -120,7 +127,7 @@ const CourseDetails = () => {
                         <GoBackButton />
                     </div>
                     <div className="col">
-                        <h4 className="mb-0 me-5 p-3 text-center">Course Details</h4>
+                        <h3 className="mb-0 me-5 p-3 text-center">Course Details</h3>
                     </div>
                 </div>
                 {
@@ -133,8 +140,8 @@ const CourseDetails = () => {
                                 <div className="col-md-5 mt-4">
                                     <div className="ms-md-5 d-flex justify-content-center align-items-center">
                                         <Image className='border rounded'
-                                            src={course.courseImg}
-                                            alt={course.title}
+                                            src={course?.courseImg}
+                                            alt={course?.title}
                                             style={{ width: "100%", height: "300px", objectFit: "cover" }}
                                         />
                                     </div>
@@ -142,17 +149,17 @@ const CourseDetails = () => {
                                 <div className="col-md-7 mt-4">
                                     <div className='ms-md-5'>
                                         <div className="card-body">
-                                            <h1>{course.title}</h1>
+                                            <h1>{course?.title}</h1>
                                             <h6>
-                                                <Link to={`/view-course/${course.grade.slug}`}>
+                                                <Link to={`/view-course/${course?.grade?.slug}`}>
                                                     Grade: <b>{course?.grade?.name}</b>
                                                 </Link>
                                             </h6>
-                                            <h6 className="card-text">Starting from: {dayjs(course.dateRange).format('MMM DD, YYYY')}</h6>
-                                            <h4 className="card-text"> <span className='fs-2 fw-bold'>৳</span>{course.price}</h4>
+                                            <h6 className="card-text">Starting from: {dayjs(course?.dateRange).format('MMM DD, YYYY')}</h6>
+                                            <h4 className="card-text"> <span className='fs-2 fw-bold'>৳</span>{course?.price}</h4>
                                             {
-                                                course.status === "Active" ? (
-                                                    auth.token ? (
+                                                course?.status === "Active" ? (
+                                                    auth?.token ? (
                                                         <button className='btn btn-success mb-3 fw-bold' onClick={openModal}>
                                                             <i className="fa-solid fa-plus"></i> Enroll Now
                                                         </button>
@@ -169,7 +176,7 @@ const CourseDetails = () => {
                                             }
                                             <p style={{ textAlign: "justify" }}
                                                 dangerouslySetInnerHTML={{
-                                                    __html: refinedDocView(course.description)
+                                                    __html: refinedDocView(course?.description)
                                                 }}
                                             />
                                         </div>
@@ -192,34 +199,44 @@ const CourseDetails = () => {
                         <li>পেমেন্ট ভেরিফাই সম্পন্ন হলে আপনি Dashboard এর <Link className='fw-bold' to="/dashboard/student/view-payment">Payment Status</Link> অপশন থেকে আপনার Invoice টি ডাউনলোড করতে পারবেন </li>
                     </ol>
                 </div>
-                {/*<div className="row">
-                    <h4 className='text-center'>Similar Course</h4>
+                <div className="row">
+                    {relatedCourse?.length > 0 && <h3 className='text-center my-4'>Related Courses</h3>}
                     {spinnerLoading ? <div className='my-5'><Spinner /></div> : <>
-                        {relatedCourse?.length < 1 && (<p className="text-center">No Similar Course Found</p>)}
-                        <div className="d-flex flex-wrap justify-content-md-start justify-content-center">
+                        <div className="d-flex flex-wrap justify-content-center justify-content-xl-between">
                             {relatedCourse?.map(c => (
-                                <div className="card m-2" style={{ width: '15rem' }} key={c._id}>
-                                    <img src={c.courseImg}
-                                        className="p-1 cardImg card-img-top h-75" alt={c.name} />
+                                <div className="card m-2" style={{ width: '15rem' }} key={c?._id}>
+                                    <img
+                                        src={c?.courseImg}
+                                        className="card-img-top"
+                                        style={{ height: '200px' }}
+                                        alt={c?.name} />
                                     <div className="card-body">
-                                        <h4 className="card-title">{c.title}</h4>
-                                        <h6 className="card-text"><span className='fs-3 fw-bold'>৳</span>{c.price}</h6>
-                                        <p className="card-text">Start:  {dayjs(c.dateRange).format("MMM DD, YYYY")} </p>
-                                        <button className="btn btn-primary w-100" onClick={() => navigate(`/view-course/${c.grade.slug}/${c.slug}`)}>Details</button>
+                                        <h4 className='card-title'>{c?.title}</h4>
+                                        <p className="form-text">Grade: <b>{c?.grade?.name}</b>
+                                            <br />
+                                            Start:  {dayjs(c?.dateRange).format("MMM DD, YYYY")}
+                                        </p>
+                                        <h5><span className='fw-bold'>৳</span>{c?.price}</h5>
+                                        <button
+                                            className="btn btn-primary w-100"
+                                            onClick={() => navigate(`/view-course/${c?.grade?.slug}/${c?.slug}`)}>
+                                            <b>Details</b>
+                                        </button>
                                     </div>
                                 </div>
                             ))}
-                        </div></>
+                        </div>
+                    </>
                     }
-                </div> */}
+                </div>
             </div>
             <Modal style={{ top: 30 }} width={800} onCancel={() => setVisible(false)} open={visible} footer={null} maskClosable={false}>
                 <h5 className='text-center mb-3'>Payment Details</h5>
                 <div>
                     <h6>আপনি কিনতে চাচ্ছেন:</h6>
                     <div className='text-center my-2 border border-2 rounded py-2'>
-                        <h6>Course: <b>{course.title}</b> ({course?.grade?.name})</h6>
-                        <h6 className="">Price: <span className='fw-bold'>৳</span>{course.price}</h6>
+                        <h6>Course: <b>{course?.title}</b> ({course?.grade?.name})</h6>
+                        <h6 className="">Price: <span className='fw-bold'>৳</span>{course?.price}</h6>
                     </div>
                     <p className='text-center my-3'>
                         Send Money করুন <b>bKash/Rocket: </b>01794-744343 নাম্বারে
@@ -298,7 +315,7 @@ const CourseDetails = () => {
                     <button
                         className="btn btn-primary fw-bold"
                         onClick={() => navigate("/dashboard/student/view-order")}>
-                       View Order
+                        View Order
                     </button>
                 </div>
             </Modal>
