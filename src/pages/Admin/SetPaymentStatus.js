@@ -150,6 +150,7 @@ const SetPaymentStatus = () => {
                 toast.success(data?.message);
                 getAllPayment();
                 // Clear form fields after submit
+                // setGrade(undefined);
                 setUser(undefined);
                 setRemark('');
                 setPaymentDate(undefined);
