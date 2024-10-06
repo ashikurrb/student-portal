@@ -253,7 +253,7 @@ const CreateNotice = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className="text-center my-4 mb-md-5">
-                            <i class="fa-solid fa-bell"></i> Create Notice ({notice.length})
+                            <i className="fa-solid fa-bell" />Create Notice ({notice.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <Input
@@ -438,7 +438,7 @@ const CreateNotice = () => {
                                                             }
                                                         </td>
                                                         <td>
-                                                        <Tooltip title={`Created: ${dayjs(n.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(n.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
+                                                            <Tooltip title={`Created: ${dayjs(n.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(n.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
                                                                 <span>{n?.title}</span>
                                                             </Tooltip>
                                                         </td>

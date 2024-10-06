@@ -65,7 +65,7 @@ const ViewContent = () => {
                                                         <td>{c.type}</td>
                                                         <td>
                                                             <Link className='link' to={c.contentLink} target='_blank'>
-                                                                <i class="fa-solid fa-up-right-from-square"></i> Open
+                                                                <i className="fa-solid fa-up-right-from-square" /> Open
                                                             </Link>
                                                         </td>
                                                     </tr>

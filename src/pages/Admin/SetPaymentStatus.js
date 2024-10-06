@@ -509,7 +509,7 @@ const SetPaymentStatus = () => {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-success fw-bold mx-1 py-2 px-4">
-                                <i class="fa-solid fa-plus"></i>  Set Payment
+                                <i className="fa-solid fa-plus" /> Set Payment
                             </button>
                             {selectedPayment.length > 0 && (
                                 <button onClick={handleDeleteSelected} className="btn btn-danger fw-bold mx-1 py-2 floating-delete-button">
@@ -736,7 +736,7 @@ const SetPaymentStatus = () => {
                                                         <td>
                                                             <div className='d-flex'>
                                                                 <button className='btn btn-primary mx-1' onClick={() => { openModal(p) }}>
-                                                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                                <i className="fa-solid fa-pen-to-square" /> Edit
                                                                 </button>
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}>
                                                                     <i className="fa-solid fa-trash-can"></i> Delete

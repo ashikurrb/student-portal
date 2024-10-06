@@ -207,8 +207,8 @@ const CreateContent = () => {
         }
     };
 
-     //delete selected contents
-     const handleDeleteSelected = async () => {
+    //delete selected contents
+    const handleDeleteSelected = async () => {
         let answer = window.confirm("Are you sure you want to delete the selected content?");
         if (!answer) return;
 
@@ -248,7 +248,7 @@ const CreateContent = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className="text-center my-4 mb-md-5">
-                            <i class="fa-solid fa-link"></i> Create Content ({content.length})
+                            <i className="fa-solid fa-link" /> Create Content ({content.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <Input

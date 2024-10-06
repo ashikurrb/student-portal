@@ -137,7 +137,7 @@ const AllUsers = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-4'>
-                            <i class="fa-solid fa-users"></i> All User's List ({users?.length})
+                            <i className="fa-solid fa-users" /> All User's List ({users?.length})
                         </h2>
                         <div className="d-flex justify-content-center">
                             <Alert
@@ -238,14 +238,16 @@ const AllUsers = () => {
                                                     <td>{u.answer}</td>
                                                     <td >
                                                         {
-                                                            u.role === 0 ? <span class="badge text-bg-success">Student</span> : u.role === 1 ? <span class="badge text-bg-warning">Admin</span> : <span class="badge text-bg-danger">{u.role}</span>
+                                                            u.role === 0 ? <span className="badge text-bg-success">Student</span> : u.role === 1 ? <span className="badge text-bg-warning">Admin</span> : <span className="badge text-bg-danger">{u.role}</span>
                                                         }
                                                     </td>
                                                     <td>{dayjs(u?.createdAt).format('MMM DD, YYYY hh:mm A')}</td>
                                                     <td>
                                                         {
-                                                            u.role === 1 ? <span class="badge text-bg-info">Restricted</span> : (
-                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(u._id)}><i class="fa-solid fa-trash-can"></i>  Delete</button>
+                                                            u.role === 1 ? <span className="badge text-bg-info">Restricted</span> : (
+                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(u._id)}>
+                                                                    <i className="fa-solid fa-trash-can" /> Delete
+                                                                </button>
                                                             )
                                                         }
                                                     </td>

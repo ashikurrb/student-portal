@@ -278,7 +278,7 @@ const PublishResult = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className="text-center my-4 mb-md-5">
-                            <i class="fa-solid fa-square-poll-vertical"></i> Publish Result ({result.length})
+                            <i className="fa-solid fa-square-poll-vertical" /> Publish Result ({result.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <Input
@@ -296,7 +296,7 @@ const PublishResult = () => {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-success fw-bold mx-1 py-2 px-4">
-                                <i class="fa-solid fa-plus"></i> Publish Result
+                                <i className="fa-solid fa-plus" /> Publish Result
                             </button>
                             {selectedResult.length > 0 && (
                                 <button onClick={handleDeleteSelected} className="btn btn-danger fw-bold mx-1 py-2 floating-delete-button">
@@ -471,10 +471,10 @@ const PublishResult = () => {
                                                             <td>
                                                                 <div className="d-flex">
                                                                     <button className='btn btn-primary mx-1' onClick={() => { openModal(r) }}>
-                                                                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                                        <i className="fa-solid fa-pen-to-square" /> Edit
                                                                     </button>
                                                                     <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(r._id)}>
-                                                                        <i class="fa-solid fa-trash-can"></i>  Delete
+                                                                        <i className="fa-solid fa-trash-can" /> Delete
                                                                     </button>
                                                                 </div>
                                                             </td>

@@ -148,7 +148,7 @@ const OrderList = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className="text-center my-4 mb-md-5">
-                            <i class="fa-solid fa-box"></i> Order List ({orders.length})
+                            <i className="fa-solid fa-box" /> Order List ({orders.length})
                         </h2>
                         <div className="d-flex justify-content-end mb-3">
                             <Input
@@ -265,7 +265,7 @@ const OrderList = () => {
                                                                             src={o?.buyer?.avatar}
                                                                             alt="dp" />
                                                                         <span className='ms-2'>                                                      <div style={{ cursor: "pointer" }} className='fw-bold text-primary' onClick={() => { openModal(o) }}>
-                                                                            {o?.buyer?.name}  <i class="fa-solid fa-arrow-right"></i>
+                                                                            {o?.buyer?.name}  <i className="fa-solid fa-arrow-right" />
                                                                         </div>
                                                                         </span>
                                                                     </div>
@@ -291,7 +291,7 @@ const OrderList = () => {
                                                                 <td>{dayjs(o.createdAt).format('MMM DD, YYYY')}</td>
                                                                 <td>
                                                                     <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(o._id)}>
-                                                                        <i class="fa-solid fa-trash-can"></i>  Delete
+                                                                        <i className="fa-solid fa-trash-can" /> Delete
                                                                     </button>
                                                                 </td>
                                                             </tr>

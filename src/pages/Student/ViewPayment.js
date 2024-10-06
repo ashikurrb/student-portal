@@ -204,7 +204,7 @@ const ViewPayment = () => {
                     </div>
                     <div className="col-md-9">
                         <h3 className="text-center my-4">
-                            <i class="fa-solid fa-credit-card pe-2"></i> Payment Status
+                            <i className="fa-solid fa-credit-card pe-2" /> Payment Status
                         </h3>
                         <h6 className='text-end'>Total paid: TK. {totalAmount}</h6>
                         <div className="card mt-2 p-4 table-container">

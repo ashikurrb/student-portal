@@ -197,8 +197,8 @@ const CreateCourse = () => {
         c?.grade?.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-     //total price calculate
-     const totalAmount = filteredCourse.reduce((sum, c) => sum + c?.price, 0);
+    //total price calculate
+    const totalAmount = filteredCourse.reduce((sum, c) => sum + c?.price, 0);
 
     //delete individual course
     const handleDelete = async (cId) => {
@@ -277,7 +277,7 @@ const CreateCourse = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className="text-center my-4 mb-md-5">
-                            <i class="fa-solid fa-book"></i> Create Course ({course.length})
+                            <i className="fa-solid fa-book" /> Create Course ({course.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <Input

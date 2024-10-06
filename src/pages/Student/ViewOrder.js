@@ -98,7 +98,7 @@ const ViewOrder = () => {
 
                                                         <td>
                                                             <div style={{ cursor: "pointer" }} className='fw-bold text-primary' onClick={() => { openModal(o) }}>
-                                                                {o?.course?.title}  <i class="fa-solid fa-arrow-right"></i>
+                                                                {o?.course?.title}  <i className="fa-solid fa-arrow-right" />
                                                             </div>
                                                         </td>
                                                         <td>

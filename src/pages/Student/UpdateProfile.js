@@ -88,7 +88,7 @@ const UpdateProfile = () => {
                     <div className="col-md-9">
                         <div className="form-container">
                             <form onSubmit={handleUpdate} className='custom-profile'>
-                                <h4 className="text-center pb-3"><i class="fa-solid fa-pen-to-square"></i> Update your Profile</h4>
+                                <h4 className="text-center pb-3"><i className="fa-solid fa-pen-to-square" />Update your Profile</h4>
                                 <div className="mb-3">
                                     <h6 className='text-center my-3'>Maximum Photo size is 3 MB</h6>
                                     {avatar && (
