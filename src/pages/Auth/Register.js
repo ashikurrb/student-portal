@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/auth';
+import { Input, Select } from 'antd';
+const { Option } = Select;
 
 const Register = () => {
     const [name, setName] = useState("");
@@ -79,33 +81,85 @@ const Register = () => {
                             <form className='m-lg-5' onSubmit={handleSubmit}>
                                 <h4 className="title"><i className="fa-solid fa-user-plus"></i> &nbsp; REGISTER FORM</h4>
                                 <div className="mb-3">
-                                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" id="exampleInputName" placeholder='Name'
-                                        minLength={4} maxLength={25}
+                                    <Input
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        className="w-100"
+                                        size="large"
+                                        placeholder='Name'
+                                        minLength={4}
+                                        maxLength={25}
+                                        allowClear
                                         required />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email' required />
+                                    <Input
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="w-100"
+                                        size="large"
+                                        placeholder='Email'
+                                        allowClear
+                                        required />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" id="exampleInputPhone" placeholder='Phone Number' required />
+                                    <Input
+                                        type="number"
+                                        value={phone}
+                                        onChange={(e) => setPhone(e.target.value)}
+                                        className="w-100"
+                                        size="large"
+                                        maxLength={11}
+                                        placeholder='Phone Number'
+                                        allowClear
+                                        required />
                                 </div>
                                 <div className="mb-3">
-                                    <select className="form-select" aria-label="Default select example" onChange={(e) => { setGrade(e.target.value) }} required>
-                                        <option selected disabled>Select Grade</option>
-                                        {grades?.map(g => (
-                                            <option key={g._id}
-                                                value={g._id}
-                                                hidden={g?.name === "Administration"}>
-                                                {g.name}
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <Select
+                                        placeholder="Select Grade"
+                                        size='large'
+                                        className='w-100'
+                                        value={grade || undefined}
+                                        onChange={(value) => { setGrade(value) }}
+                                        allowClear
+                                    >
+                                        {grades
+                                            ?.filter(g => g.name !== "Administration")
+                                            .map(g => (
+                                                <Option
+                                                    key={g._id}
+                                                    value={g._id}
+                                                    hidden={g?.name === "Administration"}>
+                                                    {g.name}
+                                                </Option>
+                                            ))}
+                                    </Select>
                                 </div>
                                 <div className="mb-3">
-                                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />
+                                    <Input
+                                        type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="w-100"
+                                        size="large"
+                                        placeholder='Password'
+                                        allowClear
+                                        required />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" id="exampleInputAddress" placeholder='Security Answer' minLength={3} maxLength={10} required />
+                                    <Input
+                                        type="text"
+                                        value={answer}
+                                        onChange={(e) => setAnswer(e.target.value)}
+                                        className="w-100"
+                                        size="large"
+                                        placeholder='Security Answer'
+                                        minLength={3}
+                                        maxLength={10}
+                                        allowClear
+                                        required />
                                 </div>
                                 <div className="text-center mt-4">
                                     <button type="submit" className="btn btn-primary">

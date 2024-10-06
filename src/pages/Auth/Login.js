@@ -93,6 +93,7 @@ const Login = () => {
                                             <KeyOutlined/>
                                         </span>
                                     }
+                                    type='password'
                                     className="w-100"
                                     size='large'
                                     placeholder='Password'

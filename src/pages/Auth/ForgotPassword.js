@@ -57,6 +57,7 @@ const ForgotPassword = () => {
                                                 <UserOutlined />
                                             </span>
                                         }
+                                        type='email'
                                         className="w-100"
                                         size='large'
                                         placeholder='Email'
