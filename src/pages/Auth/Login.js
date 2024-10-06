@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Layout from '../../components/Layouts/Layout';
 import '../../style/AuthStyle.css'
+import { Input } from 'antd';
+import { UserOutlined, KeyOutlined } from '@ant-design/icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../context/auth';
@@ -37,7 +39,7 @@ const Login = () => {
                 Cookies.set("auth", JSON.stringify(res.data), { expires: 1 }); // expires in 1 day
                 toast.success(res.data && res.data.message, { id: loadingToastId });
                 const redirectTo = location.state?.from || "/";
-                navigate(redirectTo); 
+                navigate(redirectTo);
             } else {
                 toast.error(res.data.message, { id: loadingToastId });
             }
@@ -63,7 +65,7 @@ const Login = () => {
                     <div className="row m-3">
                         <div className="col-md-7 mb-5 mx-md-5">
                             <div className="text-center">
-                            <img src="/images/loginImg.png" style={{ width: "100%" }} alt="" />
+                                <img src="/images/loginImg.png" style={{ width: "100%" }} alt="" />
                             </div>
                         </div>
                     </div>
@@ -71,10 +73,32 @@ const Login = () => {
                         <form className='m-lg-5 mb-2' onSubmit={handleSubmit}>
                             <h4 className="title"><i className="fa-solid fa-right-to-bracket"></i> &nbsp; Login Here</h4>
                             <div className="mb-3">
-                                <input type="text" value={email || phone} onChange={(e) => setEmail(e.target.value) || setPhone(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email or Phone' required />
+                                <Input
+                                    prefix={
+                                        <span style={{ paddingRight: '4px' }}>
+                                            <UserOutlined />
+                                        </span>
+                                    }
+                                    className="w-100"
+                                    size='large'
+                                    placeholder='Email or Phone'
+                                    value={email || phone}
+                                    onChange={(e) => setEmail(e.target.value) || setPhone(e.target.value)}
+                                    required />
                             </div>
                             <div className="mb-3">
-                                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />
+                                <Input.Password
+                                    prefix={
+                                        <span style={{ paddingRight: '4px' }}>
+                                            <KeyOutlined/>
+                                        </span>
+                                    }
+                                    className="w-100"
+                                    size='large'
+                                    placeholder='Password'
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required />
                                 <div className="form-text text-end pt-1">
                                     <Link to="/forgot-password">Forgot Password?</Link>
                                 </div>
