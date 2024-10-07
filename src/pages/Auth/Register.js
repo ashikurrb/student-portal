@@ -138,7 +138,7 @@ const Register = () => {
                                     </Select>
                                 </div>
                                 <div className="mb-3">
-                                    <Input
+                                    <Input.Password
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
