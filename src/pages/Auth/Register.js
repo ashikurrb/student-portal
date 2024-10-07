@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/auth';
+import { BookOutlined, LockOutlined, MailOutlined, PhoneOutlined, QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { Input, Select } from 'antd';
 const { Option } = Select;
 
@@ -82,6 +83,11 @@ const Register = () => {
                                 <h4 className="title"><i className="fa-solid fa-user-plus"></i> &nbsp; REGISTER FORM</h4>
                                 <div className="mb-3">
                                     <Input
+                                        prefix={
+                                            <span style={{ paddingRight: '4px' }}>
+                                                <UserOutlined />
+                                            </span>
+                                        }
                                         type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
@@ -95,6 +101,11 @@ const Register = () => {
                                 </div>
                                 <div className="mb-3">
                                     <Input
+                                        prefix={
+                                            <span style={{ paddingRight: '4px' }}>
+                                                <MailOutlined />
+                                            </span>
+                                        }
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
@@ -106,6 +117,11 @@ const Register = () => {
                                 </div>
                                 <div className="mb-3">
                                     <Input
+                                        prefix={
+                                            <span style={{ paddingRight: '4px' }}>
+                                                <PhoneOutlined />
+                                            </span>
+                                        }
                                         type="number"
                                         value={phone}
                                         onChange={(e) => setPhone(e.target.value)}
@@ -118,7 +134,12 @@ const Register = () => {
                                 </div>
                                 <div className="mb-3">
                                     <Select
-                                        placeholder="Select Grade"
+                                        placeholder={
+                                            <span>
+                                                <i className="fa-solid fa-graduation-cap" style={{ marginRight: "8px" }} />
+                                                Select Grade
+                                            </span>
+                                        }
                                         size='large'
                                         className='w-100'
                                         value={grade || undefined}
@@ -132,6 +153,7 @@ const Register = () => {
                                                     key={g._id}
                                                     value={g._id}
                                                     hidden={g?.name === "Administration"}>
+                                                    <i className="fa-solid fa-graduation-cap" style={{ marginRight: "8px" }} />
                                                     {g.name}
                                                 </Option>
                                             ))}
@@ -139,6 +161,11 @@ const Register = () => {
                                 </div>
                                 <div className="mb-3">
                                     <Input.Password
+                                        prefix={
+                                            <span style={{ paddingRight: '4px' }}>
+                                                <LockOutlined />
+                                            </span>
+                                        }
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
@@ -150,6 +177,11 @@ const Register = () => {
                                 </div>
                                 <div className="mb-3">
                                     <Input
+                                        prefix={
+                                            <span style={{ paddingRight: '4px' }}>
+                                                <QuestionCircleOutlined />
+                                            </span>
+                                        }
                                         type="text"
                                         value={answer}
                                         onChange={(e) => setAnswer(e.target.value)}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Layout from '../../components/Layouts/Layout';
 import '../../style/AuthStyle.css'
 import { Input } from 'antd';
-import { UserOutlined, KeyOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../context/auth';
@@ -90,7 +90,7 @@ const Login = () => {
                                 <Input.Password
                                     prefix={
                                         <span style={{ paddingRight: '4px' }}>
-                                            <KeyOutlined/>
+                                            <LockOutlined/>
                                         </span>
                                     }
                                     type='password'

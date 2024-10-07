@@ -8,6 +8,15 @@ import { Link } from 'react-router-dom';
 const ViewContent = () => {
     const [content, setContent] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
+    const types = [
+        { name: "PDF", logo: <i className="fa-solid fa-file-pdf" /> },
+        { name: "Doc", logo: <i className="fa-solid fa-file-word" /> },
+        { name: "Slide", logo: <i className="fa-solid fa-file-powerpoint" /> },
+        { name: "Spreadsheet", logo: <i className="fa-solid fa-file-excel" /> },
+        { name: "Video", logo: <i className="fa-solid fa-circle-play" /> },
+        { name: "Audio", logo: <i className="fa-solid fa-volume-high" /> },
+        { name: "Online Class", logo: <i className="fa-solid fa-video" /> },
+    ];
 
     const getContent = async () => {
         try {
@@ -62,7 +71,17 @@ const ViewContent = () => {
                                                         <th scope='row'>{i + 1}</th>
                                                         <td>{c.subject}</td>
                                                         <td>{c.remark}</td>
-                                                        <td>{c.type}</td>
+                                                        <td>
+                                                            {types.map((t) =>
+                                                                t.name === c.type ? (
+                                                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                                        {t.logo}
+                                                                        &nbsp;
+                                                                        {t.name}
+                                                                    </div>
+                                                                ) : null
+                                                            )}
+                                                        </td>
                                                         <td>
                                                             <Link className='link' to={c.contentLink} target='_blank'>
                                                                 <i className="fa-solid fa-up-right-from-square" /> Open

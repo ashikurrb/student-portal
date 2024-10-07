@@ -2,7 +2,7 @@ import Layout from '../../components/Layouts/Layout';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../style/AuthStyle.css';
 import { Input } from 'antd';
-import { UserOutlined, KeyOutlined, InfoCircleOutlined, } from '@ant-design/icons';
+import { MailOutlined, LockOutlined, QuestionCircleOutlined, } from '@ant-design/icons';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useState } from 'react';
@@ -54,7 +54,7 @@ const ForgotPassword = () => {
                                     <Input
                                         prefix={
                                             <span style={{ paddingRight: '4px' }}>
-                                                <UserOutlined />
+                                                <MailOutlined />
                                             </span>
                                         }
                                         type='email'
@@ -69,7 +69,7 @@ const ForgotPassword = () => {
                                     <Input
                                         prefix={
                                             <span style={{ paddingRight: '4px' }}>
-                                                <InfoCircleOutlined />
+                                                <QuestionCircleOutlined />
                                             </span>
                                         }
                                         className="w-100"
@@ -83,7 +83,7 @@ const ForgotPassword = () => {
                                     <Input.Password
                                         prefix={
                                             <span style={{ paddingRight: '4px' }}>
-                                                <KeyOutlined />
+                                                <LockOutlined />
                                             </span>
                                         }
                                         className="w-100"

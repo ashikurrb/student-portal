@@ -5,7 +5,7 @@ import Spinner from '../../components/Spinner';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, LinkOutlined } from '@ant-design/icons';
 import { Input, Modal, Select, Tooltip } from 'antd';
 import dayjs from 'dayjs';
 const { Option } = Select;
@@ -19,7 +19,15 @@ const CreateContent = () => {
     const [subject, setSubject] = useState('');
     const [remark, setRemark] = useState('');
     const [contentLink, setContentLink] = useState('');
-    const [types] = useState(["PDF", "Doc", "Video", "Audio", "PPT"]);
+    const types = [
+        { name: "PDF", logo: <i className="fa-solid fa-file-pdf" /> },
+        { name: "Doc", logo: <i className="fa-solid fa-file-word" /> },
+        { name: "Slide", logo: <i className="fa-solid fa-file-powerpoint" /> },
+        { name: "Spreadsheet", logo: <i className="fa-solid fa-file-excel" /> },
+        { name: "Video", logo: <i className="fa-solid fa-circle-play" /> },
+        { name: "Audio", logo: <i className="fa-solid fa-volume-high" /> },
+        { name: "Online Class", logo: <i className="fa-solid fa-video" /> },
+    ];
     const [type, setType] = useState(null);
     const [content, setContent] = useState([]);
     const [updatedSubject, setUpdatedSubject] = useState('');
@@ -296,8 +304,14 @@ const CreateContent = () => {
                                         value={type}
                                         onChange={(value) => { setType(value) }}
                                         required>
-                                        {types.map((t, i) => (
-                                            <Option key={i} value={t}>{t}</Option>
+                                        {types.map((type, i) => (
+                                            <Option key={i} value={type.name}>
+                                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                    {type.logo}
+                                                    &nbsp; &nbsp;
+                                                    {type.name}
+                                                </div>
+                                            </Option>
                                         ))}
                                     </Select>
                                 </div>
@@ -325,6 +339,11 @@ const CreateContent = () => {
                                 </div>
                                 <div>
                                     <Input
+                                        addonBefore={
+                                            <span style={{ paddingRight: '4px' }}>
+                                                <LinkOutlined />
+                                            </span>
+                                        }
                                         type="url"
                                         placeholder='Paste Link Here'
                                         className='mb-3 w-100'
@@ -406,7 +425,17 @@ const CreateContent = () => {
                                                             </Tooltip>
                                                         </td>
                                                         <td>{c.remark}</td>
-                                                        <td>{c.type}</td>
+                                                        <td>
+                                                            {types.map((t) =>
+                                                                t.name === c.type ? (
+                                                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                                        {t.logo}
+                                                                        &nbsp;
+                                                                        {t.name}
+                                                                    </div>
+                                                                ) : null
+                                                            )}
+                                                        </td>
                                                         <td>
                                                             <Link className='link' to={c.contentLink} target='_blank'>
                                                                 <i className="fa-solid fa-up-right-from-square"></i> Open
@@ -470,11 +499,22 @@ const CreateContent = () => {
                             value={updatedType}
                             onChange={(value) => { setUpdatedType(value) }}
                             required>
-                            {types.map((t, i) => (
-                                <Option key={i} value={t}>{t}</Option>
+                            {types.map((type, i) => (
+                                <Option key={i} value={type.name}>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        {type.logo}
+                                        &nbsp; &nbsp;
+                                        {type.name}
+                                    </div>
+                                </Option>
                             ))}
                         </Select>
                         <Input
+                            addonBefore={
+                                <span style={{ paddingRight: '4px' }}>
+                                    <LinkOutlined />
+                                </span>
+                            }
                             type="url"
                             placeholder='Paste Link Here'
                             size="large"
