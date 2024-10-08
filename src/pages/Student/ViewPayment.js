@@ -39,9 +39,9 @@ const ViewPayment = () => {
     //total payment amount calculate
     const totalAmount = payment.reduce((sum, p) => sum + p.amount, 0);
 
-    // Function to generate invoice PDF
-    const generateInvoice = (payment) => {
-        const loadingToastId = toast.loading('Generating Invoice...');
+    // Function to generate receipt PDF
+    const generateReceipt = (payment) => {
+        const loadingToastId = toast.loading('Generating Receipt...');
 
         // Set page size to A5
         const doc = new jsPDF({
@@ -95,7 +95,7 @@ const ViewPayment = () => {
 
             doc.setFontSize(16);
             doc.setFont('helvetica', 'bold');
-            const title = 'Payment Invoice';
+            const title = 'Payment Receipt';
             const titleWidth = doc.getTextWidth(title);
             const titleX = (pageWidth - titleWidth) / 2; // Center text horizontally
             doc.text(title, titleX, 44);
@@ -166,7 +166,7 @@ const ViewPayment = () => {
                 doc.setFontSize(8); // Adjust font size for footer
                 doc.setTextColor(128, 128, 128); // Set text color to grey
                 const currentDateTime = dayjs().format('MMMM D, YYYY h:mm A');
-                const footerText = `This is a system generated Invoice | Generated on: ${currentDateTime}`;
+                const footerText = `This is a system generated receipt | Generated on: ${currentDateTime}`;
                 const footerWidth = doc.getTextWidth(footerText);
                 const footerX = (pageWidth - footerWidth) / 2; // Center text horizontally
                 const footerY = pageHeight - 5; // Adjust this value to position the footer correctly
@@ -174,7 +174,7 @@ const ViewPayment = () => {
 
                 const blob = doc.output('blob');
                 const url = URL.createObjectURL(blob);
-                toast.success("Invoice generated", { id: loadingToastId });
+                toast.success("Receipt generated", { id: loadingToastId });
                 const printWindow = window.open(url);
                 if (printWindow) {
                     printWindow.focus();
@@ -218,7 +218,7 @@ const ViewPayment = () => {
                                         <th scope="col">Method</th>
                                         <th scope="col">Trx ID</th>
                                         <th scope="col">Date</th>
-                                        <th scope="col">Invoice</th>
+                                        <th scope="col">Receipt</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -256,7 +256,7 @@ const ViewPayment = () => {
                                                         <td>{p.trxId}</td>
                                                         <td>{dayjs(p.paymentDate).format('MMM DD, YYYY')}</td>
                                                         <td>
-                                                            <button className="btn btn-secondary" onClick={() => generateInvoice(p)}>
+                                                            <button className="btn btn-secondary" onClick={() => generateReceipt(p)}>
                                                                 <i className="fa-solid fa-download"></i>
                                                             </button>
                                                         </td>

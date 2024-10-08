@@ -320,9 +320,9 @@ const SetPaymentStatus = () => {
         };
     }, []);
 
-    // Function to generate invoice PDF
-    const generateInvoice = (payment) => {
-        const loadingToastId = toast.loading('Generating Invoice...');
+    // Function to generate receipt PDF
+    const generateReceipt = (payment) => {
+        const loadingToastId = toast.loading('Generating Receipt...');
 
         // Set page size to A5
         const doc = new jsPDF({
@@ -375,7 +375,7 @@ const SetPaymentStatus = () => {
 
             doc.setFontSize(16);
             doc.setFont('helvetica', 'bold');
-            const title = 'Payment Invoice';
+            const title = 'Payment Receipt';
             const titleWidth = doc.getTextWidth(title);
             const titleX = (pageWidth - titleWidth) / 2; // Center text horizontally
             doc.text(title, titleX, 44);
@@ -445,7 +445,7 @@ const SetPaymentStatus = () => {
                 doc.setFontSize(8); // Adjust font size for footer
                 doc.setTextColor(128, 128, 128); // Set text color to grey
                 const currentDateTime = dayjs().format('MMMM D, YYYY h:mm A');
-                const footerText1 = `This is a system generated Invoice | Generated on: ${currentDateTime}`;
+                const footerText1 = `This is a system generated receipt | Generated on: ${currentDateTime}`;
                 const footerText2 = `Created by Admin | System Entry: ${dayjs(payment.createdAt).format('MMMM D, YYYY h:mm A')} / ${dayjs(payment.updatedAt).format('MMMM D, YYYY h:mm A')}`;
 
                 const footerWidth1 = doc.getTextWidth(footerText1);
@@ -463,7 +463,7 @@ const SetPaymentStatus = () => {
 
                 const blob = doc.output('blob');
                 const url = URL.createObjectURL(blob);
-                toast.success("Invoice generated", { id: loadingToastId });
+                toast.success("Receipt generated", { id: loadingToastId });
                 const printWindow = window.open(url);
                 if (printWindow) {
                     printWindow.focus();
@@ -662,7 +662,7 @@ const SetPaymentStatus = () => {
                                                 <th>Method</th>
                                                 <th>Trx ID</th>
                                                 <th>Date</th>
-                                                <th>Invoice</th>
+                                                <th>Receipt</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -729,7 +729,7 @@ const SetPaymentStatus = () => {
                                                         <td>{p.trxId}</td>
                                                         <td>{dayjs(p?.paymentDate).format('DD MMM YYYY')}</td>
                                                         <td className='text-center'>
-                                                            <button className="btn btn-secondary" onClick={() => generateInvoice(p)}>
+                                                            <button className="btn btn-secondary" onClick={() => generateReceipt(p)}>
                                                                 <i className="fa-solid fa-download"></i>
                                                             </button>
                                                         </td>
