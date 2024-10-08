@@ -153,6 +153,11 @@ const CreateGrade = () => {
                         <form className="p-3" onSubmit={handleCreate}>
                             <div>
                                 <Input
+                                    prefix={
+                                        <span>
+                                            <i className="fa-solid fa-graduation-cap" style={{ marginRight: "8px" }} />
+                                        </span>
+                                    }
                                     type="text"
                                     placeholder='Enter grade'
                                     size='large'
@@ -164,7 +169,7 @@ const CreateGrade = () => {
                             </div>
                             <div className="mt-3 text-center">
                                 <button type='submit' className="btn btn-warning fw-bold">
-                                    {spinnerLoading ? <Spinner /> : <span><i className="fa-solid fa-plus" />Create Grade</span>}
+                                    {spinnerLoading ? <Spinner /> : <span><i className="fa-solid fa-plus" /> Create Grade</span>}
                                 </button>
                             </div>
                         </form>
@@ -223,6 +228,11 @@ const CreateGrade = () => {
                         <form onSubmit={handleUpdate}>
                             <div className='mt-4'>
                                 <Input
+                                    addonBefore={
+                                        <span>
+                                            <i className="fa-solid fa-graduation-cap" style={{ marginRight: "8px" }} />
+                                        </span>
+                                    }
                                     type="text"
                                     placeholder='Updated Grade Name'
                                     className='mb-3'
