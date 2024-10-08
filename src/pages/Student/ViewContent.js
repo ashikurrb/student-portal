@@ -74,10 +74,9 @@ const ViewContent = () => {
                                                         <td>
                                                             {types.map((t) =>
                                                                 t.name === c.type ? (
-                                                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                                        {t.logo}
-                                                                        &nbsp;
-                                                                        {t.name}
+                                                                    <div>
+                                                                        <span> {t.logo}</span>
+                                                                        <span className='ms-1'> {t.name}</span>
                                                                     </div>
                                                                 ) : null
                                                             )}

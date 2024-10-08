@@ -306,10 +306,9 @@ const CreateContent = () => {
                                         required>
                                         {types.map((type, i) => (
                                             <Option key={i} value={type.name}>
-                                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                    {type.logo}
-                                                    &nbsp; &nbsp;
-                                                    {type.name}
+                                                <div>
+                                                    <span> {type.logo}</span>
+                                                    <span className='ms-1'> {type.name}</span>
                                                 </div>
                                             </Option>
                                         ))}
@@ -428,10 +427,9 @@ const CreateContent = () => {
                                                         <td>
                                                             {types.map((t) =>
                                                                 t.name === c.type ? (
-                                                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                                        {t.logo}
-                                                                        &nbsp;
-                                                                        {t.name}
+                                                                    <div>
+                                                                        <span> {t.logo}</span>
+                                                                        <span className='ms-1'> {t.name}</span>
                                                                     </div>
                                                                 ) : null
                                                             )}
@@ -501,10 +499,9 @@ const CreateContent = () => {
                             required>
                             {types.map((type, i) => (
                                 <Option key={i} value={type.name}>
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        {type.logo}
-                                        &nbsp; &nbsp;
-                                        {type.name}
+                                    <div>
+                                        <span> {type.logo}</span>
+                                        <span className='ms-1'> {type.name}</span>
                                     </div>
                                 </Option>
                             ))}
