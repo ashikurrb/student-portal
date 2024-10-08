@@ -125,7 +125,7 @@ const ViewPayment = () => {
             doc.autoTable({
                 startY: 100,
                 margin: { left: leftMargin, right: rightMargin },
-                head: [['Remark', 'Amount', 'Method', 'Trx ID / Receipt No']],
+                head: [['Remark', 'Amount', 'Method', 'Trx ID']],
                 body: [
                     [`${payment.remark}`, `TK. ${payment.amount}`, `${payment.method}`, `${payment.trxId}`]
                 ],

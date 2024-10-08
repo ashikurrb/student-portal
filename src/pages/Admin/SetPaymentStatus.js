@@ -185,6 +185,11 @@ const SetPaymentStatus = () => {
         setIsCreateModalVisible(false)
     }
 
+    //clear trx id field when grade or method changes.. 
+    useEffect(() => {
+        setTrxId('');
+    }, [method, grade]);
+
     //update payment status
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -404,7 +409,7 @@ const SetPaymentStatus = () => {
             doc.autoTable({
                 startY: 100,
                 margin: { left: leftMargin, right: rightMargin },
-                head: [['Remark', 'Amount', 'Method', 'Trx ID / Receipt No']],
+                head: [['Remark', 'Amount', 'Method', 'Trx ID']],
                 body: [
                     [`${payment.remark}`, `TK. ${payment.amount}`, `${payment.method}`, `${payment.trxId}`]
                 ],
@@ -553,6 +558,14 @@ const SetPaymentStatus = () => {
                                     </Select>
                                 </div>
                                 <div className="d-lg-flex">
+                                    <DatePicker
+                                        format={dateFormat}
+                                        size='large'
+                                        className='mb-3 me-2 w-100'
+                                        value={paymentDate}
+                                        onChange={(date) => setPaymentDate(date)}
+                                        required
+                                    />
                                     <Input
                                         type="text"
                                         placeholder='Remark'
@@ -561,6 +574,8 @@ const SetPaymentStatus = () => {
                                         value={remark}
                                         onChange={(e) => setRemark(e.target.value)} required
                                     />
+                                </div>
+                                <div className="d-lg-flex">
                                     <Input
                                         prefix="৳"
                                         type="number"
@@ -570,16 +585,6 @@ const SetPaymentStatus = () => {
                                         value={amount}
                                         onChange={(e) => setAmount(e.target.value)} required
                                     />
-                                    <DatePicker
-                                        format={dateFormat}
-                                        className='w-100 mb-3'
-                                        size='large'
-                                        value={paymentDate}
-                                        onChange={(date) => setPaymentDate(date)}
-                                        required
-                                    />
-                                </div>
-                                <div className="d-lg-flex">
                                     <Select
                                         placeholder="Select Method"
                                         size='large'
@@ -610,7 +615,7 @@ const SetPaymentStatus = () => {
                                             ) : null
                                         }
                                         type="text"
-                                        placeholder='Transaction ID / Receipt No'
+                                        placeholder='Transaction ID'
                                         size="large"
                                         className='mb-3 w-100'
                                         value={trxId}
@@ -736,7 +741,7 @@ const SetPaymentStatus = () => {
                                                         <td>
                                                             <div className='d-flex'>
                                                                 <button className='btn btn-primary mx-1' onClick={() => { openModal(p) }}>
-                                                                <i className="fa-solid fa-pen-to-square" /> Edit
+                                                                    <i className="fa-solid fa-pen-to-square" /> Edit
                                                                 </button>
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}>
                                                                     <i className="fa-solid fa-trash-can"></i> Delete
@@ -753,7 +758,7 @@ const SetPaymentStatus = () => {
                     </div>
                 </div>
             </div>
-            <Modal onCancel={() => setVisible(false)} open={visible} footer={null}>
+            <Modal width={650} onCancel={() => setVisible(false)} open={visible} footer={null}>
                 <h5 className='text-center'>Update Payment Status</h5>
                 <div className='text-center my-3'>
                     <span className="d-flex justify-content-center align-items-center">
@@ -777,15 +782,6 @@ const SetPaymentStatus = () => {
                             value={updatedRemark}
                             onChange={(e) => setUpdatedRemark(e.target.value)} required
                         />
-                        <Input
-                            prefix="৳"
-                            type="number"
-                            placeholder='Amount'
-                            size='large'
-                            className='mb-3 me-2 w-100'
-                            value={updatedAmount}
-                            onChange={(e) => setUpdatedAmount(e.target.value)} required
-                        />
                         <DatePicker
                             format={dateFormat}
                             value={updatedPaymentDate}
@@ -796,6 +792,15 @@ const SetPaymentStatus = () => {
                         />
                     </div>
                     <div className="mb-2 d-lg-flex">
+                        <Input
+                            prefix="৳"
+                            type="number"
+                            placeholder='Amount'
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={updatedAmount}
+                            onChange={(e) => setUpdatedAmount(e.target.value)} required
+                        />
                         <Select
                             placeholder="Select Method"
                             size='large'
@@ -818,7 +823,7 @@ const SetPaymentStatus = () => {
                         </Select>
                         <Input
                             type="text"
-                            placeholder='Transaction ID / Receipt No'
+                            placeholder='Transaction ID'
                             size='large'
                             className='mb-3 me-2 w-100'
                             value={updatedTrxId}

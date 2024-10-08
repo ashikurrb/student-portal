@@ -24,7 +24,7 @@ const CreateContent = () => {
         { name: "Doc", logo: <i className="fa-solid fa-file-word" /> },
         { name: "Slide", logo: <i className="fa-solid fa-file-powerpoint" /> },
         { name: "Spreadsheet", logo: <i className="fa-solid fa-file-excel" /> },
-        { name: "Video", logo: <i className="fa-solid fa-circle-play" /> },
+        { name: "Video", logo: <i className="fa-brands fa-youtube" /> },
         { name: "Audio", logo: <i className="fa-solid fa-volume-high" /> },
         { name: "Online Class", logo: <i className="fa-solid fa-video" /> },
     ];
