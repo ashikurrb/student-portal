@@ -156,7 +156,7 @@ const AdminDashboard = () => {
                                     <ul>
                                         <li>Total Orders: <u>{orders.length}</u></li>
                                         <Link to={getPendingOrderCount() > 0 ? '/dashboard/admin/order-list' : ''}>
-                                            <li className={getPendingOrderCount() > 0 ? 'text-danger' : 'text-dark'}>
+                                            <li className={getPendingOrderCount() > 0 ? 'text-danger fw-bold' : ''}>
                                                 Pending: <u>{getPendingOrderCount()}</u>
                                             </li>
                                         </Link>
@@ -175,21 +175,11 @@ const AdminDashboard = () => {
                                     <>
                                         <h6 className='text-center'>Student Count</h6>
                                         <List
-                                            dataSource={grades}
+                                            dataSource={grades.filter((g) => getStudentCountForGrade(g._id) > 0)}
                                             renderItem={(g) => {
-                                                const studentCount = getStudentCountForGrade(g._id);
                                                 return (
                                                     <List.Item key={g._id}>
-                                                        {g.name} -{" "}
-                                                        <span
-                                                            style={{
-                                                                fontWeight: studentCount > 0 ? "bold" : "normal",
-                                                                textDecoration: studentCount > 0 ? "underline" : "none",
-                                                            }}
-                                                        >
-                                                            {studentCount}
-                                                        </span>{" "}
-                                                        Students
+                                                        {g.name} - {getStudentCountForGrade(g._id)}
                                                     </List.Item>
                                                 );
                                             }}
