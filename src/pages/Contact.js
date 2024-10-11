@@ -4,7 +4,7 @@ import GoBackButton from '../components/GoBackButton';
 
 const Contact = () => {
     return (
-        <Layout title={"Contact Us - 5points Academy}>
+        <Layout title={"Contact Us - 5points Academy"}>
             <div className="container">
                 <div className="row">
                     <div className="d-flex align-items-center">
