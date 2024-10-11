@@ -5,6 +5,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { List } from 'antd';
 import Spinner from '../../components/Spinner';
+import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
@@ -88,6 +89,12 @@ const AdminDashboard = () => {
         return monthlyPayments.reduce((sum, p) => sum + p.amount, 0);
     };
 
+    // Get current month name
+    const getCurrentMonthName = () => {
+        const currentDate = new Date();
+        return currentDate.toLocaleString('default', { month: 'long' });
+    };
+
     //Get All Order
     const getOrderList = async () => {
         try {
@@ -97,6 +104,11 @@ const AdminDashboard = () => {
             console.log(error);
         }
     };
+
+    // Total sell
+    const totalSellAmount = orders
+        .filter((o) => o.status === 'Approved')
+        .reduce((sum, o) => sum + (o?.course?.price || 0), 0);
 
     //get pending order count
     const getPendingOrderCount = () => {
@@ -136,16 +148,21 @@ const AdminDashboard = () => {
 
                                 <div class="mb-3">
                                     <h5 class="py-1">Total Payment Received: {totalAmount} Tk</h5>
-                                    <h5 class="py-1">This Month Payment: <u>{getMonthlyPaymentTotal()}</u> Tk</h5>
+                                    <h5 class="py-1">{getCurrentMonthName()} Payment: <u>{getMonthlyPaymentTotal()}</u> Tk</h5>
                                 </div>
 
                                 <div>
                                     <h5 class="py-1">Orders Summary</h5>
-                                    <p>Total Orders: <u>{orders.length}</u></p>
-                                    <p className={getPendingOrderCount() > 0 ? 'text-danger' : 'text-dark'}>
-                                        Pending: <u>{getPendingOrderCount()}</u>
-                                    </p>
-                                    <p>Approved: <u>{getApprovedOrderCount()}</u></p>
+                                    <ul>
+                                        <li>Total Orders: <u>{orders.length}</u></li>
+                                        <Link to={getPendingOrderCount() > 0 ? '/dashboard/admin/order-list' : ''}>
+                                            <li className={getPendingOrderCount() > 0 ? 'text-danger' : 'text-dark'}>
+                                                Pending: <u>{getPendingOrderCount()}</u>
+                                            </li>
+                                        </Link>
+                                        <li>Approved: <u>{getApprovedOrderCount()}</u></li>
+                                        <li>Total Sell: <b><u>{totalSellAmount}</u></b> Tk</li>
+                                    </ul>
                                 </div>
                             </div>
 
