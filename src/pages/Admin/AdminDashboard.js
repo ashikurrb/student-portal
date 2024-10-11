@@ -11,6 +11,7 @@ const AdminDashboard = () => {
     const [grades, setGrades] = useState([]);
     const [courses, setCourses] = useState([]);
     const [payment, setPayment] = useState([]);
+    const [orders, setOrders] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
 
     // Get all grades
@@ -87,12 +88,33 @@ const AdminDashboard = () => {
         return monthlyPayments.reduce((sum, p) => sum + p.amount, 0);
     };
 
+    //Get All Order
+    const getOrderList = async () => {
+        try {
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/order/all-order`);
+            setOrders(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    //get pending order count
+    const getPendingOrderCount = () => {
+        return orders.filter((order) => order.status === 'Pending').length;
+    }
+
+    //get approved order count
+    const getApprovedOrderCount = () => {
+        return orders.filter((order) => order.status === 'Approved').length;
+    }
+
     // Fetch data on component mount
     useEffect(() => {
         getAllUsers();
         getAllGrades();
         getAllCourses();
         getAllPayment();
+        getOrderList();
     }, []);
 
     return (
@@ -105,38 +127,58 @@ const AdminDashboard = () => {
                     <div className="col-md-9">
                         <h4 className='text-center my-3'>Admin Dashboard</h4>
                         <div className="row m-2">
-                            <div className="col-md-6 p-3 card">
-                                <h5 className='py-1'>Total Grades: <u>{grades.length}</u></h5>
-                                <h5 className='py-1'>Total Students: <u>{users.length}</u></h5>
-                                <h5 className='py-1'>Total Courses: <u>{courses.length}</u></h5>
-                                <h5 className='py-1'>Total Payment Received: {totalAmount} Tk</h5>
-                                <h5 className='py-1'>This Month Payment: <u>{getMonthlyPaymentTotal()}</u> Tk</h5>
+                            <div class="col-md-6 p-3 card">
+                                <div class="mb-3">
+                                    <h5 class="py-1">Total Grades: <u>{grades.length}</u></h5>
+                                    <h5 class="py-1">Total Students: <u>{users.length}</u></h5>
+                                    <h5 class="py-1">Total Courses: <u>{courses.length}</u></h5>
+                                </div>
+
+                                <div class="mb-3">
+                                    <h5 class="py-1">Total Payment Received: {totalAmount} Tk</h5>
+                                    <h5 class="py-1">This Month Payment: <u>{getMonthlyPaymentTotal()}</u> Tk</h5>
+                                </div>
+
+                                <div>
+                                    <h5 class="py-1">Orders Summary</h5>
+                                    <p>Total Orders: <u>{orders.length}</u></p>
+                                    <p className={getPendingOrderCount() > 0 ? 'text-danger' : 'text-dark'}>
+                                        Pending: <u>{getPendingOrderCount()}</u>
+                                    </p>
+                                    <p>Approved: <u>{getApprovedOrderCount()}</u></p>
+                                </div>
                             </div>
-                            <div className="col-md-6 px-3 card">
+
+                            <div className="col-md-6 p-3 card">
                                 {spinnerLoading ? (
                                     <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
                                         <Spinner />
                                     </div>
                                 ) : (
-                                    <List>
-                                    {grades.map((g) => {
-                                      const studentCount = getStudentCountForGrade(g._id);
-                                      return (
-                                        <List.Item className="px-2" key={g._id}>
-                                          {g.name} -{" "}
-                                          <span
-                                            style={{
-                                              fontWeight: studentCount > 0 ? "bold" : "normal",
-                                              textDecoration: studentCount > 0 ? "underline" : "none",
+                                    <>
+                                        <h6 className='text-center'>Student Count</h6>
+                                        <List
+                                            dataSource={grades}
+                                            renderItem={(g) => {
+                                                const studentCount = getStudentCountForGrade(g._id);
+                                                return (
+                                                    <List.Item key={g._id}>
+                                                        {g.name} -{" "}
+                                                        <span
+                                                            style={{
+                                                                fontWeight: studentCount > 0 ? "bold" : "normal",
+                                                                textDecoration: studentCount > 0 ? "underline" : "none",
+                                                            }}
+                                                        >
+                                                            {studentCount}
+                                                        </span>{" "}
+                                                        Students
+                                                    </List.Item>
+                                                );
                                             }}
-                                          >
-                                            {studentCount}
-                                          </span>{" "}
-                                          Students
-                                        </List.Item>
-                                      );
-                                    })}
-                                  </List>
+                                            style={{ maxHeight: 400, overflow: 'auto' }}
+                                        />
+                                    </>
                                 )}
                             </div>
                         </div>
