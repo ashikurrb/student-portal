@@ -138,22 +138,26 @@ const AdminDashboard = () => {
                         <AdminMenu />
                     </div>
                     <div className="col-md-9">
-                        <h4 className='text-center my-3'>Admin Dashboard</h4>
+                        <h4 className='text-center my-3'>
+                            <i className="fa-solid fa-gauge" /> Dashboard
+                        </h4>
                         <div className="row m-2">
                             <div class="col-md-6 p-3 card">
-                                <div class="mb-3">
-                                    <h5 class="py-1">Total Grades: <u>{grades.length}</u></h5>
-                                    <h5 class="py-1">Total Students: <u>{users.length}</u></h5>
-                                    <h5 class="py-1">Total Courses: <u>{courses.length}</u></h5>
+                                <div>
+                                    <ul className="mb-3">
+                                        <li className="py-1 h5">Total Grades: <u>{grades.length}</u></li>
+                                        <li className="py-1 h5">Total Students: <u>{users.length}</u></li>
+                                        <li className="py-1 h5">Total Courses: <u>{courses.length}</u></li>
+                                    </ul>
+                                    <ul className="mb-3">
+                                        <li className="py-1 h5">Total Payment Received: {totalAmount} Tk</li>
+                                        <li className="py-1 h5">{getCurrentMonthName()} Payment: <u>{getMonthlyPaymentTotal()}</u> Tk</li>
+                                    </ul>
                                 </div>
 
-                                <div class="mb-3">
-                                    <h5 class="py-1">Total Payment Received: {totalAmount} Tk</h5>
-                                    <h5 class="py-1">{getCurrentMonthName()} Payment: <u>{getMonthlyPaymentTotal()}</u> Tk</h5>
-                                </div>
 
                                 <div>
-                                    <h5 class="py-1">Orders Summary</h5>
+                                    <h5 className="py-1">Orders Summary</h5>
                                     <ul>
                                         <li>Total Orders: <u>{orders.length}</u></li>
                                         <Link to={getPendingOrderCount() > 0 ? '/dashboard/admin/order-list' : ''}>
@@ -179,22 +183,18 @@ const AdminDashboard = () => {
                                     </div>
                                 ) : (
                                     <>
-                                        <h6 className='text-center'>Student Count</h6>
-                                        <List
-                                            dataSource={grades.filter((g) => getStudentCountForGrade(g._id) > 0)}
-                                            renderItem={(g, i) => {
-                                                return (
-                                                    <List.Item key={g._id}>
-                                                        <b> {i + 1}. </b>
-                                                        {g.name}:&nbsp;
-                                                        <span className='badge text-bg-dark'>
-                                                            {getStudentCountForGrade(g._id)}
-                                                        </span>
-                                                    </List.Item>
-                                                );
-                                            }}
-                                            style={{ maxHeight: 400, overflow: 'auto' }}
-                                        />
+                                        <h5 className='text-center'>Student Count</h5>
+                                        <ol style={{ maxHeight: 400, overflow: 'auto', listStyleType: 'decimal', padding: 0 }}>
+                                            {grades.filter((g) => getStudentCountForGrade(g._id) > 0).map((g, i) => (
+                                                <li key={g._id}>
+                                                    <b> {i + 1}. </b> {g.name}: &nbsp;
+                                                    <span className='badge text-bg-dark'>
+                                                        {getStudentCountForGrade(g._id)}
+                                                    </span>
+                                                    <hr />
+                                                </li>
+                                            ))}
+                                        </ol>
                                     </>
                                 )}
                             </div>
