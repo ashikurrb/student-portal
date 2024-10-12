@@ -24,11 +24,10 @@ const AdminDashboard = () => {
                 setGrades(data?.grade);
                 setSpinnerLoading(false);
             } else {
-                toast.error(data.message);
+                toast.error("Error! Please reload the page");
             }
         } catch (error) {
             console.log(error);
-            toast.error('Error fetching Grades');
         }
     };
 
@@ -39,7 +38,6 @@ const AdminDashboard = () => {
             setUsers(data);
         } catch (error) {
             console.log(error);
-            toast.error('Error fetching Users');
         }
     };
 
@@ -50,7 +48,6 @@ const AdminDashboard = () => {
             setCourses(data);
         } catch (error) {
             console.log(error);
-            toast.error("Error fetching all courses");
         }
     };
 
@@ -61,7 +58,6 @@ const AdminDashboard = () => {
             setPayment(data);
         } catch (error) {
             console.log(error);
-            toast.error("Error fetching Payments");
         }
     };
 
@@ -120,6 +116,11 @@ const AdminDashboard = () => {
         return orders.filter((order) => order.status === 'Approved').length;
     }
 
+    //get canceled order count
+    const getCanceledOrderCount = () => {
+        return orders.filter((order) => order.status === 'Canceled').length;
+    }
+
     // Fetch data on component mount
     useEffect(() => {
         getAllUsers();
@@ -156,11 +157,16 @@ const AdminDashboard = () => {
                                     <ul>
                                         <li>Total Orders: <u>{orders.length}</u></li>
                                         <Link to={getPendingOrderCount() > 0 ? '/dashboard/admin/order-list' : ''}>
-                                            <li className={getPendingOrderCount() > 0 ? 'text-danger fw-bold' : ''}>
-                                                Pending: <u>{getPendingOrderCount()}</u>
-                                            </li>
+                                            {
+                                                getPendingOrderCount() > 0 &&
+                                                <li> <span className='text-danger fw-bold fs-5'>
+                                                    Pending: <u>{getPendingOrderCount()}</u>
+                                                </span>
+                                                </li>
+                                            }
                                         </Link>
-                                        <li>Approved: <u>{getApprovedOrderCount()}</u></li>
+                                        <li className='text-info'>Canceled: <u>{getCanceledOrderCount()}</u></li>
+                                        <li className='text-success'>Approved: <u>{getApprovedOrderCount()}</u></li>
                                         <li>Total Sell: <b><u>{totalSellAmount}</u></b> Tk</li>
                                     </ul>
                                 </div>
@@ -174,17 +180,13 @@ const AdminDashboard = () => {
                                 ) : (
                                     <>
                                         <h6 className='text-center'>Student Count</h6>
-                                        <List
-                                            dataSource={grades.filter((g) => getStudentCountForGrade(g._id) > 0)}
-                                            renderItem={(g) => {
-                                                return (
-                                                    <List.Item key={g._id}>
-                                                        {g.name} - {getStudentCountForGrade(g._id)}
-                                                    </List.Item>
-                                                );
-                                            }}
-                                            style={{ maxHeight: 400, overflow: 'auto' }}
-                                        />
+                                        <ol style={{ maxHeight: 400, overflow: 'auto', listStyleType: 'decimal', padding: 0 }}>
+                                            {grades.filter((g) => getStudentCountForGrade(g._id) > 0).map((g, i) => (
+                                                <li key={g._id}>
+                                                    {i+1}. {g.name}: {getStudentCountForGrade(g._id)}
+                                                </li>
+                                            ))}
+                                        </ol>
                                     </>
                                 )}
                             </div>
