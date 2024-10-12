@@ -180,13 +180,17 @@ const AdminDashboard = () => {
                                 ) : (
                                     <>
                                         <h6 className='text-center'>Student Count</h6>
-                                        <ol style={{ maxHeight: 400, overflow: 'auto', listStyleType: 'decimal', padding: 0 }}>
-                                            {grades.filter((g) => getStudentCountForGrade(g._id) > 0).map((g, i) => (
-                                                <li key={g._id}>
-                                                    {i+1}. {g.name}: {getStudentCountForGrade(g._id)}
-                                                </li>
-                                            ))}
-                                        </ol>
+                                        <List
+                                            dataSource={grades.filter((g) => getStudentCountForGrade(g._id) > 0)}
+                                            renderItem={(g, i) => {
+                                                return (
+                                                    <List.Item key={g._id}>
+                                                        {i+1}. {g.name}: {getStudentCountForGrade(g._id)}
+                                                    </List.Item>
+                                                );
+                                            }}
+                                            style={{ maxHeight: 400, overflow: 'auto' }}
+                                        /> 
                                     </>
                                 )}
                             </div>
