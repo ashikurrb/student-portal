@@ -185,12 +185,16 @@ const AdminDashboard = () => {
                                             renderItem={(g, i) => {
                                                 return (
                                                     <List.Item key={g._id}>
-                                                        {i+1}. {g.name}: {getStudentCountForGrade(g._id)}
+                                                        <b> {i + 1}. </b>
+                                                        {g.name}:&nbsp;
+                                                        <span className='badge text-bg-dark'>
+                                                            {getStudentCountForGrade(g._id)}
+                                                        </span>
                                                     </List.Item>
                                                 );
                                             }}
                                             style={{ maxHeight: 400, overflow: 'auto' }}
-                                        /> 
+                                        />
                                     </>
                                 )}
                             </div>
