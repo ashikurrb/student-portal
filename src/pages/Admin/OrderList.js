@@ -141,6 +141,27 @@ const OrderList = () => {
         setVisible(true);
     };
 
+    const handlePrint = () => {
+        const content = document.getElementById('printable-content').innerHTML;
+        const printWindow = window.open('', '_blank', 'width=800,height=600');
+        printWindow.document.write(`
+            <html>
+                <head>
+                    <title>Print</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        .card { border: none; }
+                        .badge { padding: 5px 10px; border-radius: 5px; }
+                    </style>
+                </head>
+                <body>${content}</body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+    };
+
+
     return (
         <Layout title={"Admin - Orders List"}>
             <div className="container-fluid mt-3 p-3">
@@ -309,22 +330,22 @@ const OrderList = () => {
             <Modal style={{ top: 30 }} onCancel={() => setVisible(false)} open={visible} footer={null}>
                 {modalOrder && (
                     <>
-                        <h5 className='text-center mb-3'>Course Details</h5>
-                        <div className="row">
+                        <h5 className="text-center mb-3">Course Details</h5>
+                        <div className="row" id="printable-content">
                             <div className="col-md-12">
                                 <div className="card">
                                     <div className="card-body">
                                         <h4 className="card-title">{modalOrder?.course?.title}</h4>
-                                        <p>Grade: <b>{modalOrder?.course?.grade?.name}</b></p>
-                                        <p>Class Start: <b>{dayjs(modalOrder?.course?.dateRange).format("MMM DD, YYYY")}</b></p>
+                                        <p>Grade: {modalOrder?.course?.grade?.name}</p>
+                                        <p>Class Start: {dayjs(modalOrder?.course?.dateRange).format("MMM DD, YYYY")}</p>
                                         <p className="card-text">
-                                            Price: <span className='fw-bold'>৳</span> {modalOrder?.course?.price}
+                                            Price: <span className="fw-bold">৳</span> {modalOrder?.course?.price}
                                         </p>
                                         <p className="card-text">
                                             Payment Method:
                                             {methods.map((m) =>
                                                 m.name === modalOrder.method ? (
-                                                    <div style={{ display: 'inline-flex', alignItems: 'center' }} key={m.name}>
+                                                    <div style={{ display: "inline-flex", alignItems: "center" }} key={m.name}>
                                                         <img
                                                             src={m.logo}
                                                             alt={m.name}
@@ -336,31 +357,46 @@ const OrderList = () => {
                                             )}
                                         </p>
 
-                                        <p className="card-text">Order Status: &nbsp;
-                                            {modalOrder.status === 'Pending' ? (
+                                        <p className="card-text">
+                                            Order Status: &nbsp;
+                                            {modalOrder.status === "Pending" ? (
                                                 <span className="badge bg-warning text-dark">{modalOrder.status}</span>
-                                            ) : modalOrder.status === 'Approved' ? (
+                                            ) : modalOrder.status === "Approved" ? (
                                                 <span className="badge bg-success">{modalOrder.status}</span>
-                                            ) : modalOrder.status === 'Canceled' ? (
+                                            ) : modalOrder.status === "Canceled" ? (
                                                 <span className="badge bg-danger">{modalOrder.status}</span>
                                             ) : null}
                                         </p>
-                                        <p className="card-text">Transaction ID: {modalOrder.trxId}</p>
+                                        <p className="card-text">
+                                            Transaction ID: <span className="text-primary fw-bold">{modalOrder.trxId}</span>
+                                        </p>
                                         <p className="card-text">Account Number: {modalOrder.accNumber}</p>
-                                        <p className="card-text">Ordered on: {dayjs(modalOrder.createdAt).format('MMM DD, YYYY  h:mm:ss A')}</p>
-                                        <p className="card-text">Updated: {dayjs(modalOrder.updatedAt).format('MMM DD, YYYY h:mm:ss A')}</p>
-                                        <p className="card-text">Buyer: &nbsp;
+                                        <p className="card-text">
+                                            Ordered on: <b>{dayjs(modalOrder.createdAt).format("MMM DD, YYYY  h:mm:ss A")}</b>
+                                        </p>
+                                        <p className="card-text">
+                                            Updated: <b>{dayjs(modalOrder.updatedAt).format("MMM DD, YYYY h:mm:ss A")}</b>
+                                        </p>
+                                        <p className="card-text">
+                                            Buyer: &nbsp;
                                             <b>
-                                                {modalOrder?.buyer?.name} ({modalOrder?.buyer?.grade?.name}) - {modalOrder?.buyer?.phone}
+                                                {modalOrder?.buyer?.name} ({modalOrder?.buyer?.grade?.name}) -{" "}
+                                                {modalOrder?.buyer?.phone}
                                             </b>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div className="text-end">
+                            <button className='btn' onClick={handlePrint}>
+                                🖨️ Print
+                            </button>
+                        </div>
                     </>
                 )}
             </Modal>
+
         </Layout>
     );
 };
