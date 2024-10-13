@@ -164,7 +164,7 @@ const AdminDashboard = () => {
                                             {
                                                 getPendingOrderCount() > 0 &&
                                                 <li> <span className='text-danger fw-bold fs-5'>
-                                                    Pending: <u>{getPendingOrderCount()}</u>
+                                                    Pending: <span className='badge text-bg-danger'>{getPendingOrderCount()}</span>
                                                 </span>
                                                 </li>
                                             }

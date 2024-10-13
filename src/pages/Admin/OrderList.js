@@ -388,7 +388,7 @@ const OrderList = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="text-end">
+                        <div className="text-end mt-2">
                             <button className='btn' onClick={handlePrint}>
                                 🖨️ Print
                             </button>
