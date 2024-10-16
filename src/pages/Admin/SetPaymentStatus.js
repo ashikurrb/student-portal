@@ -348,7 +348,7 @@ const SetPaymentStatus = () => {
             const imgHeight = (imgWidth * logo.height) / logo.width; // Maintain aspect ratio
 
             const imgX = (pageWidth - imgWidth) / 2; // Center horizontally
-            const imgY = (pageHeight - imgHeight) / 2; // Center vertically
+            const imgY = (pageHeight - imgHeight) / 2.2; // Center vertically
 
             // Add the watermark image with low opacity to simulate blur
             doc.addImage(logo, 'PNG', imgX, imgY, imgWidth, imgHeight, '', 'NONE');
