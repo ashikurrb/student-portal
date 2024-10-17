@@ -74,6 +74,7 @@ const OrderList = () => {
 
     // Filter order based on search query
     const filteredOrder = orders.filter(o =>
+        o?.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
         o?.buyer?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         o?.course?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         o?.accNumber?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -268,7 +269,7 @@ const OrderList = () => {
                                                                         loading={statusUpdateLoading}
                                                                         size='large'
                                                                         className='mb-3 me-2'
-                                                                        defaultValue={o?.status}
+                                                                        value={o?.status}
                                                                         onChange={(value) => handleChange(o._id, value)}
                                                                         required>
                                                                         {statuses.map((s, i) => (

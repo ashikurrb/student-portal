@@ -245,6 +245,7 @@ const SetPaymentStatus = () => {
 
     // Filter content based on search query
     const filteredPayment = payment.filter(p =>
+        dayjs(p.paymentDate).format('DD MMMM YYYY').toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.remark.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.trxId.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.method.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -732,7 +733,7 @@ const SetPaymentStatus = () => {
                                                             )}
                                                         </td>
                                                         <td>{p.trxId}</td>
-                                                        <td>{dayjs(p?.paymentDate).format('DD MMM YYYY')}</td>
+                                                        <td>{dayjs(p?.paymentDate).format('DD MMMM YYYY')}</td>
                                                         <td className='text-center'>
                                                             <button className="btn btn-secondary" onClick={() => generateReceipt(p)}>
                                                                 <i className="fa-solid fa-download"></i>
