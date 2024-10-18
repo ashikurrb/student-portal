@@ -151,7 +151,7 @@ const CourseDetails = () => {
                                         <div className="card-body">
                                             <h1>{course?.title}</h1>
                                             <h6>
-                                                <Link to={`/view-course/${course?.grade?.slug}`}>
+                                                <Link to={`/view-courses/${course?.grade?.slug}`}>
                                                     Grade: <b>{course?.grade?.name}</b>
                                                 </Link>
                                             </h6>
@@ -219,7 +219,7 @@ const CourseDetails = () => {
                                         <h5><span className='fw-bold'>৳</span>{c?.price}</h5>
                                         <button
                                             className="btn btn-primary w-100"
-                                            onClick={() => navigate(`/view-course/${c?.grade?.slug}/${c?.slug}`)}>
+                                            onClick={() => navigate(`/view-courses/${c?.grade?.slug}/${c?.slug}`)}>
                                             <b>Details</b>
                                         </button>
                                     </div>

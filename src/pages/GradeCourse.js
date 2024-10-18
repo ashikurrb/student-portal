@@ -73,7 +73,7 @@ const GradeCourse = () => {
                                                 <h5><span className='fw-bold'>৳</span>{c.price}</h5>
                                                 <button
                                                     className="btn btn-primary w-100"
-                                                    onClick={() => navigate(`/view-course/${grade.slug}/${c.slug}`)}>
+                                                    onClick={() => navigate(`/view-courses/${grade.slug}/${c.slug}`)}>
                                                     <b>Details</b>
                                                 </button>
                                             </div>

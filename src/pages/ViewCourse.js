@@ -53,7 +53,7 @@ const ViewCourse = () => {
                                 {grades.map(g => (
                                     (g.name !== "Administration" || auth?.user?.role === 1) && (
                                         <div className="col-md-2 card grade-btn border-dark p-3 m-2" key={g._id}>
-                                            <Link className='grade-link' to={`/view-course/${g.slug}`}>{g.name} </Link>
+                                            <Link className='grade-link' to={`/view-courses/${g.slug}`}>{g.name} </Link>
                                         </div>
                                     )
                                 ))}

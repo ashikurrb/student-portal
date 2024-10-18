@@ -37,9 +37,9 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
-        <Route path='/view-course' element={<ViewCourse />} />
-        <Route path='/view-course/:slug' element={<GradeCourse />} />
-        <Route path='/view-course/:slug/:slug' element={<CourseDetails />} />
+        <Route path='/view-courses' element={<ViewCourse />} />
+        <Route path='/view-courses/:slug' element={<GradeCourse />} />
+        <Route path='/view-courses/:slug/:slug' element={<CourseDetails />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
 

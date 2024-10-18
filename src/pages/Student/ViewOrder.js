@@ -75,7 +75,7 @@ const ViewOrder = () => {
                                                             No Orders Found.
                                                             <br />
                                                             <p className='mt-3'>
-                                                                Visit <Link to={"/view-course"}><u>Courses</u></Link> to order.
+                                                                Visit <Link to={"/view-courses"}><u>Courses</u></Link> to order.
                                                             </p>
                                                         </h3>
                                                     </div>
