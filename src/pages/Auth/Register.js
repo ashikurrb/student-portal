@@ -80,7 +80,7 @@ const Register = () => {
                         </div>
                         <div className="col-md-6 p-3">
                             <form className='m-lg-5' onSubmit={handleSubmit}>
-                                <h4 className="title"><i className="fa-solid fa-user-plus"></i> &nbsp; REGISTER FORM</h4>
+                                <h4 className="title"><i className="fa-solid fa-user-plus"></i> &nbsp; REGISTRATION FORM</h4>
                                 <div className="mb-3">
                                     <Input
                                         prefix={
