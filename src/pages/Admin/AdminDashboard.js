@@ -156,6 +156,7 @@ const AdminDashboard = () => {
         getAllCourses();
         getAllPayment();
         getOrderList();
+        getFailedRegistration();
     }, []);
 
     useEffect(() => {
@@ -240,35 +241,37 @@ const AdminDashboard = () => {
                     </div>
                 </div>
             </div>
-            {failedRegistration.length > 0 && (
-                <Modal style={{ top: 30 }} onCancel={() => setVisible(false)} open={visible} footer={null}>
-                    <h5 className='text-center mb-3'>Failed Registration List</h5>
-                    <table className='table'>
-                        <thead className='table-dark'>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Tried At</th>
-                                <th scope="col">Action</th>
+            <Modal
+                style={{ top: 30 }}
+                onCancel={() => setVisible(false)}
+                open={visible && failedRegistration.length > 0}
+                footer={null}>
+                <h5 className='text-center mb-3'>Failed Registration List</h5>
+                <table className='table'>
+                    <thead className='table-dark'>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Tried At</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {failedRegistration.map((f, i) => (
+                            <tr key={i}>
+                                <th>{i + 1}</th>
+                                <td>{f.email}</td>
+                                <td>{dayjs(f.createdAt).format('DD-MMM-YYYY hh:mm A')}</td>
+                                <td>
+                                    <button className="btn btn-danger fw-bold ms-1" onClick={() => deleteFailedRegistration(f._id)}>
+                                        <i className="fa-solid fa-trash-can" />
+                                    </button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {failedRegistration.map((f, i) => (
-                                <tr key={i}>
-                                    <th>{i + 1}</th>
-                                    <td>{f.email}</td>
-                                    <td>{dayjs(f.createdAt).format('DD-MMM-YYYY hh:mm A')}</td>
-                                    <td>
-                                        <button className="btn btn-danger fw-bold ms-1" onClick={() => deleteFailedRegistration(f._id)}>
-                                            <i className="fa-solid fa-trash-can" />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </Modal>
-            )}
+                        ))}
+                    </tbody>
+                </table>
+            </Modal>
         </Layout>
     );
 };
