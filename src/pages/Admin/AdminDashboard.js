@@ -44,6 +44,21 @@ const AdminDashboard = () => {
         }
     };
 
+    // Get failed registration
+    const deleteFailedRegistration = async (uId) => {
+        let answer = window.confirm("Are you sure want to delete?")
+        if (!answer) return;
+        try {
+            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/auth/delete-failed/${uId}`);
+            if (data?.message) {
+                toast.success(data?.message);
+                getFailedRegistration();
+            }
+        } catch (error) {
+            toast.error('Something wrong while Delete');
+        }
+    };
+
     // Get all users
     const getAllUsers = async () => {
         try {
@@ -141,8 +156,11 @@ const AdminDashboard = () => {
         getAllCourses();
         getAllPayment();
         getOrderList();
-        getFailedRegistration();
     }, []);
+
+    useEffect(() => {
+        getFailedRegistration();
+    }, [failedRegistration]);
 
     return (
         <Layout title={"Dashboard - Admin Panel"}>
@@ -222,28 +240,35 @@ const AdminDashboard = () => {
                     </div>
                 </div>
             </div>
-            <Modal style={{ top: 30 }} onCancel={() => setVisible(false)} open={visible} footer={null}>
-                <h5 className='text-center mb-3'>Failed Registration List</h5>
-                <table className='table'>
-                    <thead className='table-dark'>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Tried At</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {failedRegistration.map((f, i) => (
-                            <tr key={i}>
-                                <td>{i + 1}</td>
-                                <td>{f.email}</td>
-                                <td>{dayjs(f.createdAt).format('DD-MMM-YYYY hh:mm A')}</td>
+            {failedRegistration.length > 0 && (
+                <Modal style={{ top: 30 }} onCancel={() => setVisible(false)} open={visible} footer={null}>
+                    <h5 className='text-center mb-3'>Failed Registration List</h5>
+                    <table className='table'>
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Tried At</th>
+                                <th scope="col">Action</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-
-            </Modal>
+                        </thead>
+                        <tbody>
+                            {failedRegistration.map((f, i) => (
+                                <tr key={i}>
+                                    <th>{i + 1}</th>
+                                    <td>{f.email}</td>
+                                    <td>{dayjs(f.createdAt).format('DD-MMM-YYYY hh:mm A')}</td>
+                                    <td>
+                                        <button className="btn btn-danger fw-bold ms-1" onClick={() => deleteFailedRegistration(f._id)}>
+                                            <i className="fa-solid fa-trash-can" />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </Modal>
+            )}
         </Layout>
     );
 };
