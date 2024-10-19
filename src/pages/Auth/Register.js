@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/auth';
-import { BookOutlined, LockOutlined, MailOutlined, PhoneOutlined, QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined, PhoneOutlined, QuestionCircleOutlined, UserOutlined, XFilled, BarcodeOutlined } from '@ant-design/icons';
 import { Input, Select } from 'antd';
 const { Option } = Select;
 
@@ -17,6 +17,7 @@ const Register = () => {
     const [grade, setGrade] = useState("");
     const [answer, setAnswer] = useState("");
     const [password, setPassword] = useState("");
+    const [otp, setOtp] = useState("");
     const [auth] = useAuth();
     const navigate = useNavigate();
 
@@ -36,26 +37,20 @@ const Register = () => {
         getAllGrades();
     }, [])
 
-
-    //form submission
-    const handleSubmit = async (e) => {
+    //send otp
+    const handleOtp = async (e) => {
         e.preventDefault();
-        const loadingToastId = toast.loading('Registering you...');
+        const loadingToastId = toast.loading('Sending OTP...');
         // Create a FormData object
-        const registerData = new FormData();
-        registerData.append('name', name);
-        registerData.append('email', email);
-        registerData.append('phone', phone);
-        registerData.append('grade', grade);
-        registerData.append('password', password);
-        registerData.append('answer', answer);
+        const verifyEmailData = new FormData();
+        verifyEmailData.append('name', name);
+        verifyEmailData.append('email', email);
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, registerData);
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/verify-otp`, verifyEmailData);
 
             if (res && res.data.success) {
                 // Show success toast
                 toast.success(res.data && res.data.message, { id: loadingToastId });
-                navigate("/login");
             } else {
                 toast.error(res.data.message, { id: loadingToastId });
             }
@@ -65,6 +60,37 @@ const Register = () => {
         }
     }
 
+    //form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const loadingToastId = toast.loading('Registering you...');
+    
+        const registerData = new FormData();
+        registerData.append('name', name);
+        registerData.append('email', email);
+        registerData.append('phone', phone);
+        registerData.append('grade', grade);
+        registerData.append('password', password);
+        registerData.append('answer', answer);
+        registerData.append('otp', otp);
+    
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, registerData);
+    
+            if (res && res.data.success) {
+                toast.success(res.data.message, { id: loadingToastId });
+                navigate("/login");
+            } else {
+                toast.error(res.data.message, { id: loadingToastId });
+            }
+        } catch (error) {
+            console.log(error);
+            // Handle specific backend error messages
+            const errorMessage = error.response?.data?.message || "An unexpected error occurred";
+            toast.error(errorMessage, { id: loadingToastId });
+        }
+    };
+    
     //redirect based on user auth
     if (auth.token) {
         auth.user.role === 1 ? navigate('/dashboard/admin') : navigate('/dashboard/student');
@@ -188,6 +214,29 @@ const Register = () => {
                                         className="w-100"
                                         size="large"
                                         placeholder='Security Answer'
+                                        minLength={3}
+                                        maxLength={10}
+                                        allowClear
+                                        required />
+                                </div>
+                                <div className="mb-3">
+                                    <Input
+                                        prefix={
+                                            <span style={{ paddingRight: '4px' }}>
+                                                <BarcodeOutlined />
+                                            </span>
+                                        }
+                                        suffix={
+                                            <span onClick={handleOtp} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                                <XFilled />
+                                            </span>
+                                        }
+                                        type="text"
+                                        value={otp}
+                                        onChange={(e) => setOtp(e.target.value)}
+                                        className="w-100"
+                                        size="large"
+                                        placeholder='OTP'
                                         minLength={3}
                                         maxLength={10}
                                         allowClear
