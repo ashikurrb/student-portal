@@ -3,17 +3,20 @@ import Layout from '../../components/Layouts/Layout';
 import AdminMenu from './AdminMenu';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { List } from 'antd';
 import Spinner from '../../components/Spinner';
 import { Link } from 'react-router-dom';
+import { Modal } from 'antd';
+import dayjs from 'dayjs';
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
+    const [failedRegistration, setFailedRegistration] = useState([]);
     const [grades, setGrades] = useState([]);
     const [courses, setCourses] = useState([]);
     const [payment, setPayment] = useState([]);
     const [orders, setOrders] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
+    const [visible, setVisible] = useState(false);
 
     // Get all grades
     const getAllGrades = async () => {
@@ -26,6 +29,16 @@ const AdminDashboard = () => {
             } else {
                 toast.error("Error! Please reload the page");
             }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    // Get failed registration
+    const getFailedRegistration = async () => {
+        try {
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/failed-user`);
+            setFailedRegistration(data);
         } catch (error) {
             console.log(error);
         }
@@ -128,6 +141,7 @@ const AdminDashboard = () => {
         getAllCourses();
         getAllPayment();
         getOrderList();
+        getFailedRegistration();
     }, []);
 
     return (
@@ -147,6 +161,12 @@ const AdminDashboard = () => {
                                     <ul className="mb-3">
                                         <li className="py-1 h5">Total Grades: <u>{grades.length}</u></li>
                                         <li className="py-1 h5">Total Students: <u>{users.length}</u></li>
+                                        {
+                                            failedRegistration.length > 0 ?
+                                                <li onClick={() => setVisible(true)} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                                                    className="py-1 h5 text-danger">Total Failed Registration:&nbsp;
+                                                    <u>{failedRegistration.length}</u>
+                                                </li> : ''}
                                         <li className="py-1 h5">Total Courses: <u>{courses.length}</u></li>
                                     </ul>
                                     <ul className="mb-3">
@@ -202,6 +222,28 @@ const AdminDashboard = () => {
                     </div>
                 </div>
             </div>
+            <Modal style={{ top: 30 }} onCancel={() => setVisible(false)} open={visible} footer={null}>
+                <h5 className='text-center mb-3'>Failed Registration List</h5>
+                <table className='table'>
+                    <thead className='table-dark'>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Tried At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {failedRegistration.map((f, i) => (
+                            <tr key={i}>
+                                <td>{i + 1}</td>
+                                <td>{f.email}</td>
+                                <td>{dayjs(f.createdAt).format('DD-MMM-YYYY hh:mm A')}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+            </Modal>
         </Layout>
     );
 };
