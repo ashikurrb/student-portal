@@ -5,8 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/auth';
-import { LockOutlined, MailOutlined, PhoneOutlined, QuestionCircleOutlined, UserOutlined, XFilled, BarcodeOutlined } from '@ant-design/icons';
-import { Input, Select } from 'antd';
+import { LockOutlined, MailOutlined, PhoneOutlined, QuestionCircleOutlined, UserOutlined, BarcodeOutlined } from '@ant-design/icons';
+import { Input, Select, Spin } from 'antd';
 const { Option } = Select;
 
 const Register = () => {
@@ -18,6 +18,7 @@ const Register = () => {
     const [answer, setAnswer] = useState("");
     const [password, setPassword] = useState("");
     const [otp, setOtp] = useState("");
+    const [otpLoading, setOtpLoading] = useState(false);
     const [auth] = useAuth();
     const navigate = useNavigate();
 
@@ -41,13 +42,13 @@ const Register = () => {
     const handleOtp = async (e) => {
         e.preventDefault();
         const loadingToastId = toast.loading('Sending OTP...');
+        setOtpLoading(true);
         // Create a FormData object
         const verifyEmailData = new FormData();
         verifyEmailData.append('name', name);
         verifyEmailData.append('email', email);
         try {
             const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/verify-otp`, verifyEmailData);
-
             if (res && res.data.success) {
                 // Show success toast
                 toast.success(res.data && res.data.message, { id: loadingToastId });
@@ -57,6 +58,8 @@ const Register = () => {
         } catch (error) {
             console.log(error);
             toast.error(error.message, { id: loadingToastId });
+        }finally {
+            setOtpLoading(false);
         }
     }
 
@@ -226,9 +229,10 @@ const Register = () => {
                                                 <BarcodeOutlined />
                                             </span>
                                         }
-                                        suffix={
-                                            <span onClick={handleOtp} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                                                <XFilled />
+                                        addonAfter={
+                                            otpLoading ? <Spin size="small" />
+                                            : <span onClick={handleOtp} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                              Get OTP
                                             </span>
                                         }
                                         type="text"
