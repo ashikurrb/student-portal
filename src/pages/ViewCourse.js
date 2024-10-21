@@ -41,7 +41,7 @@ const ViewCourse = () => {
                             <h2 className="text-center mt-4 me-5">
                                 View Courses
                             </h2>
-                            <p className="form-text text-center me-5">Click on grade to view and buy course</p>
+                            <p className="fw-bold form-text text-center me-5">Click on grade to find and enroll courses</p>
                         </div>
                     </div>
                     {spinnerLoading ?
