@@ -206,15 +206,17 @@ const CreateGrade = () => {
                                                     <td className='fs-5 fw-bold'>{g.name}</td>
                                                     <td>{dayjs(g?.createdAt).fromNow()}</td>
                                                     <td>{dayjs(g?.updatedAt).fromNow()}</td>
-                                                    <td className='d-flex'>
-                                                        <button className='btn btn-primary mx-1' onClick={() => { openModal(g) }}
-                                                            disabled={g.name === "Administration"}>
-                                                            <i className="fa-solid fa-pen-to-square" /> Edit
-                                                        </button>
-                                                        <button className='btn btn-danger mx-1' onClick={() => { handleDelete(g._id) }}
-                                                            disabled={g.name === "Administration"}>
-                                                            <i className="fa-solid fa-trash-can" /> Delete
-                                                        </button>
+                                                    <td>
+                                                        <div className='d-flex'>
+                                                            <button className='btn btn-primary mx-1' onClick={() => { openModal(g) }}
+                                                                disabled={g.name === "Administration"}>
+                                                                <i className="fa-solid fa-pen-to-square" /> Edit
+                                                            </button>
+                                                            <button className='btn btn-danger mx-1' onClick={() => { handleDelete(g._id) }}
+                                                                disabled={g.name === "Administration"}>
+                                                                <i className="fa-solid fa-trash-can" /> Delete
+                                                            </button>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             ))}

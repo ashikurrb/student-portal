@@ -15,6 +15,9 @@ const AllUsers = () => {
     const [users, setUsers] = useState([]);
     const [grades, setGrades] = useState([]);
     const [updatedGrade, setUpdatedGrade] = useState('');
+    const [statuses] = useState(["Enabled", "Disabled"]);
+    const [updatedStatus, setUpdatedStatus] = useState("");
+    const [statusUpdateLoading, setStatusUpdateLoading] = useState(false);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
     const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -80,6 +83,21 @@ const AllUsers = () => {
             setUpdateSpinnerLoading(false);
         }
     };
+
+    //user status update
+    const handleStatusUpdate = async (sId, value) => {
+        setStatusUpdateLoading(true);
+        try {
+            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/auth/user-status/${sId}`, { status: value });
+            toast.success(data.message)
+            setStatusUpdateLoading(false);
+            getAllUsers();
+        } catch (error) {
+            console.error(error);
+            toast.error("Error update status")
+        }
+    }
+
 
     // Open modal with selected result data
     const openModal = (users) => {
@@ -243,13 +261,30 @@ const AllUsers = () => {
                                                     </td>
                                                     <td>{dayjs(u?.createdAt).format('MMM DD, YYYY hh:mm A')}</td>
                                                     <td>
-                                                        {
-                                                            u.role === 1 ? <span className="badge text-bg-info">Restricted</span> : (
-                                                                <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(u._id)}>
-                                                                    <i className="fa-solid fa-trash-can" /> Delete
-                                                                </button>
-                                                            )
-                                                        }
+                                                        <div className="d-flex">
+                                                            {
+                                                                u.role === 1 ? <span className="badge text-bg-info mx-1">Restricted</span> : (
+                                                                    <Select
+                                                                        loading={statusUpdateLoading}
+                                                                        size='large'
+                                                                        className='mb-3 me-2'
+                                                                        value={u?.status}
+                                                                        onChange={(value) => handleStatusUpdate(u._id, value)}
+                                                                        required>
+                                                                        {statuses.map((s, i) => (
+                                                                            <Option key={i} value={s}>{s}</Option>
+                                                                        ))}
+                                                                    </Select>
+                                                                )
+                                                            }
+                                                            {
+                                                                u.role === 1 ? <span className="badge text-bg-info">Restricted</span> : (
+                                                                    <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(u._id)}>
+                                                                        <i className="fa-solid fa-trash-can" /> Delete
+                                                                    </button>
+                                                                )
+                                                            }
+                                                        </div>
                                                     </td>
                                                     <Modal
                                                         open={visible}
