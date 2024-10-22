@@ -7,6 +7,7 @@ import { Image } from 'antd';
 import GoBackButton from '../../components/GoBackButton';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import toast from 'react-hot-toast';
 dayjs.extend(relativeTime)
 
 
@@ -19,8 +20,14 @@ const ViewNotice = () => {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/notice/get-notice`);
             setNotice(data);
         } catch (error) {
-            console.log(error);
-        } finally {
+            console.error("Error details:", error);
+            if (error.response && error.response.data && error.response.data.error) {
+                toast.error(error.response.data.error);
+            } else {
+                toast.error("Something went wrong");
+            }
+        }
+        finally {
             setSpinnerLoading(false);
         }
     };

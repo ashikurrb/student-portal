@@ -26,12 +26,18 @@ const ViewPayment = () => {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/payment/user-payment`);
             setPayment(data);
         } catch (error) {
-            console.log(error);
-            toast.error("Error fetching Payments");
-        } finally {
+            console.error("Error details:", error);
+            if (error.response && error.response.data && error.response.data.error) {
+                toast.error(error.response.data.error);
+            } else {
+                toast.error("Something went wrong");
+            }
+        }
+        finally {
             setSpinnerLoading(false);
         }
     };
+
     useEffect(() => {
         getPayment();
     }, []);

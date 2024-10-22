@@ -15,9 +15,14 @@ const ViewResult = () => {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/result/user-result`);
             setResults(data);
         } catch (error) {
-            console.log(error);
-            toast.error("Error fetching Results");
-        } finally {
+            console.error("Error details:", error);
+            if (error.response && error.response.data && error.response.data.error) {
+                toast.error(error.response.data.error);
+            } else {
+                toast.error("Something went wrong");
+            }
+        }
+        finally {
             setSpinnerLoading(false);
         }
     };

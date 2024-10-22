@@ -23,9 +23,14 @@ const ViewOrder = () => {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/order/user-order`);
             setOrders(data);
         } catch (error) {
-            console.log(error);
-            toast.error("Error fetching orders");
-        } finally {
+            console.error("Error details:", error);
+            if (error.response && error.response.data && error.response.data.error) {
+                toast.error(error.response.data.error);
+            } else {
+                toast.error("Something went wrong");
+            }
+        }
+        finally {
             setSpinnerLoading(false);
         }
     };
