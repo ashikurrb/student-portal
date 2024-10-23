@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import Spinner from '../../components/Spinner';
 import { EyeOutlined } from '@ant-design/icons';
 import { SearchOutlined } from '@ant-design/icons';
-import { Image, Input, Modal, Select } from 'antd';
+import { Image, Input, Modal, Select, Spin } from 'antd';
 import dayjs from 'dayjs';
 const { Option } = Select;
 
@@ -14,7 +14,7 @@ const OrderList = () => {
     const [orders, setOrders] = useState([]);
     const [statuses] = useState(["Pending", "Approved", "Canceled"]);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(true);
-    const [statusUpdateLoading, setStatusUpdateLoading] = useState(false);
+    const [statusUpdateLoading, setStatusUpdateLoading] = useState(null);
     const [visible, setVisible] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -42,15 +42,16 @@ const OrderList = () => {
 
     //order status change
     const handleChange = async (oId, value) => {
-        setStatusUpdateLoading(true);
+        setStatusUpdateLoading(oId);
         try {
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/order/order-status/${oId}`, { status: value });
             toast.success(data.message)
-            setStatusUpdateLoading(false);
+            setStatusUpdateLoading(null);
             getOrderList();
         } catch (error) {
             console.error(error);
-            toast.error("Error update status")
+            toast.error("Error update status");
+            setStatusUpdateLoading(null);
         }
     }
 
@@ -265,17 +266,18 @@ const OrderList = () => {
                                                                 </td>
                                                                 <th scope='row' className='ps-3'>{i + 1}</th>
                                                                 <td>
-                                                                    <Select
-                                                                        loading={statusUpdateLoading}
-                                                                        size='large'
-                                                                        className='mb-3 me-2'
-                                                                        value={o?.status}
-                                                                        onChange={(value) => handleChange(o._id, value)}
-                                                                        required>
-                                                                        {statuses.map((s, i) => (
-                                                                            <Option key={i} value={s}>{s}</Option>
-                                                                        ))}
-                                                                    </Select>
+                                                                    <Spin spinning={statusUpdateLoading === o._id}>
+                                                                        <Select
+                                                                            size='large'
+                                                                            className='mb-3 me-2'
+                                                                            value={o?.status}
+                                                                            onChange={(value) => handleChange(o._id, value)}
+                                                                            required>
+                                                                            {statuses.map((s, i) => (
+                                                                                <Option key={i} value={s}>{s}</Option>
+                                                                            ))}
+                                                                        </Select>
+                                                                    </Spin>
                                                                 </td>
                                                                 <td>
                                                                     <div className="d-flex align-items-center">

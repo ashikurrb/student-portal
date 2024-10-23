@@ -6,7 +6,7 @@ import Spinner from '../../components/Spinner'; import axios from 'axios';
 import toast from 'react-hot-toast';
 import { SearchOutlined } from '@ant-design/icons';
 import { EyeOutlined } from '@ant-design/icons';
-import { Modal, Select, Alert, Input, Image, Tooltip } from 'antd';
+import { Modal, Select, Alert, Input, Image, Tooltip, Spin } from 'antd';
 import dayjs from 'dayjs';
 const { Option } = Select;
 
@@ -16,8 +16,7 @@ const AllUsers = () => {
     const [grades, setGrades] = useState([]);
     const [updatedGrade, setUpdatedGrade] = useState('');
     const [statuses] = useState(["Enabled", "Disabled"]);
-    const [updatedStatus, setUpdatedStatus] = useState("");
-    const [statusUpdateLoading, setStatusUpdateLoading] = useState(false);
+    const [statusUpdateLoading, setStatusUpdateLoading] = useState(null);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
     const [updateSpinnerLoading, setUpdateSpinnerLoading] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -86,15 +85,16 @@ const AllUsers = () => {
 
     //user status update
     const handleStatusUpdate = async (sId, value) => {
-        setStatusUpdateLoading(true);
+        setStatusUpdateLoading(sId);
         try {
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/auth/user-status/${sId}`, { status: value });
             toast.success(data.message)
-            setStatusUpdateLoading(false);
+            setStatusUpdateLoading(null);
             getAllUsers();
         } catch (error) {
             console.error(error);
-            toast.error("Error update status")
+            toast.error("Error update status");
+            setStatusUpdateLoading(null);
         }
     }
 
@@ -264,8 +264,8 @@ const AllUsers = () => {
                                                         <div className="d-flex">
                                                             {
                                                                 u.role === 1 ? <span className="badge text-bg-info mx-1">Restricted</span> : (
-                                                                    <Select
-                                                                        loading={statusUpdateLoading}
+                                                                    <Spin spinning={statusUpdateLoading === u._id}>
+                                                                         <Select
                                                                         size='large'
                                                                         className='mb-3 me-2'
                                                                         value={u?.status}
@@ -275,6 +275,7 @@ const AllUsers = () => {
                                                                             <Option key={i} value={s}>{s}</Option>
                                                                         ))}
                                                                     </Select>
+                                                                    </Spin>
                                                                 )
                                                             }
                                                             {
