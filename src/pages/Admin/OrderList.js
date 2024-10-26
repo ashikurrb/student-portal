@@ -266,18 +266,17 @@ const OrderList = () => {
                                                                 </td>
                                                                 <th scope='row' className='ps-3'>{i + 1}</th>
                                                                 <td>
-                                                                    <Spin spinning={statusUpdateLoading === o._id}>
-                                                                        <Select
-                                                                            size='large'
-                                                                            className='mb-3 me-2'
-                                                                            value={o?.status}
-                                                                            onChange={(value) => handleChange(o._id, value)}
-                                                                            required>
-                                                                            {statuses.map((s, i) => (
-                                                                                <Option key={i} value={s}>{s}</Option>
-                                                                            ))}
-                                                                        </Select>
-                                                                    </Spin>
+                                                                    <Select
+                                                                        loading={statusUpdateLoading === o._id}
+                                                                        size='large'
+                                                                        className='mb-3 me-2'
+                                                                        value={o?.status}
+                                                                        onChange={(value) => handleChange(o._id, value)}
+                                                                        required>
+                                                                        {statuses.map((s, i) => (
+                                                                            <Option key={i} value={s}>{s}</Option>
+                                                                        ))}
+                                                                    </Select>
                                                                 </td>
                                                                 <td>
                                                                     <div className="d-flex align-items-center">

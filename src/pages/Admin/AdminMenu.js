@@ -26,13 +26,13 @@ const AdminMenu = () => {
                     </div>
                     <div className='d-md-collapse show rounded' id="collapseExample">
                         <NavLink to="/dashboard/admin/create-grade" className="list-group-item list-group-item-action">
-                            Create Grade
+                             Grade
                         </NavLink>
                         <NavLink to="/dashboard/admin/create-notice" className="list-group-item list-group-item-action">
-                            Create Notice
+                             Notice
                         </NavLink>
                         <NavLink to="/dashboard/admin/create-course" className="list-group-item list-group-item-action">
-                            Create Course
+                             Course
                         </NavLink>
                         <NavLink to="/dashboard/admin/create-link" className="list-group-item list-group-item-action">
                             Content Links
@@ -41,7 +41,7 @@ const AdminMenu = () => {
                             Publish Results
                         </NavLink>
                         <NavLink to="/dashboard/admin/create-payment" className="list-group-item list-group-item-action">
-                            Set Payment Status
+                             Payment Status
                         </NavLink>
                         <NavLink to="/dashboard/admin/order-list" className="list-group-item list-group-item-action">
                             Orders List

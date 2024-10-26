@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layouts/Layout';
 import AdminMenu from '../../pages/Admin/AdminMenu';
 import { useAuth } from '../../context/auth';
-import Spinner from '../../components/Spinner'; import axios from 'axios';
+import Spinner from '../../components/Spinner';
+import axios from 'axios';
 import toast from 'react-hot-toast';
 import { SearchOutlined } from '@ant-design/icons';
 import { EyeOutlined } from '@ant-design/icons';
-import { Modal, Select, Alert, Input, Image, Tooltip, Spin } from 'antd';
+import { Modal, Select, Alert, Input, Image, Tooltip } from 'antd';
 import dayjs from 'dayjs';
 const { Option } = Select;
 
@@ -264,8 +265,8 @@ const AllUsers = () => {
                                                         <div className="d-flex">
                                                             {
                                                                 u.role === 1 ? <span className="badge text-bg-info mx-1">Restricted</span> : (
-                                                                    <Spin spinning={statusUpdateLoading === u._id}>
-                                                                         <Select
+                                                                    <Select
+                                                                        loading={statusUpdateLoading === u._id}
                                                                         size='large'
                                                                         className='mb-3 me-2'
                                                                         value={u?.status}
@@ -275,7 +276,6 @@ const AllUsers = () => {
                                                                             <Option key={i} value={s}>{s}</Option>
                                                                         ))}
                                                                     </Select>
-                                                                    </Spin>
                                                                 )
                                                             }
                                                             {
