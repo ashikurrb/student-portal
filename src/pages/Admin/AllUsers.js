@@ -257,7 +257,7 @@ const AllUsers = () => {
                                                     <td>{u.answer}</td>
                                                     <td >
                                                         {
-                                                            u.role === 0 ? <span className="badge text-bg-success">Student</span> : u.role === 1 ? <span className="badge text-bg-warning">Admin</span> : <span className="badge text-bg-danger">{u.role}</span>
+                                                            u.role === 0 ? <span className="badge text-bg-success">Student</span> : u.role === 1 ? <span className="badge text-bg-warning">Admin</span> : <span className="badge text-bg-danger">Moderator</span>
                                                         }
                                                     </td>
                                                     <td>{dayjs(u?.createdAt).format('MMM DD, YYYY hh:mm A')}</td>
