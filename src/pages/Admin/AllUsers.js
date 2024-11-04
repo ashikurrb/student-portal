@@ -130,6 +130,7 @@ const AllUsers = () => {
         u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         u.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
         u.phone.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        u.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
         u.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
