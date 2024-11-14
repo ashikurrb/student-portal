@@ -8,11 +8,12 @@ import { SearchOutlined } from '@ant-design/icons';
 import { EyeOutlined } from '@ant-design/icons';
 import { Image, Input, Modal, Select, Tooltip, DatePicker } from 'antd';
 import dayjs from 'dayjs';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 const { RangePicker } = DatePicker;
 const dateFormat = 'DD-MMM-YYYY';
-const { TextArea } = Input;
 const { Option } = Select;
-
 
 const CreateCourse = () => {
     const [spinnerLoading, setSpinnerLoading] = useState(false);
@@ -395,18 +396,14 @@ const CreateCourse = () => {
                                             ))}
                                         </Select>
                                     </div>
-                                    <div className="d-lg-flex">
-                                        <TextArea
-                                            type="text"
-                                            size='large'
-                                            placeholder='Course description'
-                                            className=' mb-3'
+                                    <div>
+                                        <ReactQuill
+                                            theme="snow"
                                             value={description}
-                                            onChange={(e) => setDescription(e.target.value)}
-                                            showCount
+                                            onChange={setDescription}
                                             maxLength={1000}
                                             required
-                                        />
+                                            placeholder="Course Description" />
                                     </div>
                                     <div className=" text-center">
                                         <button type="submit" className="btn btn-warning fw-bold mt-2">
@@ -623,18 +620,14 @@ const CreateCourse = () => {
                             ))}
                         </Select>
                     </div>
-                    <div className="d-lg-flex">
-                        <TextArea
-                            type="text"
-                            size='large'
-                            placeholder='Course description'
-                            className=' mb-3'
+                    <div>
+                        <ReactQuill
+                            theme="snow"
                             value={updatedDescription}
-                            onChange={(e) => setUpdatedDescription(e.target.value)}
-                            showCount
+                            onChange={setUpdatedDescription}
                             maxLength={1000}
                             required
-                        />
+                            placeholder="Course Description" />
                     </div>
                     <div className=" text-center">
                         <button type="submit" className="btn btn-warning fw-bold mt-2">

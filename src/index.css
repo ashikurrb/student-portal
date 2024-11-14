@@ -175,3 +175,14 @@ body {
 .grade-link:hover{
  color: white;
 }
+
+/* react-quill custom style */
+.ql-container {
+  border-radius: 0px 0px 8px 8px !important;
+  overflow: hidden; 
+  min-height: 112px;
+  background-color: #f4f4f4;
+}
+.ql-toolbar {
+  border-radius: 8px 8px 0px 0px !important; 
+}

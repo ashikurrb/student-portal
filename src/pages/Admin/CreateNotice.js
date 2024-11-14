@@ -8,6 +8,9 @@ import { SearchOutlined } from '@ant-design/icons';
 import { EyeOutlined } from '@ant-design/icons';
 import { Alert, Image, Input, Modal, Select, Tooltip } from 'antd';
 import dayjs from 'dayjs';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -351,17 +354,14 @@ const CreateNotice = () => {
                                             required
                                         />
                                     </div>
-                                    <div className="d-lg-flex">
-                                        <TextArea showCount
-                                            type="text"
-                                            size='large'
-                                            placeholder='Notice Message'
-                                            className=' mb-3'
+                                    <div>
+                                        <ReactQuill
+                                            theme="snow"
                                             value={noticeInfo}
-                                            onChange={(e) => setNoticeInfo(e.target.value)}
-                                            maxLength={200}
+                                            onChange={setNoticeInfo}
+                                            maxLength={1000}
                                             required
-                                        />
+                                            placeholder="Notice Description" />
                                     </div>
                                     <div>
 
@@ -526,16 +526,14 @@ const CreateNotice = () => {
                         />
                     </div>
                     <div className='mb-3'>
-                        <TextArea
-                            showCount
-                            maxLength={200}
-                            size='large'
-                            type="text"
-                            placeholder='Notice message'
+                        <ReactQuill
+                            theme="snow"
                             value={updatedNoticeInfo}
-                            onChange={(e) => setUpdatedNoticeInfo(e.target.value)}
+                            onChange={setUpdatedNoticeInfo}
+                            maxLength={1000}
                             required
-                        />
+                            placeholder="Notice Description" />
+
                     </div>
                     <div className="text-center">
                         <button type="submit" className="btn btn-warning fw-bold">
