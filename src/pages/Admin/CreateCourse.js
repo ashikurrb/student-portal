@@ -406,6 +406,7 @@ const CreateCourse = () => {
                                     <div>
                                         <ReactQuill
                                             theme="snow"
+                                            className="mb-3"
                                             value={description}
                                             onChange={setDescription}
                                             maxLength={1000}
@@ -631,6 +632,7 @@ const CreateCourse = () => {
                         <ReactQuill
                             key={visible ? 'modal-open' : 'modal-closed'}
                             theme="snow"
+                            className="mb-3"
                             value={updatedDescription}
                             onChange={setUpdatedDescription}
                             maxLength={1000}

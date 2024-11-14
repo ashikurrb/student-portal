@@ -251,19 +251,19 @@ const CreateNotice = () => {
     //strip html tags
     const stripHTML = (html) => {
         // Replace <br> with newline characters
-        let text = html.replace(/<br\s*\/?>/gi, '\n'); 
-        text = text.replace(/<\/p>/gi, '\n\n');  
-        text = text.replace(/<p>/gi, ''); 
-    
+        let text = html.replace(/<br\s*\/?>/gi, '\n');
+        text = text.replace(/<\/p>/gi, '\n\n');
+        text = text.replace(/<p>/gi, '');
+
         // Use DOMParser to remove remaining HTML tags and get plain text
         const doc = new DOMParser().parseFromString(text, 'text/html');
         return doc.body.textContent || "";
     };
 
-     //initializing updated description on html formatted version for react-quill
-     useEffect(() => {
+    //initializing updated description on html formatted version for react-quill
+    useEffect(() => {
         if (visible) {
-            setUpdatedNoticeInfo(selected.noticeInfo);  
+            setUpdatedNoticeInfo(selected.noticeInfo);
         }
     }, [visible]);
 
@@ -372,7 +372,7 @@ const CreateNotice = () => {
                                             required
                                         />
                                     </div>
-                                    <div>
+                                    <div className='mb-3'>
                                         <ReactQuill
                                             theme="snow"
                                             value={noticeInfo}
@@ -382,7 +382,6 @@ const CreateNotice = () => {
                                             placeholder="Notice Description" />
                                     </div>
                                     <div>
-
                                     </div>
                                     <div className=" text-center">
                                         <button type="submit" className="btn btn-warning fw-bold mt-2">
@@ -551,7 +550,6 @@ const CreateNotice = () => {
                             maxLength={1000}
                             required
                             placeholder="Notice Description" />
-
                     </div>
                     <div className="text-center">
                         <button type="submit" className="btn btn-warning fw-bold">
