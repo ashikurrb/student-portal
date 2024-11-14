@@ -108,17 +108,7 @@ const CourseDetails = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [navigate]);
-
-    const refinedDocView = (text) => {
-        if (!text) {
-            return ''; // Return an empty string or handle accordingly if text is undefined/null
-        }
-        const urlRegex = /(https?:\/\/[^\s]+)/g;
-        const textWithLinks = text.replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
-        const textWithNewLines = textWithLinks.replace(/\n/g, '<br>');
-        return textWithNewLines;
-    };
-
+    
     return (
         <Layout title={"Course Details"}>
             <div className="container">
@@ -174,11 +164,7 @@ const CourseDetails = () => {
                                                     <h5 className='text-danger my-3'>Coming soon</h5>
                                                 )
                                             }
-                                            <p style={{ textAlign: "justify" }}
-                                                dangerouslySetInnerHTML={{
-                                                    __html: refinedDocView(course?.description)
-                                                }}
-                                            />
+                                            <p dangerouslySetInnerHTML={{ __html: course?.description }} />
                                         </div>
                                     </div>
                                 </div>
