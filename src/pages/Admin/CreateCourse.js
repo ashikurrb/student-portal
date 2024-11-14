@@ -271,6 +271,13 @@ const CreateCourse = () => {
         };
     }, []);
 
+    //initializing updated description on html formatted version for react-quill
+    useEffect(() => {
+        if (visible) {
+            setUpdatedDescription(selected.description);  
+        }
+    }, [visible]);
+
     return (
         <Layout title={"Admin - Create Course"}>
             <div className="container-fluid mt-3 p-3">
@@ -622,6 +629,7 @@ const CreateCourse = () => {
                     </div>
                     <div>
                         <ReactQuill
+                            key={visible ? 'modal-open' : 'modal-closed'}
                             theme="snow"
                             value={updatedDescription}
                             onChange={setUpdatedDescription}

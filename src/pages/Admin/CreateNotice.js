@@ -11,7 +11,6 @@ import dayjs from 'dayjs';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const { TextArea } = Input;
 const { Option } = Select;
 
 const CreateNotice = () => {
@@ -249,6 +248,25 @@ const CreateNotice = () => {
         };
     }, []);
 
+    //strip html tags
+    const stripHTML = (html) => {
+        // Replace <br> with newline characters
+        let text = html.replace(/<br\s*\/?>/gi, '\n'); 
+        text = text.replace(/<\/p>/gi, '\n\n');  
+        text = text.replace(/<p>/gi, ''); 
+    
+        // Use DOMParser to remove remaining HTML tags and get plain text
+        const doc = new DOMParser().parseFromString(text, 'text/html');
+        return doc.body.textContent || "";
+    };
+
+     //initializing updated description on html formatted version for react-quill
+     useEffect(() => {
+        if (visible) {
+            setUpdatedNoticeInfo(selected.noticeInfo);  
+        }
+    }, [visible]);
+
     return (
         <Layout title={"Admin - Create Notice"}>
             <div className="container-fluid mt-3 p-3">
@@ -282,7 +300,7 @@ const CreateNotice = () => {
                                 </button>
                             )}
 
-                            <Modal width={650} centered visible={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
+                            <Modal width={650} centered open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
                                 <h5 className='text-center'>Create Notice</h5>
                                 <form onSubmit={handleCreate}>
                                     <div>
@@ -442,7 +460,7 @@ const CreateNotice = () => {
                                                                 <span>{n?.title}</span>
                                                             </Tooltip>
                                                         </td>
-                                                        <td>{n.noticeInfo.substring(0, 20)}...</td>
+                                                        <td>{stripHTML(n.noticeInfo).substring(0, 20)}...</td>
                                                         <td>
                                                             <Image
                                                                 fallback="https://demofree.sirv.com/nope-not-here.jpg"
@@ -473,7 +491,7 @@ const CreateNotice = () => {
                     </div>
                 </div>
             </div>
-            <Modal centered onCancel={() => setVisible(false)} visible={visible} footer={null}>
+            <Modal centered onCancel={() => setVisible(false)} open={visible} footer={null}>
                 <h5 className='text-center'>Update Notice</h5>
                 <form onSubmit={handleUpdate}>
                     <div>
