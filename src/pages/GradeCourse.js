@@ -32,7 +32,7 @@ const GradeCourse = () => {
     }, [params?.slug])
 
     return (
-        <Layout title={`Courses - ${grade.name}`}>
+        <Layout title={`Courses - ${grade?.name}`}>
             <div className="container">
                 <div className="row align-items-center mt-4">
                     <div className="col-auto">
@@ -53,27 +53,27 @@ const GradeCourse = () => {
                                     <div className="d-flex justify-content-center">
                                         <p className='card text-center h3 p-5 mt-3 text-secondary w-75'>
                                             No courses available yet for this grade</p>
-                                    </div> : <h6 className='text-center'>{courses.length} course found</h6>
+                                    </div> : <h6 className='text-center'>{courses?.length} course found</h6>
                             }
                             <div className="d-flex flex-wrap justify-content-center">
                                 {
                                     courses.map((c, i) =>
-                                        <div className="card m-2" style={{ width: '15rem' }} key={c._id}>
+                                        <div className="card m-2" style={{ width: '15rem' }} key={c?._id}>
                                             <img
                                                 src={c.courseImg}
                                                 className="card-img-top"
                                                 style={{ height: '200px' }}
-                                                alt={c.name} />
+                                                alt={c?.name} />
                                             <div className="card-body">
-                                                <h4 className='card-title'>{c.title}</h4>
-                                                <p className="form-text">Grade: <b>{c.grade.name}</b>
+                                                <h4 className='card-title'>{c?.title}</h4>
+                                                <p className="form-text">Grade: <b>{c?.grade?.name}</b>
                                                     <br />
-                                                    Start:  {dayjs(c.dateRange).format("MMM DD, YYYY")}
+                                                    Start:  {dayjs(c?.dateRange).format("MMM DD, YYYY")}
                                                 </p>
-                                                <h5><span className='fw-bold'>৳</span>{c.price}</h5>
+                                                <h5><span className='fw-bold'>৳</span>{c?.price}</h5>
                                                 <button
                                                     className="btn btn-primary w-100"
-                                                    onClick={() => navigate(`/view-courses/${grade.slug}/${c.slug}`)}>
+                                                    onClick={() => navigate(`/view-courses/${grade.slug}/${c?.slug}`)}>
                                                     <b>Details</b>
                                                 </button>
                                             </div>
