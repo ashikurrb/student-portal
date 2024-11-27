@@ -83,7 +83,7 @@ const SetPaymentStatus = () => {
     // show user list based on grade selection
     useEffect(() => {
         if (grade) {
-            const filtered = users.filter(user => user.grade._id === grade);
+            const filtered = users.filter(user => user?.grade?._id === grade);
             setFilteredUsers(filtered);
             setUser('');
         } else {
@@ -245,12 +245,12 @@ const SetPaymentStatus = () => {
 
     // Filter content based on search query
     const filteredPayment = payment.filter(p =>
-        dayjs(p.paymentDate).format('DD MMMM YYYY').toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.remark.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.trxId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.method.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+        dayjs(p?.paymentDate).format('DD MMMM YYYY').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p?.remark?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p?.trxId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p?.method?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p?.user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p?.grade?.name?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     //total payment amount calculate
@@ -402,10 +402,10 @@ const SetPaymentStatus = () => {
             // Normal text
             doc.setFont('helvetica', 'normal'); // Revert font to normal
             doc.text(dateText, pageWidth - rightMargin - doc.getTextWidth(dateText), 57);
-            doc.text(`${payment.user.name}`, leftMargin + doc.getTextWidth('Name:') + 2, 57 + verticalSpacing);
-            doc.text(`${payment.grade.name}`, leftMargin + doc.getTextWidth('Grade:') + 2, 57 + 2 * verticalSpacing);
-            doc.text(`${payment.user.email}`, leftMargin + doc.getTextWidth('Email:') + 2, 57 + 3 * verticalSpacing);
-            doc.text(`${payment.user.phone}`, leftMargin + doc.getTextWidth('Mobile:') + 2, 57 + 4 * verticalSpacing);
+            doc.text(`${payment?.user?.name}`, leftMargin + doc.getTextWidth('Name:') + 2, 57 + verticalSpacing);
+            doc.text(`${payment?.grade?.name}`, leftMargin + doc.getTextWidth('Grade:') + 2, 57 + 2 * verticalSpacing);
+            doc.text(`${payment?.user?.email}`, leftMargin + doc.getTextWidth('Email:') + 2, 57 + 3 * verticalSpacing);
+            doc.text(`${payment?.user?.phone}`, leftMargin + doc.getTextWidth('Mobile:') + 2, 57 + 4 * verticalSpacing);
 
             doc.autoTable({
                 startY: 100,
@@ -535,7 +535,7 @@ const SetPaymentStatus = () => {
                                         value={grade || undefined}
                                         onChange={(value) => { setGrade(value) }}>
                                         {grades?.map(g => (
-                                            <Option key={g._id} value={g._id}>{g.name}</Option>
+                                            <Option key={g?._id} value={g?._id}>{g?.name}</Option>
                                         ))}
                                     </Select>
                                     <Select

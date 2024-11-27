@@ -69,7 +69,7 @@ const PublishResult = () => {
     // Filter users by grade
     useEffect(() => {
         if (grade) {
-            const filtered = users.filter(user => user.grade._id === grade);
+            const filtered = users.filter(user => user?.grade?._id === grade);
             setFilteredUsers(filtered);
             setUser('');
         } else {
@@ -195,10 +195,10 @@ const PublishResult = () => {
 
     // Filter content based on search query
     const filteredResult = result.filter(r =>
-        r.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+        r?.type?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r?.subject?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r?.user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r?.grade?.name?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     //delete individual result
@@ -320,7 +320,7 @@ const PublishResult = () => {
                                         }
                                     >
                                         {grades?.map(g => (
-                                            <Option key={g._id} value={g._id}>{g.name}</Option>
+                                            <Option key={g?._id} value={g?._id}>{g?.name}</Option>
                                         ))}
                                     </Select>
                                     <Select

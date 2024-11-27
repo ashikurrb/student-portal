@@ -104,7 +104,7 @@ const AllUsers = () => {
     const openModal = (users) => {
         setVisible(true);
         setSelected(users);
-        setUpdatedGrade(users.grade.name);
+        setUpdatedGrade(users?.grade?.name);
     }
 
     //delete users
@@ -127,11 +127,11 @@ const AllUsers = () => {
 
     // Filter content based on search query
     const filteredUser = users.filter(u =>
-        u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        u.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        u.phone.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        u.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        u.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+        u?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        u?.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        u?.phone?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        u?.status?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        u?.grade?.name?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     // Handle Escape key functionality
@@ -237,7 +237,7 @@ const AllUsers = () => {
                                                                 alt="dp" />
                                                             <span className='ms-2'>
                                                                 <Tooltip title={`Created: ${dayjs(u.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(u.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
-                                                                    {u.name}
+                                                                    {u?.name}
                                                                 </Tooltip>
                                                             </span>
                                                         </div>
@@ -317,10 +317,10 @@ const AllUsers = () => {
                                                             value={updatedGrade}
                                                             onChange={(value) => { setUpdatedGrade(value) }}>
                                                             {grades?.map(g => (
-                                                                <Option key={g._id}
-                                                                    value={g._id}
+                                                                <Option key={g?._id}
+                                                                    value={g?._id}
                                                                     disabled={g?.name === "Administration"}>
-                                                                    {g.name}
+                                                                    {g?.name}
                                                                 </Option>
                                                             ))}
                                                         </Select>

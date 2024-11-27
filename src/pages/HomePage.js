@@ -5,23 +5,25 @@ const HomePage = () => {
     return (
         <Layout title={"5points Academy - Best Coaching"}>
             <div className="container">
-                <div className="row">
-                    <div className="d-flex justify-content-center align-items-center my-3">
-                        <img src="/images/logoBrand.png" alt="logo" style={{ width: "30%" }} />
+                <div id="carouselExampleAutoplaying" className="carousel slide mt-3" data-bs-ride="carousel">
+                    <div className="carousel-inner">
+                        <div className="carousel-item active">
+                        <img src="/images/banner/carousel1.jpg" height={400} className="d-block w-100" alt="banner1" />
+                        </div>
+                        <div className="carousel-item">
+                            <img src="/images/banner/carousel2.png" height={400} className="d-block w-100" alt="banner2" />
+                        </div>
                     </div>
-                    <p className='px-4'>
-                        শিক্ষার এক নতুন যুগে প্রতিযোগিতামূলক সফলতা অর্জনের জন্য আমরা <b>5points Academy</b> আছি সবসময় আপনাদের পাশে।
-                        শিক্ষার্থীর যেকোনো ক্লাসের যেকোনো subject এর হাজারো সব সমস্যার সমাধান পাবেন একই প্লাটফর্মে যা পাওয়া যাবে খুবই সাশ্রয়ী মূল্যে।
-                        <br />
-                        একই সাথে আমরা আছি শিক্ষার্থীর স্কুল জীবন থেকে শুরু করে জীবনের প্রতিটা অধ্যায়ের সফলতা অর্জনের সহযোগী হিসেবে।
-                        এরকম আরো সুবিধা একই প্লাটফর্মে পেতে আজই সাইন আপ/রেজিস্টার করে আমাদের সাথে থাকুন।
-                    </p>
-                    <div className='p-4'>
-                        Call us for more information about admission and courses.
-                        <br />
-                        <i className='fa-solid fa-phone-volume'></i> : +880 1794-744343
-                    </div>
+                    <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                        <span className="carousel-control-prev-icon" aria-hidden="true" />
+                        <span className="visually-hidden">Previous</span>
+                    </button>
+                    <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                        <span className="carousel-control-next-icon" aria-hidden="true" />
+                        <span className="visually-hidden">Next</span>
+                    </button>
                 </div>
+
             </div>
         </Layout>
     );

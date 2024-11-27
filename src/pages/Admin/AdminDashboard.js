@@ -91,7 +91,7 @@ const AdminDashboard = () => {
 
     // Calculate the student count for each grade
     const getStudentCountForGrade = (gradeId) => {
-        return users.filter((user) => user.grade._id === gradeId).length;
+        return users.filter((user) => user?.grade?._id === gradeId).length;
     };
 
     // Total payment amount calculation
@@ -178,8 +178,8 @@ const AdminDashboard = () => {
                             <div class="col-md-6 p-3 card">
                                 <div>
                                     <ul className="mb-3">
-                                        <li className="py-1 h5">Total Grades: <u>{grades.length}</u></li>
-                                        <li className="py-1 h5">Total Students: <u>{users.length}</u></li>
+                                        <li className="py-1 h5">Total Grades: <u>{grades?.length}</u></li>
+                                        <li className="py-1 h5">Total Students: <u>{users?.length}</u></li>
                                         {
                                             failedRegistration.length > 0 ?
                                                 <li onClick={() => setVisible(true)} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
@@ -224,11 +224,11 @@ const AdminDashboard = () => {
                                     <>
                                         <h5 className='text-center'>Student Count</h5>
                                         <ol style={{ maxHeight: 400, overflow: 'auto', listStyleType: 'decimal', padding: 0 }}>
-                                            {grades.filter((g) => getStudentCountForGrade(g._id) > 0).map((g, i) => (
-                                                <li key={g._id}>
-                                                    <b> {i + 1}. </b> {g.name}: &nbsp;
+                                            {grades?.filter((g) => getStudentCountForGrade(g?._id) > 0).map((g, i) => (
+                                                <li key={g?._id}>
+                                                    <b> {i + 1}. </b> {g?.name}: &nbsp;
                                                     <span className='badge text-bg-dark'>
-                                                        {getStudentCountForGrade(g._id)}
+                                                        {getStudentCountForGrade(g?._id)}
                                                     </span>
                                                     <hr />
                                                 </li>
