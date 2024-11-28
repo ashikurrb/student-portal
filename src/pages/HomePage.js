@@ -1,7 +1,46 @@
 import React from 'react';
 import Layout from '../components/Layouts/Layout';
+import { motion } from 'framer-motion';
 
 const HomePage = () => {
+    const teachers = [
+        {
+            img: "/images/teachers/rifat.jpg",
+            name: "MD Samiul Ferdous Rifat",
+            title: "CEO and Principal",
+            department: "Department of Management",
+            university: "University of Dhaka",
+        },
+        {
+            img: "/images/teachers/joy.jpg",
+            name: "MD Azmal Hossain Joy",
+            title: "Teacher",
+            department: "Department of Political Science",
+            university: "University of Dhaka",
+        },
+        {
+            img: "/images/teachers/farhan.jpg",
+            name: "Shah Ahmed Farhan",
+            title: "Teacher & Exam Co-Ordinator",
+            department: "Department of Biochemistry and Molecular Biology",
+            university: "University of Dhaka",
+        },
+        {
+            img: "/images/teachers/rafi.jpg",
+            name: "Shayman Rafi",
+            title: "Teacher",
+            department: "Department of Computer Science and Engineering",
+            university: "University of Dhaka",
+        },
+        {
+            img: "/images/teachers/ashik.jpg",
+            name: "Ashikur Rahman Bhuiyan",
+            title: "Teacher & Exam Co-Ordinator",
+            department: "Department of Tourism and Hospitality Management",
+            university: "Mohammadpur Kendriya College",
+        },
+    ];
+
     return (
         <Layout title={"5points Academy - Best Coaching"}>
             <div className="container">
@@ -24,74 +63,43 @@ const HomePage = () => {
                     </button>
                 </div>
 
-                <h2 className='text-center mt-5'>Our Teachers Panel</h2>
+                <motion.h2
+                    className="text-center mt-5"
+                    initial={{ x: "-100%" }} // Start from the left
+                    animate={{ x: 0 }} // Move to the center
+                    transition={{ duration: 2, ease: "easeOut" }} // Smooth animation
+                >
+                    Our Teachers Panel
+                </motion.h2>
                 <hr />
                 <div className='d-flex flex-wrap justify-content-lg-between justify-content-center'>
-                    <div className="card m-2" style={{ width: '15rem' }}>
-                        <img
-                            src="/images/teachers/rifat.jpg"
-                            className="card-img-top"
-                            style={{ height: '14rem' }}
-                            alt="rifat" />
-                        <div className="card-body">
-                            <h5 className='card-title'style={{ height: '3rem' }}>MD Samiul Ferdous Rifat</h5>
-                            <p className="form-text"> <b>CEO and Principle</b></p>
-                            <p className='fw-bold'style={{ height: '4rem' }}>Department of Management</p>
-                            <h6 className='fw-bold'> Univeristy of Dhaka</h6>
-                        </div>
-                    </div>
-                    <div className="card m-2" style={{ width: '15rem' }}>
-                        <img
-                            src="/images/teachers/joy.jpg"
-                            className="card-img-top"
-                            style={{ height: '14rem' }}
-                            alt="joy" />
-                        <div className="card-body">
-                            <h5 className='card-title'style={{ height: '3rem' }}>MD Azmal Hossain Joy</h5>
-                            <p className="form-text"> <b>Teacher</b></p>
-                            <p className='fw-bold'style={{ height: '4rem' }}>Department of Political Science</p>
-                            <h6 className='fw-bold'> Univeristy of Dhaka</h6>
-                        </div>
-                    </div>
-                    <div className="card m-2" style={{ width: '15rem' }}>
-                        <img
-                            src="/images/teachers/farhan.jpg"
-                            className="card-img-top"
-                            style={{ height: '14rem' }}
-                            alt="joy" />
-                        <div className="card-body">
-                            <h5 className='card-title'style={{ height: '3rem' }}>Shah Ahmed Farhan</h5>
-                            <p className="form-text"> <b>Teacher & Exam Co-Ordinator</b></p>
-                            <p className='fw-bold'style={{ height: '4rem' }}>Department of Biochemistry and Molecular Biology </p>
-                            <h6 className='fw-bold'> Univeristy of Dhaka</h6>
-                        </div>
-                    </div>
-                    <div className="card m-2" style={{ width: '15rem' }}>
-                        <img
-                            src="/images/teachers/rafi.jpg"
-                            className="card-img-top"
-                            style={{ height: '14rem' }}
-                            alt="joy" />
-                        <div className="card-body">
-                            <h5 className='card-title'style={{ height: '3rem' }}>Shayman Rafi </h5>
-                            <p className="form-text"> <b>Teacher</b></p>
-                            <p className='fw-bold'style={{ height: '4rem' }}>Department of Computer Science and Engineering </p>
-                            <h6 className='fw-bold'> Univeristy of Dhaka</h6>
-                        </div>
-                    </div>
-                    <div className="card m-2" style={{ width: '15rem' }}>
-                        <img
-                            src="/images/teachers/ashik.jpg"
-                            className="card-img-top"
-                            style={{ height: '14rem' }}
-                            alt="joy" />
-                        <div className="card-body">
-                            <h5 className='card-title'style={{ height: '3rem' }}>Ashikur Rahman Bhuiyan </h5>
-                            <p className="form-text"> <b>Teacher & Exam Co-Ordinator</b></p>
-                            <p className='fw-bold'style={{ height: '4rem' }}>Department of Tourism and Hospitality Management </p>
-                            <h6 className='fw-bold'> Mohammadpur Kendriya College</h6>
-                        </div>
-                    </div>
+                    {
+                        teachers.map((t, i) => (
+                            <motion.div
+                                key={i}
+                                className="card m-2"
+                                style={{ width: '15rem' }}
+                                whileHover={{ scale: 1.09, boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)" }}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: false, amount: 0.2 }} // Trigger animation when visible
+                                transition={{ duration: 0.5, delay: i * 0.2 }} // Staggered animation
+                            >
+                                <img
+                                    src={t?.img}
+                                    className="card-img-top"
+                                    style={{ height: '14rem' }}
+                                    alt={t?.name}
+                                />
+                                <div className="card-body">
+                                    <h5 className='card-title' style={{ height: '3rem' }}>{t?.name}</h5>
+                                    <p className="form-text"> <b>{t?.title}</b></p>
+                                    <p className='fw-bold' style={{ height: '4rem' }}>{t.department}</p>
+                                    <h6 className='fw-bold'> {t.university}</h6>
+                                </div>
+                            </motion.div>
+                        ))
+                    }
                 </div>
                 <hr />
             </div>
