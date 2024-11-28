@@ -65,7 +65,7 @@ const GradeCourse = () => {
                                                 style={{ height: '200px' }}
                                                 alt={c?.name} />
                                             <div className="card-body">
-                                                <h4 className='card-title'>{c?.title}</h4>
+                                                <h4 className='card-title' style={{ height: '4rem' }}>{c?.title}</h4>
                                                 <p className="form-text">Grade: <b>{c?.grade?.name}</b>
                                                     <br />
                                                     Start:  {dayjs(c?.dateRange).format("MMM DD, YYYY")}
