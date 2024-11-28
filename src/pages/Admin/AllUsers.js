@@ -60,14 +60,14 @@ const AllUsers = () => {
 
     //update user grade
     const handleUpdate = async (e) => {
-        setUpdateSpinnerLoading(true);
         e.preventDefault();
+        setUpdateSpinnerLoading(true);
         try {
             const updatedGradeData = new FormData();
             updatedGradeData.append("grade", updatedGrade);
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/auth/user-grade/${selected._id}`, updatedGradeData);
-            setUpdateSpinnerLoading(false);
             if (data?.success) {
+                setUpdateSpinnerLoading(false);
                 toast.success(data?.message);
                 getAllUsers();
                 // Clear form fields after submit
@@ -84,6 +84,13 @@ const AllUsers = () => {
         }
     };
 
+    // Open modal with selected result data
+    const openModal = (user) => {
+        setVisible(true);
+        setSelected(user);
+        setUpdatedGrade(user?.grade?.name);
+    }
+
     //user status update
     const handleStatusUpdate = async (sId, value) => {
         setStatusUpdateLoading(sId);
@@ -97,14 +104,6 @@ const AllUsers = () => {
             toast.error("Error update status");
             setStatusUpdateLoading(null);
         }
-    }
-
-
-    // Open modal with selected result data
-    const openModal = (users) => {
-        setVisible(true);
-        setSelected(users);
-        setUpdatedGrade(users?.grade?.name);
     }
 
     //delete users
@@ -253,9 +252,9 @@ const AllUsers = () => {
                                                             </span>
                                                         </button>
                                                     </td>
-                                                    <td className='text-wrap'>{u.email}</td>
-                                                    <td>{u.phone}</td>
-                                                    <td>{u.answer}</td>
+                                                    <td className='text-wrap'>{u?.email}</td>
+                                                    <td>{u?.phone}</td>
+                                                    <td>{u?.answer}</td>
                                                     <td >
                                                         {
                                                             u.role === 0 ? <span className="badge text-bg-success">Student</span> : u.role === 1 ? <span className="badge text-bg-warning">Admin</span> : <span className="badge text-bg-danger">Moderator</span>
@@ -280,7 +279,7 @@ const AllUsers = () => {
                                                                 )
                                                             }
                                                             {
-                                                                u.role === 1 ? <span className="badge text-bg-info">Restricted</span> : (
+                                                                u?.role === 1 ? <span className="badge text-bg-info">Restricted</span> : (
                                                                     <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(u._id)}>
                                                                         <i className="fa-solid fa-trash-can" /> Delete
                                                                     </button>
@@ -288,59 +287,58 @@ const AllUsers = () => {
                                                             }
                                                         </div>
                                                     </td>
-                                                    <Modal
-                                                        open={visible}
-                                                        onCancel={() => setVisible(false)}
-                                                        footer={null}>
-                                                        <h5 className='text-center'>User Grade Upgrading</h5>
-                                                        <Alert
-                                                            className='m-3'
-                                                            message={
-                                                                <>
-                                                                    <p>Changing users <b>Grade</b> will alter their access to the available content</p>
-                                                                </>
-                                                            }
-                                                            type="warning"
-                                                            showIcon
-                                                        />
-                                                        <div className='text-center my-2'>
-                                                            {
-                                                                <div className='text-center my-3'>
-                                                                    <b>{selected?.name} - {selected?.grade?.name}</b>
-                                                                </div>
-                                                            }
-                                                        </div>
-                                                        <Select
-                                                            className='w-100'
-                                                            placeholder="Select Grade"
-                                                            size='large'
-                                                            value={updatedGrade}
-                                                            onChange={(value) => { setUpdatedGrade(value) }}>
-                                                            {grades?.map(g => (
-                                                                <Option key={g?._id}
-                                                                    value={g?._id}
-                                                                    disabled={g?.name === "Administration"}>
-                                                                    {g?.name}
-                                                                </Option>
-                                                            ))}
-                                                        </Select>
-                                                        <div className='text-center mt-3'>
-                                                            <button onClick={handleUpdate} className="btn btn-warning fw-bold">
-                                                                {updateSpinnerLoading ? <Spinner /> : "Update Grade"}
-                                                            </button>
-                                                        </div>
-                                                    </Modal>
                                                 </tr>
                                             )
                                         })
                                     )}
                                 </tbody>
                             </table>
-
                         </div>}
                     </div>
                 </div>
             </div>
+            <Modal
+                open={visible}
+                onCancel={() => setVisible(false)}
+                footer={null}>
+                <h5 className='text-center'>User Grade Upgrading</h5>
+                <Alert
+                    className='m-3'
+                    message={
+                        <>
+                            <p>Changing users <b>Grade</b> will alter their access to the available content</p>
+                        </>
+                    }
+                    type="warning"
+                    showIcon
+                />
+                <div className='text-center my-2'>
+                    {
+                        <div className='text-center my-3'>
+                            <b>{selected?.name} - {selected?.grade?.name}</b>
+                        </div>
+                    }
+                </div>
+                <Select
+                    className='w-100'
+                    placeholder="Select Grade"
+                    size='large'
+                    value={updatedGrade}
+                    onChange={(value) => { setUpdatedGrade(value) }}>
+                    {grades?.map(g => (
+                        <Option key={g?._id}
+                            value={g?._id}
+                            disabled={g?.name === "Administration"}>
+                            {g?.name}
+                        </Option>
+                    ))}
+                </Select>
+                <div className='text-center mt-3'>
+                    <button onClick={handleUpdate} className="btn btn-warning fw-bold">
+                        {updateSpinnerLoading ? <Spinner /> : "Update Grade"}
+                    </button>
+                </div>
+            </Modal>
         </Layout >
     );
 };
