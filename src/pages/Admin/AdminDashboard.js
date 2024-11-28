@@ -227,7 +227,7 @@ const AdminDashboard = () => {
                                             {grades?.filter((g) => getStudentCountForGrade(g?._id) > 0).map((g, i) => (
                                                 <li key={g?._id}>
                                                     <b> {i + 1}. </b> {g?.name}: &nbsp;
-                                                    <span className='badge text-bg-dark'>
+                                                    <span className='badge text-bg-dark fs-5'>
                                                         {getStudentCountForGrade(g?._id)}
                                                     </span>
                                                     <hr />
