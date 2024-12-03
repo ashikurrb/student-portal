@@ -73,7 +73,8 @@ const HomePage = () => {
                 </div>
 
                 <div className="text-center my-5">
-                    <button className="btn btn-outline-dark py-3 w-75 fw-bold fs-3"  onClick={() => navigate(`/view-courses`)}>
+                    <button className="btn btn-outline-dark py-3 w-75 fw-bold fs-3" onClick={() => navigate(`/view-courses`)}>
+                        <i className="fa-solid fa-book-open" />  &nbsp;
                         Check out our new courses &nbsp; <i className="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>

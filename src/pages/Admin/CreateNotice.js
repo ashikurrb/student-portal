@@ -260,12 +260,12 @@ const CreateNotice = () => {
         return doc.body.textContent || "";
     };
 
-    //Quill modules
+    //quill modules
     const modules = {
         toolbar: [
-
             ["bold", "italic", "underline", "strike"],
-            [{ size: ["small", false, "large", "huge"] }],
+            [{ align: [] }],
+            [{ header: [1, 2, 3, false] }],
             [{ font: [] }],
             [
                 { color: [] },
@@ -275,7 +275,7 @@ const CreateNotice = () => {
             [{ list: "ordered" }, { list: "bullet" }],
             ["blockquote", "code-block"],
             ["link"],
-        ]
+        ],
     };
 
     //initializing updated description on html formatted version for react-quill

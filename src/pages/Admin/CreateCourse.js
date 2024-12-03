@@ -274,19 +274,19 @@ const CreateCourse = () => {
     //Quill modules
     const modules = {
         toolbar: [
-
             ["bold", "italic", "underline", "strike"],
-            [{ size: ["small", false, "large", "huge"] }],
+            [{ align: [] }],
+            [{ header: [1, 2, 3, false] }],
             [{ font: [] }],
             [
-                { color: [] },
+                { color: [] }, 
                 { background: [] },
             ],
             [{ script: "sub" }, { script: "super" }],
             [{ list: "ordered" }, { list: "bullet" }],
             ["blockquote", "code-block"],
-            ["link"],
-        ]
+            ["link"], 
+        ],
     };
 
     //initializing updated description on html formatted version for react-quill
