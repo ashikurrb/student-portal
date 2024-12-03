@@ -260,6 +260,24 @@ const CreateNotice = () => {
         return doc.body.textContent || "";
     };
 
+    //Quill modules
+    const modules = {
+        toolbar: [
+
+            ["bold", "italic", "underline", "strike"],
+            [{ size: ["small", false, "large", "huge"] }],
+            [{ font: [] }],
+            [
+                { color: [] },
+                { background: [] },
+            ],
+            [{ script: "sub" }, { script: "super" }],
+            [{ list: "ordered" }, { list: "bullet" }],
+            ["blockquote", "code-block"],
+            ["link"],
+        ]
+    };
+
     //initializing updated description on html formatted version for react-quill
     useEffect(() => {
         if (visible) {
@@ -374,6 +392,7 @@ const CreateNotice = () => {
                                     </div>
                                     <div className='mb-3'>
                                         <ReactQuill
+                                            modules={modules}
                                             theme="snow"
                                             value={noticeInfo}
                                             onChange={setNoticeInfo}
@@ -544,6 +563,7 @@ const CreateNotice = () => {
                     </div>
                     <div className='mb-3'>
                         <ReactQuill
+                            modules={modules}
                             theme="snow"
                             value={updatedNoticeInfo}
                             onChange={setUpdatedNoticeInfo}

@@ -271,10 +271,28 @@ const CreateCourse = () => {
         };
     }, []);
 
+    //Quill modules
+    const modules = {
+        toolbar: [
+
+            ["bold", "italic", "underline", "strike"],
+            [{ size: ["small", false, "large", "huge"] }],
+            [{ font: [] }],
+            [
+                { color: [] },
+                { background: [] },
+            ],
+            [{ script: "sub" }, { script: "super" }],
+            [{ list: "ordered" }, { list: "bullet" }],
+            ["blockquote", "code-block"],
+            ["link"],
+        ]
+    };
+
     //initializing updated description on html formatted version for react-quill
     useEffect(() => {
         if (visible) {
-            setUpdatedDescription(selected.description);  
+            setUpdatedDescription(selected.description);
         }
     }, [visible]);
 
@@ -405,6 +423,7 @@ const CreateCourse = () => {
                                     </div>
                                     <div>
                                         <ReactQuill
+                                            modules={modules}
                                             theme="snow"
                                             className="mb-3"
                                             value={description}
@@ -630,7 +649,8 @@ const CreateCourse = () => {
                     </div>
                     <div>
                         <ReactQuill
-                            key={visible ? 'modal-open' : 'modal-closed'}
+                            key={selected?._id}
+                            modules={modules}
                             theme="snow"
                             className="mb-3"
                             value={updatedDescription}

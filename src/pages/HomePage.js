@@ -1,8 +1,11 @@
 import React from 'react';
 import Layout from '../components/Layouts/Layout';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+    const navigate = useNavigate();
+
     const teachers = [
         {
             img: "/images/teachers/rifat.jpg",
@@ -47,10 +50,16 @@ const HomePage = () => {
                 <div id="carouselExampleAutoplaying" className="carousel slide mt-3" data-bs-ride="carousel">
                     <div className="carousel-inner">
                         <div className="carousel-item active">
-                            <img src="/images/banner/carousel1.jpg" height={400} className="d-block w-100" alt="banner1" />
+                            <img src="/images/banner/ssc-25-com.jpg" height={450} className="d-block w-100" alt="banner1" />
                         </div>
                         <div className="carousel-item">
-                            <img src="/images/banner/carousel2.png" height={400} className="d-block w-100" alt="banner2" />
+                            <img src="/images/banner/ssc-25-sci.jpg" height={450} className="d-block w-100" alt="banner1" />
+                        </div>
+                        <div className="carousel-item">
+                            <img src="/images/banner/carousel1.jpg" height={450} className="d-block w-100" alt="banner1" />
+                        </div>
+                        <div className="carousel-item">
+                            <img src="/images/banner/carousel2.jpg" height={450} className="d-block w-100" alt="banner2" />
                         </div>
                     </div>
                     <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
@@ -63,14 +72,21 @@ const HomePage = () => {
                     </button>
                 </div>
 
-                <motion.h2
-                    className="text-center mt-5"
-                    initial={{ x: "-100%" }} // Start from the left
-                    animate={{ x: 0 }} // Move to the center
-                    transition={{ duration: 2, ease: "easeOut" }} // Smooth animation
-                >
-                    Our Teachers Panel
-                </motion.h2>
+                <div className="text-center my-5">
+                    <button className="btn btn-outline-dark py-3 w-75 fw-bold fs-3"  onClick={() => navigate(`/view-courses`)}>
+                        Check out our new courses &nbsp; <i className="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div>
+                    <motion.h2
+                        className="text-center mt-5"
+                        initial={{ x: "-100%" }} // Start from the left
+                        animate={{ x: 0 }} // Move to the center
+                        transition={{ duration: 2, ease: "easeOut" }} // Smooth animation
+                    >
+                        Our Teachers Panel
+                    </motion.h2>
+                </div>
                 <hr />
                 <div className='d-flex flex-wrap justify-content-lg-between justify-content-center'>
                     {
