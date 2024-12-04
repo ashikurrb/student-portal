@@ -523,115 +523,6 @@ const SetPaymentStatus = () => {
                                 </button>
                             )}
                         </div>
-
-                        <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
-                            <form onSubmit={handleCreate}>
-                                <h5 className='text-center'>Create Payment Status</h5>
-                                <div className="mt-4 d-lg-flex">
-                                    <Select
-                                        placeholder="Select Grade"
-                                        size='large'
-                                        className='mb-3 me-2 w-100'
-                                        value={grade || undefined}
-                                        onChange={(value) => { setGrade(value) }}>
-                                        {grades?.map(g => (
-                                            <Option key={g?._id} value={g?._id}>{g?.name}</Option>
-                                        ))}
-                                    </Select>
-                                    <Select
-                                        placeholder="Select Student"
-                                        size='large'
-                                        className='mb-3 w-100'
-                                        value={user || undefined}
-                                        onChange={(value) => { setUser(value) }} required>
-                                        {filteredUsers?.map(u => (
-                                            <Option key={u._id} value={u._id}>
-                                                <div className="d-flex align-items-center">
-                                                    <img
-                                                        className='me-1'
-                                                        style={{ width: "23px", height: "23px", borderRadius: "100%" }}
-                                                        src={u?.avatar}
-                                                        alt="dp" />
-                                                    {u.name}
-                                                </div>
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                </div>
-                                <div className="d-lg-flex">
-                                    <DatePicker
-                                        format={dateFormat}
-                                        size='large'
-                                        className='mb-3 me-2 w-100'
-                                        value={paymentDate}
-                                        onChange={(date) => setPaymentDate(date)}
-                                        required
-                                    />
-                                    <Input
-                                        type="text"
-                                        placeholder='Remark'
-                                        size="large"
-                                        className='mb-3 me-2 w-100'
-                                        value={remark}
-                                        onChange={(e) => setRemark(e.target.value)} required
-                                    />
-                                </div>
-                                <div className="d-lg-flex">
-                                    <Input
-                                        prefix="৳"
-                                        type="number"
-                                        placeholder='Amount'
-                                        size="large"
-                                        className='mb-3 me-2 w-100'
-                                        value={amount}
-                                        onChange={(e) => setAmount(e.target.value)} required
-                                    />
-                                    <Select
-                                        placeholder="Select Method"
-                                        size='large'
-                                        className='mb-3 me-2 w-100'
-                                        value={method}
-                                        onChange={(value) => { setMethod(value) }}
-                                        required>
-                                        {methods.map((method, i) => (
-                                            <Option key={i} value={method.name}>
-                                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                    <img
-                                                        src={method.logo}
-                                                        alt={method.name}
-                                                        style={{ width: 20, height: 20, marginRight: 8 }}
-                                                    />
-                                                    {method.name}
-                                                </div>
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                    <Input
-                                        suffix={
-                                            method === "Cash" ? (
-                                                trxIdLoading ? <Spin size="small" />
-                                                    : <span onClick={getTrxIdGen} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                                                        <XFilled />
-                                                    </span>
-                                            ) : null
-                                        }
-                                        type="text"
-                                        placeholder='Transaction ID'
-                                        size="large"
-                                        className='mb-3 w-100'
-                                        value={trxId}
-                                        onChange={(e) => setTrxId(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="text-center">
-                                    <button type="submit" className="btn btn-warning fw-bold mt-2">
-                                        {spinnerLoading ? <Spinner /> : "Create Payment Status"}
-                                    </button>
-                                </div>
-                            </form>
-                        </Modal>
-
                         <h6 className='d-flex justify-content-between'>
                             <span>
                                 {
@@ -759,6 +650,113 @@ const SetPaymentStatus = () => {
                     </div>
                 </div>
             </div>
+            <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
+                <form onSubmit={handleCreate}>
+                    <h5 className='text-center'>Create Payment Status</h5>
+                    <div className="mt-4 d-lg-flex">
+                        <Select
+                            placeholder="Select Grade"
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={grade || undefined}
+                            onChange={(value) => { setGrade(value) }}>
+                            {grades?.map(g => (
+                                <Option key={g?._id} value={g?._id}>{g?.name}</Option>
+                            ))}
+                        </Select>
+                        <Select
+                            placeholder="Select Student"
+                            size='large'
+                            className='mb-3 w-100'
+                            value={user || undefined}
+                            onChange={(value) => { setUser(value) }} required>
+                            {filteredUsers?.map(u => (
+                                <Option key={u._id} value={u._id}>
+                                    <div className="d-flex align-items-center">
+                                        <img
+                                            className='me-1'
+                                            style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                                            src={u?.avatar}
+                                            alt="dp" />
+                                        {u.name}
+                                    </div>
+                                </Option>
+                            ))}
+                        </Select>
+                    </div>
+                    <div className="d-lg-flex">
+                        <DatePicker
+                            format={dateFormat}
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={paymentDate}
+                            onChange={(date) => setPaymentDate(date)}
+                            required
+                        />
+                        <Input
+                            type="text"
+                            placeholder='Remark'
+                            size="large"
+                            className='mb-3 me-2 w-100'
+                            value={remark}
+                            onChange={(e) => setRemark(e.target.value)} required
+                        />
+                    </div>
+                    <div className="d-lg-flex">
+                        <Input
+                            prefix="৳"
+                            type="number"
+                            placeholder='Amount'
+                            size="large"
+                            className='mb-3 me-2 w-100'
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)} required
+                        />
+                        <Select
+                            placeholder="Select Method"
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={method}
+                            onChange={(value) => { setMethod(value) }}
+                            required>
+                            {methods.map((method, i) => (
+                                <Option key={i} value={method.name}>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <img
+                                            src={method.logo}
+                                            alt={method.name}
+                                            style={{ width: 20, height: 20, marginRight: 8 }}
+                                        />
+                                        {method.name}
+                                    </div>
+                                </Option>
+                            ))}
+                        </Select>
+                        <Input
+                            suffix={
+                                method === "Cash" ? (
+                                    trxIdLoading ? <Spin size="small" />
+                                        : <span onClick={getTrxIdGen} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                            <XFilled />
+                                        </span>
+                                ) : null
+                            }
+                            type="text"
+                            placeholder='Transaction ID'
+                            size="large"
+                            className='mb-3 w-100'
+                            value={trxId}
+                            onChange={(e) => setTrxId(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="text-center">
+                        <button type="submit" className="btn btn-warning fw-bold mt-2">
+                            {spinnerLoading ? <Spinner /> : "Create Payment Status"}
+                        </button>
+                    </div>
+                </form>
+            </Modal>
             <Modal width={650} onCancel={() => setVisible(false)} open={visible} footer={null}>
                 <h5 className='text-center'>Update Payment Status</h5>
                 <div className='text-center my-3'>

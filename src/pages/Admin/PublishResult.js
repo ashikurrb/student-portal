@@ -304,90 +304,6 @@ const PublishResult = () => {
                                 </button>
                             )}
                         </div>
-                        <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
-                            <h5 className='text-center mb-3'>Publish Result</h5>
-                            <form onSubmit={handlePublish}>
-                                <div className="mt-4 d-lg-flex">
-                                    <Select
-                                        placeholder="Select Grade"
-                                        size='large'
-                                        className='mb-3 me-2 w-100'
-                                        value={grade || undefined}
-                                        onChange={(value) => { setGrade(value) }}
-                                        showSearch
-                                        filterOption={(input, option) =>
-                                            (option?.children || '').toLowerCase().includes(input.toLowerCase())
-                                        }
-                                    >
-                                        {grades?.map(g => (
-                                            <Option key={g?._id} value={g?._id}>{g?.name}</Option>
-                                        ))}
-                                    </Select>
-                                    <Select
-                                        placeholder="Select Student"
-                                        size='large'
-                                        className='mb-3 w-100'
-                                        value={user || undefined}
-                                        onChange={(value) => { setUser(value) }}
-                                        required>
-                                        {filteredUsers?.map(u => (
-                                            <Option key={u._id} value={u._id}>
-                                                <div className="d-flex align-items-center">
-                                                    <img
-                                                        className='me-1'
-                                                        style={{ width: "23px", height: "23px", borderRadius: "100%" }}
-                                                        src={u?.avatar}
-                                                        alt="dp" />
-                                                    {u.name}
-                                                </div>
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                </div>
-                                <div className="d-lg-flex">
-                                    <Input
-                                        type="text"
-                                        placeholder='Exam Type'
-                                        className='mb-3 me-2 w-100'
-                                        size='large'
-                                        value={type}
-                                        onChange={(e) => setType(e.target.value)} required
-                                    />
-                                    <DatePicker
-                                        format={dateFormat}
-                                        className='mb-3 w-100'
-                                        size='large'
-                                        value={examDate}
-                                        onChange={(date) => setExamDate(date)}
-                                        required
-                                    />
-                                </div>
-                                <div className="d-lg-flex">
-                                    <Input
-                                        type="text"
-                                        placeholder='Subject'
-                                        className='mb-3 me-2 w-100'
-                                        size='large'
-                                        value={subject}
-                                        onChange={(e) => setSubject(e.target.value)} required
-                                    />
-                                    <Input
-                                        type="text"
-                                        placeholder='Marks'
-                                        className='mb-3 w-100'
-                                        size='large'
-                                        value={marks}
-                                        onChange={(e) => setMarks(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="text-center">
-                                    <button type="submit" className="btn btn-warning fw-bold mt-2">
-                                        {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}
-                                    </button>
-                                </div>
-                            </form>
-                        </Modal>
                         {
                             selectedResult.length > 0 ?
                                 <h6 className='d-flex justify-content-start'>{selectedResult.length} selected</h6> :
@@ -489,6 +405,90 @@ const PublishResult = () => {
                     </div>
                 </div>
             </div>
+            <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
+                <h5 className='text-center mb-3'>Publish Result</h5>
+                <form onSubmit={handlePublish}>
+                    <div className="mt-4 d-lg-flex">
+                        <Select
+                            placeholder="Select Grade"
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={grade || undefined}
+                            onChange={(value) => { setGrade(value) }}
+                            showSearch
+                            filterOption={(input, option) =>
+                                (option?.children || '').toLowerCase().includes(input.toLowerCase())
+                            }
+                        >
+                            {grades?.map(g => (
+                                <Option key={g?._id} value={g?._id}>{g?.name}</Option>
+                            ))}
+                        </Select>
+                        <Select
+                            placeholder="Select Student"
+                            size='large'
+                            className='mb-3 w-100'
+                            value={user || undefined}
+                            onChange={(value) => { setUser(value) }}
+                            required>
+                            {filteredUsers?.map(u => (
+                                <Option key={u._id} value={u._id}>
+                                    <div className="d-flex align-items-center">
+                                        <img
+                                            className='me-1'
+                                            style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                                            src={u?.avatar}
+                                            alt="dp" />
+                                        {u.name}
+                                    </div>
+                                </Option>
+                            ))}
+                        </Select>
+                    </div>
+                    <div className="d-lg-flex">
+                        <Input
+                            type="text"
+                            placeholder='Exam Type'
+                            className='mb-3 me-2 w-100'
+                            size='large'
+                            value={type}
+                            onChange={(e) => setType(e.target.value)} required
+                        />
+                        <DatePicker
+                            format={dateFormat}
+                            className='mb-3 w-100'
+                            size='large'
+                            value={examDate}
+                            onChange={(date) => setExamDate(date)}
+                            required
+                        />
+                    </div>
+                    <div className="d-lg-flex">
+                        <Input
+                            type="text"
+                            placeholder='Subject'
+                            className='mb-3 me-2 w-100'
+                            size='large'
+                            value={subject}
+                            onChange={(e) => setSubject(e.target.value)} required
+                        />
+                        <Input
+                            type="text"
+                            placeholder='Marks'
+                            className='mb-3 w-100'
+                            size='large'
+                            value={marks}
+                            onChange={(e) => setMarks(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="text-center">
+                        <button type="submit" className="btn btn-warning fw-bold mt-2">
+                            {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}
+                        </button>
+                    </div>
+                </form>
+            </Modal>
             <Modal onCancel={() => setVisible(false)} open={visible} footer={null}>
                 <h5 className='text-center'>Update Result</h5>
 

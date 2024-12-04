@@ -282,82 +282,6 @@ const CreateContent = () => {
                                 </button>
                             )}
                         </div>
-
-                        <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
-                            <h5 className='text-center'>Create Content</h5>
-                            <form onSubmit={handleCreate}>
-                                <div className="mt-4 d-lg-flex">
-                                    <Select
-                                        placeholder="Select Grade"
-                                        size='large'
-                                        className='mb-3 me-2 w-100'
-                                        value={grade || undefined}
-                                        onChange={(value) => { setGrade(value) }}>
-                                        {grades?.map(g => (
-                                            <Option key={g._id} value={g._id}>{g.name}</Option>
-                                        ))}
-                                    </Select>
-                                    <Select
-                                        placeholder="Select Content Type"
-                                        size='large'
-                                        className='mb-3 w-100'
-                                        value={type}
-                                        onChange={(value) => { setType(value) }}
-                                        required>
-                                        {types.map((type, i) => (
-                                            <Option key={i} value={type.name}>
-                                                <div>
-                                                    <span> {type.logo}</span>
-                                                    <span className='ms-1'> {type.name}</span>
-                                                </div>
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                </div>
-                                <div className="d-lg-flex">
-                                    <Input
-                                        type="text"
-                                        placeholder='Subject'
-                                        className='mb-3 me-2 w-100'
-                                        size='large'
-                                        value={subject}
-                                        onChange={(e) => setSubject(e.target.value)}
-                                        minLength={3} maxLength={20}
-                                        required
-                                    />
-                                    <Input
-                                        type="text"
-                                        placeholder='Remark'
-                                        className='mb-3 w-100'
-                                        size="large"
-                                        value={remark}
-                                        onChange={(e) => setRemark(e.target.value)}
-                                        minLength={3} maxLength={30}
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <Input
-                                        addonBefore={
-                                            <span style={{ paddingRight: '4px' }}>
-                                                <LinkOutlined />
-                                            </span>
-                                        }
-                                        type="url"
-                                        placeholder='Paste Link Here'
-                                        className='mb-3 w-100'
-                                        size="large"
-                                        value={contentLink}
-                                        onChange={(e) => setContentLink(e.target.value)} required
-                                    />
-                                </div>
-                                <div className=" text-center">
-                                    <button type="submit" className="btn btn-warning fw-bold mt-2">
-                                        {spinnerLoading ? <Spinner /> : "Create Content"}
-                                    </button>
-                                </div>
-                            </form>
-                        </Modal>
                         {
                             selectedContent.length > 0 ?
                                 <h6 className='d-flex justify-content-start'>{selectedContent.length} selected</h6> :
@@ -459,6 +383,81 @@ const CreateContent = () => {
                     </div>
                 </div>
             </div>
+            <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
+                <h5 className='text-center'>Create Content</h5>
+                <form onSubmit={handleCreate}>
+                    <div className="mt-4 d-lg-flex">
+                        <Select
+                            placeholder="Select Grade"
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={grade || undefined}
+                            onChange={(value) => { setGrade(value) }}>
+                            {grades?.map(g => (
+                                <Option key={g._id} value={g._id}>{g.name}</Option>
+                            ))}
+                        </Select>
+                        <Select
+                            placeholder="Select Content Type"
+                            size='large'
+                            className='mb-3 w-100'
+                            value={type}
+                            onChange={(value) => { setType(value) }}
+                            required>
+                            {types.map((type, i) => (
+                                <Option key={i} value={type.name}>
+                                    <div>
+                                        <span> {type.logo}</span>
+                                        <span className='ms-1'> {type.name}</span>
+                                    </div>
+                                </Option>
+                            ))}
+                        </Select>
+                    </div>
+                    <div className="d-lg-flex">
+                        <Input
+                            type="text"
+                            placeholder='Subject'
+                            className='mb-3 me-2 w-100'
+                            size='large'
+                            value={subject}
+                            onChange={(e) => setSubject(e.target.value)}
+                            minLength={3} maxLength={20}
+                            required
+                        />
+                        <Input
+                            type="text"
+                            placeholder='Remark'
+                            className='mb-3 w-100'
+                            size="large"
+                            value={remark}
+                            onChange={(e) => setRemark(e.target.value)}
+                            minLength={3} maxLength={30}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <Input
+                            addonBefore={
+                                <span style={{ paddingRight: '4px' }}>
+                                    <LinkOutlined />
+                                </span>
+                            }
+                            type="url"
+                            placeholder='Paste Link Here'
+                            className='mb-3 w-100'
+                            size="large"
+                            value={contentLink}
+                            onChange={(e) => setContentLink(e.target.value)} required
+                        />
+                    </div>
+                    <div className=" text-center">
+                        <button type="submit" className="btn btn-warning fw-bold mt-2">
+                            {spinnerLoading ? <Spinner /> : "Create Content"}
+                        </button>
+                    </div>
+                </form>
+            </Modal>
             <Modal onCancel={() => setVisible(false)} open={visible} footer={null}>
                 <h5 className='text-center'>Update Content</h5>
                 <div className='text-center my-3'>
