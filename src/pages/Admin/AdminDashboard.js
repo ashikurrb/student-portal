@@ -7,6 +7,9 @@ import Spinner from '../../components/Spinner';
 import { Link } from 'react-router-dom';
 import { Modal } from 'antd';
 import dayjs from 'dayjs';
+import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
@@ -55,7 +58,7 @@ const AdminDashboard = () => {
                 getFailedRegistration();
             }
         } catch (error) {
-            toast.error('Something wrong while Delete');
+            toast.error('Something wrong while delete');
         }
     };
 
@@ -159,9 +162,21 @@ const AdminDashboard = () => {
         getFailedRegistration();
     }, []);
 
-    useEffect(() => {
-        getFailedRegistration();
-    }, [failedRegistration]);
+    // Register required Chart.js components
+    ChartJS.register(ArcElement, Tooltip, Legend);
+
+    const chartData = {
+        labels: grades.map(
+            (grade) => `${grade.name} (${getStudentCountForGrade(grade._id)})` // Combine grade name and student count
+        ),
+        datasets: [
+            {
+                label: "Students",
+                data: grades.map((grade) => getStudentCountForGrade(grade._id)),
+                backgroundColor: ["blue", "green", "red", "orange", "purple", "yellow", "pink", "brown", "gray", "black"],
+            },
+        ],
+    };
 
     return (
         <Layout title={"Dashboard - Admin Panel"}>
@@ -223,7 +238,8 @@ const AdminDashboard = () => {
                                 ) : (
                                     <>
                                         <h5 className='text-center'>Student Count</h5>
-                                        <ol style={{ maxHeight: 400, overflow: 'auto', listStyleType: 'decimal', padding: 0 }}>
+                                        <Doughnut data={chartData} />
+                                        {/* <ol style={{ maxHeight: 400, overflow: 'auto', listStyleType: 'decimal', padding: 0 }}>
                                             {grades?.filter((g) => getStudentCountForGrade(g?._id) > 0).map((g, i) => (
                                                 <li key={g?._id}>
                                                     <b> {i + 1}. </b> {g?.name}: &nbsp;
@@ -233,7 +249,7 @@ const AdminDashboard = () => {
                                                     <hr />
                                                 </li>
                                             ))}
-                                        </ol>
+                                        </ol> */}
                                     </>
                                 )}
                             </div>

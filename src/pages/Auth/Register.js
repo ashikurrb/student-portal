@@ -216,7 +216,7 @@ const Register = () => {
                                         onChange={(e) => setAnswer(e.target.value)}
                                         className="w-100"
                                         size="large"
-                                        placeholder='Security Answer'
+                                        placeholder='Set a security answer to reset your password'
                                         minLength={3}
                                         maxLength={10}
                                         allowClear
