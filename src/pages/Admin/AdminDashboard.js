@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layouts/Layout';
+import { Doughnut } from 'react-chartjs-2';
 import AdminMenu from './AdminMenu';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -7,27 +8,21 @@ import Spinner from '../../components/Spinner';
 import { Link } from 'react-router-dom';
 import { Modal } from 'antd';
 import dayjs from 'dayjs';
-import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-
 const AdminDashboard = () => {
-    const [users, setUsers] = useState([]);
     const [failedRegistration, setFailedRegistration] = useState([]);
-    const [grades, setGrades] = useState([]);
-    const [courses, setCourses] = useState([]);
-    const [payment, setPayment] = useState([]);
-    const [orders, setOrders] = useState([]);
+    const [dashboardData, setDashboardData] = useState({});
     const [spinnerLoading, setSpinnerLoading] = useState(true);
     const [visible, setVisible] = useState(false);
 
-    // Get all grades
-    const getAllGrades = async () => {
+    // Get all data
+    const getDashboardData = async () => {
         setSpinnerLoading(true);
         try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/grade/all-grades`);
-            if (data?.success) {
-                setGrades(data?.grade);
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/dashboard-data`);
+            if (data) {
+                setDashboardData(data);
                 setSpinnerLoading(false);
             } else {
                 toast.error("Error! Please reload the page");
@@ -36,7 +31,7 @@ const AdminDashboard = () => {
             console.log(error);
         }
     };
-
+console.log(dashboardData);
     // Get failed registration
     const getFailedRegistration = async () => {
         try {
@@ -62,103 +57,11 @@ const AdminDashboard = () => {
         }
     };
 
-    // Get all users
-    const getAllUsers = async () => {
-        try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/all-users`);
-            setUsers(data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
-    // Get all courses
-    const getAllCourses = async () => {
-        try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/course/all-courses`);
-            setCourses(data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    // Get all payment list
-    const getAllPayment = async () => {
-        try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/payment/all-payment`);
-            setPayment(data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    // Calculate the student count for each grade
-    const getStudentCountForGrade = (gradeId) => {
-        return users.filter((user) => user?.grade?._id === gradeId).length;
-    };
-
-    // Total payment amount calculation
-    const totalAmount = payment.reduce((sum, p) => sum + p.amount, 0);
-
-    // Calculate the total payment amount for the current month
-    const getMonthlyPaymentTotal = () => {
-        const currentDate = new Date();
-        const currentMonth = currentDate.getMonth();
-        const currentYear = currentDate.getFullYear();
-
-        // Filter payments created in the current month
-        const monthlyPayments = payment.filter((p) => {
-            const currentPay = new Date(p.paymentDate);
-            return currentPay.getMonth() === currentMonth && currentPay.getFullYear() === currentYear;
-        });
-
-        // Sum up the total amount for the current month
-        return monthlyPayments.reduce((sum, p) => sum + p.amount, 0);
-    };
-
-    // Get current month name
-    const getCurrentMonthName = () => {
-        const currentDate = new Date();
-        return currentDate.toLocaleString('default', { month: 'long' });
-    };
-
-    //Get All Order
-    const getOrderList = async () => {
-        try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/order/all-order`);
-            setOrders(data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    // Total sell
-    const totalSellAmount = orders
-        .filter((o) => o.status === 'Approved')
-        .reduce((sum, o) => sum + (o?.course?.price || 0), 0);
-
-    //get pending order count
-    const getPendingOrderCount = () => {
-        return orders.filter((order) => order.status === 'Pending').length;
-    }
-
-    //get approved order count
-    const getApprovedOrderCount = () => {
-        return orders.filter((order) => order.status === 'Approved').length;
-    }
-
-    //get canceled order count
-    const getCanceledOrderCount = () => {
-        return orders.filter((order) => order.status === 'Canceled').length;
-    }
 
     // Fetch data on component mount
     useEffect(() => {
-        getAllUsers();
-        getAllGrades();
-        getAllCourses();
-        getAllPayment();
-        getOrderList();
+        getDashboardData();
         getFailedRegistration();
     }, []);
 
@@ -166,17 +69,20 @@ const AdminDashboard = () => {
     ChartJS.register(ArcElement, Tooltip, Legend);
 
     const chartData = {
-        labels: grades.map(
-            (grade) => `${grade.name} (${getStudentCountForGrade(grade._id)})` // Combine grade name and student count
+        labels: dashboardData?.totalUserbyGrade?.map(
+            (grade) => `${grade._id} (${grade.total})` // Combine grade name and student count
         ),
         datasets: [
             {
                 label: "Students",
-                data: grades.map((grade) => getStudentCountForGrade(grade._id)),
-                backgroundColor: ["blue", "green", "red", "orange", "purple", "yellow", "pink", "brown", "gray", "black"],
+                data: dashboardData?.totalUserbyGrade?.map((grade) => grade?.total), // Extract total count for each grade
+                backgroundColor: [
+                    "blue", "green", "red", "orange", "purple", 
+                    "yellow", "pink", "brown", "gray", "black"
+                ], // Colors for each grade
             },
         ],
-    };
+    };    
 
     return (
         <Layout title={"Dashboard - Admin Panel"}>
@@ -193,19 +99,19 @@ const AdminDashboard = () => {
                             <div class="col-md-6 p-3 card">
                                 <div>
                                     <ul className="mb-3">
-                                        <li className="py-1 h5">Total Grades: <u>{grades?.length}</u></li>
-                                        <li className="py-1 h5">Total Students: <u>{users?.length}</u></li>
+                                        <li className="py-1 h5">Total Grades: <u>{dashboardData.totalGrade}</u></li>
+                                        <li className="py-1 h5">Total Students: <u>{dashboardData.totalUser}</u></li>
                                         {
                                             failedRegistration.length > 0 ?
                                                 <li onClick={() => setVisible(true)} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
                                                     className="py-1 h5 text-danger">Total Failed Registration:&nbsp;
-                                                    <u>{failedRegistration.length}</u>
+                                                    <u>{failedRegistration?.length}</u>
                                                 </li> : ''}
-                                        <li className="py-1 h5">Total Courses: <u>{courses.length}</u></li>
+                                        <li className="py-1 h5">Total Courses: <u>{dashboardData?.totalCourse}</u></li>
                                     </ul>
                                     <ul className="mb-3">
-                                        <li className="py-1 h5">Total Payment Received: {totalAmount} Tk</li>
-                                        <li className="py-1 h5">{getCurrentMonthName()} Payment: <u>{getMonthlyPaymentTotal()}</u> Tk</li>
+                                        <li className="py-1 h5">Total Payment Received: {dashboardData?.totalPaymentReceived} Tk</li>
+                                        <li className="py-1 h5">{dashboardData?.currentMonth} Payment: <u>{dashboardData?.totalCurrentMonthPayment}</u> Tk</li>
                                     </ul>
                                 </div>
 
@@ -213,19 +119,19 @@ const AdminDashboard = () => {
                                 <div>
                                     <h5 className="py-1">Orders Summary</h5>
                                     <ul>
-                                        <li>Total Orders: <u>{orders.length}</u></li>
-                                        <Link to={getPendingOrderCount() > 0 ? '/dashboard/admin/order-list' : ''}>
+                                        <li>Total Orders: <u>{dashboardData?.totalOrder}</u></li>
+                                        <Link to={dashboardData?.totalPendingOrder > 0 ? '/dashboard/admin/order-list' : ''}>
                                             {
-                                                getPendingOrderCount() > 0 &&
+                                                dashboardData?.totalPendingOrder > 0 &&
                                                 <li> <span className='text-danger fw-bold fs-5'>
-                                                    Pending: <span className='badge text-bg-danger'>{getPendingOrderCount()}</span>
+                                                    Pending: <span className='badge text-bg-danger'>{dashboardData.totalPendingOrder}</span>
                                                 </span>
                                                 </li>
                                             }
                                         </Link>
-                                        <li className='text-info'>Canceled: <u>{getCanceledOrderCount()}</u></li>
-                                        <li className='text-success'>Approved: <u>{getApprovedOrderCount()}</u></li>
-                                        <li>Total Sell: <b><u>{totalSellAmount}</u></b> Tk</li>
+                                        <li className='text-info'>Canceled: <u>{dashboardData.totalCanceledOrder}</u></li>
+                                        <li className='text-success'>Approved: <u>{dashboardData.totalApprovedOrder}</u></li>
+                                        <li>Total Sell: <b><u>{dashboardData.totalOrderSell}</u></b> Tk</li>
                                     </ul>
                                 </div>
                             </div>
@@ -240,11 +146,11 @@ const AdminDashboard = () => {
                                         <h5 className='text-center'>Student Count</h5>
                                         <Doughnut data={chartData} />
                                         {/* <ol style={{ maxHeight: 400, overflow: 'auto', listStyleType: 'decimal', padding: 0 }}>
-                                            {grades?.filter((g) => getStudentCountForGrade(g?._id) > 0).map((g, i) => (
+                                            {dashboardData.totalUserbyGrade.map((g, i) => (
                                                 <li key={g?._id}>
-                                                    <b> {i + 1}. </b> {g?.name}: &nbsp;
+                                                    <b> {i + 1}. </b> {g?._id}: &nbsp;
                                                     <span className='badge text-bg-dark fs-5'>
-                                                        {getStudentCountForGrade(g?._id)}
+                                                        {g?.total}
                                                     </span>
                                                     <hr />
                                                 </li>
