@@ -96,53 +96,14 @@ const AdminDashboard = () => {
                             <i className="fa-solid fa-gauge" /> Dashboard
                         </h4>
                         <div className="row m-2">
-                            {/* <div class="col-md-6 p-3 card">
-                                <div>
-                                    <ul className="mb-3">
-                                        <li className="py-1 h5">Total Grades: <u>{dashboardData.totalGrade}</u></li>
-                                        <li className="py-1 h5">Total Students: <u>{dashboardData.totalUser}</u></li>
-                                        {
-                                            failedRegistration.length > 0 ?
-                                                <li onClick={() => setVisible(true)} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-                                                    className="py-1 h5 text-danger">Total Failed Registration:&nbsp;
-                                                    <u>{failedRegistration?.length}</u>
-                                                </li> : ''}
-                                        <li className="py-1 h5">Total Courses: <u>{dashboardData?.totalCourse}</u></li>
-                                    </ul>
-                                    <ul className="mb-3">
-                                        <li className="py-1 h5">Total Payment Received: {dashboardData?.totalPaymentReceived} Tk</li>
-                                        <li className="py-1 h5">{dashboardData?.currentMonth} Payment: <u>{dashboardData?.totalCurrentMonthPayment}</u> Tk</li>
-                                    </ul>
-                                </div>
-
-
-                                <div>
-                                    <h5 className="py-1">Orders Summary</h5>
-                                    <ul>
-                                        <li>Total Orders: <u>{dashboardData?.totalOrder}</u></li>
-                                        <Link to={dashboardData?.totalPendingOrder > 0 ? '/dashboard/admin/order-list' : ''}>
-                                            {
-                                                dashboardData?.totalPendingOrder > 0 &&
-                                                <li> <span className='text-danger fw-bold fs-5'>
-                                                    Pending: <span className='badge text-bg-danger'>{dashboardData.totalPendingOrder}</span>
-                                                </span>
-                                                </li>
-                                            }
-                                        </Link>
-                                        <li className='text-info'>Canceled: <u>{dashboardData.totalCanceledOrder}</u></li>
-                                        <li className='text-success'>Approved: <u>{dashboardData.totalApprovedOrder}</u></li>
-                                        <li>Total Sell: <b><u>{dashboardData.totalOrderSell}</u></b> Tk</li>
-                                    </ul>
-                                </div>
-                            </div> */}
-                            <div class="col-md-6 p-3 card">
+                            <div class="col-md-6 p-3 card order-2 order-md-1">
                                 <div className="d-flex">
                                     <div className='m-1 w-100'>
                                         {
                                             failedRegistration.length > 0 ?
                                                 <div className="card shadow" onClick={() => setVisible(true)} style={{ cursor: 'pointer' }}>
                                                     <h4 className='text-success m-3 text-center'>
-                                                        <i className="fa-solid fa-graduation-cap" style={{ marginRight: "8px" }} />
+                                                        <i className="fa-solid fa-circle-exclamation" style={{ marginRight: "8px" }} />
                                                         Failed:&nbsp;
                                                         <span className='badge text-bg-danger'>
                                                             {failedRegistration?.length}
@@ -217,13 +178,13 @@ const AdminDashboard = () => {
                                 <div className="d-flex">
                                     <div className="card m-1 shadow w-100">
                                         <h4 className='text-success m-3 text-center'>
-                                            <i className="fa-solid fa-book" style={{ marginRight: "8px" }} />
+                                            <i className="fa-solid fa-box" style={{ marginRight: "8px" }} />
                                             Orders</h4>
                                         <h2 className='text-center'>{dashboardData.totalOrder}</h2>
                                     </div>
                                     <div className="card m-1 shadow w-100">
                                         <h4 className='text-success m-3 text-center'>
-                                            <i className="fa-solid fa-book" style={{ marginRight: "8px" }} />
+                                            <i className="fa-brands fa-sellsy" style={{ marginRight: "8px" }} />
                                             Sell</h4>
                                         <h2 className='text-center'>{dashboardData.totalOrderSell} TK</h2>
                                     </div>
@@ -247,7 +208,7 @@ const AdminDashboard = () => {
                                 </div>
                             </div>
 
-                            <div className="col-md-6 p-3 card">
+                            <div className="col-md-6 p-3 card order-md-2 order-1">  
                                 {spinnerLoading ? (
                                     <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
                                         <Spinner />
