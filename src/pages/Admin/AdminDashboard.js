@@ -92,9 +92,9 @@ const AdminDashboard = () => {
                         <AdminMenu />
                     </div>
                     <div className="col-md-9">
-                        <h4 className='text-center my-3'>
+                        <h5 className='text-center my-3'>
                             <i className="fa-solid fa-gauge" /> Dashboard
-                        </h4>
+                        </h5>
                         <div className="row m-2">
                             <div class="col-md-6 p-3 card order-2 order-md-1">
                                 <div className="d-flex">
@@ -102,13 +102,15 @@ const AdminDashboard = () => {
                                         {
                                             failedRegistration.length > 0 ?
                                                 <div className="card shadow" onClick={() => setVisible(true)} style={{ cursor: 'pointer' }}>
-                                                    <h4 className='text-success m-3 text-center'>
-                                                        <i className="fa-solid fa-circle-exclamation" style={{ marginRight: "8px" }} />
-                                                        Failed:&nbsp;
+                                                    <h5 className='text-success m-3 text-center'>
+                                                        <span>
+                                                            <i className="fa-solid fa-circle-exclamation" style={{ marginRight: "8px" }} />
+                                                            Failed User: &nbsp;
+                                                        </span>
                                                         <span className='badge text-bg-danger'>
                                                             {failedRegistration?.length}
                                                         </span>
-                                                    </h4>
+                                                    </h5>
                                                 </div>
                                                 : ''}
                                     </div>
@@ -117,13 +119,15 @@ const AdminDashboard = () => {
                                             {
                                                 dashboardData?.totalPendingOrder > 0 &&
                                                 <div className="card shadow">
-                                                    <h4 className='text-success m-3 text-center'>
-                                                        <i className="fa-solid fa-clock" style={{ marginRight: "8px" }} />
-                                                        Pending: &nbsp;
+                                                    <h5 className='text-success m-3 text-center'>
+                                                        <span>
+                                                            <i className="fa-solid fa-clock" style={{ marginRight: "8px" }} />
+                                                            Pending: &nbsp;
+                                                        </span>
                                                         <span className='badge text-bg-danger'>
                                                             {dashboardData.totalPendingOrder}
                                                         </span>
-                                                    </h4>
+                                                    </h5>
                                                 </div>
                                             }
                                         </Link>
@@ -132,83 +136,80 @@ const AdminDashboard = () => {
                                 <hr />
                                 <div className="d-flex">
                                     <div className="card m-1 shadow w-100">
-                                        <h4 className='text-success m-3 text-center'>
+                                        <h5 className='text-success m-3 text-center'>
                                             <i className="fa-solid fa-graduation-cap" style={{ marginRight: "8px" }} />
-                                            Grades</h4>
-                                        <h2 className='mx- text-center'>{dashboardData.totalGrade}</h2>
+                                            Grades</h5>
+                                        <h3 className='mx- text-center'>{dashboardData.totalGrade}</h3>
                                     </div>
                                     <div className="card m-1 shadow w-100">
-                                        <h4 className='text-success m-3 text-center'>
+                                        <h5 className='text-success m-3 text-center'>
                                             <i className="fa-solid fa-users" style={{ marginRight: "8px" }} />
-                                            Users</h4>
-                                        <h2 className='mx- text-center'>{dashboardData.totalUser}</h2>
+                                            Users</h5>
+                                        <h3 className='mx- text-center'>{dashboardData.totalUser}</h3>
                                     </div>
                                 </div>
                                 <div className="d-flex">
                                     <div className="card m-1 shadow w-100">
-                                        <h4 className='text-success m-3 text-center'>
+                                        <h5 className='text-success m-3 text-center'>
                                             <i className="fa-solid fa-credit-card" style={{ marginRight: "8px" }} />
-                                            Total Payment</h4>
-                                        <h2 className='mx- text-center'>{dashboardData.totalPaymentReceived} TK</h2>
+                                            Total Payment</h5>
+                                        <h3 className='mx- text-center'>{dashboardData.totalPaymentReceived} TK</h3>
                                     </div>
                                     <div className="card m-1 shadow w-100">
-                                        <h4 className='text-success m-3 text-center'>
+                                        <h5 className='text-success m-3 text-center'>
                                             <i className="fa-solid fa-credit-card" style={{ marginRight: "8px" }} />
-                                            {dashboardData.currentMonth}</h4>
-                                        <h2 className='mx- text-center'>{dashboardData.totalCurrentMonthPayment} TK</h2>
+                                            {dashboardData.currentMonth}</h5>
+                                        <h3 className='mx- text-center'>{dashboardData.totalCurrentMonthPayment} TK</h3>
                                     </div>
 
                                 </div>
                                 <div className="d-flex">
                                     <div className="card m-1 shadow w-100">
-                                        <h4 className='text-success m-3 text-center'>
+                                        <h5 className='text-success m-3 text-center'>
                                             <i className="fa-solid fa-book" style={{ marginRight: "8px" }} />
-                                            Courses</h4>
-                                        <h2 className='mx- text-center'>{dashboardData.totalCourse}</h2>
+                                            Courses</h5>
+                                        <h3 className='mx- text-center'>{dashboardData.totalCourse}</h3>
                                     </div>
                                     <div className="card m-1 shadow w-100">
-                                        <h4 className='text-success m-3 text-center'>
-                                            <i className="fa-solid fa-credit-card" style={{ marginRight: "8px" }} />
-                                            Sell</h4>
-                                        <h2 className='mx- text-center'>{dashboardData.totalOrderSell} TK</h2>
+
                                     </div>
 
                                 </div>
                                 <hr />
                                 <div className="d-flex">
                                     <div className="card m-1 shadow w-100">
-                                        <h4 className='text-success m-3 text-center'>
+                                        <h5 className='text-success m-3 text-center'>
                                             <i className="fa-solid fa-box" style={{ marginRight: "8px" }} />
-                                            Orders</h4>
-                                        <h2 className='text-center'>{dashboardData.totalOrder}</h2>
+                                            Orders</h5>
+                                        <h3 className='text-center'>{dashboardData.totalOrder}</h3>
                                     </div>
                                     <div className="card m-1 shadow w-100">
-                                        <h4 className='text-success m-3 text-center'>
+                                        <h5 className='text-success m-3 text-center'>
                                             <i className="fa-brands fa-sellsy" style={{ marginRight: "8px" }} />
-                                            Sell</h4>
-                                        <h2 className='text-center'>{dashboardData.totalOrderSell} TK</h2>
+                                            Sell</h5>
+                                        <h3 className='text-center'>{dashboardData.totalOrderSell} TK</h3>
                                     </div>
                                 </div>
                                 <div className="d-flex">
                                     <div className="card m-1 shadow w-100">
-                                        <h4 className='text-success m-3 text-center'>
+                                        <h5 className='text-success m-3 text-center'>
                                             <i className="fa-solid fa-thumbs-up" style={{ marginRight: "8px" }} />
-                                            Approved</h4>
-                                        <h2 className='text-center'>{dashboardData.totalApprovedOrder}</h2>
+                                            Approved</h5>
+                                        <h3 className='text-center'>{dashboardData.totalApprovedOrder}</h3>
                                     </div>
                                     <div className="card m-1 shadow w-100">
                                         <Link to={dashboardData?.totalPendingOrder > 0 ? '/dashboard/admin/order-list' : ''}>
-                                            <h4 className='text-success m-3 text-center'>
+                                            <h5 className='text-success m-3 text-center'>
                                                 <i className="fa-solid fa-ban" style={{ marginRight: "8px" }} />
-                                                Canceled</h4>
-                                            <h2 className='text-center'>{dashboardData.totalCanceledOrder}</h2>
+                                                Canceled</h5>
+                                            <h3 className='text-center'>{dashboardData.totalCanceledOrder}</h3>
                                         </Link>
                                     </div>
 
                                 </div>
                             </div>
 
-                            <div className="col-md-6 p-3 card order-md-2 order-1">  
+                            <div className="col-md-6 p-3 card order-md-2 order-1">
                                 {spinnerLoading ? (
                                     <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
                                         <Spinner />
