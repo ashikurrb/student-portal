@@ -17,7 +17,7 @@ const Footer = () => {
                                 <Link to="/policy">Privacy Policy</Link>
                             </p>
                         </div>
-    
+
                         <div className='text-center'>
                             <h5>Follow Us</h5>
                             <div className="d-md-flex justify-content-between">
@@ -37,7 +37,7 @@ const Footer = () => {
             <hr />
             <div className='text-center mb-3'>
                 <span>Copyright &copy; 2024
-                    <Link className='text-warning' to="https://www.facebook.com/ashikurrb85" target='_blank'>
+                    <Link className='text-warning' to="https://ashikurrb.vercel.app" target='_blank'>
                         @ashikurrb
                     </Link>
                     All Rights Reserved
