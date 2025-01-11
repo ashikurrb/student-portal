@@ -186,3 +186,19 @@ body {
   border-radius: 8px 8px 0px 0px !important; 
   background-color: #f4f4f4;
 }
+
+/* For desktops (screens larger than 768px) */
+@media (min-width: 768px) {
+  .desktop-img {
+    height: 500px !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* For mobile (screens smaller than 768px), image takes full width */
+@media (max-width: 767px) {
+  .desktop-img {
+    width: 100% !important;
+  }
+}

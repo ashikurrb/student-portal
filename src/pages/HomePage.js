@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../components/Layouts/Layout';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import "../index.css";
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -44,23 +45,42 @@ const HomePage = () => {
         },
     ];
 
+    const banner = [
+        {
+            img: "/images/banner/ssc-25-com.jpg",
+            title: "SSC 2025 Commerce",
+            status: "active"
+        },
+        {
+            img: "/images/banner/ssc-25-sci.jpg",
+            title: "SSC 2025 Science",
+            status: "active"
+        },
+        {
+            img: "/images/banner/carousel1.jpg",
+            title: "banner1",
+            status: "active"
+        },
+        {
+            img: "/images/banner/carousel2.jpg",
+            title: "banner2",
+            status: "active"
+        },
+
+    ]
+
     return (
         <Layout title={"5points Academy - Best Coaching"}>
             <div className="container">
                 <div id="carouselExampleAutoplaying" className="carousel slide mt-3" data-bs-ride="carousel">
                     <div className="carousel-inner">
-                        <div className="carousel-item active">
-                            <img src="/images/banner/ssc-25-com.jpg" height={450} className="d-block w-100" alt="banner1" />
-                        </div>
-                        <div className="carousel-item">
-                            <img src="/images/banner/ssc-25-sci.jpg" height={450} className="d-block w-100" alt="banner1" />
-                        </div>
-                        <div className="carousel-item">
-                            <img src="/images/banner/carousel1.jpg" height={450} className="d-block w-100" alt="banner1" />
-                        </div>
-                        <div className="carousel-item">
-                            <img src="/images/banner/carousel2.jpg" height={450} className="d-block w-100" alt="banner2" />
-                        </div>
+                        {
+                            banner.map((b, i) => (
+                                <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''}`}>
+                                    <img src={b.img} className="d-block w-100 desktop-img" alt={b.title} />
+                                </div>
+                            ))
+                        }
                     </div>
                     <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
                         <span className="carousel-control-prev-icon" aria-hidden="true" />
