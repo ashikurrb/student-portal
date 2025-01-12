@@ -455,6 +455,7 @@ const PublishResult = () => {
                             onChange={(e) => setType(e.target.value)} required
                         />
                         <DatePicker
+                            placeholder="Exam Date"
                             format={dateFormat}
                             className='mb-3 w-100'
                             size='large'
@@ -515,6 +516,7 @@ const PublishResult = () => {
                             onChange={(e) => setUpdatedType(e.target.value)} required
                         />
                         <DatePicker
+                            placeholder="Exam Date"
                             value={updatedExamDate}
                             format={dateFormat}
                             className='mb-3 w-100'

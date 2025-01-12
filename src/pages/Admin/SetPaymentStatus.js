@@ -686,6 +686,7 @@ const SetPaymentStatus = () => {
                     </div>
                     <div className="d-lg-flex">
                         <DatePicker
+                            placeholder='Payment Date'
                             format={dateFormat}
                             size='large'
                             className='mb-3 me-2 w-100'
@@ -782,6 +783,7 @@ const SetPaymentStatus = () => {
                             onChange={(e) => setUpdatedRemark(e.target.value)} required
                         />
                         <DatePicker
+                            placeholder='Payment Date'
                             format={dateFormat}
                             value={updatedPaymentDate}
                             className='w-100 mb-3 me-2'
