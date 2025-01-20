@@ -22,20 +22,19 @@ const PublishResult = () => {
     const [user, setUser] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [type, setType] = useState('');
-    const [subject, setSubject] = useState('');
-    const [marks, setMarks] = useState('');
     const [examDate, setExamDate] = useState('');
     const [result, setResult] = useState([]);
     const [updatedType, setUpdatedType] = useState('');
-    const [updatedSubject, setUpdatedSubject] = useState('');
-    const [updatedMarks, setUpdatedMarks] = useState('');
     const [updatedExamDate, setUpdatedExamDate] = useState('');
     const [selected, setSelected] = useState(null);
     const [visible, setVisible] = useState(false);
     const [createModalVisible, setIsCreateModalVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedResult, setSelectedResult] = useState([]);
-    const [subjectFields, setSubjectFields] = useState([{ subject: '', marks: '' }]);
+    const [subjects, setSubjects] = useState([{ subject: '', marks: '' }]);
+    const [updatedSubjects, setUpdatedSubjects] = useState([{ subject: '', marks: '' }]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalResult, setModalResult] = useState(null);
 
     //Get All Grades
     const getAllGrades = async (req, res) => {
@@ -95,22 +94,40 @@ const PublishResult = () => {
         getAllResults();
     }, [])
 
-    // Function to handle adding new subject and mark fields
+    // Create Form
     const handleAddField = () => {
-        setSubjectFields([...subjectFields, { subject: '', marks: '' }]);
+        setSubjects([...subjects, { subject: '', marks: '' }]);
     };
 
     const handleRemoveField = () => {
-        if (subjectFields.length > 1) {
-            setSubjectFields(subjectFields.slice(0, -1));
+        if (subjects.length > 1) {
+            setSubjects(subjects.slice(0, -1));
+        }
+    };
+
+
+    // Update Form
+    const updatedAddField = () => {
+        setUpdatedSubjects([...updatedSubjects, { updatedSubject: '', updatedMarks: '' }]);
+    };
+
+    const updatedRemoveField = () => {
+        if (updatedSubjects.length > 1) {
+            setUpdatedSubjects(updatedSubjects.slice(0, -1));
         }
     };
 
     // Function to handle changes in the dynamically added fields
     const handleFieldChange = (index, field, value) => {
-        const newFields = [...subjectFields];
+        const newFields = [...subjects];
         newFields[index][field] = value;
-        setSubjectFields(newFields);
+        setSubjects(newFields);
+    };
+
+    const handleUpdatedFieldChange = (index, field, value) => {
+        const newFields = [...updatedSubjects];
+        newFields[index][field] = value;
+        setUpdatedSubjects(newFields);
     };
 
     //publish result
@@ -118,14 +135,24 @@ const PublishResult = () => {
         e.preventDefault();
         setSpinnerLoading(true);
         try {
-            const resultData = new FormData();
-            resultData.append("grade", grade);
-            resultData.append("user", user);
-            resultData.append("type", type);
-            resultData.append("subject", subject);
-            resultData.append("examDate", examDate);
-            resultData.append("marks", marks);
-            const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/result/create-result`, resultData);
+            const resultData = {
+                grade,
+                user,
+                type,
+                subjects,
+                examDate,
+            };
+            const { data } = await axios.post(
+                `${process.env.REACT_APP_API}/api/v1/result/create-result`,
+                resultData,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            // Handle success
             if (data?.success) {
                 setSpinnerLoading(false);
                 toast.success(data?.message);
@@ -133,22 +160,20 @@ const PublishResult = () => {
                 // Clear form fields
                 setUser(undefined);
                 setType('');
-                setSubject('');
+                setSubjects([]); // Clear the subjects array
                 setExamDate(undefined);
-                setMarks('');
                 setListSpinnerLoading(false);
             } else {
-                toast.success(data.message);
+                toast.error(data.message);
             }
         } catch (error) {
             console.error("Error details:", error);
             if (error.response && error.response.data && error.response.data.message) {
                 toast.error(error.response.data.message);
-                setSpinnerLoading(false);
             } else {
                 toast.error("Something went wrong");
-                setSpinnerLoading(false);
             }
+            setSpinnerLoading(false);
         }
     };
 
@@ -156,10 +181,8 @@ const PublishResult = () => {
     const createModalCancel = () => {
         setGrade('');
         setUser('');
-        setSubject('');
-        setSubjectFields([{ subject: '', marks: '' }]);
+        setSubjects([{ subject: '', marks: '' }]);
         setType('');
-        setMarks('');
         setExamDate(undefined);
         setIsCreateModalVisible(false)
     }
@@ -169,36 +192,45 @@ const PublishResult = () => {
         e.preventDefault();
         setUpdateSpinnerLoading(true);
         try {
-            const updateResultData = new FormData();
-            updateResultData.append("type", updatedType);
-            updateResultData.append("subject", updatedSubject);
-            updateResultData.append("marks", updatedMarks);
-            updateResultData.append("examDate", updatedExamDate);
-            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/result/update-result/${selected._id}`, updateResultData);
+            // Prepare the request payload
+            const updateResultData = {
+                type: updatedType,
+                subjects: updatedSubjects, // Ensure this is an array of objects [{subject, marks}, ...]
+                examDate: updatedExamDate,
+            };
+
+            // Make the API call
+            const { data } = await axios.put(
+                `${process.env.REACT_APP_API}/api/v1/result/update-result/${selected._id}`,
+                updateResultData,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            // Handle the response
             if (data?.success) {
-                setUpdateSpinnerLoading(false);
                 toast.success(data?.message);
-                getAllResults();
+                getAllResults(); // Refresh the list of results
                 // Clear form fields
                 setUpdatedType('');
-                setUpdatedSubject('');
-                setUpdatedMarks('');
+                setUpdatedSubjects([]); // Clear the subjects array
                 setUpdatedExamDate(undefined);
                 setVisible(false);
-                setListSpinnerLoading(false);
             } else {
-                toast.success(data.message);
-                setUpdateSpinnerLoading(false);
+                toast.error(data.message);
             }
         } catch (error) {
             console.error("Error details:", error);
             if (error.response && error.response.data && error.response.data.message) {
                 toast.error(error.response.data.message);
-                setUpdateSpinnerLoading(false);
             } else {
                 toast.error("Something went wrong");
-                setUpdateSpinnerLoading(false);
             }
+        } finally {
+            setUpdateSpinnerLoading(false); // Stop the spinner in any case
         }
     };
 
@@ -207,9 +239,14 @@ const PublishResult = () => {
         setVisible(true);
         setSelected(result);
         setUpdatedType(result.type);
-        setUpdatedSubject(result.subject);
-        setUpdatedMarks(result.marks);
+        setUpdatedSubjects(result.subjects);
         setUpdatedExamDate(dayjs(result.examDate))
+    };
+
+    // Open modal with selected result data
+    const openResultModal = (result) => {
+        setModalVisible(true);
+        setModalResult(result);
     };
 
     // Filter content based on search query
@@ -297,7 +334,8 @@ const PublishResult = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className="text-center my-4 mb-md-5">
-                            <i class="fa-solid fa-square-poll-vertical"></i> Publish Result ({result.length})
+                            <i className="fa-solid fa-square-poll-vertical" />
+                            Publish Result ({result.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <Input
@@ -381,7 +419,7 @@ const PublishResult = () => {
                                         required
                                     />
                                 </div>
-                                {subjectFields.map((field, index) => (
+                                {subjects.map((field, index) => (
                                     <div className="d-lg-flex" key={index}>
                                         <Input
                                             type="text"
@@ -414,7 +452,7 @@ const PublishResult = () => {
                                         onClick={handleRemoveField}
                                         type="button"
                                         className='btn btn-outline'
-                                        >
+                                    >
                                         <i className="fa-solid fa-minus" />
                                     </button>
                                 </div>
@@ -450,9 +488,8 @@ const PublishResult = () => {
                                                 <th>Grade</th>
                                                 <th>Name</th>
                                                 <th>Type</th>
-                                                <th>Subject</th>
-                                                <th>Result</th>
                                                 <th>Date</th>
+                                                <th>Result</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -488,23 +525,26 @@ const PublishResult = () => {
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{r?.grade?.name}</td>
                                                             <td>
-                                                                <div className="d-flex align-items-center">
-                                                                    <img
-                                                                        className='me-1'
-                                                                        style={{ width: "23px", height: "23px", borderRadius: "100%" }}
-                                                                        src={r?.user.avatar}
-                                                                        alt="dp" />
-                                                                    <span>{r?.user?.name}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td>{r.type}</td>
-                                                            <td>
                                                                 <Tooltip title={`Created: ${dayjs(r.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(r.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
-                                                                    {r.subject}
+                                                                    <div className="d-flex align-items-center">
+                                                                        <img
+                                                                            className='me-1'
+                                                                            style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                                                                            src={r?.user.avatar}
+                                                                            alt="dp" />
+                                                                        <span>{r?.user?.name}</span>
+                                                                    </div>
                                                                 </Tooltip>
                                                             </td>
-                                                            <td>{r.marks}</td>
+                                                            <td>{r.type}</td>
                                                             <td>{dayjs(r.examDate).format('DD MMM YYYY')}</td>
+                                                            <td>
+                                                                <button
+                                                                    onClick={() => openResultModal(r)}
+                                                                    className='btn btn-outline-primary'>
+                                                                    <i className="fa-solid fa-square-poll-vertical" />
+                                                                </button>
+                                                            </td>
                                                             <td>
                                                                 <div className="d-flex">
                                                                     <button className='btn btn-primary mx-1' onClick={() => { openModal(r) }}>
@@ -528,7 +568,6 @@ const PublishResult = () => {
             </div>
             <Modal onCancel={() => setVisible(false)} open={visible} footer={null}>
                 <h5 className='text-center'>Update Result</h5>
-
                 <div className='text-center my-3'>
                     <span className="d-flex justify-content-center align-items-center">
                         <img
@@ -560,23 +599,42 @@ const PublishResult = () => {
                             required
                         />
                     </div>
-                    <div className='mb-2 d-lg-flex'>
-                        <Input
-                            type="text"
-                            placeholder='Subject'
-                            className='w-100 mb-3 me-2'
-                            size='large'
-                            value={updatedSubject}
-                            onChange={(e) => setUpdatedSubject(e.target.value)} required
-                        />
-                        <Input
-                            type="text"
-                            placeholder='Marks'
-                            className='mb-3 w-100'
-                            size='large'
-                            value={updatedMarks}
-                            onChange={(e) => setUpdatedMarks(e.target.value)} required
-                        />
+                    {updatedSubjects.map((updateField, index) => (
+                        <div className="d-lg-flex" key={index}>
+                            <Input
+                                type="text"
+                                placeholder='Subject'
+                                className='mb-3 me-2 w-100'
+                                size='large'
+                                value={updateField.subject}
+                                onChange={(e) => handleUpdatedFieldChange(index, 'subject', e.target.value)}
+                                required
+                            />
+                            <Input
+                                type="text"
+                                placeholder='Marks'
+                                className='mb-3 w-100'
+                                size='large'
+                                value={updateField.marks}
+                                onChange={(e) => handleUpdatedFieldChange(index, 'marks', e.target.value)}
+                                required
+                            />
+                        </div>
+                    ))}
+                    <div className='d-flex justify-content-end'>
+                        <button
+                            onClick={updatedAddField}
+                            type="button"
+                            className='btn btn-outline me-2'>
+                            <i className="fa-solid fa-plus" />
+                        </button>
+                        <button
+                            onClick={updatedRemoveField}
+                            type="button"
+                            className='btn btn-outline'
+                        >
+                            <i className="fa-solid fa-minus" />
+                        </button>
                     </div>
                     <div className="text-center">
                         <button type='submit' className="btn btn-warning fw-bold" >
@@ -584,6 +642,38 @@ const PublishResult = () => {
                         </button>
                     </div>
                 </form>
+            </Modal>
+            <Modal open={modalVisible} onCancel={() => setModalVisible(false)} footer={null}>
+                <div>
+                    <h5 className='text-center mb-3'>
+                        Result
+                    </h5>
+                    <table className="table table-striped">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                modalResult && modalResult.subjects.map((s, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <td>{i + 1}</td>
+                                            <td>{s.subject}</td>
+                                            <td>{s.marks}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </table>
+                    <div className='text-center form-text'>
+                        {modalResult?.type}: {modalResult?.examDate && dayjs(modalResult.examDate).format('MMM DD, YYYY')}
+                    </div>
+                </div>
             </Modal>
         </Layout>
     );
