@@ -243,8 +243,7 @@ const AllUsers = () => {
                                                     </td>
                                                     <td>
                                                         <button className="btn px-0 d-flex justify-content-between align-items-center w-100"
-                                                            onClick={() => { openModal(u) }}
-                                                            disabled={u?.grade?.name === "Administration"}>
+                                                            onClick={() => { openModal(u) }}>
                                                             <span className='text-start'>
                                                                 {u?.grade?.name}
                                                             </span>
@@ -327,8 +326,7 @@ const AllUsers = () => {
                     onChange={(value) => { setUpdatedGrade(value) }}>
                     {grades?.map(g => (
                         <Option key={g?._id}
-                            value={g?._id}
-                            disabled={g?.name === "Administration"}>
+                            value={g?._id}>
                             {g?.name}
                         </Option>
                     ))}
