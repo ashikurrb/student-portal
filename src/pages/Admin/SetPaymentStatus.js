@@ -83,7 +83,7 @@ const SetPaymentStatus = () => {
     // show user list based on grade selection
     useEffect(() => {
         if (grade) {
-            const filtered = users.filter(user => user.grade._id === grade);
+            const filtered = users.filter(user => user?.grade?._id === grade);
             setFilteredUsers(filtered);
             setUser('');
         } else {
@@ -150,6 +150,7 @@ const SetPaymentStatus = () => {
                 toast.success(data?.message);
                 getAllPayment();
                 // Clear form fields after submit
+                // setGrade(undefined);
                 setUser(undefined);
                 setRemark('');
                 setPaymentDate(undefined);
@@ -183,6 +184,11 @@ const SetPaymentStatus = () => {
         setPaymentDate('');
         setIsCreateModalVisible(false)
     }
+
+    //clear trx id field when grade or method changes.. 
+    useEffect(() => {
+        setTrxId('');
+    }, [method, grade]);
 
     //update payment status
     const handleUpdate = async (e) => {
@@ -239,11 +245,12 @@ const SetPaymentStatus = () => {
 
     // Filter content based on search query
     const filteredPayment = payment.filter(p =>
-        p.remark.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.trxId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.method.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+        dayjs(p?.paymentDate).format('DD MMMM YYYY').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p?.remark?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p?.trxId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p?.method?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p?.user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p?.grade?.name?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     //total payment amount calculate
@@ -319,9 +326,9 @@ const SetPaymentStatus = () => {
         };
     }, []);
 
-    // Function to generate invoice PDF
-    const generateInvoice = (payment) => {
-        const loadingToastId = toast.loading('Generating Invoice...');
+    // Function to generate receipt PDF
+    const generateReceipt = (payment) => {
+        const loadingToastId = toast.loading('Generating Receipt...');
 
         // Set page size to A5
         const doc = new jsPDF({
@@ -342,7 +349,7 @@ const SetPaymentStatus = () => {
             const imgHeight = (imgWidth * logo.height) / logo.width; // Maintain aspect ratio
 
             const imgX = (pageWidth - imgWidth) / 2; // Center horizontally
-            const imgY = (pageHeight - imgHeight) / 2; // Center vertically
+            const imgY = (pageHeight - imgHeight) / 2.2; // Center vertically
 
             // Add the watermark image with low opacity to simulate blur
             doc.addImage(logo, 'PNG', imgX, imgY, imgWidth, imgHeight, '', 'NONE');
@@ -374,7 +381,7 @@ const SetPaymentStatus = () => {
 
             doc.setFontSize(16);
             doc.setFont('helvetica', 'bold');
-            const title = 'Payment Invoice';
+            const title = 'Payment Receipt';
             const titleWidth = doc.getTextWidth(title);
             const titleX = (pageWidth - titleWidth) / 2; // Center text horizontally
             doc.text(title, titleX, 44);
@@ -395,15 +402,15 @@ const SetPaymentStatus = () => {
             // Normal text
             doc.setFont('helvetica', 'normal'); // Revert font to normal
             doc.text(dateText, pageWidth - rightMargin - doc.getTextWidth(dateText), 57);
-            doc.text(`${payment.user.name}`, leftMargin + doc.getTextWidth('Name:') + 2, 57 + verticalSpacing);
-            doc.text(`${payment.grade.name}`, leftMargin + doc.getTextWidth('Grade:') + 2, 57 + 2 * verticalSpacing);
-            doc.text(`${payment.user.email}`, leftMargin + doc.getTextWidth('Email:') + 2, 57 + 3 * verticalSpacing);
-            doc.text(`${payment.user.phone}`, leftMargin + doc.getTextWidth('Mobile:') + 2, 57 + 4 * verticalSpacing);
+            doc.text(`${payment?.user?.name}`, leftMargin + doc.getTextWidth('Name:') + 2, 57 + verticalSpacing);
+            doc.text(`${payment?.grade?.name}`, leftMargin + doc.getTextWidth('Grade:') + 2, 57 + 2 * verticalSpacing);
+            doc.text(`${payment?.user?.email}`, leftMargin + doc.getTextWidth('Email:') + 2, 57 + 3 * verticalSpacing);
+            doc.text(`${payment?.user?.phone}`, leftMargin + doc.getTextWidth('Mobile:') + 2, 57 + 4 * verticalSpacing);
 
             doc.autoTable({
                 startY: 100,
                 margin: { left: leftMargin, right: rightMargin },
-                head: [['Remark', 'Amount', 'Method', 'Trx ID / Receipt No']],
+                head: [['Remark', 'Amount', 'Method', 'Trx ID']],
                 body: [
                     [`${payment.remark}`, `TK. ${payment.amount}`, `${payment.method}`, `${payment.trxId}`]
                 ],
@@ -444,7 +451,7 @@ const SetPaymentStatus = () => {
                 doc.setFontSize(8); // Adjust font size for footer
                 doc.setTextColor(128, 128, 128); // Set text color to grey
                 const currentDateTime = dayjs().format('MMMM D, YYYY h:mm A');
-                const footerText1 = `This is a system generated Invoice | Generated on: ${currentDateTime}`;
+                const footerText1 = `This is a system generated receipt | Generated on: ${currentDateTime}`;
                 const footerText2 = `Created by Admin | System Entry: ${dayjs(payment.createdAt).format('MMMM D, YYYY h:mm A')} / ${dayjs(payment.updatedAt).format('MMMM D, YYYY h:mm A')}`;
 
                 const footerWidth1 = doc.getTextWidth(footerText1);
@@ -462,7 +469,7 @@ const SetPaymentStatus = () => {
 
                 const blob = doc.output('blob');
                 const url = URL.createObjectURL(blob);
-                toast.success("Invoice generated", { id: loadingToastId });
+                toast.success("Receipt generated", { id: loadingToastId });
                 const printWindow = window.open(url);
                 if (printWindow) {
                     printWindow.focus();
@@ -508,7 +515,7 @@ const SetPaymentStatus = () => {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-success fw-bold mx-1 py-2 px-4">
-                                <i class="fa-solid fa-plus"></i>  Set Payment
+                                <i className="fa-solid fa-plus" /> Set Payment
                             </button>
                             {selectedPayment.length > 0 && (
                                 <button onClick={handleDeleteSelected} className="btn btn-danger fw-bold mx-1 py-2 floating-delete-button">
@@ -516,115 +523,6 @@ const SetPaymentStatus = () => {
                                 </button>
                             )}
                         </div>
-
-                        <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
-                            <form onSubmit={handleCreate}>
-                                <h5 className='text-center'>Create Payment Status</h5>
-                                <div className="mt-4 d-lg-flex">
-                                    <Select
-                                        placeholder="Select Grade"
-                                        size='large'
-                                        className='mb-3 me-2 w-100'
-                                        value={grade || undefined}
-                                        onChange={(value) => { setGrade(value) }}>
-                                        {grades?.map(g => (
-                                            <Option key={g._id} value={g._id}>{g.name}</Option>
-                                        ))}
-                                    </Select>
-                                    <Select
-                                        placeholder="Select Student"
-                                        size='large'
-                                        className='mb-3 w-100'
-                                        value={user || undefined}
-                                        onChange={(value) => { setUser(value) }} required>
-                                        {filteredUsers?.map(u => (
-                                            <Option key={u._id} value={u._id}>
-                                                <div className="d-flex align-items-center">
-                                                    <img
-                                                        className='me-1'
-                                                        style={{ width: "23px", height: "23px", borderRadius: "100%" }}
-                                                        src={u?.avatar}
-                                                        alt="dp" />
-                                                    {u.name}
-                                                </div>
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                </div>
-                                <div className="d-lg-flex">
-                                    <Input
-                                        type="text"
-                                        placeholder='Remark'
-                                        size="large"
-                                        className='mb-3 me-2 w-100'
-                                        value={remark}
-                                        onChange={(e) => setRemark(e.target.value)} required
-                                    />
-                                    <Input
-                                        prefix="৳"
-                                        type="number"
-                                        placeholder='Amount'
-                                        size="large"
-                                        className='mb-3 me-2 w-100'
-                                        value={amount}
-                                        onChange={(e) => setAmount(e.target.value)} required
-                                    />
-                                    <DatePicker
-                                        format={dateFormat}
-                                        className='w-100 mb-3'
-                                        size='large'
-                                        value={paymentDate}
-                                        onChange={(date) => setPaymentDate(date)}
-                                        required
-                                    />
-                                </div>
-                                <div className="d-lg-flex">
-                                    <Select
-                                        placeholder="Select Method"
-                                        size='large'
-                                        className='mb-3 me-2 w-100'
-                                        value={method}
-                                        onChange={(value) => { setMethod(value) }}
-                                        required>
-                                        {methods.map((method, i) => (
-                                            <Option key={i} value={method.name}>
-                                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                    <img
-                                                        src={method.logo}
-                                                        alt={method.name}
-                                                        style={{ width: 20, height: 20, marginRight: 8 }}
-                                                    />
-                                                    {method.name}
-                                                </div>
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                    <Input
-                                        suffix={
-                                            method === "Cash" ? (
-                                                trxIdLoading ? <Spin size="small" />
-                                                    : <span onClick={getTrxIdGen} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                                                        <XFilled />
-                                                    </span>
-                                            ) : null
-                                        }
-                                        type="text"
-                                        placeholder='Transaction ID / Receipt No'
-                                        size="large"
-                                        className='mb-3 w-100'
-                                        value={trxId}
-                                        onChange={(e) => setTrxId(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="text-center">
-                                    <button type="submit" className="btn btn-warning fw-bold mt-2">
-                                        {spinnerLoading ? <Spinner /> : "Create Payment Status"}
-                                    </button>
-                                </div>
-                            </form>
-                        </Modal>
-
                         <h6 className='d-flex justify-content-between'>
                             <span>
                                 {
@@ -661,7 +559,7 @@ const SetPaymentStatus = () => {
                                                 <th>Method</th>
                                                 <th>Trx ID</th>
                                                 <th>Date</th>
-                                                <th>Invoice</th>
+                                                <th>Receipt</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -726,16 +624,16 @@ const SetPaymentStatus = () => {
                                                             )}
                                                         </td>
                                                         <td>{p.trxId}</td>
-                                                        <td>{dayjs(p?.paymentDate).format('DD MMM YYYY')}</td>
+                                                        <td>{dayjs(p?.paymentDate).format('DD MMMM YYYY')}</td>
                                                         <td className='text-center'>
-                                                            <button className="btn btn-secondary" onClick={() => generateInvoice(p)}>
+                                                            <button className="btn btn-secondary" onClick={() => generateReceipt(p)}>
                                                                 <i className="fa-solid fa-download"></i>
                                                             </button>
                                                         </td>
                                                         <td>
                                                             <div className='d-flex'>
                                                                 <button className='btn btn-primary mx-1' onClick={() => { openModal(p) }}>
-                                                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                                    <i className="fa-solid fa-pen-to-square" /> Edit
                                                                 </button>
                                                                 <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(p._id)}>
                                                                     <i className="fa-solid fa-trash-can"></i> Delete
@@ -752,7 +650,115 @@ const SetPaymentStatus = () => {
                     </div>
                 </div>
             </div>
-            <Modal onCancel={() => setVisible(false)} open={visible} footer={null}>
+            <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
+                <form onSubmit={handleCreate}>
+                    <h5 className='text-center'>Create Payment Status</h5>
+                    <div className="mt-4 d-lg-flex">
+                        <Select
+                            placeholder="Select Grade"
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={grade || undefined}
+                            onChange={(value) => { setGrade(value) }}>
+                            {grades?.map(g => (
+                                <Option key={g?._id} value={g?._id}>{g?.name}</Option>
+                            ))}
+                        </Select>
+                        <Select
+                            placeholder="Select Student"
+                            size='large'
+                            className='mb-3 w-100'
+                            value={user || undefined}
+                            onChange={(value) => { setUser(value) }} required>
+                            {filteredUsers?.map(u => (
+                                <Option key={u._id} value={u._id}>
+                                    <div className="d-flex align-items-center">
+                                        <img
+                                            className='me-1'
+                                            style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                                            src={u?.avatar}
+                                            alt="dp" />
+                                        {u.name}
+                                    </div>
+                                </Option>
+                            ))}
+                        </Select>
+                    </div>
+                    <div className="d-lg-flex">
+                        <DatePicker
+                            placeholder='Payment Date'
+                            format={dateFormat}
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={paymentDate}
+                            onChange={(date) => setPaymentDate(date)}
+                            required
+                        />
+                        <Input
+                            type="text"
+                            placeholder='Remark'
+                            size="large"
+                            className='mb-3 me-2 w-100'
+                            value={remark}
+                            onChange={(e) => setRemark(e.target.value)} required
+                        />
+                    </div>
+                    <div className="d-lg-flex">
+                        <Input
+                            prefix="৳"
+                            type="number"
+                            placeholder='Amount'
+                            size="large"
+                            className='mb-3 me-2 w-100'
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)} required
+                        />
+                        <Select
+                            placeholder="Select Method"
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={method}
+                            onChange={(value) => { setMethod(value) }}
+                            required>
+                            {methods.map((method, i) => (
+                                <Option key={i} value={method.name}>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <img
+                                            src={method.logo}
+                                            alt={method.name}
+                                            style={{ width: 20, height: 20, marginRight: 8 }}
+                                        />
+                                        {method.name}
+                                    </div>
+                                </Option>
+                            ))}
+                        </Select>
+                        <Input
+                            suffix={
+                                method === "Cash" ? (
+                                    trxIdLoading ? <Spin size="small" />
+                                        : <span onClick={getTrxIdGen} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                            <XFilled />
+                                        </span>
+                                ) : null
+                            }
+                            type="text"
+                            placeholder='Transaction ID'
+                            size="large"
+                            className='mb-3 w-100'
+                            value={trxId}
+                            onChange={(e) => setTrxId(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="text-center">
+                        <button type="submit" className="btn btn-warning fw-bold mt-2">
+                            {spinnerLoading ? <Spinner /> : "Create Payment Status"}
+                        </button>
+                    </div>
+                </form>
+            </Modal>
+            <Modal width={650} onCancel={() => setVisible(false)} open={visible} footer={null}>
                 <h5 className='text-center'>Update Payment Status</h5>
                 <div className='text-center my-3'>
                     <span className="d-flex justify-content-center align-items-center">
@@ -776,16 +782,8 @@ const SetPaymentStatus = () => {
                             value={updatedRemark}
                             onChange={(e) => setUpdatedRemark(e.target.value)} required
                         />
-                        <Input
-                            prefix="৳"
-                            type="number"
-                            placeholder='Amount'
-                            size='large'
-                            className='mb-3 me-2 w-100'
-                            value={updatedAmount}
-                            onChange={(e) => setUpdatedAmount(e.target.value)} required
-                        />
                         <DatePicker
+                            placeholder='Payment Date'
                             format={dateFormat}
                             value={updatedPaymentDate}
                             className='w-100 mb-3 me-2'
@@ -795,6 +793,15 @@ const SetPaymentStatus = () => {
                         />
                     </div>
                     <div className="mb-2 d-lg-flex">
+                        <Input
+                            prefix="৳"
+                            type="number"
+                            placeholder='Amount'
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={updatedAmount}
+                            onChange={(e) => setUpdatedAmount(e.target.value)} required
+                        />
                         <Select
                             placeholder="Select Method"
                             size='large'
@@ -817,7 +824,7 @@ const SetPaymentStatus = () => {
                         </Select>
                         <Input
                             type="text"
-                            placeholder='Transaction ID / Receipt No'
+                            placeholder='Transaction ID'
                             size='large'
                             className='mb-3 me-2 w-100'
                             value={updatedTrxId}

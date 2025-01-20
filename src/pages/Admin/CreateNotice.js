@@ -8,7 +8,9 @@ import { SearchOutlined } from '@ant-design/icons';
 import { EyeOutlined } from '@ant-design/icons';
 import { Alert, Image, Input, Modal, Select, Tooltip } from 'antd';
 import dayjs from 'dayjs';
-const { TextArea } = Input;
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 const { Option } = Select;
 
 const CreateNotice = () => {
@@ -246,6 +248,40 @@ const CreateNotice = () => {
         };
     }, []);
 
+    //strip html tags
+    const stripHTML = (html) => {
+        // Replace <br> with newline characters
+        let text = html.replace(/<br\s*\/?>/gi, '\n');
+        text = text.replace(/<\/p>/gi, '\n\n');
+        text = text.replace(/<p>/gi, '');
+
+        // Use DOMParser to remove remaining HTML tags and get plain text
+        const doc = new DOMParser().parseFromString(text, 'text/html');
+        return doc.body.textContent || "";
+    };
+
+    //Quill modules
+    const modules = {
+        toolbar: [
+            [{ header: [1, 2, 3, false] }],
+            ["bold", "italic", "underline", "strike"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            ["link"],
+            [{ script: "sub" }, { script: "super" }],
+            [
+                { color: [] },
+                { background: [] },
+            ],
+        ],
+    };
+
+    //initializing updated description on html formatted version for react-quill
+    useEffect(() => {
+        if (visible) {
+            setUpdatedNoticeInfo(selected.noticeInfo);
+        }
+    }, [visible]);
+
     return (
         <Layout title={"Admin - Create Notice"}>
             <div className="container-fluid mt-3 p-3">
@@ -253,7 +289,7 @@ const CreateNotice = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className="text-center my-4 mb-md-5">
-                            <i class="fa-solid fa-bell"></i> Create Notice ({notice.length})
+                            <i className="fa-solid fa-bell" />Create Notice ({notice.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <Input
@@ -278,101 +314,6 @@ const CreateNotice = () => {
                                     <i className="fa-solid fa-trash-can"></i> Delete Selected
                                 </button>
                             )}
-
-                            <Modal width={650} centered visible={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
-                                <h5 className='text-center'>Create Notice</h5>
-                                <form onSubmit={handleCreate}>
-                                    <div>
-                                        <div className="mb-3">
-                                            <h6 className='text-center my-3'>Maximum Photo size is 3 MB</h6>
-                                            {noticeImg && (
-                                                <div className="text-center">
-                                                    <img src={typeof noticeImg === 'string' ? noticeImg : URL.createObjectURL(noticeImg)} alt='profile-img' style={{ height: "200px" }} className='img-fluid rounded'
-                                                    />
-                                                    <h6 className='mt-3'>
-                                                        {`${(noticeImg.size / 1048576).toFixed(2)} MB`}
-                                                    </h6>
-                                                    <button
-                                                        onClick={() => setNoticeImg(null)} // Reset the image input
-                                                        className="btn btn-danger" >
-                                                        Remove photo
-                                                    </button>
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="mb-3 text-center">
-                                            <label className="btn btn-outline-secondary col-md-12">
-                                                {noticeImg ? (typeof noticeImg === 'string' ? 'Change Photo' : noticeImg.name) : "Upload Photo"}
-                                                <input
-                                                    type="file"
-                                                    name="photo"
-                                                    accept="image/*"
-                                                    onChange={(e) => {
-                                                        setNoticeImg(e.target.files[0]);
-                                                        e.target.value = null; // Clear the input value after selection
-                                                    }}
-                                                    hidden
-                                                />
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <Alert
-                                            message={
-                                                <>
-                                                    <span className='fw-bold'>Avoid grade when setting notice for all</span>
-                                                </>
-                                            }
-                                            type="warning"
-                                            showIcon
-                                        />
-                                    </div>
-                                    <div className="mt-4 d-lg-flex">
-                                        <Select
-                                            allowClear={true}
-                                            placeholder="Select Grade"
-                                            size='large'
-                                            className='mb-3 me-2 w-100'
-                                            value={grade || undefined}
-                                            onChange={(value) => { setGrade(value) }}>
-                                            {grades?.map(g => (
-                                                <Option key={g._id} value={g._id}>{g.name}</Option>
-                                            ))}
-                                        </Select>
-                                        <Input
-                                            showCount
-                                            type="text"
-                                            size='large'
-                                            placeholder='Title'
-                                            className='mb-3 me-2'
-                                            value={title}
-                                            onChange={(e) => setTitle(e.target.value)}
-                                            minLength={4} maxLength={30}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="d-lg-flex">
-                                        <TextArea showCount
-                                            type="text"
-                                            size='large'
-                                            placeholder='Notice Message'
-                                            className=' mb-3'
-                                            value={noticeInfo}
-                                            onChange={(e) => setNoticeInfo(e.target.value)}
-                                            maxLength={200}
-                                            required
-                                        />
-                                    </div>
-                                    <div>
-
-                                    </div>
-                                    <div className=" text-center">
-                                        <button type="submit" className="btn btn-warning fw-bold mt-2">
-                                            {spinnerLoading ? <Spinner /> : "Create Notice"}
-                                        </button>
-                                    </div>
-                                </form>
-                            </Modal>
                         </div>
                         {
                             selectedNotice.length > 0 ?
@@ -438,11 +379,11 @@ const CreateNotice = () => {
                                                             }
                                                         </td>
                                                         <td>
-                                                        <Tooltip title={`Created: ${dayjs(n.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(n.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
+                                                            <Tooltip title={`Created: ${dayjs(n.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(n.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
                                                                 <span>{n?.title}</span>
                                                             </Tooltip>
                                                         </td>
-                                                        <td>{n.noticeInfo.substring(0, 20)}...</td>
+                                                        <td>{stripHTML(n.noticeInfo).substring(0, 20)}...</td>
                                                         <td>
                                                             <Image
                                                                 fallback="https://demofree.sirv.com/nope-not-here.jpg"
@@ -473,7 +414,98 @@ const CreateNotice = () => {
                     </div>
                 </div>
             </div>
-            <Modal centered onCancel={() => setVisible(false)} visible={visible} footer={null}>
+            <Modal width={650} centered open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
+                <h5 className='text-center'>Create Notice</h5>
+                <form onSubmit={handleCreate}>
+                    <div>
+                        <div className="mb-3">
+                            <h6 className='text-center my-3'>Maximum Photo size is 3 MB</h6>
+                            {noticeImg && (
+                                <div className="text-center">
+                                    <img src={typeof noticeImg === 'string' ? noticeImg : URL.createObjectURL(noticeImg)} alt='profile-img' style={{ height: "200px" }} className='img-fluid rounded'
+                                    />
+                                    <h6 className='mt-3'>
+                                        {`${(noticeImg.size / 1048576).toFixed(2)} MB`}
+                                    </h6>
+                                    <button
+                                        onClick={() => setNoticeImg(null)} // Reset the image input
+                                        className="btn btn-danger" >
+                                        Remove photo
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                        <div className="mb-3 text-center">
+                            <label className="btn btn-outline-secondary col-md-12">
+                                {noticeImg ? (typeof noticeImg === 'string' ? 'Change Photo' : noticeImg.name) : "Upload Photo"}
+                                <input
+                                    type="file"
+                                    name="photo"
+                                    accept="image/*"
+                                    onChange={(e) => {
+                                        setNoticeImg(e.target.files[0]);
+                                        e.target.value = null; // Clear the input value after selection
+                                    }}
+                                    hidden
+                                />
+                            </label>
+                        </div>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Alert
+                            message={
+                                <>
+                                    <span className='fw-bold'>Avoid grade when setting notice for all</span>
+                                </>
+                            }
+                            type="warning"
+                            showIcon
+                        />
+                    </div>
+                    <div className="mt-4 d-lg-flex">
+                        <Select
+                            allowClear={true}
+                            placeholder="Select Grade"
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={grade || undefined}
+                            onChange={(value) => { setGrade(value) }}>
+                            {grades?.map(g => (
+                                <Option key={g._id} value={g._id}>{g.name}</Option>
+                            ))}
+                        </Select>
+                        <Input
+                            showCount
+                            type="text"
+                            size='large'
+                            placeholder='Title'
+                            className='mb-3 me-2'
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            minLength={4} maxLength={30}
+                            required
+                        />
+                    </div>
+                    <div className='mb-3'>
+                        <ReactQuill
+                            modules={modules}
+                            theme="snow"
+                            value={noticeInfo}
+                            onChange={setNoticeInfo}
+                            maxLength={1000}
+                            required
+                            placeholder="Notice Description" />
+                    </div>
+                    <div>
+                    </div>
+                    <div className=" text-center">
+                        <button type="submit" className="btn btn-warning fw-bold mt-2">
+                            {spinnerLoading ? <Spinner /> : "Create Notice"}
+                        </button>
+                    </div>
+                </form>
+            </Modal>
+            <Modal width={650} centered onCancel={() => setVisible(false)} open={visible} footer={null}>
                 <h5 className='text-center'>Update Notice</h5>
                 <form onSubmit={handleUpdate}>
                     <div>
@@ -526,16 +558,14 @@ const CreateNotice = () => {
                         />
                     </div>
                     <div className='mb-3'>
-                        <TextArea
-                            showCount
-                            maxLength={200}
-                            size='large'
-                            type="text"
-                            placeholder='Notice message'
+                        <ReactQuill
+                            modules={modules}
+                            theme="snow"
                             value={updatedNoticeInfo}
-                            onChange={(e) => setUpdatedNoticeInfo(e.target.value)}
+                            onChange={setUpdatedNoticeInfo}
+                            maxLength={1000}
                             required
-                        />
+                            placeholder="Notice Description" />
                     </div>
                     <div className="text-center">
                         <button type="submit" className="btn btn-warning fw-bold">

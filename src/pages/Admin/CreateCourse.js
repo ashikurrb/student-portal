@@ -8,11 +8,12 @@ import { SearchOutlined } from '@ant-design/icons';
 import { EyeOutlined } from '@ant-design/icons';
 import { Image, Input, Modal, Select, Tooltip, DatePicker } from 'antd';
 import dayjs from 'dayjs';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 const { RangePicker } = DatePicker;
 const dateFormat = 'DD-MMM-YYYY';
-const { TextArea } = Input;
 const { Option } = Select;
-
 
 const CreateCourse = () => {
     const [spinnerLoading, setSpinnerLoading] = useState(false);
@@ -197,8 +198,8 @@ const CreateCourse = () => {
         c?.grade?.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-     //total price calculate
-     const totalAmount = filteredCourse.reduce((sum, c) => sum + c?.price, 0);
+    //total price calculate
+    const totalAmount = filteredCourse.reduce((sum, c) => sum + c?.price, 0);
 
     //delete individual course
     const handleDelete = async (cId) => {
@@ -270,6 +271,28 @@ const CreateCourse = () => {
         };
     }, []);
 
+    //Quill modules
+    const modules = {
+        toolbar: [
+            [{ header: [1, 2, 3, false] }],
+            ["bold", "italic", "underline", "strike"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            ["link"],
+            [{ script: "sub" }, { script: "super" }],
+            [
+                { color: [] },
+                { background: [] },
+            ],
+        ],
+    };
+
+    //initializing updated description on html formatted version for react-quill
+    useEffect(() => {
+        if (visible) {
+            setUpdatedDescription(selected.description);
+        }
+    }, [visible]);
+
     return (
         <Layout title={"Admin - Create Course"}>
             <div className="container-fluid mt-3 p-3">
@@ -277,7 +300,7 @@ const CreateCourse = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className="text-center my-4 mb-md-5">
-                            <i class="fa-solid fa-book"></i> Create Course ({course.length})
+                            <i className="fa-solid fa-book" /> Create Course ({course.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <Input
@@ -302,119 +325,6 @@ const CreateCourse = () => {
                                     <i className="fa-solid fa-trash-can"></i> Delete Selected
                                 </button>
                             )}
-                            <Modal width={800} centered open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
-                                <h5 className='text-center mb-4'>Create Course</h5>
-                                <form onSubmit={handleCreate}>
-                                    <div>
-                                        <div className="mb-1">
-                                            {courseImg && (
-                                                <div className="text-center">
-                                                    <img src={typeof courseImg === 'string' ? courseImg : URL.createObjectURL(courseImg)} alt='profile-img' style={{ height: "200px" }} className='img-fluid rounded'
-                                                    />
-                                                    <div className="d-flex justify-content-center">
-                                                        <div className='mt-1 fw-bold'>
-                                                            <span> Size: {`${(courseImg.size / 1048576).toFixed(2)} MB`}</span>
-                                                            <span>{
-                                                                courseImg.size > 5000000 ? <p className='text-danger'>Image size should be less than 5 MB</p> : null
-                                                            }</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="mb-3 text-center">
-                                            <label className="btn btn-outline-secondary col-md-8">
-                                                {courseImg ? (typeof courseImg === 'string' ? 'Change Photo' : courseImg.name) : "Upload Photo"}
-                                                <input
-                                                    type="file"
-                                                    name="photo"
-                                                    accept="image/*"
-                                                    onChange={(e) => {
-                                                        setCourseImg(e.target.files[0]);
-                                                        e.target.value = null;
-                                                    }}
-                                                    hidden
-                                                />
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                    </div>
-                                    <div className="d-lg-flex">
-                                        <Select
-                                            allowClear={true}
-                                            placeholder="Select Grade"
-                                            size='large'
-                                            className='mb-3 me-2 w-100'
-                                            value={grade || undefined}
-                                            onChange={(value) => { setGrade(value) }}>
-                                            {grades?.map(g => (
-                                                <Option key={g._id} value={g._id}>{g.name}</Option>
-                                            ))}
-                                        </Select>
-                                        <Input
-                                            showCount
-                                            type="text"
-                                            size='large'
-                                            placeholder='Title'
-                                            className='mb-3 me-2'
-                                            value={title}
-                                            onChange={(e) => setTitle(e.target.value)}
-                                            minLength={4} maxLength={30}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="d-lg-flex">
-                                        <DatePicker
-                                            size='large'
-                                            format={dateFormat}
-                                            placeholder='Starting Date'
-                                            className='mb-3 me-2 w-100'
-                                            value={dateRange}
-                                            onChange={(date) => setDateRange(date)}
-                                            required />
-                                        <Input
-                                            prefix="৳"
-                                            type="number"
-                                            size='large'
-                                            placeholder='Price'
-                                            className='mb-3 me-2'
-                                            value={price}
-                                            onChange={(e) => setPrice(e.target.value)}
-                                            required
-                                        />
-                                        <Select
-                                            placeholder="Course Status"
-                                            size='large'
-                                            className='mb-3 me-2 w-100'
-                                            value={status}
-                                            onChange={(value) => { setStatus(value) }}
-                                            required>
-                                            {statuses.map((s, i) => (
-                                                <Option key={i} value={s}>{s}</Option>
-                                            ))}
-                                        </Select>
-                                    </div>
-                                    <div className="d-lg-flex">
-                                        <TextArea
-                                            type="text"
-                                            size='large'
-                                            placeholder='Course description'
-                                            className=' mb-3'
-                                            value={description}
-                                            onChange={(e) => setDescription(e.target.value)}
-                                            showCount
-                                            maxLength={1000}
-                                            required
-                                        />
-                                    </div>
-                                    <div className=" text-center">
-                                        <button type="submit" className="btn btn-warning fw-bold mt-2">
-                                            {spinnerLoading ? <Spinner /> : "Create Course"}
-                                        </button>
-                                    </div>
-                                </form>
-                            </Modal>
                         </div>
                         <h6 className='d-flex justify-content-between'>
                             <span>
@@ -524,6 +434,117 @@ const CreateCourse = () => {
                     </div>
                 </div>
             </div>
+            <Modal width={800} centered open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
+                <h5 className='text-center mb-4'>Create Course</h5>
+                <form onSubmit={handleCreate}>
+                    <div>
+                        <div className="mb-1">
+                            {courseImg && (
+                                <div className="text-center">
+                                    <img src={typeof courseImg === 'string' ? courseImg : URL.createObjectURL(courseImg)} alt='profile-img' style={{ height: "200px" }} className='img-fluid rounded'
+                                    />
+                                    <div className="d-flex justify-content-center">
+                                        <div className='mt-1 fw-bold'>
+                                            <span> Size: {`${(courseImg.size / 1048576).toFixed(2)} MB`}</span>
+                                            <span>{
+                                                courseImg.size > 5000000 ? <p className='text-danger'>Image size should be less than 5 MB</p> : null
+                                            }</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <div className="mb-3 text-center">
+                            <label className="btn btn-outline-secondary col-md-8">
+                                {courseImg ? (typeof courseImg === 'string' ? 'Change Photo' : courseImg.name) : "Upload Photo"}
+                                <input
+                                    type="file"
+                                    name="photo"
+                                    accept="image/*"
+                                    onChange={(e) => {
+                                        setCourseImg(e.target.files[0]);
+                                        e.target.value = null;
+                                    }}
+                                    hidden
+                                />
+                            </label>
+                        </div>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    </div>
+                    <div className="d-lg-flex">
+                        <Select
+                            allowClear={true}
+                            placeholder="Select Grade"
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={grade || undefined}
+                            onChange={(value) => { setGrade(value) }}>
+                            {grades?.map(g => (
+                                <Option key={g._id} value={g._id}>{g.name}</Option>
+                            ))}
+                        </Select>
+                        <Input
+                            showCount
+                            type="text"
+                            size='large'
+                            placeholder='Title'
+                            className='mb-3 me-2'
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            minLength={4} maxLength={30}
+                            required
+                        />
+                    </div>
+                    <div className="d-lg-flex">
+                        <DatePicker
+                            size='large'
+                            format={dateFormat}
+                            placeholder='Starting Date'
+                            className='mb-3 me-2 w-100'
+                            value={dateRange}
+                            onChange={(date) => setDateRange(date)}
+                            required />
+                        <Input
+                            prefix="৳"
+                            type="number"
+                            size='large'
+                            placeholder='Price'
+                            className='mb-3 me-2'
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                            required
+                        />
+                        <Select
+                            placeholder="Course Status"
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={status}
+                            onChange={(value) => { setStatus(value) }}
+                            required>
+                            {statuses.map((s, i) => (
+                                <Option key={i} value={s}>{s}</Option>
+                            ))}
+                        </Select>
+                    </div>
+                    <div>
+                        <ReactQuill
+                            modules={modules}
+                            theme="snow"
+                            className="mb-3"
+                            value={description}
+                            onChange={setDescription}
+                            maxLength={1000}
+                            required
+                            placeholder="Course Description" />
+                    </div>
+                    <div className=" text-center">
+                        <button type="submit" className="btn btn-warning fw-bold mt-2">
+                            {spinnerLoading ? <Spinner /> : "Create Course"}
+                        </button>
+                    </div>
+                </form>
+            </Modal>
             <Modal width={800} centered onCancel={() => setVisible(false)} open={visible} footer={null}>
                 <h5 className='text-center mb-4'>Update Course</h5>
                 <form onSubmit={handleUpdate}>
@@ -623,18 +644,17 @@ const CreateCourse = () => {
                             ))}
                         </Select>
                     </div>
-                    <div className="d-lg-flex">
-                        <TextArea
-                            type="text"
-                            size='large'
-                            placeholder='Course description'
-                            className=' mb-3'
+                    <div>
+                        <ReactQuill
+                            key={selected?._id}
+                            modules={modules}
+                            theme="snow"
+                            className="mb-3"
                             value={updatedDescription}
-                            onChange={(e) => setUpdatedDescription(e.target.value)}
-                            showCount
+                            onChange={setUpdatedDescription}
                             maxLength={1000}
                             required
-                        />
+                            placeholder="Course Description" />
                     </div>
                     <div className=" text-center">
                         <button type="submit" className="btn btn-warning fw-bold mt-2">

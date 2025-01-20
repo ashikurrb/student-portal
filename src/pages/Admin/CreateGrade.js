@@ -129,19 +129,19 @@ const CreateGrade = () => {
         }
     }
 
-  // Handle Escape key functionality
-  useEffect(() => {
-    const handleEscapeKey = (event) => {
-        if (event.key === 'Escape') {
-            // Clear search bar
-            setName('');
-        }
-    };
-    document.addEventListener('keydown', handleEscapeKey);
-    return () => {
-        document.removeEventListener('keydown', handleEscapeKey);
-    };
-}, []);
+    // Handle Escape key functionality
+    useEffect(() => {
+        const handleEscapeKey = (event) => {
+            if (event.key === 'Escape') {
+                // Clear search bar
+                setName('');
+            }
+        };
+        document.addEventListener('keydown', handleEscapeKey);
+        return () => {
+            document.removeEventListener('keydown', handleEscapeKey);
+        };
+    }, []);
 
     return (
         <Layout title={"Admin - Create Grade"}>
@@ -149,10 +149,15 @@ const CreateGrade = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h2 className='text-center mt-4'><i class="fa-solid fa-graduation-cap"></i> Create Grade</h2>
+                        <h2 className='text-center mt-4'><i className="fa-solid fa-graduation-cap" /> Create Grade</h2>
                         <form className="p-3" onSubmit={handleCreate}>
                             <div>
                                 <Input
+                                    prefix={
+                                        <span>
+                                            <i className="fa-solid fa-graduation-cap" style={{ marginRight: "8px" }} />
+                                        </span>
+                                    }
                                     type="text"
                                     placeholder='Enter grade'
                                     size='large'
@@ -164,7 +169,7 @@ const CreateGrade = () => {
                             </div>
                             <div className="mt-3 text-center">
                                 <button type='submit' className="btn btn-warning fw-bold">
-                                {spinnerLoading ? <Spinner /> : <span><i class="fa-solid fa-plus"></i> Create Grade</span>}
+                                    {spinnerLoading ? <Spinner /> : <span><i className="fa-solid fa-plus" /> Create Grade</span>}
                                 </button>
                             </div>
                         </form>
@@ -201,15 +206,17 @@ const CreateGrade = () => {
                                                     <td className='fs-5 fw-bold'>{g.name}</td>
                                                     <td>{dayjs(g?.createdAt).fromNow()}</td>
                                                     <td>{dayjs(g?.updatedAt).fromNow()}</td>
-                                                    <td className='d-flex'>
-                                                        <button className='btn btn-primary mx-1' onClick={() => { openModal(g) }}
-                                                            disabled={g.name === "Administration"}>
-                                                            <i class="fa-solid fa-pen-to-square"></i> Edit
-                                                        </button>
-                                                        <button className='btn btn-danger mx-1' onClick={() => { handleDelete(g._id) }}
-                                                            disabled={g.name === "Administration"}>
-                                                            <i class="fa-solid fa-trash-can"></i> Delete
-                                                        </button>
+                                                    <td>
+                                                        <div className='d-flex'>
+                                                            <button className='btn btn-primary mx-1' onClick={() => { openModal(g) }}
+                                                                disabled={g.name === "Administration"}>
+                                                                <i className="fa-solid fa-pen-to-square" /> Edit
+                                                            </button>
+                                                            <button className='btn btn-danger mx-1' onClick={() => { handleDelete(g._id) }}
+                                                                disabled={g.name === "Administration"}>
+                                                                <i className="fa-solid fa-trash-can" /> Delete
+                                                            </button>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             ))}
@@ -223,6 +230,11 @@ const CreateGrade = () => {
                         <form onSubmit={handleUpdate}>
                             <div className='mt-4'>
                                 <Input
+                                    addonBefore={
+                                        <span>
+                                            <i className="fa-solid fa-graduation-cap" style={{ marginRight: "8px" }} />
+                                        </span>
+                                    }
                                     type="text"
                                     placeholder='Updated Grade Name'
                                     className='mb-3'

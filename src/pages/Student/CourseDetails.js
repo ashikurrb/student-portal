@@ -9,6 +9,8 @@ import { Image, Input, Modal, Select } from 'antd';
 import toast from 'react-hot-toast';
 import dayjs from 'dayjs';
 import AnimatedTickMark from '../../components/AnimatedTickMark';
+import { motion } from 'framer-motion';
+
 const { Option } = Select;
 
 const CourseDetails = () => {
@@ -109,16 +111,6 @@ const CourseDetails = () => {
         window.scrollTo(0, 0);
     }, [navigate]);
 
-    const refinedDocView = (text) => {
-        if (!text) {
-            return ''; // Return an empty string or handle accordingly if text is undefined/null
-        }
-        const urlRegex = /(https?:\/\/[^\s]+)/g;
-        const textWithLinks = text.replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
-        const textWithNewLines = textWithLinks.replace(/\n/g, '<br>');
-        return textWithNewLines;
-    };
-
     return (
         <Layout title={"Course Details"}>
             <div className="container">
@@ -151,7 +143,7 @@ const CourseDetails = () => {
                                         <div className="card-body">
                                             <h1>{course?.title}</h1>
                                             <h6>
-                                                <Link to={`/view-course/${course?.grade?.slug}`}>
+                                                <Link to={`/view-courses/${course?.grade?.slug}`}>
                                                     Grade: <b>{course?.grade?.name}</b>
                                                 </Link>
                                             </h6>
@@ -174,11 +166,7 @@ const CourseDetails = () => {
                                                     <h5 className='text-danger my-3'>Coming soon</h5>
                                                 )
                                             }
-                                            <p style={{ textAlign: "justify" }}
-                                                dangerouslySetInnerHTML={{
-                                                    __html: refinedDocView(course?.description)
-                                                }}
-                                            />
+                                            <p dangerouslySetInnerHTML={{ __html: course?.description }} />
                                         </div>
                                     </div>
                                 </div>
@@ -200,31 +188,50 @@ const CourseDetails = () => {
                     </ol>
                 </div>
                 <div className="row">
-                    {relatedCourse?.length > 0 && <h3 className='text-center my-4'>More {course.grade.name} Courses</h3>}
+                    {relatedCourse?.length > 0 &&
+                         <motion.h2
+                         className="text-center my-4"
+                         initial={{ x: "-100%" }} 
+                         animate={{ x: 0 }} 
+                         transition={{ duration: 2, ease: "easeOut" }}
+                     >
+                         More {course.grade.name} Courses
+                     </motion.h2>
+                    }
                     {spinnerLoading ? <div className='my-5'><Spinner /></div> : <>
                         <div className="d-flex flex-wrap justify-content-center justify-content-xl-between">
-                            {relatedCourse?.map(c => (
-                                <div className="card m-2" style={{ width: '15rem' }} key={c?._id}>
-                                    <img
-                                        src={c?.courseImg}
-                                        className="card-img-top"
-                                        style={{ height: '200px' }}
-                                        alt={c?.name} />
-                                    <div className="card-body">
-                                        <h4 className='card-title'>{c?.title}</h4>
-                                        <p className="form-text">Grade: <b>{c?.grade?.name}</b>
-                                            <br />
-                                            Start:  {dayjs(c?.dateRange).format("MMM DD, YYYY")}
-                                        </p>
-                                        <h5><span className='fw-bold'>৳</span>{c?.price}</h5>
-                                        <button
-                                            className="btn btn-primary w-100"
-                                            onClick={() => navigate(`/view-course/${c?.grade?.slug}/${c?.slug}`)}>
-                                            <b>Details</b>
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
+                            {
+                                relatedCourse.map((c, i) =>
+                                    <motion.div
+                                        key={i}
+                                        className="card m-2"
+                                        style={{ width: '15rem' }}
+                                        initial={{ opacity: 0, y: 50 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: false, amount: 0.2 }}
+                                        transition={{ duration: 0.5, delay: i * 0.2 }}
+                                    >
+                                        <img
+                                            src={c.courseImg}
+                                            className="card-img-top"
+                                            style={{ height: '200px' }}
+                                            alt={c?.name} />
+                                        <div className="card-body">
+                                            <h4 className='card-title' style={{ height: '4rem' }}>{c?.title}</h4>
+                                            <p className="form-text">Grade: <b>{c?.grade?.name}</b>
+                                                <br />
+                                                Start:  {dayjs(c?.dateRange).format("MMM DD, YYYY")}
+                                            </p>
+                                            <h5><span className='fw-bold'>৳</span>{c?.price}</h5>
+                                            <button
+                                                className="btn btn-primary w-100"
+                                                onClick={() => navigate(`/view-courses/${c?.grade.slug}/${c?.slug}`)}>
+                                                <b>Details</b>
+                                            </button>
+                                        </div>
+                                    </motion.div>
+                                )
+                            }
                         </div>
                     </>
                     }

@@ -23,9 +23,14 @@ const ViewOrder = () => {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/order/user-order`);
             setOrders(data);
         } catch (error) {
-            console.log(error);
-            toast.error("Error fetching orders");
-        } finally {
+            console.error("Error details:", error);
+            if (error.response && error.response.data && error.response.data.error) {
+                toast.error(error.response.data.error);
+            } else {
+                toast.error("Something went wrong");
+            }
+        }
+        finally {
             setSpinnerLoading(false);
         }
     };
@@ -75,7 +80,7 @@ const ViewOrder = () => {
                                                             No Orders Found.
                                                             <br />
                                                             <p className='mt-3'>
-                                                                Visit <Link to={"/view-course"}><u>Courses</u></Link> to order.
+                                                                Visit <Link to={"/view-courses"}><u>Courses</u></Link> to order.
                                                             </p>
                                                         </h3>
                                                     </div>
@@ -98,7 +103,7 @@ const ViewOrder = () => {
 
                                                         <td>
                                                             <div style={{ cursor: "pointer" }} className='fw-bold text-primary' onClick={() => { openModal(o) }}>
-                                                                {o?.course?.title}  <i class="fa-solid fa-arrow-right"></i>
+                                                                {o?.course?.title}  <i className="fa-solid fa-arrow-right" />
                                                             </div>
                                                         </td>
                                                         <td>

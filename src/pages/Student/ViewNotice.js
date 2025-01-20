@@ -7,6 +7,7 @@ import { Image } from 'antd';
 import GoBackButton from '../../components/GoBackButton';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import toast from 'react-hot-toast';
 dayjs.extend(relativeTime)
 
 
@@ -19,8 +20,14 @@ const ViewNotice = () => {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/notice/get-notice`);
             setNotice(data);
         } catch (error) {
-            console.log(error);
-        } finally {
+            console.error("Error details:", error);
+            if (error.response && error.response.data && error.response.data.error) {
+                toast.error(error.response.data.error);
+            } else {
+                toast.error("Something went wrong");
+            }
+        }
+        finally {
             setSpinnerLoading(false);
         }
     };
@@ -43,14 +50,7 @@ const ViewNotice = () => {
                 link.remove();
             });
     };
-
-    const convertLinksToAnchorTags = (text) => {
-        const urlRegex = /(https?:\/\/[^\s]+)/g;
-        const textWithLinks = text.replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
-        const textWithNewLines = textWithLinks.replace(/\n/g, '<br>'); // Replace newlines with <br>
-        return textWithNewLines;
-    };
-
+    
     return (
         <Layout title={"Notice"}>
             <div className="container-fluid px-5 mb-3">
@@ -87,11 +87,7 @@ const ViewNotice = () => {
 
                                                     <div className="col-md-6 mt-2 order-2 order-md-1">
                                                         <h4>{n.title}</h4>
-                                                        <p style={{ textAlign: "justify" }}
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: convertLinksToAnchorTags(n.noticeInfo)
-                                                            }}
-                                                        />
+                                                        <p dangerouslySetInnerHTML={{ __html: n?.noticeInfo }} />
                                                     </div>
                                                     <div className="col-md-6 mt-2 d-flex justify-content-center align-items-center order-1 order-md-2">
                                                         <Image

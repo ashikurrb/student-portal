@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import Spinner from '../../components/Spinner';
 import { EyeOutlined } from '@ant-design/icons';
 import { SearchOutlined } from '@ant-design/icons';
-import { Image, Input, Modal, Select } from 'antd';
+import { Image, Input, Modal, Select, Spin } from 'antd';
 import dayjs from 'dayjs';
 const { Option } = Select;
 
@@ -14,7 +14,7 @@ const OrderList = () => {
     const [orders, setOrders] = useState([]);
     const [statuses] = useState(["Pending", "Approved", "Canceled"]);
     const [listSpinnerLoading, setListSpinnerLoading] = useState(true);
-    const [statusUpdateLoading, setStatusUpdateLoading] = useState(false);
+    const [statusUpdateLoading, setStatusUpdateLoading] = useState(null);
     const [visible, setVisible] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -42,15 +42,16 @@ const OrderList = () => {
 
     //order status change
     const handleChange = async (oId, value) => {
-        setStatusUpdateLoading(true);
+        setStatusUpdateLoading(oId);
         try {
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/order/order-status/${oId}`, { status: value });
             toast.success(data.message)
-            setStatusUpdateLoading(false);
+            setStatusUpdateLoading(null);
             getOrderList();
         } catch (error) {
             console.error(error);
-            toast.error("Error update status")
+            toast.error("Error update status");
+            setStatusUpdateLoading(null);
         }
     }
 
@@ -74,6 +75,7 @@ const OrderList = () => {
 
     // Filter order based on search query
     const filteredOrder = orders.filter(o =>
+        o?.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
         o?.buyer?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         o?.course?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         o?.accNumber?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -141,6 +143,27 @@ const OrderList = () => {
         setVisible(true);
     };
 
+    const handlePrint = () => {
+        const content = document.getElementById('printable-content').innerHTML;
+        const printWindow = window.open('', '_blank', 'width=800,height=600');
+        printWindow.document.write(`
+            <html>
+                <head>
+                    <title>Print</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        .card { border: none; }
+                        .badge { padding: 5px 10px; border-radius: 5px; }
+                    </style>
+                </head>
+                <body>${content}</body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+    };
+
+
     return (
         <Layout title={"Admin - Orders List"}>
             <div className="container-fluid mt-3 p-3">
@@ -148,7 +171,7 @@ const OrderList = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className="text-center my-4 mb-md-5">
-                            <i class="fa-solid fa-box"></i> Order List ({orders.length})
+                            <i className="fa-solid fa-box" /> Order List ({orders.length})
                         </h2>
                         <div className="d-flex justify-content-end mb-3">
                             <Input
@@ -244,10 +267,10 @@ const OrderList = () => {
                                                                 <th scope='row' className='ps-3'>{i + 1}</th>
                                                                 <td>
                                                                     <Select
-                                                                        loading={statusUpdateLoading}
+                                                                        loading={statusUpdateLoading === o._id}
                                                                         size='large'
                                                                         className='mb-3 me-2'
-                                                                        defaultValue={o?.status}
+                                                                        value={o?.status}
                                                                         onChange={(value) => handleChange(o._id, value)}
                                                                         required>
                                                                         {statuses.map((s, i) => (
@@ -265,7 +288,7 @@ const OrderList = () => {
                                                                             src={o?.buyer?.avatar}
                                                                             alt="dp" />
                                                                         <span className='ms-2'>                                                      <div style={{ cursor: "pointer" }} className='fw-bold text-primary' onClick={() => { openModal(o) }}>
-                                                                            {o?.buyer?.name}  <i class="fa-solid fa-arrow-right"></i>
+                                                                            {o?.buyer?.name}  <i className="fa-solid fa-arrow-right" />
                                                                         </div>
                                                                         </span>
                                                                     </div>
@@ -291,7 +314,7 @@ const OrderList = () => {
                                                                 <td>{dayjs(o.createdAt).format('MMM DD, YYYY')}</td>
                                                                 <td>
                                                                     <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(o._id)}>
-                                                                        <i class="fa-solid fa-trash-can"></i>  Delete
+                                                                        <i className="fa-solid fa-trash-can" /> Delete
                                                                     </button>
                                                                 </td>
                                                             </tr>
@@ -309,22 +332,22 @@ const OrderList = () => {
             <Modal style={{ top: 30 }} onCancel={() => setVisible(false)} open={visible} footer={null}>
                 {modalOrder && (
                     <>
-                        <h5 className='text-center mb-3'>Course Details</h5>
-                        <div className="row">
+                        <h5 className="text-center mb-3">Course Details</h5>
+                        <div className="row" id="printable-content">
                             <div className="col-md-12">
                                 <div className="card">
                                     <div className="card-body">
                                         <h4 className="card-title">{modalOrder?.course?.title}</h4>
-                                        <p>Grade: <b>{modalOrder?.course?.grade?.name}</b></p>
-                                        <p>Class Start: <b>{dayjs(modalOrder?.course?.dateRange).format("MMM DD, YYYY")}</b></p>
+                                        <p>Grade: {modalOrder?.course?.grade?.name}</p>
+                                        <p>Class Start: {dayjs(modalOrder?.course?.dateRange).format("MMM DD, YYYY")}</p>
                                         <p className="card-text">
-                                            Price: <span className='fw-bold'>৳</span> {modalOrder?.course?.price}
+                                            Price: <span className="fw-bold">৳</span> {modalOrder?.course?.price}
                                         </p>
                                         <p className="card-text">
                                             Payment Method:
                                             {methods.map((m) =>
                                                 m.name === modalOrder.method ? (
-                                                    <div style={{ display: 'inline-flex', alignItems: 'center' }} key={m.name}>
+                                                    <div style={{ display: "inline-flex", alignItems: "center" }} key={m.name}>
                                                         <img
                                                             src={m.logo}
                                                             alt={m.name}
@@ -336,27 +359,41 @@ const OrderList = () => {
                                             )}
                                         </p>
 
-                                        <p className="card-text">Order Status: &nbsp;
-                                            {modalOrder.status === 'Pending' ? (
+                                        <p className="card-text">
+                                            Order Status: &nbsp;
+                                            {modalOrder.status === "Pending" ? (
                                                 <span className="badge bg-warning text-dark">{modalOrder.status}</span>
-                                            ) : modalOrder.status === 'Approved' ? (
+                                            ) : modalOrder.status === "Approved" ? (
                                                 <span className="badge bg-success">{modalOrder.status}</span>
-                                            ) : modalOrder.status === 'Canceled' ? (
+                                            ) : modalOrder.status === "Canceled" ? (
                                                 <span className="badge bg-danger">{modalOrder.status}</span>
                                             ) : null}
                                         </p>
-                                        <p className="card-text">Transaction ID: {modalOrder.trxId}</p>
+                                        <p className="card-text">
+                                            Transaction ID: <span className="text-primary fw-bold">{modalOrder.trxId}</span>
+                                        </p>
                                         <p className="card-text">Account Number: {modalOrder.accNumber}</p>
-                                        <p className="card-text">Ordered on: {dayjs(modalOrder.createdAt).format('MMM DD, YYYY  h:mm:ss A')}</p>
-                                        <p className="card-text">Updated: {dayjs(modalOrder.updatedAt).format('MMM DD, YYYY h:mm:ss A')}</p>
-                                        <p className="card-text">Buyer: &nbsp;
+                                        <p className="card-text">
+                                            Ordered on: <b>{dayjs(modalOrder.createdAt).format("MMM DD, YYYY  h:mm:ss A")}</b>
+                                        </p>
+                                        <p className="card-text">
+                                            Updated: <b>{dayjs(modalOrder.updatedAt).format("MMM DD, YYYY h:mm:ss A")}</b>
+                                        </p>
+                                        <p className="card-text">
+                                            Buyer: &nbsp;
                                             <b>
-                                                {modalOrder?.buyer?.name} ({modalOrder?.buyer?.grade?.name}) - {modalOrder?.buyer?.phone}
+                                                {modalOrder?.buyer?.name} ({modalOrder?.buyer?.grade?.name}) -{" "}
+                                                {modalOrder?.buyer?.phone}
                                             </b>
                                         </p>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div className="text-end mt-2">
+                            <button className='btn' onClick={handlePrint}>
+                                🖨️ Print
+                            </button>
                         </div>
                     </>
                 )}

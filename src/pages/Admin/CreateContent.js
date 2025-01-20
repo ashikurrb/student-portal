@@ -5,7 +5,7 @@ import Spinner from '../../components/Spinner';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, LinkOutlined } from '@ant-design/icons';
 import { Input, Modal, Select, Tooltip } from 'antd';
 import dayjs from 'dayjs';
 const { Option } = Select;
@@ -19,7 +19,15 @@ const CreateContent = () => {
     const [subject, setSubject] = useState('');
     const [remark, setRemark] = useState('');
     const [contentLink, setContentLink] = useState('');
-    const [types] = useState(["PDF", "Doc", "Video", "Audio", "PPT"]);
+    const types = [
+        { name: "PDF", logo: <i className="fa-solid fa-file-pdf" /> },
+        { name: "Doc", logo: <i className="fa-solid fa-file-word" /> },
+        { name: "Slide", logo: <i className="fa-solid fa-file-powerpoint" /> },
+        { name: "Spreadsheet", logo: <i className="fa-solid fa-file-excel" /> },
+        { name: "Video", logo: <i className="fa-brands fa-youtube" /> },
+        { name: "Audio", logo: <i className="fa-solid fa-volume-high" /> },
+        { name: "Online Class", logo: <i className="fa-solid fa-video" /> },
+    ];
     const [type, setType] = useState(null);
     const [content, setContent] = useState([]);
     const [updatedSubject, setUpdatedSubject] = useState('');
@@ -207,8 +215,8 @@ const CreateContent = () => {
         }
     };
 
-     //delete selected contents
-     const handleDeleteSelected = async () => {
+    //delete selected contents
+    const handleDeleteSelected = async () => {
         let answer = window.confirm("Are you sure you want to delete the selected content?");
         if (!answer) return;
 
@@ -248,7 +256,7 @@ const CreateContent = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className="text-center my-4 mb-md-5">
-                            <i class="fa-solid fa-link"></i> Create Content ({content.length})
+                            <i className="fa-solid fa-link" /> Create Content ({content.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <Input
@@ -274,72 +282,6 @@ const CreateContent = () => {
                                 </button>
                             )}
                         </div>
-
-                        <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
-                            <h5 className='text-center'>Create Content</h5>
-                            <form onSubmit={handleCreate}>
-                                <div className="mt-4 d-lg-flex">
-                                    <Select
-                                        placeholder="Select Grade"
-                                        size='large'
-                                        className='mb-3 me-2 w-100'
-                                        value={grade || undefined}
-                                        onChange={(value) => { setGrade(value) }}>
-                                        {grades?.map(g => (
-                                            <Option key={g._id} value={g._id}>{g.name}</Option>
-                                        ))}
-                                    </Select>
-                                    <Select
-                                        placeholder="Select Content Type"
-                                        size='large'
-                                        className='mb-3 w-100'
-                                        value={type}
-                                        onChange={(value) => { setType(value) }}
-                                        required>
-                                        {types.map((t, i) => (
-                                            <Option key={i} value={t}>{t}</Option>
-                                        ))}
-                                    </Select>
-                                </div>
-                                <div className="d-lg-flex">
-                                    <Input
-                                        type="text"
-                                        placeholder='Subject'
-                                        className='mb-3 me-2 w-100'
-                                        size='large'
-                                        value={subject}
-                                        onChange={(e) => setSubject(e.target.value)}
-                                        minLength={3} maxLength={20}
-                                        required
-                                    />
-                                    <Input
-                                        type="text"
-                                        placeholder='Remark'
-                                        className='mb-3 w-100'
-                                        size="large"
-                                        value={remark}
-                                        onChange={(e) => setRemark(e.target.value)}
-                                        minLength={3} maxLength={30}
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <Input
-                                        type="url"
-                                        placeholder='Paste Link Here'
-                                        className='mb-3 w-100'
-                                        size="large"
-                                        value={contentLink}
-                                        onChange={(e) => setContentLink(e.target.value)} required
-                                    />
-                                </div>
-                                <div className=" text-center">
-                                    <button type="submit" className="btn btn-warning fw-bold mt-2">
-                                        {spinnerLoading ? <Spinner /> : "Create Content"}
-                                    </button>
-                                </div>
-                            </form>
-                        </Modal>
                         {
                             selectedContent.length > 0 ?
                                 <h6 className='d-flex justify-content-start'>{selectedContent.length} selected</h6> :
@@ -406,7 +348,16 @@ const CreateContent = () => {
                                                             </Tooltip>
                                                         </td>
                                                         <td>{c.remark}</td>
-                                                        <td>{c.type}</td>
+                                                        <td>
+                                                            {types.map((t) =>
+                                                                t.name === c.type ? (
+                                                                    <div>
+                                                                        <span> {t.logo}</span>
+                                                                        <span className='ms-1'> {t.name}</span>
+                                                                    </div>
+                                                                ) : null
+                                                            )}
+                                                        </td>
                                                         <td>
                                                             <Link className='link' to={c.contentLink} target='_blank'>
                                                                 <i className="fa-solid fa-up-right-from-square"></i> Open
@@ -432,6 +383,81 @@ const CreateContent = () => {
                     </div>
                 </div>
             </div>
+            <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
+                <h5 className='text-center'>Create Content</h5>
+                <form onSubmit={handleCreate}>
+                    <div className="mt-4 d-lg-flex">
+                        <Select
+                            placeholder="Select Grade"
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={grade || undefined}
+                            onChange={(value) => { setGrade(value) }}>
+                            {grades?.map(g => (
+                                <Option key={g._id} value={g._id}>{g.name}</Option>
+                            ))}
+                        </Select>
+                        <Select
+                            placeholder="Select Content Type"
+                            size='large'
+                            className='mb-3 w-100'
+                            value={type}
+                            onChange={(value) => { setType(value) }}
+                            required>
+                            {types.map((type, i) => (
+                                <Option key={i} value={type.name}>
+                                    <div>
+                                        <span> {type.logo}</span>
+                                        <span className='ms-1'> {type.name}</span>
+                                    </div>
+                                </Option>
+                            ))}
+                        </Select>
+                    </div>
+                    <div className="d-lg-flex">
+                        <Input
+                            type="text"
+                            placeholder='Subject'
+                            className='mb-3 me-2 w-100'
+                            size='large'
+                            value={subject}
+                            onChange={(e) => setSubject(e.target.value)}
+                            minLength={3} maxLength={20}
+                            required
+                        />
+                        <Input
+                            type="text"
+                            placeholder='Remark'
+                            className='mb-3 w-100'
+                            size="large"
+                            value={remark}
+                            onChange={(e) => setRemark(e.target.value)}
+                            minLength={3} maxLength={30}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <Input
+                            addonBefore={
+                                <span style={{ paddingRight: '4px' }}>
+                                    <LinkOutlined />
+                                </span>
+                            }
+                            type="url"
+                            placeholder='Paste Link Here'
+                            className='mb-3 w-100'
+                            size="large"
+                            value={contentLink}
+                            onChange={(e) => setContentLink(e.target.value)} required
+                        />
+                    </div>
+                    <div className=" text-center">
+                        <button type="submit" className="btn btn-warning fw-bold mt-2">
+                            {spinnerLoading ? <Spinner /> : "Create Content"}
+                        </button>
+                    </div>
+                </form>
+            </Modal>
             <Modal onCancel={() => setVisible(false)} open={visible} footer={null}>
                 <h5 className='text-center'>Update Content</h5>
                 <div className='text-center my-3'>
@@ -470,11 +496,21 @@ const CreateContent = () => {
                             value={updatedType}
                             onChange={(value) => { setUpdatedType(value) }}
                             required>
-                            {types.map((t, i) => (
-                                <Option key={i} value={t}>{t}</Option>
+                            {types.map((type, i) => (
+                                <Option key={i} value={type.name}>
+                                    <div>
+                                        <span> {type.logo}</span>
+                                        <span className='ms-1'> {type.name}</span>
+                                    </div>
+                                </Option>
                             ))}
                         </Select>
                         <Input
+                            addonBefore={
+                                <span style={{ paddingRight: '4px' }}>
+                                    <LinkOutlined />
+                                </span>
+                            }
                             type="url"
                             placeholder='Paste Link Here'
                             size="large"

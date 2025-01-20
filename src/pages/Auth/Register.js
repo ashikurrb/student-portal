@@ -5,6 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/auth';
+import { LockOutlined, MailOutlined, PhoneOutlined, QuestionCircleOutlined, UserOutlined, BarcodeOutlined } from '@ant-design/icons';
+import { Input, Select, Spin } from 'antd';
+const { Option } = Select;
 
 const Register = () => {
     const [name, setName] = useState("");
@@ -14,6 +17,8 @@ const Register = () => {
     const [grade, setGrade] = useState("");
     const [answer, setAnswer] = useState("");
     const [password, setPassword] = useState("");
+    const [otp, setOtp] = useState("");
+    const [otpLoading, setOtpLoading] = useState(false);
     const [auth] = useAuth();
     const navigate = useNavigate();
 
@@ -33,12 +38,36 @@ const Register = () => {
         getAllGrades();
     }, [])
 
+    //send otp
+    const handleOtp = async (e) => {
+        e.preventDefault();
+        const loadingToastId = toast.loading('Sending OTP...');
+        setOtpLoading(true);
+        // Create a FormData object
+        const verifyEmailData = new FormData();
+        verifyEmailData.append('name', name);
+        verifyEmailData.append('email', email);
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/verify-otp`, verifyEmailData);
+            if (res && res.data.success) {
+                // Show success toast
+                toast.success(res.data && res.data.message, { id: loadingToastId });
+            } else {
+                toast.error(res.data.message, { id: loadingToastId });
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message, { id: loadingToastId });
+        }finally {
+            setOtpLoading(false);
+        }
+    }
 
     //form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         const loadingToastId = toast.loading('Registering you...');
-        // Create a FormData object
+    
         const registerData = new FormData();
         registerData.append('name', name);
         registerData.append('email', email);
@@ -46,22 +75,25 @@ const Register = () => {
         registerData.append('grade', grade);
         registerData.append('password', password);
         registerData.append('answer', answer);
+        registerData.append('otp', otp);
+    
         try {
             const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, registerData);
-
+    
             if (res && res.data.success) {
-                // Show success toast
-                toast.success(res.data && res.data.message, { id: loadingToastId });
+                toast.success(res.data.message, { id: loadingToastId });
                 navigate("/login");
             } else {
                 toast.error(res.data.message, { id: loadingToastId });
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.message, { id: loadingToastId });
+            // Handle specific backend error messages
+            const errorMessage = error.response?.data?.message || "An unexpected error occurred";
+            toast.error(errorMessage, { id: loadingToastId });
         }
-    }
-
+    };
+    
     //redirect based on user auth
     if (auth.token) {
         auth.user.role === 1 ? navigate('/dashboard/admin') : navigate('/dashboard/student');
@@ -77,35 +109,142 @@ const Register = () => {
                         </div>
                         <div className="col-md-6 p-3">
                             <form className='m-lg-5' onSubmit={handleSubmit}>
-                                <h4 className="title"><i className="fa-solid fa-user-plus"></i> &nbsp; REGISTER FORM</h4>
+                                <h4 className="title"><i className="fa-solid fa-user-plus"></i> &nbsp; REGISTRATION FORM</h4>
                                 <div className="mb-3">
-                                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" id="exampleInputName" placeholder='Name'
-                                        minLength={4} maxLength={25}
+                                    <Input
+                                        prefix={
+                                            <span style={{ paddingRight: '4px' }}>
+                                                <UserOutlined />
+                                            </span>
+                                        }
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        className="w-100"
+                                        size="large"
+                                        placeholder='Name'
+                                        minLength={4}
+                                        maxLength={25}
+                                        allowClear
                                         required />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email' required />
+                                    <Input
+                                        prefix={
+                                            <span style={{ paddingRight: '4px' }}>
+                                                <MailOutlined />
+                                            </span>
+                                        }
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="w-100"
+                                        size="large"
+                                        placeholder='Email'
+                                        allowClear
+                                        required />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" id="exampleInputPhone" placeholder='Phone Number' required />
+                                    <Input
+                                        prefix={
+                                            <span style={{ paddingRight: '4px' }}>
+                                                <PhoneOutlined />
+                                            </span>
+                                        }
+                                        type="number"
+                                        value={phone}
+                                        onChange={(e) => setPhone(e.target.value)}
+                                        className="w-100"
+                                        size="large"
+                                        maxLength={11}
+                                        placeholder='Phone Number'
+                                        allowClear
+                                        required />
                                 </div>
                                 <div className="mb-3">
-                                    <select className="form-select" aria-label="Default select example" onChange={(e) => { setGrade(e.target.value) }} required>
-                                        <option selected disabled>Select Grade</option>
-                                        {grades?.map(g => (
-                                            <option key={g._id}
-                                                value={g._id}
-                                                hidden={g?.name === "Administration"}>
-                                                {g.name}
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <Select
+                                        placeholder={
+                                            <span>
+                                                <i className="fa-solid fa-graduation-cap" style={{ marginRight: "8px" }} />
+                                                Select Grade
+                                            </span>
+                                        }
+                                        size='large'
+                                        className='w-100'
+                                        value={grade || undefined}
+                                        onChange={(value) => { setGrade(value) }}
+                                        allowClear
+                                    >
+                                        {grades
+                                            ?.filter(g => g.name !== "Administration")
+                                            .map(g => (
+                                                <Option
+                                                    key={g._id}
+                                                    value={g._id}
+                                                    hidden={g?.name === "Administration"}>
+                                                    <i className="fa-solid fa-graduation-cap" style={{ marginRight: "8px" }} />
+                                                    {g.name}
+                                                </Option>
+                                            ))}
+                                    </Select>
                                 </div>
                                 <div className="mb-3">
-                                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />
+                                    <Input.Password
+                                        prefix={
+                                            <span style={{ paddingRight: '4px' }}>
+                                                <LockOutlined />
+                                            </span>
+                                        }
+                                        type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="w-100"
+                                        size="large"
+                                        placeholder='Password'
+                                        allowClear
+                                        required />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" id="exampleInputAddress" placeholder='Security Answer' minLength={3} maxLength={10} required />
+                                    <Input
+                                        prefix={
+                                            <span style={{ paddingRight: '4px' }}>
+                                                <QuestionCircleOutlined />
+                                            </span>
+                                        }
+                                        type="text"
+                                        value={answer}
+                                        onChange={(e) => setAnswer(e.target.value)}
+                                        className="w-100"
+                                        size="large"
+                                        placeholder='Set a security answer to reset your password'
+                                        minLength={3}
+                                        maxLength={10}
+                                        allowClear
+                                        required />
+                                </div>
+                                <div className="mb-3">
+                                    <Input
+                                        prefix={
+                                            <span style={{ paddingRight: '4px' }}>
+                                                <BarcodeOutlined />
+                                            </span>
+                                        }
+                                        addonAfter={
+                                            otpLoading ? <Spin size="small" />
+                                            : <span onClick={handleOtp} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                              Get OTP
+                                            </span>
+                                        }
+                                        type="text"
+                                        value={otp}
+                                        onChange={(e) => setOtp(e.target.value)}
+                                        className="w-100"
+                                        size="large"
+                                        placeholder='OTP'
+                                        minLength={3}
+                                        maxLength={10}
+                                        allowClear
+                                        required />
                                 </div>
                                 <div className="text-center mt-4">
                                     <button type="submit" className="btn btn-primary">
