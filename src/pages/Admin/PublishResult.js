@@ -334,8 +334,7 @@ const PublishResult = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className="text-center my-4 mb-md-5">
-                            <i className="fa-solid fa-square-poll-vertical" />
-                            Publish Result ({result.length})
+                            <i className="fa-solid fa-square-poll-vertical" /> Publish Result ({result.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <Input
