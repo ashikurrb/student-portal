@@ -22,19 +22,19 @@ const PublishResult = () => {
     const [user, setUser] = useState('');
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [type, setType] = useState('');
-    const [subject, setSubject] = useState('');
-    const [marks, setMarks] = useState('');
     const [examDate, setExamDate] = useState('');
     const [result, setResult] = useState([]);
     const [updatedType, setUpdatedType] = useState('');
-    const [updatedSubject, setUpdatedSubject] = useState('');
-    const [updatedMarks, setUpdatedMarks] = useState('');
     const [updatedExamDate, setUpdatedExamDate] = useState('');
     const [selected, setSelected] = useState(null);
     const [visible, setVisible] = useState(false);
     const [createModalVisible, setIsCreateModalVisible] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedResult, setSelectedResult] = useState([]);
+    const [subjects, setSubjects] = useState([{ subject: '', marks: '' }]);
+    const [updatedSubjects, setUpdatedSubjects] = useState([{ subject: '', marks: '' }]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalResult, setModalResult] = useState(null);
 
     //Get All Grades
     const getAllGrades = async (req, res) => {
@@ -69,7 +69,7 @@ const PublishResult = () => {
     // Filter users by grade
     useEffect(() => {
         if (grade) {
-            const filtered = users.filter(user => user?.grade?._id === grade);
+            const filtered = users.filter(user => user.grade._id === grade);
             setFilteredUsers(filtered);
             setUser('');
         } else {
@@ -94,43 +94,86 @@ const PublishResult = () => {
         getAllResults();
     }, [])
 
+    // Create Form
+    const handleAddField = () => {
+        setSubjects([...subjects, { subject: '', marks: '' }]);
+    };
+
+    const handleRemoveField = () => {
+        if (subjects.length > 1) {
+            setSubjects(subjects.slice(0, -1));
+        }
+    };
+
+
+    // Update Form
+    const updatedAddField = () => {
+        setUpdatedSubjects([...updatedSubjects, { updatedSubject: '', updatedMarks: '' }]);
+    };
+
+    const updatedRemoveField = () => {
+        if (updatedSubjects.length > 1) {
+            setUpdatedSubjects(updatedSubjects.slice(0, -1));
+        }
+    };
+
+    // Function to handle changes in the dynamically added fields
+    const handleFieldChange = (index, field, value) => {
+        const newFields = [...subjects];
+        newFields[index][field] = value;
+        setSubjects(newFields);
+    };
+
+    const handleUpdatedFieldChange = (index, field, value) => {
+        const newFields = [...updatedSubjects];
+        newFields[index][field] = value;
+        setUpdatedSubjects(newFields);
+    };
+
     //publish result
     const handlePublish = async (e) => {
         e.preventDefault();
         setSpinnerLoading(true);
         try {
-            const resultData = new FormData();
-            resultData.append("grade", grade);
-            resultData.append("user", user);
-            resultData.append("type", type);
-            resultData.append("subject", subject);
-            resultData.append("examDate", examDate);
-            resultData.append("marks", marks);
-            const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/result/create-result`, resultData);
+            const resultData = {
+                grade,
+                user,
+                type,
+                subjects,
+                examDate,
+            };
+            const { data } = await axios.post(
+                `${process.env.REACT_APP_API}/api/v1/result/create-result`,
+                resultData,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            // Handle success
             if (data?.success) {
                 setSpinnerLoading(false);
                 toast.success(data?.message);
                 getAllResults();
                 // Clear form fields
-                // setGrade(undefined);
-                // setUser(undefined);
-                // setType('');
-                setSubject('');
+                setUser(undefined);
+                setType('');
+                setSubjects([]); // Clear the subjects array
                 setExamDate(undefined);
-                setMarks('');
                 setListSpinnerLoading(false);
             } else {
-                toast.success(data.message);
+                toast.error(data.message);
             }
         } catch (error) {
             console.error("Error details:", error);
             if (error.response && error.response.data && error.response.data.message) {
                 toast.error(error.response.data.message);
-                setSpinnerLoading(false);
             } else {
                 toast.error("Something went wrong");
-                setSpinnerLoading(false);
             }
+            setSpinnerLoading(false);
         }
     };
 
@@ -138,9 +181,8 @@ const PublishResult = () => {
     const createModalCancel = () => {
         setGrade('');
         setUser('');
-        setSubject('');
+        setSubjects([{ subject: '', marks: '' }]);
         setType('');
-        setMarks('');
         setExamDate(undefined);
         setIsCreateModalVisible(false)
     }
@@ -150,36 +192,45 @@ const PublishResult = () => {
         e.preventDefault();
         setUpdateSpinnerLoading(true);
         try {
-            const updateResultData = new FormData();
-            updateResultData.append("type", updatedType);
-            updateResultData.append("subject", updatedSubject);
-            updateResultData.append("marks", updatedMarks);
-            updateResultData.append("examDate", updatedExamDate);
-            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/result/update-result/${selected._id}`, updateResultData);
+            // Prepare the request payload
+            const updateResultData = {
+                type: updatedType,
+                subjects: updatedSubjects, // Ensure this is an array of objects [{subject, marks}, ...]
+                examDate: updatedExamDate,
+            };
+
+            // Make the API call
+            const { data } = await axios.put(
+                `${process.env.REACT_APP_API}/api/v1/result/update-result/${selected._id}`,
+                updateResultData,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            // Handle the response
             if (data?.success) {
-                setUpdateSpinnerLoading(false);
                 toast.success(data?.message);
-                getAllResults();
+                getAllResults(); // Refresh the list of results
                 // Clear form fields
                 setUpdatedType('');
-                setUpdatedSubject('');
-                setUpdatedMarks('');
+                setUpdatedSubjects([]); // Clear the subjects array
                 setUpdatedExamDate(undefined);
                 setVisible(false);
-                setListSpinnerLoading(false);
             } else {
-                toast.success(data.message);
-                setUpdateSpinnerLoading(false);
+                toast.error(data.message);
             }
         } catch (error) {
             console.error("Error details:", error);
             if (error.response && error.response.data && error.response.data.message) {
                 toast.error(error.response.data.message);
-                setUpdateSpinnerLoading(false);
             } else {
                 toast.error("Something went wrong");
-                setUpdateSpinnerLoading(false);
             }
+        } finally {
+            setUpdateSpinnerLoading(false); // Stop the spinner in any case
         }
     };
 
@@ -188,17 +239,22 @@ const PublishResult = () => {
         setVisible(true);
         setSelected(result);
         setUpdatedType(result.type);
-        setUpdatedSubject(result.subject);
-        setUpdatedMarks(result.marks);
+        setUpdatedSubjects(result.subjects);
         setUpdatedExamDate(dayjs(result.examDate))
+    };
+
+    // Open modal with selected result data
+    const openResultModal = (result) => {
+        setModalVisible(true);
+        setModalResult(result);
     };
 
     // Filter content based on search query
     const filteredResult = result.filter(r =>
-        r?.type?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r?.subject?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r?.user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r?.grade?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+        r.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     //delete individual result
@@ -278,7 +334,8 @@ const PublishResult = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className="text-center my-4 mb-md-5">
-                            <i className="fa-solid fa-square-poll-vertical" /> Publish Result ({result.length})
+                            <i className="fa-solid fa-square-poll-vertical" />
+                            Publish Result ({result.length})
                         </h2>
                         <div className='d-flex justify-content-between mb-3'>
                             <Input
@@ -296,7 +353,7 @@ const PublishResult = () => {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-success fw-bold mx-1 py-2 px-4">
-                                <i className="fa-solid fa-plus" /> Publish Result
+                                <i class="fa-solid fa-plus"></i> Publish Result
                             </button>
                             {selectedResult.length > 0 && (
                                 <button onClick={handleDeleteSelected} className="btn btn-danger fw-bold mx-1 py-2 floating-delete-button">
@@ -304,6 +361,108 @@ const PublishResult = () => {
                                 </button>
                             )}
                         </div>
+                        <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
+                            <h5 className='text-center mb-3'>Publish Result</h5>
+                            <form onSubmit={handlePublish}>
+                                <div className="mt-4 d-lg-flex">
+                                    <Select
+                                        placeholder="Select Grade"
+                                        size='large'
+                                        className='mb-3 me-2 w-100'
+                                        value={grade || undefined}
+                                        onChange={(value) => { setGrade(value) }}
+                                        showSearch
+                                        filterOption={(input, option) =>
+                                            (option?.children || '').toLowerCase().includes(input.toLowerCase())
+                                        }
+                                    >
+                                        {grades?.map(g => (
+                                            <Option key={g._id} value={g._id}>{g.name}</Option>
+                                        ))}
+                                    </Select>
+                                    <Select
+                                        placeholder="Select Student"
+                                        size='large'
+                                        className='mb-3 w-100'
+                                        value={user || undefined}
+                                        onChange={(value) => { setUser(value) }}
+                                        required>
+                                        {filteredUsers?.map(u => (
+                                            <Option key={u._id} value={u._id}>
+                                                <div className="d-flex align-items-center">
+                                                    <img
+                                                        className='me-1'
+                                                        style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                                                        src={u?.avatar}
+                                                        alt="dp" />
+                                                    {u.name}
+                                                </div>
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                </div>
+                                <div className="d-lg-flex">
+                                    <Input
+                                        type="text"
+                                        placeholder='Exam Type'
+                                        className='mb-3 me-2 w-100'
+                                        size='large'
+                                        value={type}
+                                        onChange={(e) => setType(e.target.value)} required
+                                    />
+                                    <DatePicker
+                                        format={dateFormat}
+                                        className='mb-3 w-100'
+                                        size='large'
+                                        value={examDate}
+                                        onChange={(date) => setExamDate(date)}
+                                        required
+                                    />
+                                </div>
+                                {subjects.map((field, index) => (
+                                    <div className="d-lg-flex" key={index}>
+                                        <Input
+                                            type="text"
+                                            placeholder='Subject'
+                                            className='mb-3 me-2 w-100'
+                                            size='large'
+                                            value={field.subject}
+                                            onChange={(e) => handleFieldChange(index, 'subject', e.target.value)}
+                                            required
+                                        />
+                                        <Input
+                                            type="text"
+                                            placeholder='Marks'
+                                            className='mb-3 w-100'
+                                            size='large'
+                                            value={field.marks}
+                                            onChange={(e) => handleFieldChange(index, 'marks', e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                ))}
+                                <div className='d-flex justify-content-end'>
+                                    <button
+                                        onClick={handleAddField}
+                                        type="button"
+                                        className='btn btn-outline me-2'>
+                                        <i className="fa-solid fa-plus" />
+                                    </button>
+                                    <button
+                                        onClick={handleRemoveField}
+                                        type="button"
+                                        className='btn btn-outline'
+                                    >
+                                        <i className="fa-solid fa-minus" />
+                                    </button>
+                                </div>
+                                <div className="text-center">
+                                    <button type="submit" className="btn btn-warning fw-bold mt-2">
+                                        {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}
+                                    </button>
+                                </div>
+                            </form>
+                        </Modal>
                         {
                             selectedResult.length > 0 ?
                                 <h6 className='d-flex justify-content-start'>{selectedResult.length} selected</h6> :
@@ -329,9 +488,8 @@ const PublishResult = () => {
                                                 <th>Grade</th>
                                                 <th>Name</th>
                                                 <th>Type</th>
-                                                <th>Subject</th>
-                                                <th>Result</th>
                                                 <th>Date</th>
+                                                <th>Result</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -367,30 +525,33 @@ const PublishResult = () => {
                                                             <th scope="row">{i + 1}</th>
                                                             <td>{r?.grade?.name}</td>
                                                             <td>
-                                                                <div className="d-flex align-items-center">
-                                                                    <img
-                                                                        className='me-1'
-                                                                        style={{ width: "23px", height: "23px", borderRadius: "100%" }}
-                                                                        src={r?.user.avatar}
-                                                                        alt="dp" />
-                                                                    <span>{r?.user?.name}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td>{r.type}</td>
-                                                            <td>
                                                                 <Tooltip title={`Created: ${dayjs(r.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(r.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
-                                                                    {r.subject}
+                                                                    <div className="d-flex align-items-center">
+                                                                        <img
+                                                                            className='me-1'
+                                                                            style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                                                                            src={r?.user.avatar}
+                                                                            alt="dp" />
+                                                                        <span>{r?.user?.name}</span>
+                                                                    </div>
                                                                 </Tooltip>
                                                             </td>
-                                                            <td>{r.marks}</td>
+                                                            <td>{r.type}</td>
                                                             <td>{dayjs(r.examDate).format('DD MMM YYYY')}</td>
+                                                            <td>
+                                                                <button
+                                                                    onClick={() => openResultModal(r)}
+                                                                    className='btn btn-outline-primary'>
+                                                                    <i className="fa-solid fa-square-poll-vertical" />
+                                                                </button>
+                                                            </td>
                                                             <td>
                                                                 <div className="d-flex">
                                                                     <button className='btn btn-primary mx-1' onClick={() => { openModal(r) }}>
-                                                                        <i className="fa-solid fa-pen-to-square" /> Edit
+                                                                        <i class="fa-solid fa-pen-to-square"></i> Edit
                                                                     </button>
                                                                     <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(r._id)}>
-                                                                        <i className="fa-solid fa-trash-can" /> Delete
+                                                                        <i class="fa-solid fa-trash-can"></i>  Delete
                                                                     </button>
                                                                 </div>
                                                             </td>
@@ -405,94 +566,8 @@ const PublishResult = () => {
                     </div>
                 </div>
             </div>
-            <Modal width={650} open={createModalVisible} onCancel={createModalCancel} footer={null} maskClosable={false}>
-                <h5 className='text-center mb-3'>Publish Result</h5>
-                <form onSubmit={handlePublish}>
-                    <div className="mt-4 d-lg-flex">
-                        <Select
-                            placeholder="Select Grade"
-                            size='large'
-                            className='mb-3 me-2 w-100'
-                            value={grade || undefined}
-                            onChange={(value) => { setGrade(value) }}
-                            showSearch
-                            filterOption={(input, option) =>
-                                (option?.children || '').toLowerCase().includes(input.toLowerCase())
-                            }
-                        >
-                            {grades?.map(g => (
-                                <Option key={g?._id} value={g?._id}>{g?.name}</Option>
-                            ))}
-                        </Select>
-                        <Select
-                            placeholder="Select Student"
-                            size='large'
-                            className='mb-3 w-100'
-                            value={user || undefined}
-                            onChange={(value) => { setUser(value) }}
-                            required>
-                            {filteredUsers?.map(u => (
-                                <Option key={u._id} value={u._id}>
-                                    <div className="d-flex align-items-center">
-                                        <img
-                                            className='me-1'
-                                            style={{ width: "23px", height: "23px", borderRadius: "100%" }}
-                                            src={u?.avatar}
-                                            alt="dp" />
-                                        {u.name}
-                                    </div>
-                                </Option>
-                            ))}
-                        </Select>
-                    </div>
-                    <div className="d-lg-flex">
-                        <Input
-                            type="text"
-                            placeholder='Exam Type'
-                            className='mb-3 me-2 w-100'
-                            size='large'
-                            value={type}
-                            onChange={(e) => setType(e.target.value)} required
-                        />
-                        <DatePicker
-                            placeholder="Exam Date"
-                            format={dateFormat}
-                            className='mb-3 w-100'
-                            size='large'
-                            value={examDate}
-                            onChange={(date) => setExamDate(date)}
-                            required
-                        />
-                    </div>
-                    <div className="d-lg-flex">
-                        <Input
-                            type="text"
-                            placeholder='Subject'
-                            className='mb-3 me-2 w-100'
-                            size='large'
-                            value={subject}
-                            onChange={(e) => setSubject(e.target.value)} required
-                        />
-                        <Input
-                            type="text"
-                            placeholder='Marks'
-                            className='mb-3 w-100'
-                            size='large'
-                            value={marks}
-                            onChange={(e) => setMarks(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="text-center">
-                        <button type="submit" className="btn btn-warning fw-bold mt-2">
-                            {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}
-                        </button>
-                    </div>
-                </form>
-            </Modal>
             <Modal onCancel={() => setVisible(false)} open={visible} footer={null}>
                 <h5 className='text-center'>Update Result</h5>
-
                 <div className='text-center my-3'>
                     <span className="d-flex justify-content-center align-items-center">
                         <img
@@ -516,7 +591,6 @@ const PublishResult = () => {
                             onChange={(e) => setUpdatedType(e.target.value)} required
                         />
                         <DatePicker
-                            placeholder="Exam Date"
                             value={updatedExamDate}
                             format={dateFormat}
                             className='mb-3 w-100'
@@ -525,23 +599,42 @@ const PublishResult = () => {
                             required
                         />
                     </div>
-                    <div className='mb-2 d-lg-flex'>
-                        <Input
-                            type="text"
-                            placeholder='Subject'
-                            className='w-100 mb-3 me-2'
-                            size='large'
-                            value={updatedSubject}
-                            onChange={(e) => setUpdatedSubject(e.target.value)} required
-                        />
-                        <Input
-                            type="text"
-                            placeholder='Marks'
-                            className='mb-3 w-100'
-                            size='large'
-                            value={updatedMarks}
-                            onChange={(e) => setUpdatedMarks(e.target.value)} required
-                        />
+                    {updatedSubjects.map((updateField, index) => (
+                        <div className="d-lg-flex" key={index}>
+                            <Input
+                                type="text"
+                                placeholder='Subject'
+                                className='mb-3 me-2 w-100'
+                                size='large'
+                                value={updateField.subject}
+                                onChange={(e) => handleUpdatedFieldChange(index, 'subject', e.target.value)}
+                                required
+                            />
+                            <Input
+                                type="text"
+                                placeholder='Marks'
+                                className='mb-3 w-100'
+                                size='large'
+                                value={updateField.marks}
+                                onChange={(e) => handleUpdatedFieldChange(index, 'marks', e.target.value)}
+                                required
+                            />
+                        </div>
+                    ))}
+                    <div className='d-flex justify-content-end'>
+                        <button
+                            onClick={updatedAddField}
+                            type="button"
+                            className='btn btn-outline me-2'>
+                            <i className="fa-solid fa-plus" />
+                        </button>
+                        <button
+                            onClick={updatedRemoveField}
+                            type="button"
+                            className='btn btn-outline'
+                        >
+                            <i className="fa-solid fa-minus" />
+                        </button>
                     </div>
                     <div className="text-center">
                         <button type='submit' className="btn btn-warning fw-bold" >
@@ -549,6 +642,38 @@ const PublishResult = () => {
                         </button>
                     </div>
                 </form>
+            </Modal>
+            <Modal open={modalVisible} onCancel={() => setModalVisible(false)} footer={null}>
+                <div>
+                    <h5 className='text-center mb-3'>
+                        Result
+                    </h5>
+                    <table className="table table-striped">
+                        <thead className='table-dark'>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                modalResult && modalResult.subjects.map((s, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <td>{i + 1}</td>
+                                            <td>{s.subject}</td>
+                                            <td>{s.marks}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </table>
+                    <div className='text-center form-text'>
+                        {modalResult?.type}: {modalResult?.examDate && dayjs(modalResult.examDate).format('MMM DD, YYYY')}
+                    </div>
+                </div>
             </Modal>
         </Layout>
     );
