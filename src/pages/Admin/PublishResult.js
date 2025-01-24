@@ -99,22 +99,17 @@ const PublishResult = () => {
         setSubjects([...subjects, { subject: '', marks: '' }]);
     };
 
-    const handleRemoveField = () => {
-        if (subjects.length > 1) {
-            setSubjects(subjects.slice(0, -1));
-        }
+    const handleRemoveField = (indexToRemove) => {
+        setSubjects(subjects.filter((_, index) => index !== indexToRemove));
     };
-
 
     // Update Form
     const updatedAddField = () => {
         setUpdatedSubjects([...updatedSubjects, { updatedSubject: '', updatedMarks: '' }]);
     };
 
-    const updatedRemoveField = () => {
-        if (updatedSubjects.length > 1) {
-            setUpdatedSubjects(updatedSubjects.slice(0, -1));
-        }
+    const updatedRemoveField = (indexToRemove) => {
+        setUpdatedSubjects(updatedSubjects.filter((_, index) => index !== indexToRemove));
     };
 
     // Function to handle changes in the dynamically added fields
@@ -439,21 +434,21 @@ const PublishResult = () => {
                                             onChange={(e) => handleFieldChange(index, 'marks', e.target.value)}
                                             required
                                         />
+                                        <button
+                                            onClick={() => handleRemoveField(index)}
+                                            type="button"
+                                            className='btn btn-outline mb-3 ms-2'
+                                        >
+                                            <i className="fa-solid fa-delete-left" />
+                                        </button>
                                     </div>
                                 ))}
                                 <div className='d-flex justify-content-end'>
                                     <button
                                         onClick={handleAddField}
                                         type="button"
-                                        className='btn btn-outline me-2'>
+                                        className='btn btn-outline-dark me-2'>
                                         <i className="fa-solid fa-plus" />
-                                    </button>
-                                    <button
-                                        onClick={handleRemoveField}
-                                        type="button"
-                                        className='btn btn-outline'
-                                    >
-                                        <i className="fa-solid fa-minus" />
                                     </button>
                                 </div>
                                 <div className="text-center">
@@ -620,21 +615,21 @@ const PublishResult = () => {
                                 onChange={(e) => handleUpdatedFieldChange(index, 'marks', e.target.value)}
                                 required
                             />
+                            <button
+                                onClick={() => updatedRemoveField(index)}
+                                type="button"
+                                className='btn btn-outline mb-3 ms-2'
+                            >
+                                <i className="fa-solid fa-delete-left" />
+                            </button>
                         </div>
                     ))}
                     <div className='d-flex justify-content-end'>
                         <button
                             onClick={updatedAddField}
                             type="button"
-                            className='btn btn-outline me-2'>
+                            className='btn btn-outline-dark me-2'>
                             <i className="fa-solid fa-plus" />
-                        </button>
-                        <button
-                            onClick={updatedRemoveField}
-                            type="button"
-                            className='btn btn-outline'
-                        >
-                            <i className="fa-solid fa-minus" />
                         </button>
                     </div>
                     <div className="text-center">
@@ -646,9 +641,18 @@ const PublishResult = () => {
             </Modal>
             <Modal open={modalVisible} onCancel={() => setModalVisible(false)} footer={null}>
                 <div>
-                    <h5 className='text-center mb-3'>
-                        Result
-                    </h5>
+                    <h5 className='text-center'>Result</h5>
+                    <div className='text-center my-3'>
+                        <span className="d-flex justify-content-center align-items-center">
+                            <img
+                                className='me-1'
+                                style={{ width: "23px", height: "23px", borderRadius: "100%" }}
+                                src={modalResult?.user?.avatar}
+                                alt="dp"
+                            />
+                            <b>{modalResult?.user?.name}</b>&nbsp;- {modalResult?.grade?.name}
+                        </span>
+                    </div>
                     <table className="table table-striped">
                         <thead className='table-dark'>
                             <tr>
