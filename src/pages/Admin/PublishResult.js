@@ -416,31 +416,35 @@ const PublishResult = () => {
                                 </div>
                                 {subjects.map((field, index) => (
                                     <div className="d-lg-flex" key={index}>
-                                        <Input
-                                            type="text"
-                                            placeholder='Subject'
-                                            className='mb-3 me-2 w-100'
-                                            size='large'
-                                            value={field.subject}
-                                            onChange={(e) => handleFieldChange(index, 'subject', e.target.value)}
-                                            required
-                                        />
-                                        <Input
-                                            type="text"
-                                            placeholder='Marks'
-                                            className='mb-3 w-100'
-                                            size='large'
-                                            value={field.marks}
-                                            onChange={(e) => handleFieldChange(index, 'marks', e.target.value)}
-                                            required
-                                        />
-                                        <button
-                                            onClick={() => handleRemoveField(index)}
-                                            type="button"
-                                            className='btn btn-outline mb-3 ms-2'
-                                        >
-                                            <i className="fa-solid fa-delete-left" />
-                                        </button>
+                                        <div className="w-100 me-2">
+                                            <Input
+                                                type="text"
+                                                placeholder='Subject'
+                                                className='mb-3'
+                                                size='large'
+                                                value={field.subject}
+                                                onChange={(e) => handleFieldChange(index, 'subject', e.target.value)}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="w-100 d-flex">
+                                            <Input
+                                                type="text"
+                                                placeholder='Marks'
+                                                className='mb-3'
+                                                size='large'
+                                                value={field.marks}
+                                                onChange={(e) => handleFieldChange(index, 'marks', e.target.value)}
+                                                required
+                                            />
+                                            <button
+                                                onClick={() => handleRemoveField(index)}
+                                                type="button"
+                                                className='btn btn-outline mb-3 ms-2'
+                                            >
+                                                <i className="fa-solid fa-delete-left" />
+                                            </button>
+                                        </div>
                                     </div>
                                 ))}
                                 <div className='d-flex justify-content-end'>
@@ -597,31 +601,35 @@ const PublishResult = () => {
                     </div>
                     {updatedSubjects.map((updateField, index) => (
                         <div className="d-lg-flex" key={index}>
-                            <Input
-                                type="text"
-                                placeholder='Subject'
-                                className='mb-3 me-2 w-100'
-                                size='large'
-                                value={updateField.subject}
-                                onChange={(e) => handleUpdatedFieldChange(index, 'subject', e.target.value)}
-                                required
-                            />
-                            <Input
-                                type="text"
-                                placeholder='Marks'
-                                className='mb-3 w-100'
-                                size='large'
-                                value={updateField.marks}
-                                onChange={(e) => handleUpdatedFieldChange(index, 'marks', e.target.value)}
-                                required
-                            />
-                            <button
-                                onClick={() => updatedRemoveField(index)}
-                                type="button"
-                                className='btn btn-outline mb-3 ms-2'
-                            >
-                                <i className="fa-solid fa-delete-left" />
-                            </button>
+                            <div className='w-100 me-2'>
+                                <Input
+                                    type="text"
+                                    placeholder='Subject'
+                                    className='mb-3'
+                                    size='large'
+                                    value={updateField.subject}
+                                    onChange={(e) => handleUpdatedFieldChange(index, 'subject', e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className='w-100 d-flex'>
+                                <Input
+                                    type="text"
+                                    placeholder='Marks'
+                                    className='mb-3'
+                                    size='large'
+                                    value={updateField.marks}
+                                    onChange={(e) => handleUpdatedFieldChange(index, 'marks', e.target.value)}
+                                    required
+                                />
+                                <button
+                                    onClick={() => updatedRemoveField(index)}
+                                    type="button"
+                                    className='btn btn-outline mb-3 ms-2'
+                                >
+                                    <i className="fa-solid fa-delete-left" />
+                                </button>
+                            </div>
                         </div>
                     ))}
                     <div className='d-flex justify-content-end'>
