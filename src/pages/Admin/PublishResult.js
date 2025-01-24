@@ -100,16 +100,24 @@ const PublishResult = () => {
     };
 
     const handleRemoveField = (indexToRemove) => {
-        setSubjects(subjects.filter((_, index) => index !== indexToRemove));
+        if (subjects.length > 1) {
+            setSubjects(subjects.filter((_, index) => index !== indexToRemove));
+        } else {
+            alert("At least one subject is required.");
+        }
     };
-
+    
     // Update Form
     const updatedAddField = () => {
         setUpdatedSubjects([...updatedSubjects, { updatedSubject: '', updatedMarks: '' }]);
     };
 
     const updatedRemoveField = (indexToRemove) => {
-        setUpdatedSubjects(updatedSubjects.filter((_, index) => index !== indexToRemove));
+        if (updatedSubjects.length > 1) {
+            setUpdatedSubjects(updatedSubjects.filter((_, index) => index !== indexToRemove));
+        } else {
+            alert("At least one subject is required.");
+        }
     };
 
     // Function to handle changes in the dynamically added fields
