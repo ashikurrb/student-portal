@@ -76,7 +76,7 @@ const ViewResult = () => {
                                                         <td>{r.type}</td>
                                                         <td>{dayjs(r.examDate).format('MMM DD, YYYY')}</td>
                                                         <td>
-                                                            <button className="btn btn-outline-dark" onClick={() => openModal(r)}>
+                                                            <button className="btn btn-outline-primary" onClick={() => openModal(r)}>
                                                             <i className="fa-solid fa-square-poll-vertical" />
                                                             </button>
                                                         </td>
