@@ -95,8 +95,10 @@ const PublishResult = () => {
     }, [])
 
     // Create Form
-    const handleAddField = () => {
-        setSubjects([...subjects, { subject: '', marks: '' }]);
+    const handleAddField = (indexToAdd) => {
+        const newSubjects = [...subjects];
+        newSubjects.splice(indexToAdd + 1, 0, { subject: '', marks: '' });
+        setSubjects(newSubjects);
     };
 
     const handleRemoveField = (indexToRemove) => {
@@ -106,10 +108,12 @@ const PublishResult = () => {
             alert("At least one subject is required.");
         }
     };
-    
+
     // Update Form
-    const updatedAddField = () => {
-        setUpdatedSubjects([...updatedSubjects, { updatedSubject: '', updatedMarks: '' }]);
+    const updatedAddField = (indexToAdd) => {
+        const newUpdatedSubjects = [...updatedSubjects];
+        newUpdatedSubjects.splice(indexToAdd + 1, 0, { updatedSubject: '', updatedMarks: '' });
+        setUpdatedSubjects(newUpdatedSubjects);
     };
 
     const updatedRemoveField = (indexToRemove) => {
@@ -324,6 +328,7 @@ const PublishResult = () => {
                 setSelectedResult([]);
             }
         };
+
         document.addEventListener('keydown', handleEscapeKey);
         return () => {
             document.removeEventListener('keydown', handleEscapeKey);
@@ -355,7 +360,7 @@ const PublishResult = () => {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                             <button type="submit" onClick={() => setIsCreateModalVisible(true)} className="btn btn-success fw-bold mx-1 py-2 px-4">
-                                <i class="fa-solid fa-plus"></i> Publish Result
+                                <i className="fa-solid fa-plus" /> Publish Result
                             </button>
                             {selectedResult.length > 0 && (
                                 <button onClick={handleDeleteSelected} className="btn btn-danger fw-bold mx-1 py-2 floating-delete-button">
@@ -424,9 +429,16 @@ const PublishResult = () => {
                                 </div>
                                 {subjects.map((field, index) => (
                                     <div className="d-flex" key={index}>
+                                        <button
+                                            onClick={() => handleAddField(index)}
+                                            type="button"
+                                            className='btn btn-light mb-3 me-2 p-0 mt-0'
+                                        >
+                                            <i className="fa-solid fa-circle-plus" />
+                                        </button>
                                         <Input
                                             type="text"
-                                            placeholder='Subject'
+                                            placeholder={`Subject ${index + 1}`}
                                             className='mb-3 me-2 w-100'
                                             size='large'
                                             value={field.subject}
@@ -445,20 +457,12 @@ const PublishResult = () => {
                                         <button
                                             onClick={() => handleRemoveField(index)}
                                             type="button"
-                                            className='btn btn-outline mb-3 ms-2'
+                                            className='btn btn-light mb-3 ms-2 p-0 mt-0'
                                         >
-                                            <i className="fa-solid fa-delete-left" />
+                                            <i className="fa-solid fa-circle-minus" />
                                         </button>
                                     </div>
                                 ))}
-                                <div className='d-flex justify-content-end'>
-                                    <button
-                                        onClick={handleAddField}
-                                        type="button"
-                                        className='btn btn-outline-dark me-2'>
-                                        <i className="fa-solid fa-plus" />
-                                    </button>
-                                </div>
                                 <div className="text-center">
                                     <button type="submit" className="btn btn-warning fw-bold mt-2">
                                         {spinnerLoading ? <div><Spinner /> </div> : "Create Result"}
@@ -551,10 +555,10 @@ const PublishResult = () => {
                                                             <td>
                                                                 <div className="d-flex">
                                                                     <button className='btn btn-primary mx-1' onClick={() => { openModal(r) }}>
-                                                                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                                        <i className="fa-solid fa-pen-to-square" /> Edit
                                                                     </button>
                                                                     <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(r._id)}>
-                                                                        <i class="fa-solid fa-trash-can"></i>  Delete
+                                                                        <i className="fa-solid fa-trash-can" /> Delete
                                                                     </button>
                                                                 </div>
                                                             </td>
@@ -569,7 +573,7 @@ const PublishResult = () => {
                     </div>
                 </div>
             </div>
-            <Modal onCancel={() => setVisible(false)} open={visible} footer={null}>
+            <Modal onCancel={() => setVisible(false)} open={visible} footer={null} destroyOnClose={true}>
                 <h5 className='text-center'>Update Result</h5>
                 <div className='text-center my-3'>
                     <span className="d-flex justify-content-center align-items-center">
@@ -605,9 +609,16 @@ const PublishResult = () => {
                     </div>
                     {updatedSubjects.map((updateField, index) => (
                         <div className="d-flex" key={index}>
+                            <button
+                                onClick={() => updatedAddField(index)}
+                                type="button"
+                                className='btn btn-light mb-3 me-2 p-0'
+                            >
+                                <i className="fa-solid fa-circle-plus" />
+                            </button>
                             <Input
                                 type="text"
-                                placeholder='Subject'
+                                placeholder={`Subject ${index + 1}`}
                                 className='mb-3 me-2 w-100'
                                 size='large'
                                 value={updateField.subject}
@@ -626,20 +637,12 @@ const PublishResult = () => {
                             <button
                                 onClick={() => updatedRemoveField(index)}
                                 type="button"
-                                className='btn btn-outline mb-3 ms-2'
+                                className='btn btn-light mb-3 ms-2 p-0'
                             >
-                                <i className="fa-solid fa-delete-left" />
+                                <i className="fa-solid fa-circle-minus" />
                             </button>
                         </div>
                     ))}
-                    <div className='d-flex justify-content-end'>
-                        <button
-                            onClick={updatedAddField}
-                            type="button"
-                            className='btn btn-outline-dark me-2'>
-                            <i className="fa-solid fa-plus" />
-                        </button>
-                    </div>
                     <div className="text-center">
                         <button type='submit' className="btn btn-warning fw-bold" >
                             {updateSpinnerLoading ? <Spinner /> : "Update Result"}

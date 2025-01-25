@@ -76,8 +76,8 @@ const ViewResult = () => {
                                                         <td>{r.type}</td>
                                                         <td>{dayjs(r.examDate).format('MMM DD, YYYY')}</td>
                                                         <td>
-                                                            <button className="btn btn-primary" onClick={() => openModal(r)}>
-                                                           <i className="fa-solid fa-right-long" />
+                                                            <button className="btn btn-outline-dark" onClick={() => openModal(r)}>
+                                                            <i className="fa-solid fa-square-poll-vertical" />
                                                             </button>
                                                         </td>
                                                     </tr>
@@ -93,9 +93,12 @@ const ViewResult = () => {
             </div>
             <Modal open={visible} onCancel={() => setVisible(false)} footer={null}>
                 <div>
-                    <h5 className='text-center mb-3'>
+                    <h5 className='text-center'>
                       Result
                     </h5>
+                    <h6 className='text-center my-3'>
+                          {selected?.type}: {selected?.examDate && dayjs(selected.examDate).format('MMM DD, YYYY')}
+                    </h6>
                     <table className="table table-striped">
                         <thead className='table-dark'>
                             <tr>
@@ -118,9 +121,6 @@ const ViewResult = () => {
                             }
                         </tbody>
                     </table>
-                    <div className='text-center form-text'>
-                          {selected?.type}: {selected?.examDate && dayjs(selected.examDate).format('MMM DD, YYYY')}
-                    </div>
                 </div>
             </Modal>
         </Layout >
