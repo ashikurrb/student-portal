@@ -258,8 +258,8 @@ const PublishResult = () => {
 
     // Filter content based on search query
     const filteredResult = result.filter(r =>
+        dayjs(r?.examDate).format('DD MMMM YYYY').toLowerCase().includes(searchQuery.toLowerCase()) ||
         r.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
         r.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         r.grade.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
