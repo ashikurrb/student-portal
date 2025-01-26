@@ -167,7 +167,7 @@ const PublishResult = () => {
                 // Clear form fields
                 setUser(undefined);
                 setType('');
-                setSubjects([]); // Clear the subjects array
+                setSubjects([{ subject: '', marks: '' }]); 
                 setExamDate(undefined);
                 setListSpinnerLoading(false);
             } else {
@@ -220,10 +220,10 @@ const PublishResult = () => {
             // Handle the response
             if (data?.success) {
                 toast.success(data?.message);
-                getAllResults(); // Refresh the list of results
+                getAllResults();
                 // Clear form fields
                 setUpdatedType('');
-                setUpdatedSubjects([]); // Clear the subjects array
+                setUpdatedSubjects([[{ subject: '', marks: '' }]]);
                 setUpdatedExamDate(undefined);
                 setVisible(false);
             } else {
