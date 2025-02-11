@@ -28,6 +28,7 @@ const CreateCourse = () => {
     const [status, setStatus] = useState(null);
     const [description, setDescription] = useState('');
     const [courseImg, setCourseImg] = useState('');
+    const [updatedGrade, setUpdatedGrade] = useState('');
     const [updatedTitle, setUpdatedTitle] = useState('');
     const [updatedPrice, setUpdatedPrice] = useState('');
     const [updatedDateRange, setUpdatedDateRange] = useState('');
@@ -138,6 +139,7 @@ const CreateCourse = () => {
     const openModal = (course) => {
         setVisible(true);
         setSelected(course);
+        setUpdatedGrade(course.grade._id);
         setUpdatedTitle(course.title);
         setUpdatedPrice(course.price);
         setUpdatedDateRange(dayjs(course.dateRange));
@@ -152,6 +154,7 @@ const CreateCourse = () => {
         setSpinnerLoading(true);
         try {
             const updateCourseData = new FormData();
+            updateCourseData.append("grade", updatedGrade);
             updateCourseData.append("title", updatedTitle);
             updateCourseData.append("price", updatedPrice);
             updateCourseData.append("dateRange", updatedDateRange);
@@ -169,6 +172,7 @@ const CreateCourse = () => {
                 toast.success(data?.message);
                 getAllCourses();
                 // Clear form fields
+                setUpdatedGrade('');
                 setUpdatedTitle('');
                 setUpdatedPrice('');
                 setUpdatedDateRange(undefined);
@@ -574,7 +578,7 @@ const CreateCourse = () => {
                                 </div>
                             )}
                         </div>
-                        <div className="text-center">
+                        <div className="text-center mb-3">
                             <label className="btn btn-outline-secondary col-md-8">
                                 {updatedCourseImg ? (typeof updatedCourseImg === 'string' ? 'Change Photo' : updatedCourseImg.name) : "Upload Photo"}
                                 <input
@@ -592,14 +596,18 @@ const CreateCourse = () => {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                     </div>
-                    <div className='text-center my-3'>
-                        {
-                            <h6>
-                                {selected?.grade?.name}
-                            </h6>
-                        }
-                    </div>
                     <div className="d-lg-flex">
+                        <Select
+                            allowClear={true}
+                            placeholder="Select Grade"
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={updatedGrade || undefined}
+                            onChange={(value) => { setUpdatedGrade(value) }}>
+                            {grades?.map(g => (
+                                <Option key={g._id} value={g._id}>{g.name}</Option>
+                            ))}
+                        </Select>
                         <Input
                             showCount
                             type="text"
