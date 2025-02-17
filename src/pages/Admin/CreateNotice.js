@@ -24,6 +24,7 @@ const CreateNotice = () => {
     const [noticeInfo, setNoticeInfo] = useState('');
     const [noticeImg, setNoticeImg] = useState('');
     const [updatedTitle, setUpdatedTitle] = useState('');
+    const [updatedGrade, setUpdatedGrade] = useState('');
     const [updatedNoticeInfo, setUpdatedNoticeInfo] = useState('');
     const [updatedNoticeImg, setUpdatedNoticeImg] = useState('');
     const [selected, setSelected] = useState(null);
@@ -128,6 +129,11 @@ const CreateNotice = () => {
             const updateNoticeData = new FormData();
             updateNoticeData.append("title", updatedTitle);
             updateNoticeData.append("noticeInfo", updatedNoticeInfo);
+            if (updatedGrade) {
+                updateNoticeData.append("grade", updatedGrade);
+            } else {
+                updateNoticeData.append("grade", null); // Ensure it's cleared
+            }
             if (updatedNoticeImg) {
                 updateNoticeData.append("photo", updatedNoticeImg);
             }
@@ -143,6 +149,7 @@ const CreateNotice = () => {
                 getAllNotices();
                 // Clear form fields after submit
                 setUpdatedTitle('');
+                setUpdatedGrade('');
                 setUpdatedNoticeInfo('');
                 setUpdatedNoticeImg('');
                 setVisible(false);
@@ -167,9 +174,10 @@ const CreateNotice = () => {
     const openModal = (notice) => {
         setVisible(true);
         setSelected(notice);
-        setUpdatedTitle(notice.title);
-        setUpdatedNoticeInfo(notice.noticeInfo);
-        setUpdatedNoticeImg(notice.noticeImg);
+        setUpdatedTitle(notice?.title);
+        setUpdatedGrade(notice?.grade?._id);
+        setUpdatedNoticeInfo(notice?.noticeInfo);
+        setUpdatedNoticeImg(notice?.noticeImg);
     };
 
     // Filter notice based on search query
@@ -545,13 +553,25 @@ const CreateNotice = () => {
                             </h6>
                         }
                     </div>
-                    <div className="mb-3">
+                    <div className="mt-4 d-lg-flex">
+                        <Select
+                            allowClear={true}
+                            placeholder="Select Grade"
+                            size='large'
+                            className='mb-3 me-2 w-100'
+                            value={updatedGrade || null}
+                            onChange={(value) => { setUpdatedGrade(value|| null) }}>
+                            {grades?.map(g => (
+                                <Option key={g?._id} value={g?._id}>{g?.name}</Option>
+                            ))}
+                        </Select>
                         <Input
                             showCount
                             size='large'
                             minLength={4} maxLength={30}
                             type="text"
                             placeholder='Subject'
+                            className='mb-3 me-2'
                             value={updatedTitle}
                             onChange={(e) => setUpdatedTitle(e.target.value)}
                             required
