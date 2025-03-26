@@ -202,7 +202,7 @@ const AllUsers = () => {
                                                 <th scope='col'>Phone</th>
                                                 <th scope='col'>Answer</th>
                                                 <th scope='col'>Role</th>
-                                                <th scope='col'><span className="text-center">Action</span></th>
+                                                <th scope='col'>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
