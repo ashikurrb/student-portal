@@ -187,112 +187,116 @@ const AllUsers = () => {
                             />
                         </div>
                         <h6 className='justify-content-start'> Count: {filteredUser.length}</h6>
-                        {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <div className="table-container">
-                            <table className='table table-fixed-header table-hover'>
-                                <thead className='table-dark'>
-                                    <tr>
-                                        <th scope='col' className='ps-3'>#</th>
-                                        <th scope='col'>Name</th>
-                                        <th scope='col'>Grade</th>
-                                        <th scope='col'>Email</th>
-                                        <th scope='col'>Phone</th>
-                                        <th scope='col'>Answer</th>
-                                        <th scope='col'>Role</th>
-                                        <th scope='col'>Time</th>
-                                        <th scope='col'>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {filteredUser.length === 0 ? (
-                                        <tr>
-                                            <td colSpan="9" className="text-center">
-                                                <div className="my-5">
-                                                    <h3 className='text-secondary'>No User Found</h3>
-                                                    {searchQuery && (
-                                                        <button
-                                                            onClick={() => setSearchQuery('')}
-                                                            className="btn btn-warning mt-2 fw-bold"
-                                                        >
-                                                            <i className="fa-solid fa-xmark"></i> Reset Search
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ) : (
-
-                                        filteredUser.map((u, i) => {
-                                            return (
+                        <div className='table-container'>
+                            {
+                                spinnerLoading ? <div className="m-5 text-center">
+                                    <Spinner /><p>Loading user's list...</p>
+                                </div> :
+                                    <table className='table table-fixed-header table-hover'>
+                                        <thead className='table-dark'>
+                                            <tr>
+                                                <th scope='col'>#</th>
+                                                <th scope='col'>Name</th>
+                                                <th scope='col'>Grade</th>
+                                                <th scope='col'>Email</th>
+                                                <th scope='col'>Phone</th>
+                                                <th scope='col'>Answer</th>
+                                                <th scope='col'>Role</th>
+                                                <th scope='col'><span className="text-center">Action</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {filteredUser.length === 0 ? (
                                                 <tr>
-                                                    <th scope='row' className='ps-3'>{i + 1}</th>
-                                                    <td>
-                                                        <div className="d-flex align-items-center">
-                                                            <Image
-                                                                preview={{
-                                                                    mask: <EyeOutlined />,
-                                                                }}
-                                                                style={{ width: "27px", height: "27px", borderRadius: "100%" }}
-                                                                src={u?.avatar}
-                                                                alt="dp" />
-                                                            <span className='ms-2'>
-                                                                <Tooltip title={`Created: ${dayjs(u.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(u.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
-                                                                    {u?.name}
-                                                                </Tooltip>
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <button className="btn px-0 d-flex justify-content-between align-items-center w-100"
-                                                            onClick={() => { openModal(u) }}>
-                                                            <span className='text-start'>
-                                                                {u?.grade?.name}
-                                                            </span>
-                                                            <span className='text-end'>                                                <i className="fa-solid fa-caret-down"></i>
-                                                            </span>
-                                                        </button>
-                                                    </td>
-                                                    <td className='text-wrap'>{u?.email}</td>
-                                                    <td>{u?.phone}</td>
-                                                    <td>{u?.answer}</td>
-                                                    <td >
-                                                        {
-                                                            u.role === 0 ? <span className="badge text-bg-success">Student</span> : u.role === 1 ? <span className="badge text-bg-warning">Admin</span> : <span className="badge text-bg-danger">Moderator</span>
-                                                        }
-                                                    </td>
-                                                    <td>{dayjs(u?.createdAt).format('MMM DD, YYYY hh:mm A')}</td>
-                                                    <td>
-                                                        <div className="d-flex">
-                                                            {
-                                                                u.role === 1 ? <span className="badge text-bg-info mx-1">Restricted</span> : (
-                                                                    <Select
-                                                                        loading={statusUpdateLoading === u._id}
-                                                                        size='large'
-                                                                        className='mb-3 me-2'
-                                                                        value={u?.status}
-                                                                        onChange={(value) => handleStatusUpdate(u._id, value)}
-                                                                        required>
-                                                                        {statuses.map((s, i) => (
-                                                                            <Option key={i} value={s}>{s}</Option>
-                                                                        ))}
-                                                                    </Select>
-                                                                )
-                                                            }
-                                                            {
-                                                                u?.role === 1 ? <span className="badge text-bg-info">Restricted</span> : (
-                                                                    <button className="btn btn-danger fw-bold ms-1" onClick={() => handleDelete(u._id)}>
-                                                                        <i className="fa-solid fa-trash-can" /> Delete
-                                                                    </button>
-                                                                )
-                                                            }
+                                                    <td colSpan="9" className="text-center">
+                                                        <div className="my-5">
+                                                            <h3 className='text-secondary'>No User Found</h3>
+                                                            {searchQuery && (
+                                                                <button
+                                                                    onClick={() => setSearchQuery('')}
+                                                                    className="btn btn-warning mt-2 fw-bold"
+                                                                >
+                                                                    <i className="fa-solid fa-xmark"></i> Reset Search
+                                                                </button>
+                                                            )}
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            )
-                                        })
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>}
+                                            ) : (
+
+                                                filteredUser.map((u, i) => {
+                                                    return (
+                                                        <tr>
+                                                            <th scope='row'>{i + 1}</th>
+                                                            <td>
+                                                                <div className="d-flex align-items-center">
+                                                                    <Image
+                                                                        preview={{
+                                                                            mask: <EyeOutlined />,
+                                                                        }}
+                                                                        style={{ width: "27px", height: "27px", borderRadius: "100%" }}
+                                                                        src={u?.avatar}
+                                                                        alt="dp" />
+                                                                    <span className='ms-2'>
+                                                                        <Tooltip title={`Created: ${dayjs(u.createdAt).format('ddd, MMM D, YYYY h:mm A')} Updated: ${dayjs(u.updatedAt).format('ddd, MMM D, YYYY h:mm A')}`}>
+                                                                            {u?.name}
+                                                                        </Tooltip>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <button className="btn px-0 d-flex justify-content-between align-items-center w-100"
+                                                                    onClick={() => { openModal(u) }}>
+                                                                    <span className='text-start'>
+                                                                        {u?.grade?.name}
+                                                                    </span>
+                                                                    <span className='text-end'>                                                <i className="fa-solid fa-caret-down"></i>
+                                                                    </span>
+                                                                </button>
+                                                            </td>
+                                                            <td>{u?.email}</td>
+                                                            <td>{u?.phone}</td>
+                                                            <td>{u?.answer}</td>
+                                                            <td >
+                                                                {
+                                                                    u.role === 0 ? <span className="badge text-bg-success">Student</span> : u.role === 1 ? <span className="badge text-bg-warning">Admin</span> : <span className="badge text-bg-danger">Moderator</span>
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                <div className="d-flex">
+                                                                    {
+                                                                        u.role === 1 ? <span className="badge text-bg-info mx-1">Restricted</span> : (
+                                                                            <Select
+                                                                                loading={statusUpdateLoading === u._id}
+                                                                                size='large'
+                                                                                className='mb-3 me-2'
+                                                                                value={u?.status}
+                                                                                onChange={(value) => handleStatusUpdate(u._id, value)}
+                                                                                required>
+                                                                                {statuses.map((s, i) => (
+                                                                                    <Option key={i} value={s}>{s}</Option>
+                                                                                ))}
+                                                                            </Select>
+                                                                        )
+                                                                    }
+                                                                    {
+                                                                        u?.role === 1 ? <span className="badge text-bg-info">Restricted</span> : (
+                                                                            <button className="btn btn-danger fw-bold ms-1"
+                                                                                onClick={() => handleDelete(u?._id)}>
+                                                                                <i className="fa-solid fa-trash-can" /> Delete
+                                                                            </button>
+                                                                        )
+                                                                    }
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            )}
+                                        </tbody>
+                                    </table>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

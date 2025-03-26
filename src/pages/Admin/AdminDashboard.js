@@ -31,7 +31,7 @@ const AdminDashboard = () => {
             console.log(error);
         }
     };
-    console.log(dashboardData);
+    
     // Get failed registration
     const getFailedRegistration = async () => {
         try {
