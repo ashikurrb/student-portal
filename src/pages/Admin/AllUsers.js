@@ -267,7 +267,7 @@ const AllUsers = () => {
                                                                     {
                                                                         u.role === 1 ? <span className="badge text-bg-info mx-1">Restricted</span> : (
                                                                             <Select
-                                                                                loading={statusUpdateLoading === u._id}
+                                                                                loading={statusUpdateLoading === u?._id}
                                                                                 size='large'
                                                                                 className='mb-3 me-2'
                                                                                 value={u?.status}

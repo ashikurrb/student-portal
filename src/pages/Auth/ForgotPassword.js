@@ -1,17 +1,42 @@
 import Layout from '../../components/Layouts/Layout';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../style/AuthStyle.css';
-import { Input } from 'antd';
-import { MailOutlined, LockOutlined, QuestionCircleOutlined, } from '@ant-design/icons';
+import { Input, Spin } from 'antd';
+import { MailOutlined, LockOutlined, BarcodeOutlined, } from '@ant-design/icons';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useState } from 'react';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
-    const [answer, setAnswer] = useState("");
+    const [otp, setOtp] = useState("");
+    const [otpLoading, setOtpLoading] = useState(false);
     const [newPassword, setNewPassword] = useState("");
     const navigate = useNavigate();
+
+    //send otp
+    const handleOtp = async (e) => {
+        e.preventDefault();
+        const loadingToastId = toast.loading('Sending OTP...');
+        setOtpLoading(true);
+        // Create a FormData object
+        const verifyEmailData = new FormData();
+        verifyEmailData.append('email', email);
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/verify-forgot-password`, verifyEmailData);
+            if (res && res.data.success) {
+                // Show success toast
+                toast.success(res.data && res.data.message, { id: loadingToastId });
+            } else {
+                toast.error(res.data.message, { id: loadingToastId });
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message, { id: loadingToastId });
+        } finally {
+            setOtpLoading(false);
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,8 +45,8 @@ const ForgotPassword = () => {
         // Create a FormData object
         const forgotPasswordData = new FormData();
         forgotPasswordData.append('email', email);
+        forgotPasswordData.append('otp', otp);
         forgotPasswordData.append('newPassword', newPassword);
-        forgotPasswordData.append('answer', answer);
 
         try {
             const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/forgot-password`, forgotPasswordData);
@@ -69,14 +94,24 @@ const ForgotPassword = () => {
                                     <Input
                                         prefix={
                                             <span style={{ paddingRight: '4px' }}>
-                                                <QuestionCircleOutlined />
+                                                <BarcodeOutlined />
                                             </span>
                                         }
+                                        addonAfter={
+                                            otpLoading ? <Spin size="small" />
+                                                : <span onClick={handleOtp} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                                    Get OTP
+                                                </span>
+                                        }
+                                        type="text"
+                                        value={otp}
+                                        onChange={(e) => setOtp(e.target.value)}
                                         className="w-100"
-                                        size='large'
-                                        placeholder='Security Answer'
-                                        value={answer}
-                                        onChange={(e) => setAnswer(e.target.value)}
+                                        size="large"
+                                        placeholder='OTP'
+                                        minLength={3}
+                                        maxLength={10}
+                                        allowClear
                                         required />
                                 </div>
                                 <div className="mb-4">
