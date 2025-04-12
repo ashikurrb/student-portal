@@ -151,13 +151,14 @@ const Register = () => {
                                                 <PhoneOutlined />
                                             </span>
                                         }
-                                        type="number"
+                                        type="tel"
                                         value={phone}
                                         onChange={(e) => setPhone(e.target.value)}
                                         className="w-100"
                                         size="large"
                                         maxLength={11}
                                         placeholder='Phone Number'
+                                        showCount
                                         allowClear
                                         required />
                                 </div>
@@ -216,9 +217,9 @@ const Register = () => {
                                         onChange={(e) => setAnswer(e.target.value)}
                                         className="w-100"
                                         size="large"
-                                        placeholder='Set a security answer to reset your password'
+                                        placeholder='Your Address'
                                         minLength={3}
-                                        maxLength={10}
+                                        maxLength={30}
                                         allowClear
                                         required />
                                 </div>
@@ -241,8 +242,8 @@ const Register = () => {
                                         className="w-100"
                                         size="large"
                                         placeholder='OTP'
-                                        minLength={3}
-                                        maxLength={10}
+                                        minLength={6}
+                                        maxLength={6}
                                         allowClear
                                         required />
                                 </div>

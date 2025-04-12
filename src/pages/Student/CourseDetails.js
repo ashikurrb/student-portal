@@ -269,22 +269,22 @@ const CourseDetails = () => {
                                 value={method}
                                 onChange={(value) => { setMethod(value) }}
                                 required>
-                                {methods.map((method, i) => (
+                                {methods?.map((method, i) => (
                                     <Option key={i} value={method.name}>
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
                                             <img
-                                                src={method.logo}
-                                                alt={method.name}
+                                                src={method?.logo}
+                                                alt={method?.name}
                                                 style={{ width: 20, height: 20, marginRight: 5 }}
                                             />
-                                            {method.name}
+                                            {method?.name}
                                         </div>
                                     </Option>
                                 ))}
                             </Select>
                             <Input
                                 showCount
-                                type="number"
+                                type="tel"
                                 size='large'
                                 placeholder='MFS Number'
                                 className='mb-3 me-2'

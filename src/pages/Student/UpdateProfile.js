@@ -23,12 +23,13 @@ const UpdateProfile = () => {
 
     // Get user data
     useEffect(() => {
-        const { email, name, phone, grade, avatar } = auth.user;
+        const { email, name, phone, grade, answer, avatar } = auth?.user;
         setGrade(grade.name);
         setName(name);
         setEmail(email);
         setPhone(phone);
         setAvatar(avatar);
+        setAnswer(answer);
 
     }, [auth?.user]);
 
@@ -139,11 +140,12 @@ const UpdateProfile = () => {
                                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" placeholder='Email' readOnly />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" placeholder='Phone Number' required />
+                                    <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-control" placeholder='Phone Number' required
+                                        minLength={11} maxLength={11} />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" placeholder='Security Answer'
-                                        minLength={3} maxLength={10}
+                                    <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" placeholder='Your Address'
+                                        minLength={3} maxLength={30}
                                     />
                                 </div>
                                 <div className="mb-3">

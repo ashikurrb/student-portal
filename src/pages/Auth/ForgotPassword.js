@@ -74,7 +74,9 @@ const ForgotPassword = () => {
                     <div className="col-md-12">
                         <div className="form-container">
                             <form onSubmit={handleSubmit}>
-                                <h4 className="title"> <i class="fa-solid fa-lock"></i> Reset Password</h4>
+                                <h4 className="title">
+                                    <i className="fa-solid fa-lock" /> Reset Password
+                                </h4>
                                 <div className="mb-3">
                                     <Input
                                         prefix={
@@ -98,10 +100,13 @@ const ForgotPassword = () => {
                                             </span>
                                         }
                                         addonAfter={
-                                            otpLoading ? <Spin size="small" />
-                                                : <span onClick={handleOtp} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                                                    Get OTP
-                                                </span>
+                                            <div style={{ width: 50, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                {otpLoading ? <Spin size="small" /> : (
+                                                    <span onClick={handleOtp} style={{ cursor: 'pointer' }}>
+                                                        Get OTP
+                                                    </span>
+                                                )}
+                                            </div>
                                         }
                                         type="text"
                                         value={otp}
@@ -109,8 +114,8 @@ const ForgotPassword = () => {
                                         className="w-100"
                                         size="large"
                                         placeholder='OTP'
-                                        minLength={3}
-                                        maxLength={10}
+                                        minLength={6}
+                                        maxLength={6}
                                         allowClear
                                         required />
                                 </div>
