@@ -77,7 +77,7 @@ const HomePage = () => {
                         {
                             banner.map((b, i) => (
                                 <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''}`}>
-                                    <img src={b.img} className="d-block w-100 desktop-img" alt={b.title} />
+                                    <img src={b.img} className="d-block w-100 desktop-img" alt={b?.title} />
                                 </div>
                             ))
                         }
@@ -119,7 +119,7 @@ const HomePage = () => {
                                 whileHover={{ scale: 1.09, boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)" }}
                                 initial={{ opacity: 0, y: 50 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: false, amount: 0.2 }} // Trigger animation when visible
+                                viewport={{ once: true, amount: 0.2 }} // Trigger animation when visible
                                 transition={{ duration: 0.5, delay: i * 0.2 }} // Staggered animation
                             >
                                 <img
@@ -131,8 +131,8 @@ const HomePage = () => {
                                 <div className="card-body">
                                     <h5 className='card-title' style={{ height: '3rem' }}>{t?.name}</h5>
                                     <p className="form-text"> <b>{t?.title}</b></p>
-                                    <p className='fw-bold' style={{ height: '4rem' }}>{t.department}</p>
-                                    <h6 className='fw-bold'> {t.university}</h6>
+                                    <p className='fw-bold' style={{ height: '4rem' }}>{t?.department}</p>
+                                    <h6 className='fw-bold'> {t?.university}</h6>
                                 </div>
                             </motion.div>
                         ))
