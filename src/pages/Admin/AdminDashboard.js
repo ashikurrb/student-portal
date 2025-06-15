@@ -31,7 +31,7 @@ const AdminDashboard = () => {
             console.log(error);
         }
     };
-    
+
     // Get failed registration
     const getFailedRegistration = async () => {
         try {
@@ -244,7 +244,8 @@ const AdminDashboard = () => {
                 open={visible && failedRegistration.length > 0}
                 footer={null}>
                 <h5 className='text-center mb-3'>Failed Registration List</h5>
-                <table className='table'>
+                <div className="table-container">
+   <table className='table'>
                     <thead className='table-dark'>
                         <tr>
                             <th scope="col">#</th>
@@ -270,6 +271,8 @@ const AdminDashboard = () => {
                         ))}
                     </tbody>
                 </table>
+                </div>
+
             </Modal>
         </Layout>
     );
