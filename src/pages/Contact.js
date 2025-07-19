@@ -4,7 +4,7 @@ import GoBackButton from '../components/GoBackButton';
 
 const Contact = () => {
     return (
-        <Layout title={"Contact Us - 5points Academy"}>
+        <Layout title={"Contact Us - Student Portal"}>
             <div className="container">
                 <div className="row">
                     <div className="d-flex align-items-center">
@@ -25,13 +25,13 @@ const Contact = () => {
                                 Call us for more information about admission and courses.
                             </p>
                             <p className="mt-3">
-                                <i className='fa-solid fa-envelope'></i> : 5pointschool@gmail.com
+                                <i className='fa-solid fa-envelope'></i> : ashikurrb@ashikurrb.onmicrosoft.com
                             </p>
                             <p className="mt-3">
-                                <i className='fa-solid fa-phone-volume'></i> : +880 1794-744343
+                                <i className='fa-solid fa-phone-volume'></i> : +880 1518-903860
                             </p>
                             <p className="mt-3">
-                                <i className="fas fa-map-marker-alt"></i> : Tajmahal Road, Mohammadpur, Dhaka - 1207, Bangladesh
+                                <i className="fas fa-map-marker-alt"></i> : Adabor, Dhaka - 1207, Bangladesh
                             </p>
                         </div>
                     </div>

@@ -70,7 +70,7 @@ const HomePage = () => {
     ]
 
     return (
-        <Layout title={"5points Academy - Best Coaching"}>
+        <Layout title={"Student Portal"}>
             <div className="container">
                 <div id="carouselExampleAutoplaying" className="carousel slide mt-3" data-bs-ride="carousel">
                     <div className="carousel-inner">

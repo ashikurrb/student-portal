@@ -35,7 +35,7 @@ const Header = () => {
                 <div className="container-fluid">
                     <Link to="/" className="navbar-brand" style={{ textTransform: "none" }}>
                         <img src="/images/logoNav.png"  height={35} className="d-inline-block align-text-top" alt="logo " />
-                        {/* <span> 5points Academy</span> */}
+                        {/* <span> Student Portal</span> */}
                     </Link>
                     <button className="navbar-toggler ms-auto my-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon" />

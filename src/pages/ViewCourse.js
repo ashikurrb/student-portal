@@ -30,7 +30,7 @@ const ViewCourse = () => {
     }, []);
 
     return (
-        <Layout title={"View Courses - 5points Academy"}>
+        <Layout title={"View Courses - Student Portal"}>
             <div className="container">
                 <div className="container">
                     <div className="row align-items-center">

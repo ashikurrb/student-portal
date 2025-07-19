@@ -77,24 +77,24 @@ const ViewPayment = () => {
             // Add text and other elements
             doc.setFontSize(22);
             doc.setFont('helvetica', 'bold');
-            const instituteName = '5points Academy';
+            const instituteName = 'ThoughtHub';
             const titleWidth1 = doc.getTextWidth(instituteName);
             const titleX1 = (pageWidth - titleWidth1) / 2; // Center text horizontally
             doc.text(instituteName, titleX1, 13);
 
             doc.setFontSize(11);
             doc.setFont('helvetica', 'normal');
-            const addressName = 'Tajmahal Road, Dhaka - 1207';
+            const addressName = 'Adabor, Dhaka - 1207';
             const titleWidth2 = doc.getTextWidth(addressName);
             const titleX2 = (pageWidth - titleWidth2) / 2; // Center text horizontally
             doc.text(addressName, titleX2, 20);
 
-            const mobile = 'Mobile: +880 1794-744343';
+            const mobile = 'Mobile: +880 1518-903860';
             const titleWidth3 = doc.getTextWidth(mobile);
             const titleX3 = (pageWidth - titleWidth3) / 2; // Center text horizontally
             doc.text(mobile, titleX3, 26);
 
-            const website = 'www.5points-academy.com';
+            const website = 'https://thoughtHub.notion.site';
             const titleWidth4 = doc.getTextWidth(website);
             const titleX4 = (pageWidth - titleWidth4) / 2; // Center text horizontally
             doc.text(website, titleX4, 32);

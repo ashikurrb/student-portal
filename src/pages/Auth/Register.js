@@ -100,7 +100,7 @@ const Register = () => {
     }
 
     return (
-        <Layout title={"Register Now - 5points Academy"}>
+        <Layout title={"Register Now - Student Portal"}>
             <div className="form-container">
                 <div className="container">
                     <div className="row">

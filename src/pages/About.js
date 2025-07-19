@@ -4,7 +4,7 @@ import GoBackButton from '../components/GoBackButton';
 
 const About = () => {
     return (
-        <Layout title={"About Us - 5points Academy"}>
+        <Layout title={"About Us - Student Portal"}>
             <div className="container">
                 <div className="row">
                     <div className="d-flex align-items-center">
@@ -21,7 +21,7 @@ const About = () => {
                         </div>
                         <div className="col-md-7">
                             <p className='mt-5' style={{ textAlign: "justify" }}>
-                                শিক্ষার এক নতুন যুগে প্রতিযোগিতামূলক সফলতা অর্জনের জন্য আমরা 5points school আছি সবসময় আপনাদের পাশে।
+                                শিক্ষার এক নতুন যুগে প্রতিযোগিতামূলক সফলতা অর্জনের জন্য আমরা আছি সবসময় আপনাদের পাশে।
                                 <br />
                                 শিক্ষার্থীর যেকোনো ক্লাসের যেকোনো subject এর হাজারো সব সমস্যার সমাধান পাবেন একই প্লাটফর্মে যা পাওয়া যাবে খুবই সাশ্রয়ী মূল্যে।
                                 <br />

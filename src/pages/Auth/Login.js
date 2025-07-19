@@ -59,7 +59,7 @@ const Login = () => {
     }
 
     return (
-        <Layout title={"Log In - 5points Academy"}>
+        <Layout title={"Log In - Student Portal"}>
             <div className="form-container">
                 <div className="container d-md-flex">
                     <div className="row m-3">
