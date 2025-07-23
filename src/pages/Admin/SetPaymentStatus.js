@@ -339,9 +339,26 @@ const SetPaymentStatus = () => {
         const leftMargin = 7; // Adjust as needed
         const rightMargin = 7; // Adjust as needed
 
+        // Add paid stamp below table, left-aligned
+        const paidStamp = new Image();
+        paidStamp.src = "/images/paidStamp.png";
+        paidStamp.onload = function () {
+            const finalY = doc.autoTable.previous?.finalY || 110; // fallback Y if no table
+            const scale = 0.09; // adjust size scaling
+
+            // Use the image's actual width and height from `this`
+            const stampWidth = (this.width || 100) * scale;  // fallback to 100 if 0
+            const stampHeight = (this.height || 50) * scale; // fallback to 50 if 0
+
+            const stampX = 15;
+            const stampY = finalY + 20;
+
+            doc.addImage(this, 'PNG', stampX, stampY, stampWidth, stampHeight);
+        };
+
         // Add background watermark
         const logo = new Image();
-        logo.src = "/images/brandWatermark.png"; // Adjust the path as needed
+        logo.src = "/images/brandWatermark.png";
         logo.onload = () => {
             const pageWidth = doc.internal.pageSize.getWidth();
             const pageHeight = doc.internal.pageSize.getHeight();
@@ -415,15 +432,15 @@ const SetPaymentStatus = () => {
                     [`${payment.remark}`, `TK. ${payment.amount}`, `${payment.method}`, `${payment.trxId}`]
                 ],
                 styles: {
-                    cellPadding: 2, // Adjust cell padding if needed
+                    cellPadding: 2,
                     valign: 'middle',
-                    halign: 'center', // Center-align text horizontally
+                    halign: 'center',
                 },
                 columnStyles: {
-                    0: { halign: 'center' }, // Center-align the first column
-                    1: { halign: 'center' }, // Center-align the second column
-                    2: { halign: 'center' }, // Center-align the third column
-                    3: { halign: 'center' }  // Center-align the fourth column
+                    0: { halign: 'center' },
+                    1: { halign: 'center' },
+                    2: { halign: 'center' },
+                    3: { halign: 'center' }
                 }
             });
 
